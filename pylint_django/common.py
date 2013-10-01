@@ -31,6 +31,10 @@ class View(object):
     request = None
     args = None
     kwargs = None
+
+    # as_view is marked as class-only
+    def as_view():
+        pass
 ''')
     module.locals['View'] = fake.locals['View']
 
