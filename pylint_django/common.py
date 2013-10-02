@@ -1,12 +1,20 @@
 from astroid import MANAGER
 from astroid.builder import AstroidBuilder
 from astroid import nodes
+from pylint.checkers.base import NameChecker
+import re
 
 
 def register(linter):
-    # this method is expected by pylint for plugins, however we don't
-    # want to register any checkers
-    pass
+    # this method is meant for registering additional checkers, however
+    # we will also use it to amend existing checker config
+    for checker in linter.get_checkers():
+        if isinstance(checker, NameChecker):
+            checker.config.good_names += ('qs',)
+            const_rgx = '(%s|urls|urlpatterns|register)' % checker.config.const_rgx.pattern
+            checker.config.const_rgx = re.compile(const_rgx)
+    # we don't care about South migrations
+    linter.config.black_list += ('migrations',)
 
 
 MODULE_TRANSFORMS = {}
