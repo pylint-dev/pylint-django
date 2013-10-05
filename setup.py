@@ -19,7 +19,7 @@ setup(
     description=_short_description,
     version=_version,
     packages=_packages,
-    install_requires=['pylint-plugin-helpers'],
+    install_requires=['pylint-plugin-utils'],
     license='GPLv2',
     keywords=('pylint', 'django', 'plugin')
 )
