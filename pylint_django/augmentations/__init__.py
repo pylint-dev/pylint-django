@@ -1,21 +1,53 @@
-from pylint.checkers.base import BasicChecker, astroid
+from astroid import InferenceError
+from pylint.checkers.typecheck import TypeChecker
 from pylint_plugin_utils import augment_visit
 
 
-def allow_attribute_comments(chain, node):
-    """
-    This augmentation is to allow comments on class attributes, for example:
+def foreign_key(chain, node):
+    if node.lineno == 190:
+        import pdb; pdb.set_trace()
+    chain()
 
-    class SomeClass(object):
-        some_attribute = 5
-        ''' This is a docstring for the above attribute '''
+
+def foreign_key_sets(chain, node):
     """
-    if isinstance(node.previous_sibling(), astroid.Assign) and \
-       isinstance(node.parent, astroid.Class) and \
-       isinstance(node.value.value, basestring):
-        return
+    When a Django model has a ForeignKey to another model, the target
+    of the foreign key gets a '<modelname>_set' attribute for accessing
+    a queryset of the model owning the foreign key - eg:
+
+    class ModelA(models.Model):
+        pass
+
+    class ModelB(models.Model):
+        a = models.ForeignKey(ModelA)
+
+    Now, ModelA instances will have a modelb_set attribute.
+    """
+    if node.attrname.endswith('_set'):
+        children = list(node.get_children())
+        for child in children:
+            try:
+                inferred = child.infered()
+            except InferenceError:
+                pass
+            else:
+                for cls in inferred:
+                    for base_cls in cls.bases:
+                        if base_cls.attrname != 'Model':
+                            continue
+                        try:
+                            for inf in base_cls.infered():
+                                if inf.qname() == 'django.db.models.base.Model':
+                                    # This means that we are looking at a subclass of models.Model
+                                    # and something is trying to access a <something>_set attribute.
+                                    # Since this could exist, we will return so as not to raise an
+                                    # error.
+                                    return
+                        except InferenceError:
+                            pass
     chain()
 
 
 def apply_augmentations(linter):
-    augment_visit(linter, BasicChecker.visit_discard, allow_attribute_comments)
+    augment_visit(linter, TypeChecker.visit_getattr, foreign_key_sets)
+    augment_visit(linter, TypeChecker.visit_getattr, foreign_key)
