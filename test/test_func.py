@@ -2,10 +2,8 @@
 from os.path import join, dirname, abspath
 import unittest
 from logilab.common import testlib
-from pylint.testutils import make_tests, LintTestUsingModule, LintTestUsingFile, cb_test_gen
+from pylint.testutils import make_tests, LintTestUsingModule, LintTestUsingFile, cb_test_gen, linter
 import sys
-
-import pylint_django
 
 
 INPUT_DIR = join(dirname(abspath(__file__)), 'input')
@@ -23,6 +21,7 @@ if __name__=='__main__':
     if len(sys.argv) > 1:
         FILTER_RGX = sys.argv[1]
         del sys.argv[1]
+    linter.load_plugin_modules(['pylint_django'])
     testlib.unittest_main(defaultTest='suite')
 
 
