@@ -12,6 +12,9 @@ CALLBACKS = [cb_test_gen(LintTestUsingModule), cb_test_gen(LintTestUsingFile)]
 FILTER_RGX = None
 
 
+linter.load_plugin_modules(['pylint_django'])
+
+
 def suite():
     return testlib.TestSuite([unittest.makeSuite(test, suiteClass=testlib.TestSuite)
                               for test in make_tests(INPUT_DIR, MESSAGES_DIR,
@@ -21,7 +24,6 @@ if __name__=='__main__':
     if len(sys.argv) > 1:
         FILTER_RGX = sys.argv[1]
         del sys.argv[1]
-    linter.load_plugin_modules(['pylint_django'])
     testlib.unittest_main(defaultTest='suite')
 
 

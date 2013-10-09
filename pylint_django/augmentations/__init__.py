@@ -4,8 +4,20 @@ from pylint_plugin_utils import augment_visit
 
 
 def foreign_key(chain, node):
-    if node.lineno == 190:
-        import pdb; pdb.set_trace()
+    """
+    Pylint will raise an error when accesing a member of a ForeignKey
+    attribute on a Django model. This augmentation supresses this error.
+    """
+    # TODO: if possible, infer the 'real' type of the foreign key attribute
+    # by using the 'to' value given to its constructor
+    if node.last_child():
+        try:
+            for infered in node.last_child().infered():
+                if infered.pytype() == 'django.db.models.fields.related.ForeignKey':
+                    return
+        except InferenceError:
+            pass
+
     chain()
 
 
