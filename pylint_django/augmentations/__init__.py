@@ -1,4 +1,5 @@
 from astroid import InferenceError
+from astroid.bases import YES
 from pylint.checkers.typecheck import TypeChecker
 from pylint_plugin_utils import augment_visit
 
@@ -44,6 +45,9 @@ def foreign_key_sets(chain, node):
                 pass
             else:
                 for cls in inferred:
+                    if cls.bases == YES:
+                        # ???
+                        continue
                     for base_cls in cls.bases:
                         if base_cls.attrname != 'Model':
                             continue
