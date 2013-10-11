@@ -1,8 +1,7 @@
 """
 Checks that Pylint does not complain about foreign key sets on models
 """
-#  pylint: disable=C0111,R0903,W0232
-__revision__ = ''
+#  pylint: disable=C0111,R0903,W0232,W5101
 
 from django.db import models
 

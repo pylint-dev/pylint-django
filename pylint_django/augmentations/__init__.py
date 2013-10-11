@@ -1,6 +1,6 @@
 from astroid import InferenceError
-from astroid.bases import YES
 from pylint.checkers.typecheck import TypeChecker
+from pylint_django.utils import node_is_subclass
 from pylint_plugin_utils import augment_visit
 
 
@@ -45,22 +45,12 @@ def foreign_key_sets(chain, node):
                 pass
             else:
                 for cls in inferred:
-                    if cls.bases == YES:
-                        # ???
-                        continue
-                    for base_cls in cls.bases:
-                        if base_cls.attrname != 'Model':
-                            continue
-                        try:
-                            for inf in base_cls.infered():
-                                if inf.qname() == 'django.db.models.base.Model':
-                                    # This means that we are looking at a subclass of models.Model
-                                    # and something is trying to access a <something>_set attribute.
-                                    # Since this could exist, we will return so as not to raise an
-                                    # error.
-                                    return
-                        except InferenceError:
-                            pass
+                    if node_is_subclass(cls, 'django.db.models.base.Model'):
+                        # This means that we are looking at a subclass of models.Model
+                        # and something is trying to access a <something>_set attribute.
+                        # Since this could exist, we will return so as not to raise an
+                        # error.
+                        return
     chain()
 
 

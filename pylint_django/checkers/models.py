@@ -1,0 +1,49 @@
+from astroid.nodes import Assign, Function
+from pylint.interfaces import IAstroidChecker
+from pylint.checkers.utils import check_messages
+from pylint.checkers import BaseChecker
+from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django.utils import node_is_subclass
+
+
+MESSAGES = {
+    'E%d01' % BASE_ID: ("__unicode__ on a model must be callable (%s)",
+                        'model-unicode-not-callable',
+                        "Django models require a callable __unicode__ method"),
+    'W%d01' % BASE_ID: ("No __unicode__ method on model (%s)",
+                        'model-missing-unicode',
+                        "Django models should implement a __unicode__ method for string representation")
+}
+
+
+class ModelChecker(BaseChecker):
+    __implements__ = IAstroidChecker
+
+    name = 'django-model-checker'
+    msgs = MESSAGES
+
+    @check_messages('model-missing-unicode')
+    def visit_class(self, node):
+        if not node_is_subclass(node, 'django.db.models.base.Model'):
+            # we only care about models
+            return
+
+        for child in node.get_children():
+            if isinstance(child, Assign):
+                grandchildren = list(child.get_children())
+                name = grandchildren[0].name
+                if name != '__unicode__':
+                    continue
+
+                assigned = grandchildren[1].infered()[0]
+                if assigned.callable():
+                    return
+
+                self.add_message('E%s01' % BASE_ID, args=node.name, node=node)
+                return
+
+            if isinstance(child, Function) and child.name == '__unicode__':
+                return
+
+        # if we get here, then we have no __unicode__ method
+        self.add_message('W%s01' % BASE_ID, args=node.name, node=node)

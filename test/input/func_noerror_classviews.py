@@ -3,7 +3,6 @@ Checks that Pylint does not complain about attributes and methods
 when using Class-based Views
 """
 #  pylint: disable=C0111,R0903,W0232
-__revision__ = ''
 
 from django.views.generic import TemplateView
 

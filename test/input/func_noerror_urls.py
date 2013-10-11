@@ -6,7 +6,6 @@ when creating a typical urls.py
 #  pylint: disable=C0103
 #    ^ eventually we should be able to override or update the
 #      CONST_NAME_RGX value
-__revision__ = ''
 
 from django.views.generic import TemplateView
 

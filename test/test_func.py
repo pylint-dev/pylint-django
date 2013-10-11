@@ -13,6 +13,7 @@ FILTER_RGX = None
 
 
 linter.load_plugin_modules(['pylint_django'])
+linter.global_set_option('required-attributes', ()) # remove required __revision__
 
 
 def suite():
