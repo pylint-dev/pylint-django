@@ -1,10 +1,14 @@
+from pylint.checkers.design_analysis import MisdesignChecker
+from pylint.checkers.classes import ClassChecker
+from pylint.checkers.newstyle import NewStyleConflictChecker
 from astroid import InferenceError
+from astroid.nodes import Class
 from pylint.checkers.typecheck import TypeChecker
 from pylint_django.utils import node_is_subclass
-from pylint_plugin_utils import augment_visit
+from pylint_plugin_utils import augment_visit, supress_message
 
 
-def foreign_key(chain, node):
+def foreign_key_attributes(chain, node):
     """
     Pylint will raise an error when accesing a member of a ForeignKey
     attribute on a Django model. This augmentation supresses this error.
@@ -54,6 +58,15 @@ def foreign_key_sets(chain, node):
     chain()
 
 
+def is_model_meta_subclass(node):
+    return node.name == 'Meta' and isinstance(node.parent, Class) \
+        and node_is_subclass(node.parent, 'django.db.models.base.Model')
+
+
 def apply_augmentations(linter):
     augment_visit(linter, TypeChecker.visit_getattr, foreign_key_sets)
-    augment_visit(linter, TypeChecker.visit_getattr, foreign_key)
+    augment_visit(linter, TypeChecker.visit_getattr, foreign_key_attributes)
+
+    supress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_meta_subclass)
+    supress_message(linter, ClassChecker.visit_class, 'W0232', is_model_meta_subclass)
+    supress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_meta_subclass)
