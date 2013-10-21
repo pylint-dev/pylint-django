@@ -25,7 +25,7 @@ class View(object):
     kwargs = None
 
     # as_view is marked as class-only
-    def as_view():
+    def as_view(*args, **kwargs):
         pass
 ''')
     module.locals['View'] = fake.locals['View']

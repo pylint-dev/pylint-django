@@ -10,5 +10,7 @@ class SomeModel(models.Model):
     something = models.CharField(max_length=255)
     # no __unicode__ method
 
+    something.something_else = 1
+
     def lala(self):
         pass

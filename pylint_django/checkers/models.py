@@ -1,4 +1,4 @@
-from astroid.nodes import Assign, Function
+from astroid.nodes import Assign, Function, AssName
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.utils import check_messages
 from pylint.checkers import BaseChecker
@@ -31,6 +31,10 @@ class ModelChecker(BaseChecker):
         for child in node.get_children():
             if isinstance(child, Assign):
                 grandchildren = list(child.get_children())
+  
+                if not isinstance(grandchildren[0], AssName):
+                    continue
+
                 name = grandchildren[0].name
                 if name != '__unicode__':
                     continue
