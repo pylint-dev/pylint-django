@@ -1,0 +1,3 @@
+
+[run]
+source=pylint_django
