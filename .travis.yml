@@ -8,6 +8,6 @@ install:
   - "pip install --use-mirrors git+https://github.com/landscapeio/pylint-plugin-utils.git@develop"
   - "pip install --use-mirrors --editable ."
 script:
-  python test/test_func.py
+  coverage run test/test_func.py
 after_success:
   coveralls
