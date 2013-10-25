@@ -7,4 +7,34 @@ pylint-django
 [![Latest Version](https://pypip.in/v/pylint-django/badge.png)](https://crate.io/package/pylint-django)
 [![Downloads](https://pypip.in/d/pylint-django/badge.png)](https://crate.io/package/pylint-django)
 
-Pylint plugin for improving code analysis for when using Django
+# About
+
+`pylint-django` is a [Pylint](http://pylint.org) plugin for improving code analysis for when analysing code using Django. It is also used by the [Prospector](https://github.com/landscapeio/prospector) tool.
+
+## Usage
+
+#### Pylint
+
+Ensure `pylint-django` is installed and on your path (`pip install pylint-django`), and then run pylint:
+
+```
+pylint --load-plugins pylint_django [..other options..]
+```
+
+#### Prospector
+
+Ensure `pylint-django` is installed and on your path (`pip install pylint-django`), and then run prospector:
+
+```
+prospector --uses django [..other options..]
+```
+
+# Features
+
+* Prevents warnings about Django-generated attributes such as `Model.objects` or `Views.request`.
+* Prevents warnings when using `ForeignKey` attributes ("Instance of ForeignKey has no <x> member")
+* Validates `Model.__unicode__` methods
+
+# License
+
+`pylint-django` is available under the GPLv2 license.
