@@ -21,5 +21,5 @@ setup(
     packages=_packages,
     install_requires=['pylint', 'astroid', 'pylint-plugin-utils'],
     license='GPLv2',
-    keywords=('pylint', 'django', 'plugin')
+    keywords='pylint django plugin'
 )
