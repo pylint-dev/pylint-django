@@ -8,17 +8,21 @@ from pylint_django.utils import node_is_subclass
 from pylint_plugin_utils import augment_visit, supress_message
 
 
-def foreign_key_attributes(chain, node):
+def related_field_attributes(chain, node):
     """
     Pylint will raise an error when accesing a member of a ForeignKey
     attribute on a Django model. This augmentation supresses this error.
     """
     # TODO: if possible, infer the 'real' type of the foreign key attribute
     # by using the 'to' value given to its constructor
+    related_fields = (
+        'django.db.models.fields.related.ForeignKey',
+        'django.db.models.fields.related.OneToOneField'
+    )
     if node.last_child():
         try:
             for infered in node.last_child().infered():
-                if infered.pytype() == 'django.db.models.fields.related.ForeignKey':
+                if infered.pytype() in related_fields:
                     return
         except InferenceError:
             pass
@@ -59,8 +63,26 @@ def foreign_key_sets(chain, node):
 
 
 def is_model_meta_subclass(node):
-    return node.name == 'Meta' and isinstance(node.parent, Class) \
-        and node_is_subclass(node.parent, 'django.db.models.base.Model')
+    if node.name != 'Meta' or not isinstance(node.parent, Class):
+        return False
+
+    return node_is_subclass(node.parent, 'django.db.models.base.Model') \
+        or node_is_subclass(node.parent, 'django.forms.forms.Form')
+
+
+def is_model_field_display_method(node):
+    if not node.attrname.endswith('_display'):
+        return
+    if not node.attrname.startswith('get_'):
+        return
+
+    if node.last_child():
+        # TODO: could validate the names of the fields on the model rather than
+        # blindly accepting get_*_display
+        for cls in node.last_child().infered():
+            if node_is_subclass(cls, 'django.db.models.base.Model'):
+                return True
+    return False
 
 
 def is_formview(node):
@@ -69,7 +91,8 @@ def is_formview(node):
 
 def apply_augmentations(linter):
     augment_visit(linter, TypeChecker.visit_getattr, foreign_key_sets)
-    augment_visit(linter, TypeChecker.visit_getattr, foreign_key_attributes)
+    augment_visit(linter, TypeChecker.visit_getattr, related_field_attributes)
+    supress_message(linter, TypeChecker.visit_getattr, 'E1101', is_model_field_display_method)
 
     supress_message(linter, MisdesignChecker.visit_class, 'R0901', is_formview)
 

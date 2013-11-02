@@ -7,6 +7,9 @@ from django import forms
 
 
 class TestForm(forms.Form):
+    class Meta:
+        pass
+
     some_field = forms.CharField()
 
     def clean(self):

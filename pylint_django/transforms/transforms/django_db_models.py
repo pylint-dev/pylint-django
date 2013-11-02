@@ -1,7 +1,10 @@
 
 class Model:
-    objects = None
-    id = None
-    DoesNotExist = None
-    pk = None
     _meta = None
+    objects = None
+
+    id = None
+    pk = None
+
+    MultipleObjectsReturned = None
+    DoesNotExist = None

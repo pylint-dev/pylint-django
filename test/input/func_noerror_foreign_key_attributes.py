@@ -13,6 +13,9 @@ class SomeModel(models.Model):
 
 class OtherModel(models.Model):
     something = models.ForeignKey(SomeModel)
+    elsething = models.OneToOneField(SomeModel)
 
     def something_doer(self):
-        return '%s - %s' % (self.something.name, self.something.timestamp)
+        part_a = '%s - %s' % (self.something.name, self.something.timestamp)
+        part_b = self.elsething.name
+        return part_a, part_b
