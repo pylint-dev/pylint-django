@@ -63,9 +63,15 @@ def is_model_meta_subclass(node):
         and node_is_subclass(node.parent, 'django.db.models.base.Model')
 
 
+def is_formview(node):
+    return node_is_subclass(node, 'django.views.generic.edit.FormView')
+
+
 def apply_augmentations(linter):
     augment_visit(linter, TypeChecker.visit_getattr, foreign_key_sets)
     augment_visit(linter, TypeChecker.visit_getattr, foreign_key_attributes)
+
+    supress_message(linter, MisdesignChecker.visit_class, 'R0901', is_formview)
 
     supress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_meta_subclass)
     supress_message(linter, ClassChecker.visit_class, 'W0232', is_model_meta_subclass)
