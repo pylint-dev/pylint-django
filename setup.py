@@ -15,7 +15,7 @@ _short_description = "pylint-django is a Pylint plugin to aid Pylint in recognis
 _transform_dir = 'pylint_django/transforms/transforms'
 _package_data = {
     'pylint_django': [
-        os.path.join(_transform_dir, name) for name in os.listdir(_transform_dir)
+        os.path.join('transforms/transforms', name) for name in os.listdir(_transform_dir)
     ]
 }
 
