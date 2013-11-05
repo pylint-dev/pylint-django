@@ -15,3 +15,8 @@ class TestForm(forms.Form):
     def clean(self):
         print self.cleaned_data
         print self.fields
+
+
+class TestModelForm(forms.ModelForm):
+    class Meta:
+        pass

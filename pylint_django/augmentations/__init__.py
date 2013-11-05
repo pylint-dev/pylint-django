@@ -66,8 +66,8 @@ def is_model_meta_subclass(node):
     if node.name != 'Meta' or not isinstance(node.parent, Class):
         return False
 
-    return node_is_subclass(node.parent, 'django.db.models.base.Model') \
-        or node_is_subclass(node.parent, 'django.forms.forms.Form')
+    parents = ('django.db.models.base.Model', 'django.forms.forms.Form', 'django.forms.models.ModelForm')
+    return any([node_is_subclass(node.parent, parent) for parent in parents])
 
 
 def is_model_field_display_method(node):
@@ -85,6 +85,10 @@ def is_model_field_display_method(node):
     return False
 
 
+def is_model_form(node):
+    return node_is_subclass(node, 'django.forms.models.ModelForm')
+
+
 def is_formview(node):
     return node_is_subclass(node, 'django.views.generic.edit.FormView')
 
@@ -94,7 +98,11 @@ def apply_augmentations(linter):
     augment_visit(linter, TypeChecker.visit_getattr, related_field_attributes)
     supress_message(linter, TypeChecker.visit_getattr, 'E1101', is_model_field_display_method)
 
+    # formviews have too many ancestors, there's nothing the user of the library can do about that
     supress_message(linter, MisdesignChecker.visit_class, 'R0901', is_formview)
+
+    # model forms have no __init__ method anywhere in their bases
+    supress_message(linter, ClassChecker.visit_class, 'W0232', is_model_form)
 
     supress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_meta_subclass)
     supress_message(linter, ClassChecker.visit_class, 'W0232', is_model_meta_subclass)
