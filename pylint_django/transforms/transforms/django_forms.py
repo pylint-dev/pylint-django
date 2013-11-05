@@ -1,4 +1,5 @@
+from django.forms import BaseForm
 
-class Form(object):
-    cleaned_data = None
-    fields = None
+
+class Form(BaseForm):
+    pass
