@@ -27,3 +27,8 @@ class SomeModel(models.Model):
 
     def __unicode__(self):
         print 'some model %s' % self.id
+
+
+class SubclassModel(SomeModel):
+    class Meta:
+        pass

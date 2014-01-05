@@ -21,3 +21,14 @@ class TestForm(forms.Form):
 class TestModelForm(forms.ModelForm):
     class Meta:
         pass
+
+
+class TestFormSubclass(forms.Form):
+    class Meta:
+        pass
+
+
+class TestModelFormSubclass(forms.ModelForm):
+    class Meta:
+        pass
+
