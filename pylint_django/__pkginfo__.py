@@ -1,6 +1,6 @@
 
 BASE_ID = 51
-VERSION = (0, 2)
+VERSION = (0, 3)
 
 
 def get_version():
