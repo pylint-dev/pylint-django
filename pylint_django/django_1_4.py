@@ -1,2 +1,2 @@
 
-from common import *
+from pylint_django.common import *

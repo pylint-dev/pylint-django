@@ -7,10 +7,10 @@ from astroid import nodes
 
 def _add_transform(package_name, *class_names):
     transforms_dir = os.path.join(os.path.dirname(__file__), 'transforms')
-    fake_module_path = os.path.join(transforms_dir, '%s.py' % re.sub('\.', '_', package_name))
+    fake_module_path = os.path.join(transforms_dir, '%s.py' % re.sub(r'\.', '_', package_name))
 
-    with open(fake_module_path) as f:
-        fake_module = f.read()
+    with open(fake_module_path) as modulefile:
+        fake_module = modulefile.read()
 
     fake = AstroidBuilder(MANAGER).string_build(fake_module)
 
