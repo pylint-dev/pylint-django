@@ -28,7 +28,7 @@ setup(
     version=_version,
     packages=_packages,
     package_data=_package_data,
-    install_requires=['pylint>=1.0', 'astroid>=1.0', 'pylint-plugin-utils>=0.1'],
+    install_requires=['pylint>=1.0', 'astroid>=1.0', 'pylint-plugin-utils>=0.1.1'],
     license='GPLv2',
     keywords='pylint django plugin'
 )
