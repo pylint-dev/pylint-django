@@ -1,3 +1,4 @@
+import sys
 from astroid.nodes import Assign, Function, AssName
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.utils import check_messages
@@ -12,7 +13,10 @@ MESSAGES = {
                         "Django models require a callable __unicode__ method"),
     'W%d01' % BASE_ID: ("No __unicode__ method on model (%s)",
                         'model-missing-unicode',
-                        "Django models should implement a __unicode__ method for string representation")
+                        "Django models should implement a __unicode__ method for string representation"),
+    'W%d02' % BASE_ID: ("Found __unicode__ method on model (%s). Python3 uses __str__.",
+                        'model-has-unicode',
+                        "Django models should not implement a __unicode__ method for string representation whan using Python3")
 }
 
 
@@ -47,7 +51,12 @@ class ModelChecker(BaseChecker):
                 return
 
             if isinstance(child, Function) and child.name == '__unicode__':
+                if sys.version_info.major >= 3:
+                    self.add_message('W%s02' % BASE_ID, args=node.name, node=node)
                 return
 
         # if we get here, then we have no __unicode__ method
+        if sys.version_info.major >= 3:
+            return
+
         self.add_message('W%s01' % BASE_ID, args=node.name, node=node)
