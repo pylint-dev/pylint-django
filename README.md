@@ -23,10 +23,10 @@ pylint --load-plugins pylint_django [..other options..]
 
 #### Prospector
 
-Ensure `pylint-django` is installed and on your path (`pip install pylint-django`), and then run prospector:
+If you have `prospector` installed, then `pylint-django` will already be installed as a dependency, and will be activated automatically if Django is detected.
 
 ```
-prospector --uses django [..other options..]
+prospector [..other options..]
 ```
 
 # Features
