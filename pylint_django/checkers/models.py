@@ -51,7 +51,7 @@ class ModelChecker(BaseChecker):
                 return
 
             if isinstance(child, Function) and child.name == '__unicode__':
-                if sys.version_info.major >= 3:
+                if sys.version_info[0] >= 3:
                     self.add_message('W%s02' % BASE_ID, args=node.name, node=node)
                 return
 
