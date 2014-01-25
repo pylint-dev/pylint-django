@@ -56,7 +56,7 @@ class ModelChecker(BaseChecker):
                 return
 
         # if we get here, then we have no __unicode__ method
-        if sys.version_info.major >= 3:
+        if sys.version_info[0] >= 3:
             return
 
         self.add_message('W%s01' % BASE_ID, args=node.name, node=node)
