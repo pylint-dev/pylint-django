@@ -23,7 +23,7 @@ class SomeModel(models.Model):
         except self.MultipleObjectsReturned:
             print('lala')
 
-        print (self.get_some_field_display())
+        print(self.get_some_field_display())
 
 
 class SubclassModel(SomeModel):
