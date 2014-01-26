@@ -1,5 +1,15 @@
 # Changelog
 
+## Version 0.3
+
+#### New Features
+
+* Python3 is now supported
+
+#### Bugfixes
+
+* `__unicode__` warning on models does not appear in Python3
+
 
 ## Version 0.2
 
