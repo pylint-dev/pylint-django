@@ -1,0 +1,1 @@
+W:  9:SomeModel: Found __unicode__ method on model (SomeModel). Python3 uses __str__.
