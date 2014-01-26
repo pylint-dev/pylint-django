@@ -13,9 +13,9 @@ class TestForm(forms.Form):
     some_field = forms.CharField()
 
     def clean(self):
-        print (self.cleaned_data)
-        print (self.fields)
-        print (self.error_class)
+        print(self.cleaned_data)
+        print(self.fields)
+        print(self.error_class)
 
 
 class TestModelForm(forms.ModelForm):
