@@ -7,6 +7,7 @@ class Form(BaseForm):
     instance = None
     data = None
     _errors = None
+    base_fields = None
 
 
 class ModelForm(BaseModelForm):
@@ -16,3 +17,4 @@ class ModelForm(BaseModelForm):
     instance = None
     data = None
     _errors = None
+    base_fields = None
