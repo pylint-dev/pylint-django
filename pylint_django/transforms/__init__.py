@@ -25,5 +25,8 @@ def _add_transform(package_name, *class_names):
 
 _add_transform('django.views.generic.base', 'View')
 _add_transform('django.forms', 'Form')
+_add_transform('django.forms', 'ModelForm')
 _add_transform('django.db.models', 'Model')
+_add_transform('django.db.models.fields.files', 'FileField')
+_add_transform('django.db.models.fields.files', 'ImageField')
 _add_transform('django.db.models.fields.related', 'ManyToManyField')
