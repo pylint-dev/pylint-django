@@ -16,5 +16,7 @@ class BoringView(TemplateView):
 
 
 urlpatterns = patterns('',
-    url(r'^something', BoringView.as_view(), name='something'),
-)
+                       url(r'^something',
+                           BoringView.as_view(),
+                           name='something'),
+                      )
