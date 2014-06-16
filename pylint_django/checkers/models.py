@@ -16,7 +16,8 @@ MESSAGES = {
                         "Django models should implement a __unicode__ method for string representation"),
     'W%d02' % BASE_ID: ("Found __unicode__ method on model (%s). Python3 uses __str__.",
                         'model-has-unicode',
-                        "Django models should not implement a __unicode__ method for string representation whan using Python3")
+                        "Django models should not implement a __unicode__ "
+                        "method for string representation whan using Python3")
 }
 
 

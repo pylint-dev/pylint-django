@@ -5,7 +5,7 @@ from astroid import InferenceError
 from astroid.nodes import Class
 from pylint.checkers.typecheck import TypeChecker
 from pylint_django.utils import node_is_subclass
-from pylint_plugin_utils import augment_visit, supress_message
+from pylint_plugin_utils import augment_visit, suppress_message
 
 
 def related_field_attributes(chain, node):
@@ -18,6 +18,7 @@ def related_field_attributes(chain, node):
     related_fields = (
         'django.db.models.fields.related.ForeignKey',
         'django.db.models.fields.related.OneToOneField'
+        'django.db.models.fields.related.ManyToManyField'
     )
     if node.last_child():
         try:
@@ -66,7 +67,9 @@ def is_model_meta_subclass(node):
     if node.name != 'Meta' or not isinstance(node.parent, Class):
         return False
 
-    parents = ('django.db.models.base.Model', 'django.forms.forms.Form', 'django.forms.models.ModelForm')
+    parents = ('django.db.models.base.Model',
+               'django.forms.forms.Form',
+               'django.forms.models.ModelForm')
     return any([node_is_subclass(node.parent, parent) for parent in parents])
 
 
@@ -92,15 +95,19 @@ def is_class(class_name):
 def apply_augmentations(linter):
     augment_visit(linter, TypeChecker.visit_getattr, foreign_key_sets)
     augment_visit(linter, TypeChecker.visit_getattr, related_field_attributes)
-    supress_message(linter, TypeChecker.visit_getattr, 'E1101', is_model_field_display_method)
+    suppress_message(linter, TypeChecker.visit_getattr, 'E1101', is_model_field_display_method)
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
-    supress_message(linter, MisdesignChecker.visit_class, 'R0901', is_class('django.views.generic.edit.FormView'))
+    suppress_message(linter, MisdesignChecker.visit_class, 'R0901', is_class('django.views.generic.edit.FormView'))
 
     # model forms have no __init__ method anywhere in their bases
-    supress_message(linter, MisdesignChecker.leave_class, 'R0924', is_class('django.forms.forms.Form'))
-    supress_message(linter, ClassChecker.visit_class, 'W0232', is_class('django.forms.models.ModelForm'))
+    suppress_message(linter, ClassChecker.visit_class, 'W0232', is_class('django.forms.models.ModelForm'))
 
-    supress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_meta_subclass)
-    supress_message(linter, ClassChecker.visit_class, 'W0232', is_model_meta_subclass)
-    supress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_meta_subclass)
+    # forms implement __getitem__ but not __len__, thus raising a "Badly implemented container" warning which
+    # we will suppress.
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0924', is_class('django.forms.forms.Form'))
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0924', is_class('django.forms.models.ModelForm'))
+
+    suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_meta_subclass)
+    suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_meta_subclass)
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_meta_subclass)
