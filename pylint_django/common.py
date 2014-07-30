@@ -20,7 +20,7 @@ def register(linter):
     name_checker.config.const_rgx = re.compile(const_rgx)
 
     # we don't care about South migrations
-    linter.config.black_list += ('migrations',)
+    linter.config.black_list += ('migrations', 'south_migrations')
 
     # add all of the checkers
     register_checkers(linter)
