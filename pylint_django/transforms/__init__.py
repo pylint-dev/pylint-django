@@ -23,6 +23,7 @@ def _add_transform(package_name, *class_names):
     MANAGER.register_transform(nodes.Module, set_fake_locals)
 
 
+_add_transform('django.core.handlers.wsgi', 'WSGIRequest')
 _add_transform('django.views.generic.base', 'View')
 _add_transform('django.forms', 'Form')
 _add_transform('django.forms', 'ModelForm')
