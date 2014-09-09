@@ -1,9 +1,11 @@
+"""Utils."""
 from astroid.exceptions import InferenceError
 from astroid.bases import YES, Instance
 from astroid.nodes import Class
 
 
 def node_is_subclass(cls, subclass_name):
+    """Checks if cls node has parent with subclass_name."""
     if not isinstance(cls, (Class, Instance)):
         return False
 

@@ -1,4 +1,3 @@
-
 class View(object):
     request = None
     args = None

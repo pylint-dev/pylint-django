@@ -1,3 +1,4 @@
+"""Models."""
 import sys
 from astroid.nodes import Assign, Function, AssName
 from pylint.interfaces import IAstroidChecker
@@ -22,6 +23,7 @@ MESSAGES = {
 
 
 class ModelChecker(BaseChecker):
+    """Django model chacker."""
     __implements__ = IAstroidChecker
 
     name = 'django-model-checker'
@@ -29,6 +31,7 @@ class ModelChecker(BaseChecker):
 
     @check_messages('model-missing-unicode')
     def visit_class(self, node):
+        """Class visitor."""
         if not node_is_subclass(node, 'django.db.models.base.Model'):
             # we only care about models
             return
@@ -36,7 +39,7 @@ class ModelChecker(BaseChecker):
         for child in node.get_children():
             if isinstance(child, Assign):
                 grandchildren = list(child.get_children())
-  
+
                 if not isinstance(grandchildren[0], AssName):
                     continue
 

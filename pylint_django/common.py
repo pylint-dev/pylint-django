@@ -1,4 +1,4 @@
-
+"""Common Django module."""
 from pylint.checkers.base import NameChecker
 from pylint_django.augmentations import apply_augmentations
 from pylint_plugin_utils import get_checker
@@ -12,8 +12,10 @@ from pylint_django import transforms
 
 
 def register(linter):
-    # this method is meant for registering additional checkers, however
-    # we will also use it to amend existing checker config
+    """Registering additional checkers.
+
+    However, we will also use it to amend existing checker config.
+    """
     name_checker = get_checker(linter, NameChecker)
     name_checker.config.good_names += ('qs',)
     # Default pylint.checkers.base.CONST_NAME_RGX = re.compile('(([A-Z_][A-Z0-9_]*)|(__.*__))$').
