@@ -2,8 +2,10 @@ from pylint.checkers.base import DocStringChecker
 from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
+from pylint.checkers.variables import VariablesChecker
 from astroid import InferenceError
 from astroid.nodes import Class
+from astroid.scoped_nodes import Class as ScopedClass
 from pylint.checkers.typecheck import TypeChecker
 from pylint_django.utils import node_is_subclass
 from pylint_plugin_utils import augment_visit, suppress_message
@@ -98,6 +100,31 @@ def is_model_mpttmeta_subclass(node):
     return any([node_is_subclass(node.parent, parent) for parent in parents])
 
 
+def is_model_view_subclass_method_shouldnt_be_function(node):
+    """Checks that node is get or post method of the View class."""
+    if node.name not in ('get', 'post'):
+        return False
+
+    parent = node.parent
+    while parent and not isinstance(parent, ScopedClass):
+        parent = parent.parent
+
+    #subclass = 'django.views.generic.base.View'
+    subclass = '.View'
+    return parent.name.endswith('View') and node_is_subclass(parent, subclass)
+
+
+def is_model_view_subclass_unused_argument(node):
+    """Checks that node is get or post method of the View class and it has valid arguments.
+
+    TODO: Bad checkings, need to be more smart.
+    """
+    if not is_model_view_subclass_method_shouldnt_be_function(node):
+        return False
+
+    return 'request' in node.argnames()
+
+
 def is_model_field_display_method(node):
     if not node.attrname.endswith('_display'):
         return
@@ -144,6 +171,10 @@ def apply_augmentations(linter):
     suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_media_subclass)
     suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_media_subclass)
     suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_media_subclass)
+
+    # View
+    suppress_message(linter, ClassChecker.leave_function, 'R0201', is_model_view_subclass_method_shouldnt_be_function)  # Method could be a function (get, post)
+    suppress_message(linter, VariablesChecker.leave_function, 'W0613', is_model_view_subclass_unused_argument)  # Unused argument 'request' (get, post)
 
     # django-mptt
     suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_mpttmeta_subclass)
