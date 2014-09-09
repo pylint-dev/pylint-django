@@ -171,6 +171,21 @@ def is_model_media_valid_attributes(node):
     return True
 
 
+def is_templatetags_module_valid_constant(node):
+    """Suppress warnings for valid constants in templatetags module."""
+    if node.name not in ('register', ):
+        return False
+
+    parent = node.parent
+    while not isinstance(parent, Module):
+        parent = parent.parent
+
+    if "templatetags." not in parent.name:
+        return False
+
+    return True
+
+
 def is_urls_module_valid_constant(node):
     """Suppress warnings for valid constants in urls module."""
     if node.name not in ('urlpatterns', ):
@@ -214,6 +229,7 @@ def apply_augmentations(linter):
 
     # TODO: Temporary until commonconst_rgx will works.
     suppress_message(linter, NameChecker.visit_assname, 'C0103', is_urls_module_valid_constant)  # Invalid constant name "urlpatterns"
+    suppress_message(linter, NameChecker.visit_assname, 'C0103', is_templatetags_module_valid_constant)  # Invalid constant name "register"
 
     # Media
     suppress_message(linter, NameChecker.visit_assname, 'C0103', is_model_media_valid_attributes)
