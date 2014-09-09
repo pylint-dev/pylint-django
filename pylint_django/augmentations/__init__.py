@@ -87,6 +87,17 @@ def is_model_meta_subclass(node):
     return any([node_is_subclass(node.parent, parent) for parent in parents])
 
 
+def is_model_mpttmeta_subclass(node):
+    """Checks that node is derivative of MPTTMeta class."""
+    if node.name != 'MPTTMeta' or not isinstance(node.parent, Class):
+        return False
+
+    parents = ('django.db.models.base.Model',
+               'django.forms.forms.Form',
+               'django.forms.models.ModelForm')
+    return any([node_is_subclass(node.parent, parent) for parent in parents])
+
+
 def is_model_field_display_method(node):
     if not node.attrname.endswith('_display'):
         return
@@ -134,3 +145,8 @@ def apply_augmentations(linter):
     suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_media_subclass)
     suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_media_subclass)
 
+    # django-mptt
+    suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_mpttmeta_subclass)
+    suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_mpttmeta_subclass)
+    suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_mpttmeta_subclass)
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_mpttmeta_subclass)
