@@ -1,3 +1,4 @@
+from pylint.checkers.base import DocStringChecker
 from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
@@ -108,6 +109,9 @@ def apply_augmentations(linter):
     suppress_message(linter, MisdesignChecker.leave_class, 'R0924', is_class('django.forms.forms.Form'))
     suppress_message(linter, MisdesignChecker.leave_class, 'R0924', is_class('django.forms.models.ModelForm'))
 
+    # Meta
+    suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_meta_subclass)
     suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_meta_subclass)
     suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_meta_subclass)
     suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_meta_subclass)
+
