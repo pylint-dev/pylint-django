@@ -64,6 +64,19 @@ def foreign_key_sets(chain, node):
     chain()
 
 
+def is_model_media_subclass(node):
+    """Checks that node is derivative of Media class."""
+    if node.name != 'Media' or not isinstance(node.parent, Class):
+        return False
+
+    parents = ('django.contrib.admin.options.ModelAdmin',
+               'django.forms.widgets.Media',
+               'django.db.models.base.Model',
+               'django.forms.forms.Form',
+               'django.forms.models.ModelForm')
+    return any([node_is_subclass(node.parent, parent) for parent in parents])
+
+
 def is_model_meta_subclass(node):
     if node.name != 'Meta' or not isinstance(node.parent, Class):
         return False
@@ -114,4 +127,10 @@ def apply_augmentations(linter):
     suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_meta_subclass)
     suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_meta_subclass)
     suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_meta_subclass)
+
+    # Media
+    suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_media_subclass)
+    suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_media_subclass)
+    suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_media_subclass)
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_media_subclass)
 
