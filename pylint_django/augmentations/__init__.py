@@ -5,7 +5,7 @@ from pylint.checkers.newstyle import NewStyleConflictChecker
 from pylint.checkers.variables import VariablesChecker
 from astroid import InferenceError
 from astroid.nodes import Class
-from astroid.scoped_nodes import Class as ScopedClass
+from astroid.scoped_nodes import Class as ScopedClass, Module
 from pylint.checkers.typecheck import TypeChecker
 from pylint_django.utils import node_is_subclass
 from pylint_plugin_utils import augment_visit, suppress_message
@@ -171,6 +171,21 @@ def is_model_media_valid_attributes(node):
     return True
 
 
+def is_urls_module_valid_constant(node):
+    """Suppress warnings for valid constants in urls module."""
+    if node.name not in ('urlpatterns', ):
+        return False
+
+    parent = node.parent
+    while not isinstance(parent, Module):
+        parent = parent.parent
+
+    if not parent.name.endswith('urls'):
+        return False
+
+    return True
+
+
 def is_class(class_name):
     return lambda node: node_is_subclass(node, class_name)
 
@@ -196,6 +211,9 @@ def apply_augmentations(linter):
     suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_meta_subclass)
     suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_meta_subclass)
     suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_meta_subclass)
+
+    # TODO: Temporary until commonconst_rgx will works.
+    suppress_message(linter, NameChecker.visit_assname, 'C0103', is_urls_module_valid_constant)  # Invalid constant name "urlpatterns"
 
     # Media
     suppress_message(linter, NameChecker.visit_assname, 'C0103', is_model_media_valid_attributes)
