@@ -18,7 +18,6 @@ def register(linter):
     name_checker.config.good_names += ('qs',)
     # Default pylint.checkers.base.CONST_NAME_RGX = re.compile('(([A-Z_][A-Z0-9_]*)|(__.*__))$').
     const_rgx = '%s|(urls|urlpatterns|register)%s' % (name_checker.config.const_rgx.pattern[:-2], name_checker.config.const_rgx.pattern[-2:])
-
     name_checker.config.const_rgx = re.compile(const_rgx)
 
     # we don't care about South migrations
