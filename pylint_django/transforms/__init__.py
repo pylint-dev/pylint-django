@@ -26,9 +26,12 @@ def _add_transform(package_name, *class_names):
     MANAGER.register_transform(nodes.Module, set_fake_locals)
 
 
+_add_transform('django.core.handlers.wsgi', 'WSGIRequest')
 _add_transform('django.views.generic.base', 'View')
 _add_transform('django.forms', 'Form')
 _add_transform('django.forms', 'ModelForm')
 _add_transform('django.db.models', 'Model')
 _add_transform('django.db.models.fields.files', 'FileField', 'ImageField')
+_add_transform('django.db.models.fields', 'CharField', 'DateField')
 _add_transform('django.db.models.fields.related', 'ManyToManyField')
+_add_transform('django.utils.translation', 'ugettext_lazy')
