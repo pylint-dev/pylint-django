@@ -1,4 +1,3 @@
-
 class FileField(object):
     url = None
     name = None

@@ -1,3 +1,4 @@
+"""Transforms."""
 import os
 import re
 from astroid import MANAGER
@@ -6,6 +7,7 @@ from astroid import nodes
 
 
 def _add_transform(package_name, *class_names):
+    """Transform package's classes."""
     transforms_dir = os.path.join(os.path.dirname(__file__), 'transforms')
     fake_module_path = os.path.join(transforms_dir, '%s.py' % re.sub(r'\.', '_', package_name))
 
@@ -15,6 +17,7 @@ def _add_transform(package_name, *class_names):
     fake = AstroidBuilder(MANAGER).string_build(fake_module)
 
     def set_fake_locals(module):
+        """Set fake locals for package."""
         if module.name != package_name:
             return
         for class_name in class_names:
@@ -27,6 +30,5 @@ _add_transform('django.views.generic.base', 'View')
 _add_transform('django.forms', 'Form')
 _add_transform('django.forms', 'ModelForm')
 _add_transform('django.db.models', 'Model')
-_add_transform('django.db.models.fields.files', 'FileField')
-_add_transform('django.db.models.fields.files', 'ImageField')
+_add_transform('django.db.models.fields.files', 'FileField', 'ImageField')
 _add_transform('django.db.models.fields.related', 'ManyToManyField')

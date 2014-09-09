@@ -1,3 +1,4 @@
+"""Augmentations."""
 from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
@@ -64,6 +65,7 @@ def foreign_key_sets(chain, node):
 
 
 def is_model_meta_subclass(node):
+    """Checks that node is derivative of Meta class."""
     if node.name != 'Meta' or not isinstance(node.parent, Class):
         return False
 
@@ -74,6 +76,7 @@ def is_model_meta_subclass(node):
 
 
 def is_model_field_display_method(node):
+    """Accept model's fields with get_*_display names."""
     if not node.attrname.endswith('_display'):
         return
     if not node.attrname.startswith('get_'):
@@ -89,10 +92,12 @@ def is_model_field_display_method(node):
 
 
 def is_class(class_name):
+    """Shortcut for node_is_subclass."""
     return lambda node: node_is_subclass(node, class_name)
 
 
 def apply_augmentations(linter):
+    """Apply augmentation and suppression rules."""
     augment_visit(linter, TypeChecker.visit_getattr, foreign_key_sets)
     augment_visit(linter, TypeChecker.visit_getattr, related_field_attributes)
     suppress_message(linter, TypeChecker.visit_getattr, 'E1101', is_model_field_display_method)
