@@ -100,6 +100,14 @@ def is_model_mpttmeta_subclass(node):
     return any([node_is_subclass(node.parent, parent) for parent in parents])
 
 
+def is_model_test_case_subclass(node):
+    """Checks that node is derivative of TestCase class."""
+    if not node.name.endswith('Test') and not isinstance(node.parent, Class):
+        return False
+
+    return node_is_subclass(node, 'django.test.testcases.TestCase')
+
+
 def is_model_view_subclass_method_shouldnt_be_function(node):
     """Checks that node is get or post method of the View class."""
     if node.name not in ('get', 'post'):
@@ -171,6 +179,9 @@ def apply_augmentations(linter):
     suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_media_subclass)
     suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_media_subclass)
     suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_media_subclass)
+
+    # Tests
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0904', is_model_test_case_subclass)
 
     # View
     suppress_message(linter, ClassChecker.leave_function, 'R0201', is_model_view_subclass_method_shouldnt_be_function)  # Method could be a function (get, post)
