@@ -1,4 +1,4 @@
-from pylint.checkers.base import DocStringChecker
+from pylint.checkers.base import DocStringChecker, NameChecker
 from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
@@ -156,6 +156,21 @@ def is_model_field_display_method(node):
     return False
 
 
+def is_model_media_valid_attributes(node):
+    """Suppress warnings for valid attributes of Media class."""
+    if node.name not in ('js', ):
+        return False
+
+    parent = node.parent
+    while parent and not isinstance(parent, ScopedClass):
+        parent = parent.parent
+
+    if parent == None or parent.name != "Media":
+        return False
+
+    return True
+
+
 def is_class(class_name):
     return lambda node: node_is_subclass(node, class_name)
 
@@ -183,6 +198,7 @@ def apply_augmentations(linter):
     suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_meta_subclass)
 
     # Media
+    suppress_message(linter, NameChecker.visit_assname, 'C0103', is_model_media_valid_attributes)
     suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_media_subclass)
     suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_media_subclass)
     suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_media_subclass)
