@@ -18,12 +18,16 @@ MESSAGES = {
     'W%d02' % BASE_ID: ("Found __unicode__ method on model (%s). Python3 uses __str__.",
                         'model-has-unicode',
                         "Django models should not implement a __unicode__ "
-                        "method for string representation whan using Python3")
+                        "method for string representation whan using Python3"),
+    'W%d03' % BASE_ID: ("Model does not explicitly define __unicode__ (%s)",
+                        'model-no-explicit-unicode',
+                        "Django models should implement a __unicode__ method for string representation. "
+                        "A parent class of this model does, but ideally all models should be explicit.")
 }
 
 
 class ModelChecker(BaseChecker):
-    """Django model chacker."""
+    """Django model checker."""
     __implements__ = IAstroidChecker
 
     name = 'django-model-checker'
@@ -59,8 +63,15 @@ class ModelChecker(BaseChecker):
                     self.add_message('W%s02' % BASE_ID, args=node.name, node=node)
                 return
 
-        # if we get here, then we have no __unicode__ method
+        # if we get here, then we have no __unicode__ method directly on the class itself
         if sys.version_info[0] >= 3:
             return
+
+        for method in node.methods():
+            if method.name == '__unicode__':
+                # this happens if a parent declares the unicode method but
+                # this node does not
+                self.add_message('W%s03' % BASE_ID, args=node.name, node=node)
+                return
 
         self.add_message('W%s01' % BASE_ID, args=node.name, node=node)

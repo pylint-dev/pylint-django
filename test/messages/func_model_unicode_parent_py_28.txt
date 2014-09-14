@@ -1,0 +1,1 @@
+W: 14:MySubclassModel: Model does not explicitly define __unicode__ (MySubclassModel)
