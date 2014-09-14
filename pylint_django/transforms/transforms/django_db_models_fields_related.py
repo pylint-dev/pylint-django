@@ -1,3 +1,6 @@
 
-class ManyToManyField(object):
-    all = filter = get = lambda: None
+from django.db.models.query import QuerySet
+
+
+class ManyToManyField(QuerySet):
+    pass
