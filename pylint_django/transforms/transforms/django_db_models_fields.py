@@ -21,11 +21,11 @@ class CharField(str, django_fields.CharField):
     pass
 
 
-class SlugField(CharField):
+class SlugField(CharField, django_fields.SlugField):
     pass
 
 
-class URLField(CharField):
+class URLField(CharField, django_fields.URLField):
     pass
 
 
@@ -33,15 +33,15 @@ class TextField(str, django_fields.TextField):
     pass
 
 
-class EmailField(CharField):
+class EmailField(CharField, django_fields.EmailField):
     pass
 
 
-class CommaSeparatedIntegerField(CharField):
+class CommaSeparatedIntegerField(CharField, django_fields.CommaSeparatedIntegerField):
     pass
 
 
-class FilePathField(CharField):
+class FilePathField(CharField, django_fields.FilePathField):
     pass
 
 
@@ -52,19 +52,19 @@ class IntegerField(int, django_fields.IntegerField):
     pass
 
 
-class BigIntegerField(IntegerField):
+class BigIntegerField(IntegerField, django_fields.BigIntegerField):
     pass
 
 
-class SmallIntegerField(IntegerField):
+class SmallIntegerField(IntegerField, django_fields.SmallIntegerField):
     pass
 
 
-class PositiveIntegerField(IntegerField):
+class PositiveIntegerField(IntegerField, django_fields.PositiveIntegerField):
     pass
 
 
-class PositiveSmallIntegerField(IntegerField):
+class PositiveSmallIntegerField(IntegerField, django_fields.PositiveSmallIntegerField):
     pass
 
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 0.5
+
+* [Issue #7] Improved handling of Django model fields
+* [Issue #11] Improved handling of Django form fields
+
+
 ## Version 0.3
 
 #### New Features
