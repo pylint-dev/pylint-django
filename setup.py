@@ -30,6 +30,12 @@ _classifiers = (
     'Programming Language :: Python :: 3.4',
 )
 
+_install_requires=[
+    'pylint>=1.0', 
+    'astroid>=1.0', 
+    'logilab-common>=0.60.0', 
+    'pylint-plugin-utils>=0.2.1'
+]
 
 setup(
     name='pylint-django',
@@ -40,7 +46,7 @@ setup(
     version=_version,
     packages=_packages,
     package_data=_package_data,
-    install_requires=['pylint>=1.0', 'astroid>=1.0', 'logilab-common>=0.60.0', 'pylint-plugin-utils>=0.2'],
+    install_requires=_install_requires,
     license='GPLv2',
     classifiers=_classifiers,
     keywords='pylint django plugin'
