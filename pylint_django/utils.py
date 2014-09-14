@@ -2,6 +2,10 @@
 from astroid.exceptions import InferenceError
 from astroid.bases import YES, Instance
 from astroid.nodes import Class
+import sys
+
+
+PY3 = sys.version_info >= (3, 0)
 
 
 def node_is_subclass(cls, subclass_name):

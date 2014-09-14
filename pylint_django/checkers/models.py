@@ -5,7 +5,7 @@ from pylint.interfaces import IAstroidChecker
 from pylint.checkers.utils import check_messages
 from pylint.checkers import BaseChecker
 from pylint_django.__pkginfo__ import BASE_ID
-from pylint_django.utils import node_is_subclass
+from pylint_django.utils import node_is_subclass, PY3
 
 
 MESSAGES = {
@@ -59,12 +59,12 @@ class ModelChecker(BaseChecker):
                 return
 
             if isinstance(child, Function) and child.name == '__unicode__':
-                if sys.version_info[0] >= 3:
+                if PY3:
                     self.add_message('W%s02' % BASE_ID, args=node.name, node=node)
                 return
 
         # if we get here, then we have no __unicode__ method directly on the class itself
-        if sys.version_info[0] >= 3:
+        if PY3:
             return
 
         # a different warning is emitted if a parent declares __unicode__

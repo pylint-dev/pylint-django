@@ -5,6 +5,8 @@ from decimal import Decimal
 
 # --------
 # booleans
+from utils import PY3
+
 
 class BooleanField(bool, django_fields.BooleanField):
     pass
@@ -82,18 +84,30 @@ class DecimalField(Decimal, django_fields.DecimalField):
 
 
 # --------
-# time
+# date/time
+
+# In Python3, the date and datetime objects are immutable, so we need to do
+# the same __new__ / __init__ fiddle as for Decimal
 
 class DateField(datetime.date, django_fields.DateField):
-    pass
+    if PY3:
+        def __new__(cls, verbose_name=None, name=None, auto_now=False,
+                    auto_now_add=False, **kwargs):
+            pass
 
 
 class DateTimeField(datetime.datetime, django_fields.DateTimeField):
-    pass
+    if PY3:
+        def __new__(cls, verbose_name=None, name=None, auto_now=False,
+                    auto_now_add=False, **kwargs):
+            pass
 
 
 class TimeField(datetime.time, django_fields.TimeField):
-    pass
+    if PY3:
+        def __new__(cls, verbose_name=None, name=None, auto_now=False,
+                    auto_now_add=False, **kwargs):
+            pass
 
 
 # -------

@@ -5,6 +5,8 @@ from django.forms import fields as django_fields
 
 # --------
 # booleans
+from utils import PY3
+
 
 class BooleanField(bool, django_fields.BooleanField):
     pass
@@ -72,23 +74,34 @@ class FloatField(float, django_fields.FloatField):
 # -------
 # date/time
 
+# In Python3, the date and datetime objects are immutable, so we need to do
+# the same __new__ / __init__ fiddle as for Decimal
+
 class DateField(datetime.date, django_fields.DateField):
-    pass
+    if PY3:
+        def __new__(cls, input_formats=None, *args, **kwargs):
+            pass
 
 
 class DateTimeField(datetime.datetime, django_fields.DateTimeField):
-    pass
+    if PY3:
+        def __new__(cls, input_formats=None, *args, **kwargs):
+            pass
 
 
 class SplitDateTimeField(datetime.datetime, django_fields.SplitDateTimeField):
-    pass
+    if PY3:
+        def __new__(cls, input_date_formats=None, input_time_formats=None, *args, **kwargs):
+            pass
 
 
 class TimeField(datetime.time, django_fields.TimeField):
-    pass
+    if PY3:
+        def __new__(cls, input_formats=None, *args, **kwargs):
+            pass
 
 
-# --------
+    # --------
 # choice
 
 class ChoiceField(object, django_fields.ChoiceField):
