@@ -67,11 +67,19 @@ class ModelChecker(BaseChecker):
         if sys.version_info[0] >= 3:
             return
 
+        # a different warning is emitted if a parent declares __unicode__
         for method in node.methods():
             if method.name == '__unicode__':
                 # this happens if a parent declares the unicode method but
                 # this node does not
                 self.add_message('W%s03' % BASE_ID, args=node.name, node=node)
                 return
+
+        # if the Django compatability decorator is used then we don't emit a warning
+        # see https://github.com/landscapeio/pylint-django/issues/10
+        if node.decorators is not None:
+            for decorator in node.decorators.nodes:
+                if decorator.name == 'python_2_unicode_compatible':
+                    return
 
         self.add_message('W%s01' % BASE_ID, args=node.name, node=node)

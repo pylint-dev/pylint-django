@@ -2,10 +2,16 @@
 
 ## Version 0.5
 
-* [Issue #7] Improved handling of Django model fields
-* [Issue #11] Improved handling of Django form fields
-* [Issue #12] Improved handling of Django ImageField and FileField objects
-* [Issue #14] Models which do not define __unicode__ but whose parents do now have a new error (W5103)
+* [Issue #7](https://github.com/landscapeio/pylint-django/issues/7)
+Improved handling of Django model fields
+* [Issue #10](https://github.com/landscapeio/pylint-django/issues/10)
+No warning about missing __unicode__ if the Django python3/2 compatability tools are used
+* [Issue #11](https://github.com/landscapeio/pylint-django/issues/11)
+Improved handling of Django form fields
+* [Issue #12](https://github.com/landscapeio/pylint-django/issues/12)
+Improved handling of Django ImageField and FileField objects
+* [Issue #14](https://github.com/landscapeio/pylint-django/issues/14)
+Models which do not define __unicode__ but whose parents do now have a new error (W5103)
 instead of incorrectly warning about no __unicide__ being present.
 
 
