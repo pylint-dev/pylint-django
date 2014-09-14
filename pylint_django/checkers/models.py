@@ -1,5 +1,4 @@
 """Models."""
-import sys
 from astroid.nodes import Assign, Function, AssName
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.utils import check_messages
