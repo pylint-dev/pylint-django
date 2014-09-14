@@ -27,6 +27,28 @@ _add_transform('django.views.generic.base', 'View')
 _add_transform('django.forms', 'Form')
 _add_transform('django.forms', 'ModelForm')
 _add_transform('django.db.models', 'Model')
-_add_transform('django.db.models.fields.files', 'FileField')
-_add_transform('django.db.models.fields.files', 'ImageField')
+_add_transform('django.db.models.fields',
+    'BigIntegerField',
+    'BooleanField',
+    'CharField',
+    'CommaSeparatedIntegerField',
+    'DateField',
+    'DateTimeField',
+    'DecimalField',
+    'EmailField',
+    'FilePathField',
+    'FloatField',
+    'GenericIPAddressField',
+    'IPAddressField',
+    'IntegerField',
+    'NullBooleanField',
+    'PositiveIntegerField',
+    'PositiveSmallIntegerField',
+    'SlugField',
+    'SmallIntegerField',
+    'TextField',
+    'TimeField',
+    'URLField',
+)
+_add_transform('django.db.models.fields.files', 'FileField', 'ImageField')
 _add_transform('django.db.models.fields.related', 'ManyToManyField')

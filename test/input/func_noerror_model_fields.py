@@ -2,3 +2,75 @@
 Checks that Pylint does not complain about various
 methods on Django model fields.
 """
+#  pylint: disable=C0111
+from datetime import datetime, date
+from django.db import models
+
+
+class LotsOfFieldsModel(models.Model):
+
+    bigintegerfield = models.BigIntegerField()
+    booleanfield = models.BooleanField(default=True)
+    charfield = models.CharField(max_length=40, null=True)
+    commaseparatedintegerfield = models.CommaSeparatedIntegerField()
+    datetimefield = models.DateTimeField(auto_now_add=True)
+    datefield = models.DateField(auto_now_add=True)
+    decimalfield = models.DecimalField(max_digits=5, decimal_places=2)
+    emailfield = models.EmailField()
+    filepathfield = models.FilePathField()
+    floatfield = models.FloatField()
+    genericipaddressfield = models.GenericIPAddressField()
+    ipaddressfield = models.IPAddressField()
+    intfield = models.IntegerField(null=True)
+    nullbooleanfield = models.NullBooleanField()
+    positiveintegerfield = models.PositiveIntegerField()
+    positivesmallintegerfield = models.PositiveSmallIntegerField()
+    slugfield = models.SlugField()
+    smallintegerfield = models.SmallIntegerField()
+    textfield = models.TextField()
+    timefield = models.TimeField()
+    urlfield = models.URLField()
+
+    def boolean_field_tests(self):
+        print self.booleanfield | True
+        print self.nullbooleanfield | True
+
+    def string_field_tests(self):
+        print self.charfield.strip()
+        print self.charfield.upper()
+        print self.charfield.replace('x', 'y')
+
+        print self.filepathfield.strip()
+        print self.filepathfield.upper()
+        print self.filepathfield.replace('x', 'y')
+
+        print self.emailfield.strip()
+        print self.emailfield.upper()
+        print self.emailfield.replace('x', 'y')
+
+        print self.textfield.strip()
+        print self.textfield.upper()
+        print self.textfield.replace('x', 'y')
+
+    def datetimefield_tests(self):
+        now = datetime.now()
+        print now - self.datetimefield
+        print self.datetimefield.ctime()
+
+    def datefield_tests(self):
+        now = date.today()
+        print now - self.datefield
+        print self.datefield.isoformat()
+
+    def decimalfield_tests(self):
+        print self.decimalfield.adjusted()
+
+    def numberfield_tests(self):
+        print self.intfield + 5
+        print self.bigintegerfield + 4
+        print self.smallintegerfield + 3
+        print self.positiveintegerfield + 2
+        print self.positivesmallintegerfield + 1
+
+    def __unicode__(self):
+        return self.charfield

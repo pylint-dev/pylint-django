@@ -1,5 +1,5 @@
 
 from __future__ import absolute_import
-from pylint_diango import plugin
+from pylint_django import plugin
 
 register = plugin.register
