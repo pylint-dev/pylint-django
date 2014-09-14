@@ -1,4 +1,3 @@
-
 class Model:
     _meta = None
     objects = None

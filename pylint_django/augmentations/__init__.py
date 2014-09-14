@@ -1,8 +1,12 @@
+"""Augmentations."""
+from pylint.checkers.base import DocStringChecker, NameChecker
 from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
+from pylint.checkers.variables import VariablesChecker
 from astroid import InferenceError
 from astroid.nodes import Class
+from astroid.scoped_nodes import Class as ScopedClass, Module
 from pylint.checkers.typecheck import TypeChecker
 from pylint_django.utils import node_is_subclass
 from pylint_plugin_utils import augment_visit, suppress_message
@@ -63,7 +67,29 @@ def foreign_key_sets(chain, node):
     chain()
 
 
+def is_model_admin_subclass(node):
+    """Checks that node is derivative of ModelAdmin class."""
+    if node.name[-5:] != 'Admin' or isinstance(node.parent, Class):
+        return False
+
+    return node_is_subclass(node, 'django.contrib.admin.options.ModelAdmin')
+
+
+def is_model_media_subclass(node):
+    """Checks that node is derivative of Media class."""
+    if node.name != 'Media' or not isinstance(node.parent, Class):
+        return False
+
+    parents = ('django.contrib.admin.options.ModelAdmin',
+               'django.forms.widgets.Media',
+               'django.db.models.base.Model',
+               'django.forms.forms.Form',
+               'django.forms.models.ModelForm')
+    return any([node_is_subclass(node.parent, parent) for parent in parents])
+
+
 def is_model_meta_subclass(node):
+    """Checks that node is derivative of Meta class."""
     if node.name != 'Meta' or not isinstance(node.parent, Class):
         return False
 
@@ -73,7 +99,52 @@ def is_model_meta_subclass(node):
     return any([node_is_subclass(node.parent, parent) for parent in parents])
 
 
+def is_model_mpttmeta_subclass(node):
+    """Checks that node is derivative of MPTTMeta class."""
+    if node.name != 'MPTTMeta' or not isinstance(node.parent, Class):
+        return False
+
+    parents = ('django.db.models.base.Model',
+               'django.forms.forms.Form',
+               'django.forms.models.ModelForm')
+    return any([node_is_subclass(node.parent, parent) for parent in parents])
+
+
+def is_model_test_case_subclass(node):
+    """Checks that node is derivative of TestCase class."""
+    if not node.name.endswith('Test') and not isinstance(node.parent, Class):
+        return False
+
+    return node_is_subclass(node, 'django.test.testcases.TestCase')
+
+
+def is_model_view_subclass_method_shouldnt_be_function(node):
+    """Checks that node is get or post method of the View class."""
+    if node.name not in ('get', 'post'):
+        return False
+
+    parent = node.parent
+    while parent and not isinstance(parent, ScopedClass):
+        parent = parent.parent
+
+    #subclass = 'django.views.generic.base.View'
+    subclass = '.View'
+    return parent.name.endswith('View') and node_is_subclass(parent, subclass)
+
+
+def is_model_view_subclass_unused_argument(node):
+    """Checks that node is get or post method of the View class and it has valid arguments.
+
+    TODO: Bad checkings, need to be more smart.
+    """
+    if not is_model_view_subclass_method_shouldnt_be_function(node):
+        return False
+
+    return 'request' in node.argnames()
+
+
 def is_model_field_display_method(node):
+    """Accept model's fields with get_*_display names."""
     if not node.attrname.endswith('_display'):
         return
     if not node.attrname.startswith('get_'):
@@ -88,11 +159,58 @@ def is_model_field_display_method(node):
     return False
 
 
+def is_model_media_valid_attributes(node):
+    """Suppress warnings for valid attributes of Media class."""
+    if node.name not in ('js', ):
+        return False
+
+    parent = node.parent
+    while parent and not isinstance(parent, ScopedClass):
+        parent = parent.parent
+
+    if parent == None or parent.name != "Media":
+        return False
+
+    return True
+
+
+def is_templatetags_module_valid_constant(node):
+    """Suppress warnings for valid constants in templatetags module."""
+    if node.name not in ('register', ):
+        return False
+
+    parent = node.parent
+    while not isinstance(parent, Module):
+        parent = parent.parent
+
+    if "templatetags." not in parent.name:
+        return False
+
+    return True
+
+
+def is_urls_module_valid_constant(node):
+    """Suppress warnings for valid constants in urls module."""
+    if node.name not in ('urlpatterns', ):
+        return False
+
+    parent = node.parent
+    while not isinstance(parent, Module):
+        parent = parent.parent
+
+    if not parent.name.endswith('urls'):
+        return False
+
+    return True
+
+
 def is_class(class_name):
+    """Shortcut for node_is_subclass."""
     return lambda node: node_is_subclass(node, class_name)
 
 
 def apply_augmentations(linter):
+    """Apply augmentation and suppression rules."""
     augment_visit(linter, TypeChecker.visit_getattr, foreign_key_sets)
     augment_visit(linter, TypeChecker.visit_getattr, related_field_attributes)
     suppress_message(linter, TypeChecker.visit_getattr, 'E1101', is_model_field_display_method)
@@ -108,6 +226,37 @@ def apply_augmentations(linter):
     suppress_message(linter, MisdesignChecker.leave_class, 'R0924', is_class('django.forms.forms.Form'))
     suppress_message(linter, MisdesignChecker.leave_class, 'R0924', is_class('django.forms.models.ModelForm'))
 
+    # Meta
+    suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_meta_subclass)
     suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_meta_subclass)
     suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_meta_subclass)
     suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_meta_subclass)
+
+    # Media
+    suppress_message(linter, NameChecker.visit_assname, 'C0103', is_model_media_valid_attributes)
+    suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_media_subclass)
+    suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_media_subclass)
+    suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_media_subclass)
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_media_subclass)
+
+    # Admin
+    # Too many public methods (40+/20)
+    # TODO: Count public methods of django.contrib.admin.options.ModelAdmin and increase MisdesignChecker.config.max_public_methods to this value to count only user' methods.
+    #nb_public_methods = 0
+    #for method in node.methods():
+    #    if not method.name.startswith('_'):
+    #        nb_public_methods += 1
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0904', is_model_admin_subclass)
+
+    # Tests
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0904', is_model_test_case_subclass)
+
+    # View
+    suppress_message(linter, ClassChecker.leave_function, 'R0201', is_model_view_subclass_method_shouldnt_be_function)  # Method could be a function (get, post)
+    suppress_message(linter, VariablesChecker.leave_function, 'W0613', is_model_view_subclass_unused_argument)  # Unused argument 'request' (get, post)
+
+    # django-mptt
+    suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_mpttmeta_subclass)
+    suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_mpttmeta_subclass)
+    suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_mpttmeta_subclass)
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_mpttmeta_subclass)
