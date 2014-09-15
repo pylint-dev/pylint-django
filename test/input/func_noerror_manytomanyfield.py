@@ -13,7 +13,7 @@ class Book(models.Model):
 
 class Author(models.Model):
     name = models.CharField(max_length=100)
-    wrote = models.ManyToManyField(Book)
+    wrote = models.ManyToManyField(Book, verbose_name="Book")
 
     def get_good_books(self):
         return self.wrote.filter(good=True)
