@@ -18,9 +18,11 @@ class LotsOfFieldsModel(models.Model):
     datefield = models.DateField(auto_now_add=True)
     decimalfield = models.DecimalField(max_digits=5, decimal_places=2)
     emailfield = models.EmailField()
+    filefield = models.FileField(name='test_file', upload_to='test')
     filepathfield = models.FilePathField()
     floatfield = models.FloatField()
     genericipaddressfield = models.GenericIPAddressField()
+    imagefield = models.ImageField(name='test_image', upload_to='test')
     ipaddressfield = models.IPAddressField()
     intfield = models.IntegerField(null=True)
     nullbooleanfield = models.NullBooleanField()
@@ -65,6 +67,10 @@ class LotsOfFieldsModel(models.Model):
 
     def decimalfield_tests(self):
         print(self.decimalfield.adjusted())
+
+    def filefield_tests(self):
+        print self.filefield.file
+        print self.imagefield.file
 
     def numberfield_tests(self):
         print(self.intfield + 5)
