@@ -1,4 +1,4 @@
-class Model:
+class Model(object):
     _meta = None
     objects = None
 
