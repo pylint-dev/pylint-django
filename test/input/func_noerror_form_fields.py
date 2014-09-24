@@ -16,9 +16,11 @@ class ManyFieldsForm(forms.Form):
     datefield = forms.DateField(auto_now_add=True)
     decimalfield = forms.DecimalField(max_digits=5, decimal_places=2)
     emailfield = forms.EmailField()
+    filefield = forms.FileField(name='test_file', upload_to='test')
     filepathfield = forms.FilePathField()
     floatfield = forms.FloatField()
     genericipaddressfield = forms.GenericIPAddressField()
+    imagefield = forms.ImageField(name='test_image', upload_to='test')
     ipaddressfield = forms.IPAddressField()
     intfield = forms.IntegerField(null=True)
     nullbooleanfield = forms.NullBooleanField()
@@ -55,6 +57,10 @@ class ManyFieldsForm(forms.Form):
 
     def decimalfield_tests(self):
         print(self.decimalfield.adjusted())
+
+    def filefield_tests(self):
+        print self.filefield
+        print self.imagefield
 
     def numberfield_tests(self):
         print(self.intfield + 5)
