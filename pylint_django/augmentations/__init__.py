@@ -1,5 +1,4 @@
 """Augmentations."""
-from django.db.models import Manager
 from pylint.checkers.base import DocStringChecker, NameChecker
 from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.classes import ClassChecker
@@ -70,7 +69,46 @@ def foreign_key_sets(chain, node):
         # we will
         if isinstance(node.parent, Getattr):
             func_name = getattr(node.parent, 'attrname', None)
-            if func_name in dir(Manager):
+            try:
+                from django.db.models import Manager
+                manager_attrs = dir(Manager)
+            except ImportError:
+                # we can't always import the Manager object if Django is not installed
+                # so we'll fall back on a hard-coded list of attributes which won't be as accurate
+                manager_attrs = (
+                    'none',
+                    'all',
+                    'count',
+                    'dates',
+                    'distinct',
+                    'extra',
+                    'get',
+                    'get_or_create',
+                    'create',
+                    'bulk_create',
+                    'filter',
+                    'aggregate',
+                    'annotate',
+                    'complex_filter',
+                    'exclude',
+                    'in_bulk',
+                    'iterator',
+                    'latest',
+                    'order_by',
+                    'select_for_update',
+                    'select_related',
+                    'prefetch_related',
+                    'values',
+                    'values_list',
+                    'update',
+                    'reverse',
+                    'defer',
+                    'only',
+                    'using',
+                    'exists',
+                )
+
+            if func_name in manager_attrs:
                 quack = True
 
     if quack:
