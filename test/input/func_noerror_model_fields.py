@@ -69,8 +69,8 @@ class LotsOfFieldsModel(models.Model):
         print(self.decimalfield.adjusted())
 
     def filefield_tests(self):
-        print self.filefield.file
-        print self.imagefield.file
+        print(self.filefield.file)
+        print(self.imagefield.file)
 
     def numberfield_tests(self):
         print(self.intfield + 5)
