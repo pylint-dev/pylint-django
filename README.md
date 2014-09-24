@@ -33,6 +33,7 @@ prospector [..other options..]
 
 * Prevents warnings about Django-generated attributes such as `Model.objects` or `Views.request`.
 * Prevents warnings when using `ForeignKey` attributes ("Instance of ForeignKey has no <x> member").
+* Fixes pylint's knowledge of the types of Model and Form field attributes
 * Validates `Model.__unicode__` methods.
 * `Meta` informational classes on forms and models do not generate errors.
 
