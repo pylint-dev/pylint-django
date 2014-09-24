@@ -2,7 +2,7 @@
 import os
 import unittest
 from logilab.common import testlib
-from pylint.testutils import make_tests, LintTestUsingModule, LintTestUsingFile, cb_test_gen, linter
+from pylint.testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -13,7 +13,7 @@ linter.global_set_option('required-attributes', ())  # remove required __revisio
 
 
 def tests():
-    callbacks = [cb_test_gen(LintTestUsingModule), cb_test_gen(LintTestUsingFile)]
+    callbacks = [cb_test_gen(LintTestUsingFile)]
 
     input_dir = os.path.join(HERE, 'input')
     messages_dir = os.path.join(HERE, 'messages')

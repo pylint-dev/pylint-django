@@ -12,7 +12,14 @@ class SomeModel(models.Model):
     def get_others(self):
         return self.othermodel_set.all()
 
+    def count_whatevers(self):
+        return self.whatevs.count()
+
 
 class OtherModel(models.Model):
     count = models.IntegerField()
     something = models.ForeignKey(SomeModel)
+
+
+class ThirdModel(models.Model):
+    whatever = models.ForeignKey(SomeModel, related_name='whatevs')
