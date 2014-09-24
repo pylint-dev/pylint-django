@@ -12,7 +12,11 @@ Improved handling of Django form fields
 Improved handling of Django ImageField and FileField objects
 * [Issue #14](https://github.com/landscapeio/pylint-django/issues/14)
 Models which do not define __unicode__ but whose parents do now have a new error (W5103)
-instead of incorrectly warning about no __unicide__ being present.
+instead of incorrectly warning about no __unicode__ being present.
+* [Issue #21](https://github.com/landscapeio/pylint-django/issues/21)
+`ForeignKey` and `OneToOneField` fields on models are replaced with instance of the type
+they refer to in the AST, which allows pylint to generate correct warnings about attributes
+they may or may not have.
 
 
 ## Version 0.3
