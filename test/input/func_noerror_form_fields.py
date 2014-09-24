@@ -59,8 +59,8 @@ class ManyFieldsForm(forms.Form):
         print(self.decimalfield.adjusted())
 
     def filefield_tests(self):
-        print self.filefield
-        print self.imagefield
+        print(self.filefield)
+        print(self.imagefield)
 
     def numberfield_tests(self):
         print(self.intfield + 5)

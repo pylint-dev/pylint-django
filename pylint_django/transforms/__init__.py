@@ -1,9 +1,13 @@
 """Transforms."""
 import os
 import re
+from pylint_django.transforms import foreignkey
 from astroid import MANAGER
 from astroid.builder import AstroidBuilder
 from astroid import nodes
+
+
+foreignkey.add_transform(MANAGER)
 
 
 def _add_transform(package_name, *class_names):
