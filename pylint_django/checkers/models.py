@@ -78,7 +78,7 @@ class ModelChecker(BaseChecker):
         # see https://github.com/landscapeio/pylint-django/issues/10
         if node.decorators is not None:
             for decorator in node.decorators.nodes:
-                if decorator.name == 'python_2_unicode_compatible':
+                if getattr(decorator, 'name', None) == 'python_2_unicode_compatible':
                     return
 
         self.add_message('W%s01' % BASE_ID, args=node.name, node=node)
