@@ -5,10 +5,10 @@ from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
 from pylint.checkers.variables import VariablesChecker
 from astroid import InferenceError
-from astroid.nodes import Class, Import, From
+from astroid.nodes import Class, From
 from astroid.scoped_nodes import Class as ScopedClass, Module
 from pylint.checkers.typecheck import TypeChecker
-from pylint_django.utils import node_is_subclass
+from pylint_django.utils import node_is_subclass, PY3
 from pylint_plugin_utils import augment_visit, suppress_message
 
 
@@ -24,7 +24,9 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
     to_consume = self._to_consume[0]
 
     new_things = {}
-    for name, stmts in to_consume[0].iteritems():
+
+    iterat = to_consume[0].items if PY3 else to_consume[0].iteritems
+    for name, stmts in iterat():
         if isinstance(stmts[0], From):
             if any([n[0] in ('ForeignKey', 'OneToOneField') for n in stmts[0].names]):
                 continue
