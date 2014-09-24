@@ -17,7 +17,7 @@ MESSAGES = {
     'W%d02' % BASE_ID: ("Found __unicode__ method on model (%s). Python3 uses __str__.",
                         'model-has-unicode',
                         "Django models should not implement a __unicode__ "
-                        "method for string representation whan using Python3"),
+                        "method for string representation when using Python3"),
     'W%d03' % BASE_ID: ("Model does not explicitly define __unicode__ (%s)",
                         'model-no-explicit-unicode',
                         "Django models should implement a __unicode__ method for string representation. "
@@ -74,7 +74,7 @@ class ModelChecker(BaseChecker):
                 self.add_message('W%s03' % BASE_ID, args=node.name, node=node)
                 return
 
-        # if the Django compatability decorator is used then we don't emit a warning
+        # if the Django compatibility decorator is used then we don't emit a warning
         # see https://github.com/landscapeio/pylint-django/issues/10
         if node.decorators is not None:
             for decorator in node.decorators.nodes:

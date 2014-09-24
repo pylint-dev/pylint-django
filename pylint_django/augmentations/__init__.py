@@ -5,34 +5,35 @@ from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
 from pylint.checkers.variables import VariablesChecker
 from astroid import InferenceError
-from astroid.nodes import Class
+from astroid.nodes import Class, Import, From
 from astroid.scoped_nodes import Class as ScopedClass, Module
 from pylint.checkers.typecheck import TypeChecker
 from pylint_django.utils import node_is_subclass
 from pylint_plugin_utils import augment_visit, suppress_message
 
 
-def related_field_attributes(chain, node):
+def ignore_import_warnings_for_related_fields(orig_method, self, node):
     """
-    Pylint will raise an error when accesing a member of a ForeignKey
-    attribute on a Django model. This augmentation supresses this error.
+    Replaces the leave_module method on the VariablesChecker class to
+    prevent unused-import warnings which are caused by the ForeignKey
+    and OneToOneField transformations. By replacing the nodes in the
+    AST with their type rather than the django field, imports of the
+    form 'from django.db.models import OneToOneField' raise an unused-import
+    warning
     """
-    # TODO: if possible, infer the 'real' type of the foreign key attribute
-    # by using the 'to' value given to its constructor
-    related_fields = (
-        'django.db.models.fields.related.ForeignKey',
-        'django.db.models.fields.related.OneToOneField'
-        'django.db.models.fields.related.ManyToManyField'
-    )
-    if node.last_child():
-        try:
-            for infered in node.last_child().infered():
-                if infered.pytype() in related_fields:
-                    return
-        except InferenceError:
-            pass
+    to_consume = self._to_consume[0]
 
-    chain()
+    new_things = {}
+    for name, stmts in to_consume[0].iteritems():
+        if isinstance(stmts[0], From):
+            if any([n[0] in ('ForeignKey', 'OneToOneField') for n in stmts[0].names]):
+                continue
+        new_things[name] = stmts
+
+    new_consume = (new_things,) + to_consume[1:]
+    self._to_consume = [new_consume]
+
+    return orig_method(self, node)
 
 
 def foreign_key_sets(chain, node):
@@ -209,10 +210,15 @@ def is_class(class_name):
     return lambda node: node_is_subclass(node, class_name)
 
 
+def wrap(orig_method, with_method):
+    def wrap_func(*args, **kwargs):
+        with_method(orig_method, *args, **kwargs)
+    return wrap_func
+
+
 def apply_augmentations(linter):
     """Apply augmentation and suppression rules."""
     augment_visit(linter, TypeChecker.visit_getattr, foreign_key_sets)
-    augment_visit(linter, TypeChecker.visit_getattr, related_field_attributes)
     suppress_message(linter, TypeChecker.visit_getattr, 'E1101', is_model_field_display_method)
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
@@ -260,3 +266,6 @@ def apply_augmentations(linter):
     suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_mpttmeta_subclass)
     suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_mpttmeta_subclass)
     suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_mpttmeta_subclass)
+
+    # ForeignKey and OneToOneField
+    VariablesChecker.leave_module = wrap(VariablesChecker.leave_module, ignore_import_warnings_for_related_fields)
