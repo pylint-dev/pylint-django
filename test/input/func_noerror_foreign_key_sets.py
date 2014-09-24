@@ -12,9 +12,6 @@ class SomeModel(models.Model):
     def get_others(self):
         return self.othermodel_set.all()
 
-    def count_whatevers(self):
-        return self.whatevs.count()
-
 
 class OtherModel(models.Model):
     count = models.IntegerField()
@@ -23,3 +20,9 @@ class OtherModel(models.Model):
 
 class ThirdModel(models.Model):
     whatever = models.ForeignKey(SomeModel, related_name='whatevs')
+
+
+def count_whatevers():
+    if SomeModel().whatevs.exists():
+        return SomeModel().whatevs.count()
+    return -1

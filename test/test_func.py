@@ -1,8 +1,12 @@
 
 import os
 import unittest
+from django.conf import settings
 from logilab.common import testlib
 from pylint.testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
+
+
+settings.configure()
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))

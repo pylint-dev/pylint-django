@@ -1,10 +1,11 @@
 """Augmentations."""
+from django.db.models import Manager
 from pylint.checkers.base import DocStringChecker, NameChecker
 from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
 from pylint.checkers.variables import VariablesChecker
-from astroid import InferenceError
+from astroid import InferenceError, Getattr
 from astroid.nodes import Class, From
 from astroid.scoped_nodes import Class as ScopedClass, Module
 from pylint.checkers.typecheck import TypeChecker
@@ -51,8 +52,28 @@ def foreign_key_sets(chain, node):
         a = models.ForeignKey(ModelA)
 
     Now, ModelA instances will have a modelb_set attribute.
+
+    It's also possible to explicitly name the relationship using the related_name argument
+    to the ForeignKey constructor. As it's impossible to know this without inspecting all
+    models before processing, we'll instead do a "best guess" approach and see if the attribute
+    being accessed goes on to be used as a queryset. This is via 'duck typing': if the method
+    called on the attribute being accessed is something we might find in a queryset, we'll
+    warn.
     """
+    quack = False
+
     if node.attrname.endswith('_set'):
+        # if this is a X_set method, that's a pretty strong signal that this is the default
+        # Django name, rather than one set by related_name
+        quack = True
+    else:
+        # we will
+        if isinstance(node.parent, Getattr):
+            func_name = getattr(node.parent, 'attrname', None)
+            if func_name in dir(Manager):
+                quack = True
+
+    if quack:
         children = list(node.get_children())
         for child in children:
             try:
@@ -171,7 +192,7 @@ def is_model_media_valid_attributes(node):
     while parent and not isinstance(parent, ScopedClass):
         parent = parent.parent
 
-    if parent == None or parent.name != "Media":
+    if parent is None or parent.name != "Media":
         return False
 
     return True
