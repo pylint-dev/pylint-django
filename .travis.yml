@@ -4,12 +4,17 @@ python:
   - "2.7"
   - "3.3"
   - "3.4"
+env:
+  - DJANGO='Django>=1.4,<1.5' SKIP='3.3 3.4'
+  - DJANGO='Django>=1.5,<1.6' SKIP='3.3 3.4'
+  - DJANGO='Django>=1.6,<1.7' SKIP='3.4'
+  - DJANGO='Django>=1.7,<1.8' SKIP='2.6'
 install:
   - "pip install --use-mirrors coverage coveralls"
-  - "pip install --use-mirrors -r test_requirements.txt"
+  - "pip install --use-mirrors $DJANGO"
   - "pip install --use-mirrors git+https://github.com/landscapeio/pylint-plugin-utils.git@develop"
   - "pip install --use-mirrors --editable ."
 script:
-  coverage run test/test_func.py
+  scripts/travis-build.sh
 after_success:
   coveralls
