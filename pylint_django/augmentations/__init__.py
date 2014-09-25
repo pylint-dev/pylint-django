@@ -192,7 +192,7 @@ def is_model_view_subclass_method_shouldnt_be_function(node):
 
     #subclass = 'django.views.generic.base.View'
     subclass = '.View'
-    return parent.name.endswith('View') and node_is_subclass(parent, subclass)
+    return parent is not None and parent.name.endswith('View') and node_is_subclass(parent, subclass)
 
 
 def is_model_view_subclass_unused_argument(node):
