@@ -21,7 +21,7 @@ def node_is_subclass(cls, subclass_name):
             for inf in base_cls.infered():
                 if inf.qname() == subclass_name:
                     return True
-                if node_is_subclass(inf, subclass_name):
+                if inf != cls and node_is_subclass(inf, subclass_name):
                     # check up the hierachy in case we are a subclass of
                     # a subclass of a subclass ...
                     return True
