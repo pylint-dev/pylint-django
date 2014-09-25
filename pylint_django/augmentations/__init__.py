@@ -108,7 +108,7 @@ def foreign_key_sets(chain, node):
                 'using',
                 'exists',
             )
-    
+
             if func_name in manager_attrs:
                 quack = True
 

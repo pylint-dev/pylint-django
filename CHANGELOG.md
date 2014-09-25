@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.5.1
+
+* Removed usage of a Django object, as importing it caused Django to try to configure itself and thus throw an ImproperlyConfigured exception.
+
 ## Version 0.5
 
 * [Issue #7](https://github.com/landscapeio/pylint-django/issues/7)
