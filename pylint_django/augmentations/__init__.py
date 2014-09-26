@@ -69,44 +69,45 @@ def foreign_key_sets(chain, node):
         # we will
         if isinstance(node.parent, Getattr):
             func_name = getattr(node.parent, 'attrname', None)
-            try:
-                from django.db.models import Manager
-                manager_attrs = dir(Manager)
-            except ImportError:
-                # we can't always import the Manager object if Django is not installed
-                # so we'll fall back on a hard-coded list of attributes which won't be as accurate
-                manager_attrs = (
-                    'none',
-                    'all',
-                    'count',
-                    'dates',
-                    'distinct',
-                    'extra',
-                    'get',
-                    'get_or_create',
-                    'create',
-                    'bulk_create',
-                    'filter',
-                    'aggregate',
-                    'annotate',
-                    'complex_filter',
-                    'exclude',
-                    'in_bulk',
-                    'iterator',
-                    'latest',
-                    'order_by',
-                    'select_for_update',
-                    'select_related',
-                    'prefetch_related',
-                    'values',
-                    'values_list',
-                    'update',
-                    'reverse',
-                    'defer',
-                    'only',
-                    'using',
-                    'exists',
-                )
+
+            # Note: it would have been nice to import the Manager object from Django and
+            # get its attributes that way - and this used to be the method - but unfortunately
+            # there's no guarantee that Django is properly configured at that stage, and importing
+            # anything from the django.db package causes an ImproperlyConfigured exception.
+            # Therefore we'll fall back on a hard-coded list of attributes which won't be as accurate,
+            # but this is not 100% accurate anyway.
+            manager_attrs = (
+                'none',
+                'all',
+                'count',
+                'dates',
+                'distinct',
+                'extra',
+                'get',
+                'get_or_create',
+                'create',
+                'bulk_create',
+                'filter',
+                'aggregate',
+                'annotate',
+                'complex_filter',
+                'exclude',
+                'in_bulk',
+                'iterator',
+                'latest',
+                'order_by',
+                'select_for_update',
+                'select_related',
+                'prefetch_related',
+                'values',
+                'values_list',
+                'update',
+                'reverse',
+                'defer',
+                'only',
+                'using',
+                'exists',
+            )
 
             if func_name in manager_attrs:
                 quack = True
@@ -191,7 +192,7 @@ def is_model_view_subclass_method_shouldnt_be_function(node):
 
     #subclass = 'django.views.generic.base.View'
     subclass = '.View'
-    return parent.name.endswith('View') and node_is_subclass(parent, subclass)
+    return parent is not None and parent.name.endswith('View') and node_is_subclass(parent, subclass)
 
 
 def is_model_view_subclass_unused_argument(node):
