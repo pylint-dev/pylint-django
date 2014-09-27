@@ -216,9 +216,12 @@ def is_model_field_display_method(node):
     if node.last_child():
         # TODO: could validate the names of the fields on the model rather than
         # blindly accepting get_*_display
-        for cls in node.last_child().infered():
-            if node_is_subclass(cls, 'django.db.models.base.Model'):
-                return True
+        try:
+            for cls in node.last_child().infered():
+                if node_is_subclass(cls, 'django.db.models.base.Model'):
+                    return True
+        except InferenceError:
+            return False
     return False
 
 
