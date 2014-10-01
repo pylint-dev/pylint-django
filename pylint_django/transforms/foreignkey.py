@@ -1,31 +1,30 @@
-from astroid import nodes, InferenceError, Getattr
+from astroid import nodes, InferenceError, inference_tip, UseInferenceDefault
 
 
-def swap_key_classes(node):
-    if not isinstance(node.parent, nodes.Class):
-        return
-
+def is_foreignkey_in_class(node):
     # is this of the form  field = models.ForeignKey
-    if not isinstance(node.value, nodes.CallFunc):
-        return
+    if not isinstance(node.parent, nodes.Assign):
+        return False
+    if not isinstance(node.parent.parent, nodes.Class):
+        return False
 
-    if isinstance(node.value.func, nodes.Getattr):
-        attr = node.value.func.attrname
-    elif isinstance(node.value.func, nodes.Name):
-        attr = node.value.func.name
+    if isinstance(node.func, nodes.Getattr):
+        attr = node.func.attrname
+    elif isinstance(node.func, nodes.Name):
+        attr = node.func.name
     else:
-        return
+        return False
+    return attr in ('OneToOneField', 'ForeignKey')
 
-    if attr not in ('OneToOneField', 'ForeignKey'):
-        return
 
-    for arg in node.value.args:
+def infer_key_classes(node, context=None):
+    for arg in node.args:
         # typically the class of the foreign key will
         # be the first argument, so we'll go from left to right
-        if isinstance(arg, nodes.Name):
+        if isinstance(arg, (nodes.Name, nodes.Getattr)):
             try:
                 key_cls = None
-                for inferred in arg.infer():
+                for inferred in arg.infer(context=context):
                     key_cls = inferred
                     break
             except InferenceError:
@@ -34,11 +33,10 @@ def swap_key_classes(node):
                 if key_cls is not None:
                     break
     else:
-        return
-
-    node.value = key_cls.instanciate_class()
-    return node
+        raise UseInferenceDefault
+    return iter([key_cls.instanciate_class()])
 
 
 def add_transform(manager):
-    manager.register_transform(nodes.Assign, swap_key_classes)
+    manager.register_transform(nodes.CallFunc, inference_tip(infer_key_classes),
+                               is_foreignkey_in_class)
