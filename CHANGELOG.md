@@ -1,5 +1,18 @@
 # Changelog
 
+## Version 0.5.5
+* [PR #27](https://github.com/landscapeio/pylint-django/pull/27) - better `ForeignKey` transforms, which now work when of the form `othermodule.ModelClass`. This also fixes a problem where an inferred type would be `_Yes` and pylint would fail
+* [PR #28](https://github.com/landscapeio/pylint-django/pull/28) - better knowledge of `ManyToManyField` classes
+
+## Version 0.5.4
+* Improved resiliance to inference failure when Django types cannot be inferred (which can happen if Django is not on the system path
+
+## Version 0.5.3
+* [Issue #25](https://github.com/landscapeio/pylint-django/issues/25) Fixing cases where a module defines `get` as a method
+
+## Version 0.5.2
+* Fixed a problem where type inference could get into an infinite loop
+
 ## Version 0.5.1
 
 * Removed usage of a Django object, as importing it caused Django to try to configure itself and thus throw an ImproperlyConfigured exception.
