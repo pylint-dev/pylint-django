@@ -1,4 +1,4 @@
-from astroid import nodes, InferenceError, Getattr
+from astroid import nodes, InferenceError
 
 
 def swap_key_classes(node):

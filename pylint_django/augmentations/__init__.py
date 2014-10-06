@@ -21,7 +21,10 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
     form 'from django.db.models import OneToOneField' raise an unused-import
     warning
     """
-    to_consume = self._to_consume[0]
+    to_consume = self._to_consume[0]  #  pylint: disable=W0212
+    # we can disable this warning ('Access to a protected member _to_consume of a client class')
+    # as it's not actually a client class, but rather, this method is being monkey patched
+    # onto the class and so the access is valid
 
     new_things = {}
 
@@ -33,7 +36,7 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
         new_things[name] = stmts
 
     new_consume = (new_things,) + to_consume[1:]
-    self._to_consume = [new_consume]
+    self._to_consume = [new_consume]  #  pylint: disable=W0212
 
     return orig_method(self, node)
 
@@ -312,7 +315,8 @@ def apply_augmentations(linter):
 
     # Admin
     # Too many public methods (40+/20)
-    # TODO: Count public methods of django.contrib.admin.options.ModelAdmin and increase MisdesignChecker.config.max_public_methods to this value to count only user' methods.
+    # TODO: Count public methods of django.contrib.admin.options.ModelAdmin and increase
+    # MisdesignChecker.config.max_public_methods to this value to count only user' methods.
     #nb_public_methods = 0
     #for method in node.methods():
     #    if not method.name.startswith('_'):
@@ -323,8 +327,10 @@ def apply_augmentations(linter):
     suppress_message(linter, MisdesignChecker.leave_class, 'R0904', is_model_test_case_subclass)
 
     # View
-    suppress_message(linter, ClassChecker.leave_function, 'R0201', is_model_view_subclass_method_shouldnt_be_function)  # Method could be a function (get, post)
-    suppress_message(linter, VariablesChecker.leave_function, 'W0613', is_model_view_subclass_unused_argument)  # Unused argument 'request' (get, post)
+    # Method could be a function (get, post)
+    suppress_message(linter, ClassChecker.leave_function, 'R0201', is_model_view_subclass_method_shouldnt_be_function)
+    # Unused argument 'request' (get, post)
+    suppress_message(linter, VariablesChecker.leave_function, 'W0613', is_model_view_subclass_unused_argument)
 
     # django-mptt
     suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_mpttmeta_subclass)
