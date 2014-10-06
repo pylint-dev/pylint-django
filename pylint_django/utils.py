@@ -26,6 +26,6 @@ def node_is_subclass(cls, subclass_name):
                     # a subclass of a subclass ...
                     return True
         except InferenceError:
-            pass
+            continue
 
     return False
