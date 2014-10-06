@@ -21,7 +21,7 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
     form 'from django.db.models import OneToOneField' raise an unused-import
     warning
     """
-    to_consume = self._to_consume[0]  #  pylint: disable=W0212
+    to_consume = self._to_consume[0]  # pylint: disable=W0212
     # we can disable this warning ('Access to a protected member _to_consume of a client class')
     # as it's not actually a client class, but rather, this method is being monkey patched
     # onto the class and so the access is valid
@@ -36,7 +36,7 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
         new_things[name] = stmts
 
     new_consume = (new_things,) + to_consume[1:]
-    self._to_consume = [new_consume]  #  pylint: disable=W0212
+    self._to_consume = [new_consume]  # pylint: disable=W0212
 
     return orig_method(self, node)
 
@@ -193,13 +193,13 @@ def is_model_view_subclass_method_shouldnt_be_function(node):
     while parent and not isinstance(parent, ScopedClass):
         parent = parent.parent
 
-    #subclass = 'django.views.generic.base.View'
     subclass = '.View'
     return parent is not None and parent.name.endswith('View') and node_is_subclass(parent, subclass)
 
 
 def is_model_view_subclass_unused_argument(node):
-    """Checks that node is get or post method of the View class and it has valid arguments.
+    """
+    Checks that node is get or post method of the View class and it has valid arguments.
 
     TODO: Bad checkings, need to be more smart.
     """

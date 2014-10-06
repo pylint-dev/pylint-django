@@ -14,14 +14,14 @@ class DjangoInstalledChecker(BaseChecker):
                             "improvements to pylint will fail."),
 
         'W%s99' % BASE_ID: ('Placeholder message to prevent disabling of checker',
-                             'django-not-available-placeholder',
-                             'PyLint does not recognise checkers as being enabled unless they have at least'
-                             ' one message which is not fatal...')
+                            'django-not-available-placeholder',
+                            'PyLint does not recognise checkers as being enabled unless they have at least'
+                            ' one message which is not fatal...')
     }
 
     @check_messages('django-not-available')
     def close(self):
         try:
-            import django as _  #  pylint: disable=F0401
+            __import__('django')
         except ImportError:
             self.add_message('F%s01' % BASE_ID)

@@ -1,4 +1,6 @@
 uses: django
-strictness: veryhigh
+strictness: high
 doc-warnings: no
 max-line-length: 120
+ignore-paths:
+  - ^scripts/
