@@ -7,8 +7,7 @@ from pylint_django.checkers import register_checkers
 
 # we want to import the transforms to make sure they get added to the astroid manager,
 # however we don't actually access them directly, so we'll disable the warning
-# pylint:disable=W0611
-from pylint_django import transforms
+from pylint_django import transforms  # pylint:disable=W0611
 
 
 def register(linter):
@@ -18,8 +17,11 @@ def register(linter):
     """
     name_checker = get_checker(linter, NameChecker)
     name_checker.config.good_names += ('qs',)
+
     # Default pylint.checkers.base.CONST_NAME_RGX = re.compile('(([A-Z_][A-Z0-9_]*)|(__.*__))$').
-    const_rgx = '%s|(urls|urlpatterns|register)%s' % (name_checker.config.const_rgx.pattern[:-2], name_checker.config.const_rgx.pattern[-2:])
+    start = name_checker.config.const_rgx.pattern[:-2]
+    end = name_checker.config.const_rgx.pattern[-2:]
+    const_rgx = '%s|(urls|urlpatterns|register)%s' % (start, end)
     name_checker.config.const_rgx = re.compile(const_rgx)
 
     # we don't care about South migrations
