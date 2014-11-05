@@ -7,3 +7,8 @@ class Model(object):
 
     MultipleObjectsReturned = None
     DoesNotExist = None
+
+
+# eliminate E1002 for Manager object
+class Manager(object):
+    pass

@@ -57,7 +57,9 @@ _add_transform('django.forms.fields',
                )
 _add_transform('django.forms', 'Form')
 _add_transform('django.forms', 'ModelForm')
-_add_transform('django.db.models', 'Model')
+_add_transform('django.db.models',
+               'Model',
+               'Manager')
 _add_transform('django.db.models.fields',
                'BigIntegerField',
                'BooleanField',
