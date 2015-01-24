@@ -313,6 +313,14 @@ def apply_augmentations(linter):
     suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_media_subclass)
     suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_media_subclass)
 
+    # Too few public methods started appearing for Views and Models as part of Pylint>=1.4 / astroid>=1.3.3
+    # Not sure why, suspect this is a failure to get the parent classes somewhere
+    # For now, just suppress it on models and views
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_class('django.db.models.base.Model'))
+    # TODO: why does this not work with the fqn of 'View'? Must be something to do with the overriding and transforms
+    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_class('.View'))
+
+
     # Admin
     # Too many public methods (40+/20)
     # TODO: Count public methods of django.contrib.admin.options.ModelAdmin and increase

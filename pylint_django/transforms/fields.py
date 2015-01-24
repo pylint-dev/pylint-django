@@ -1,4 +1,4 @@
-from astroid import MANAGER, scoped_nodes, nodes
+from astroid import MANAGER, scoped_nodes, nodes, inference_tip
 
 
 _STR_FIELDS = ('CharField', 'SlugField', 'URLField', 'TextField', 'EmailField',
@@ -17,7 +17,12 @@ def is_form_field(cls):
     return cls.qname().startswith('django.forms.fields')
 
 
-def make_field_str(cls):
+def is_model_or_form_field(cls):
+    return is_model_field(cls) or is_form_field(cls)
+
+
+def apply_type_shim(cls, context=None):
+
     if cls.name in _STR_FIELDS:
         base_node = scoped_nodes.builtin_lookup('str')
     elif cls.name in _INT_FIELDS:
@@ -35,12 +40,10 @@ def make_field_str(cls):
     elif cls.name == 'DateField':
         base_node = MANAGER.ast_from_module_name('datetime').lookup('date')
     else:
-        return cls
+        return iter([cls])
 
-    cls.bases.append(base_node[1][0])
-    return cls
+    return iter([cls] + base_node[1])
 
 
 def add_transforms(manager):
-    manager.register_transform(nodes.Class, make_field_str, is_model_field)
-    manager.register_transform(nodes.Class, make_field_str, is_form_field)
+    manager.register_transform(nodes.Class, inference_tip(apply_type_shim), is_model_or_form_field)
