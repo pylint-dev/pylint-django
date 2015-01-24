@@ -1,5 +1,6 @@
 """
-Ensures that django models without a __unicode__ method are flagged
+Ensures that django models without a __unicode__ method are flagged,
+but only models which are not abstract
 """
 #  pylint: disable=C0111
 
@@ -14,3 +15,8 @@ class SomeModel(models.Model):
 
     def lala(self):
         pass
+
+
+class SomeAbstractModel(models.Model):
+    class Meta:
+        abstract = True
