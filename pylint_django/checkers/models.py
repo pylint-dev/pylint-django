@@ -26,6 +26,24 @@ MESSAGES = {
 }
 
 
+def _is_meta_with_abstract(node):
+    if isinstance(node, Class) and node.name == 'Meta':
+        for meta_child in node.get_children():
+            if not isinstance(meta_child, Assign):
+                continue
+            if not meta_child.targets[0].name == 'abstract':
+                continue
+            if not isinstance(meta_child.value, Const):
+                continue
+                # TODO: handle tuple assignment?
+            # eg:
+            #    abstract, something_else = True, 1
+            if meta_child.value.value:
+                # this class is abstract
+                return True
+    return False
+
+
 class ModelChecker(BaseChecker):
     """Django model checker."""
     __implements__ = IAstroidChecker
@@ -41,20 +59,8 @@ class ModelChecker(BaseChecker):
             return
 
         for child in node.get_children():
-            if isinstance(child, Class) and child.name == 'Meta':
-                for meta_child in child.get_children():
-                    if not isinstance(meta_child, Assign):
-                        continue
-                    if not meta_child.targets[0].name == 'abstract':
-                        continue
-                    if not isinstance(meta_child.value, Const):
-                        continue
-                    # TODO: handle tuple assignment?
-                    # eg:
-                    #    abstract, something_else = True, 1
-                    if meta_child.value.value:
-                        # this class is abstract
-                        return
+            if _is_meta_with_abstract(child):
+                return
 
             if isinstance(child, Assign):
                 grandchildren = list(child.get_children())
