@@ -1,5 +1,6 @@
 """Models."""
-from astroid.nodes import Assign, Function, AssName
+from astroid import Const
+from astroid.nodes import Assign, Function, AssName, Class
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.utils import check_messages
 from pylint.checkers import BaseChecker
@@ -40,6 +41,21 @@ class ModelChecker(BaseChecker):
             return
 
         for child in node.get_children():
+            if isinstance(child, Class) and child.name == 'Meta':
+                for meta_child in child.get_children():
+                    if not isinstance(meta_child, Assign):
+                        continue
+                    if not meta_child.targets[0].name == 'abstract':
+                        continue
+                    if not isinstance(meta_child.value, Const):
+                        continue
+                    # TODO: handle tuple assignment?
+                    # eg:
+                    #    abstract, something_else = True, 1
+                    if meta_child.value.value:
+                        # this class is abstract
+                        return
+
             if isinstance(child, Assign):
                 grandchildren = list(child.get_children())
 
