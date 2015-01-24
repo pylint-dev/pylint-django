@@ -10,14 +10,14 @@ from django import forms
 
 class ManyFieldsForm(forms.Form):
 
-    booleanfield = forms.BooleanField(default=True)
+    booleanfield = forms.BooleanField()
     charfield = forms.CharField(max_length=40, null=True)
     datetimefield = forms.DateTimeField(auto_now_add=True)
     datefield = forms.DateField(auto_now_add=True)
     decimalfield = forms.DecimalField(max_digits=5, decimal_places=2)
     emailfield = forms.EmailField()
     filefield = forms.FileField(name='test_file', upload_to='test')
-    filepathfield = forms.FilePathField()
+    filepathfield = forms.FilePathField(path='/some/path')
     floatfield = forms.FloatField()
     genericipaddressfield = forms.GenericIPAddressField()
     imagefield = forms.ImageField(name='test_image', upload_to='test')
