@@ -39,6 +39,10 @@ def apply_type_shim(cls, context=None):
         base_node = MANAGER.ast_from_module_name('datetime').lookup('time')
     elif cls.name == 'DateField':
         base_node = MANAGER.ast_from_module_name('datetime').lookup('date')
+    elif cls.name == 'ManyToManyField':
+        base_node = MANAGER.ast_from_module_name('django.db.models.query').lookup('QuerySet')
+    elif cls.name in ('ImageField', 'FileField'):
+        base_node = MANAGER.ast_from_module_name('django.core.files.base').lookup('File')
     else:
         return iter([cls])
 

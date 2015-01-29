@@ -31,9 +31,9 @@ _classifiers = (
 )
 
 _install_requires=[
-    'pylint>=1.0', 
-    'astroid>=1.0', 
-    'logilab-common>=0.60.0', 
+    'pylint>=1.0',
+    'astroid>=1.0',
+    'logilab-common>=0.60.0',
     'pylint-plugin-utils>=0.2.1'
 ]
 
