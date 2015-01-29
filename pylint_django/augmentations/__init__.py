@@ -320,7 +320,6 @@ def apply_augmentations(linter):
     # TODO: why does this not work with the fqn of 'View'? Must be something to do with the overriding and transforms
     suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_class('.View'))
 
-
     # Admin
     # Too many public methods (40+/20)
     # TODO: Count public methods of django.contrib.admin.options.ModelAdmin and increase
