@@ -35,5 +35,7 @@ _add_transform('django.core.handlers.wsgi', 'WSGIRequest')
 _add_transform('django.views.generic.base', 'View')
 _add_transform('django.forms', 'Form')
 _add_transform('django.forms', 'ModelForm')
-_add_transform('django.db.models', 'Model')
+_add_transform('django.db.models',
+               'Model',
+               'Manager')
 _add_transform('django.utils.translation', 'ugettext_lazy')
