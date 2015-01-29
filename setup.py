@@ -32,19 +32,24 @@ _classifiers = (
 )
 
 
-if sys.version_info < (2, 7):
-    # pylint 1.4 dropped support for Python 2.6
-    _pylint = 'pylint>=1.0,<1.4'
-else:
-    _pylint = 'pylint>=1.0'
-
-
 _install_requires = [
-    _pylint,
-    'astroid>=1.0',
-    'logilab-common>=0.60.0',
     'pylint-plugin-utils>=0.2.1'
 ]
+
+
+if sys.version_info < (2, 7):
+    # pylint 1.4 dropped support for Python 2.6
+    _install_requires += [
+        'pylint>=1.0,<1.4',
+        'astroid>=1.0,<1.3.0',
+        'logilab-common>=0.60.0,<0.63',
+    ]
+else:
+    _install_requires += [
+        'pylint>=1.0',
+        'astroid>=1.0',
+        'logilab-common>=0.60.0',
+    ]
 
 setup(
     name='pylint-django',
