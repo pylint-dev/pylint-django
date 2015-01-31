@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 0.6.6
+* Pylint 1.4 dropped support for Python 2.6, therefore a constraint is added that pylint-django will only work with Python2.6 if pylint<=1.3 is installed
+* [#40](https://github.com/landscapeio/pylint-django/issues/40) - pylint 1.4 warned about View and Model classes not having enough public methods; this is suppressed
+* [#37](https://github.com/landscapeio/pylint-django/issues/37) - fixed an infinite loop when using astroid 1.3.3+
+* [#36](https://github.com/landscapeio/pylint-django/issues/36) - no longer warning about lack of `__unicode__` method on abstract model classes
+* [PR #34](https://github.com/landscapeio/pylint-django/pull/34) - prevent warning about use of `super()` on ModelManager classes
+
 ## Version 0.5.5
 * [PR #27](https://github.com/landscapeio/pylint-django/pull/27) - better `ForeignKey` transforms, which now work when of the form `othermodule.ModelClass`. This also fixes a problem where an inferred type would be `_Yes` and pylint would fail
 * [PR #28](https://github.com/landscapeio/pylint-django/pull/28) - better knowledge of `ManyToManyField` classes
