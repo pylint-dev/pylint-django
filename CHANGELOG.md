@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 0.6.6
+## Version 0.6
 * Pylint 1.4 dropped support for Python 2.6, therefore a constraint is added that pylint-django will only work with Python2.6 if pylint<=1.3 is installed
 * [#40](https://github.com/landscapeio/pylint-django/issues/40) - pylint 1.4 warned about View and Model classes not having enough public methods; this is suppressed
 * [#37](https://github.com/landscapeio/pylint-django/issues/37) - fixed an infinite loop when using astroid 1.3.3+
