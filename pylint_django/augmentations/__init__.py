@@ -161,7 +161,8 @@ def is_model_meta_subclass(node):
 
     parents = ('django.db.models.base.Model',
                'django.forms.forms.Form',
-               'django.forms.models.ModelForm')
+               'django.forms.models.ModelForm',
+               'rest_framework.serializers.ModelSerializer')
     return any([node_is_subclass(node.parent, parent) for parent in parents])
 
 
