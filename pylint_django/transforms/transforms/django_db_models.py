@@ -1,3 +1,5 @@
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
+
 class Model(object):
     _meta = None
     objects = None
@@ -5,8 +7,8 @@ class Model(object):
     id = None
     pk = None
 
-    MultipleObjectsReturned = None
-    DoesNotExist = None
+    MultipleObjectsReturned = MultipleObjectsReturned
+    DoesNotExist = ObjectDoesNotExist
 
 
 # eliminate E1002 for Manager object
