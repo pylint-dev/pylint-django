@@ -124,12 +124,18 @@ def foreign_key_sets(chain, node):
                 for cls in inferred:
                     if (node_is_subclass(
                             cls, 'django.db.models.manager.Manager')
-                      or node_is_subclass(cls, 'django.db.models.base.Model')):
+                            or node_is_subclass(cls, 'django.db.models.base.Model')):
                         # This means that we are looking at a subclass of models.Model
                         # and something is trying to access a <something>_set attribute.
                         # Since this could exist, we will return so as not to raise an
                         # error.
                         return
+    chain()
+
+
+def foreign_key_ids(chain, node):
+    if node.attrname.endswith('_id'):
+        return
     chain()
 
 
@@ -292,6 +298,7 @@ def wrap(orig_method, with_method):
 def apply_augmentations(linter):
     """Apply augmentation and suppression rules."""
     augment_visit(linter, TypeChecker.visit_getattr, foreign_key_sets)
+    augment_visit(linter, TypeChecker.visit_getattr, foreign_key_ids)
     suppress_message(linter, TypeChecker.visit_getattr, 'E1101', is_model_field_display_method)
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
