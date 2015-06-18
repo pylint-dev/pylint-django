@@ -1,5 +1,5 @@
 #!/bin/bash
-python scripts/travis-skip.py
+python scripts/travis_skip.py
 
 if [ "$?" -eq "0" ]
 then

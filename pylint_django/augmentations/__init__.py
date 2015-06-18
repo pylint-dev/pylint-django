@@ -123,8 +123,8 @@ def foreign_key_sets(chain, node):
             else:
                 for cls in inferred:
                     if (node_is_subclass(
-                            cls, 'django.db.models.manager.Manager')
-                            or node_is_subclass(cls, 'django.db.models.base.Model')):
+                            cls, 'django.db.models.manager.Manager') or
+                            node_is_subclass(cls, 'django.db.models.base.Model')):
                         # This means that we are looking at a subclass of models.Model
                         # and something is trying to access a <something>_set attribute.
                         # Since this could exist, we will return so as not to raise an
