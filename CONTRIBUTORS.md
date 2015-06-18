@@ -4,3 +4,5 @@
 * [ustun](https://github.com/ustun)
 * [jproffitt](https://github.com/jproffitt)
 * [lhupfeldt](https://github.com/lhupfeldt)
+* [smirolo](https://github.com/smirolo)
+* [mbertolacci](https://github.com/mbertolacci)
