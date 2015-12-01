@@ -2,7 +2,6 @@
 import os
 import unittest
 from django.conf import settings
-from logilab.common import testlib
 from pylint.testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
 
 
@@ -26,9 +25,9 @@ def tests():
 
 
 def suite():
-    return testlib.TestSuite([unittest.makeSuite(test, suiteClass=testlib.TestSuite)
+    return unittest.TestSuite([unittest.makeSuite(test, suiteClass=unittest.TestSuite)
                               for test in tests()])
 
 
 if __name__=='__main__':
-    testlib.unittest_main(defaultTest='suite')
+    unittest.main(defaultTest='suite')
