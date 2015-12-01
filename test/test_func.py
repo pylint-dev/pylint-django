@@ -2,7 +2,6 @@
 import os
 import unittest
 from django.conf import settings
-from logilab.common import testlib
 from pylint.testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
 
 
@@ -38,8 +37,8 @@ def suite():
     if module_exists('rest_framework'):
         test_list += tests('external_drf', '')
 
-    return testlib.TestSuite([unittest.makeSuite(test, suiteClass=testlib.TestSuite)
-                              for test in test_list])
+    return unittest.TestSuite([unittest.makeSuite(test, suiteClass=unittest.TestSuite)
+                               for test in test_list])
 
 if __name__=='__main__':
-    testlib.unittest_main(defaultTest='suite')
+    unittest.main(defaultTest='suite')

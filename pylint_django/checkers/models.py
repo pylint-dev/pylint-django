@@ -4,6 +4,7 @@ from astroid.nodes import Assign, Function, AssName, Class
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.utils import check_messages
 from pylint.checkers import BaseChecker
+from pylint.__pkginfo__ import numversion as PYLINT_VERSION
 from pylint_django.__pkginfo__ import BASE_ID
 from pylint_django.utils import node_is_subclass, PY3
 
@@ -51,8 +52,19 @@ class ModelChecker(BaseChecker):
     name = 'django-model-checker'
     msgs = MESSAGES
 
-    @check_messages('model-missing-unicode')
-    def visit_class(self, node):
+    # XXX: there's a bug in pylint's backwards compatability logic after changing
+    # visit method names from visit_class to visit_classdef, see
+    # https://bitbucket.org/logilab/pylint/issues/711/new-node-visit-methods-not-backwards
+    if PYLINT_VERSION < (1, 5):
+        @check_messages('model-missing-unicode')
+        def visit_class(self, node):
+            return self._visit_classdef(node)
+    else:
+        @check_messages('model-missing-unicode')
+        def visit_classdef(self, node):
+            return self._visit_classdef(node)
+
+    def _visit_classdef(self, node):
         """Class visitor."""
         if not node_is_subclass(node, 'django.db.models.base.Model'):
             # we only care about models

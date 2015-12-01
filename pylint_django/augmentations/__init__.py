@@ -7,6 +7,7 @@ from pylint.checkers.variables import VariablesChecker
 from astroid import InferenceError, Getattr
 from astroid.nodes import Class, From
 from astroid.scoped_nodes import Class as ScopedClass, Module
+from pylint.__pkginfo__ import numversion as PYLINT_VERSION
 from pylint.checkers.typecheck import TypeChecker
 from pylint_django.utils import node_is_subclass, PY3
 from pylint_plugin_utils import augment_visit, suppress_message
@@ -295,42 +296,66 @@ def wrap(orig_method, with_method):
     return wrap_func
 
 
+# The names of some visit functions changed in this commit:
+# https://bitbucket.org/logilab/pylint/commits/c94ee95abaa5737f13b91626fe321150c0ddd140
+
+def _visit_class(checker):
+    return getattr(checker, 'visit_classdef' if PYLINT_VERSION >= (1, 5) else 'visit_class')
+
+
+def _visit_attribute(checker):
+    return getattr(checker, 'visit_attribute' if PYLINT_VERSION >= (1, 5) else 'visit_getattr')
+
+
+def _leave_class(checker):
+    return getattr(checker, 'leave_classdef' if PYLINT_VERSION >= (1, 5) else 'leave_class')
+
+
+def _leave_function(checker):
+    return getattr(checker, 'leave_functiondef' if PYLINT_VERSION >= (1, 5) else 'leave_function')
+
+
+def _visit_assignname(checker):
+    return getattr(checker, 'visit_assignname' if PYLINT_VERSION >= (1, 5) else 'visit_assname')
+
+
 def apply_augmentations(linter):
     """Apply augmentation and suppression rules."""
-    augment_visit(linter, TypeChecker.visit_getattr, foreign_key_sets)
-    augment_visit(linter, TypeChecker.visit_getattr, foreign_key_ids)
-    suppress_message(linter, TypeChecker.visit_getattr, 'E1101', is_model_field_display_method)
+    augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_sets)
+    augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_ids)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_model_field_display_method)
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
-    suppress_message(linter, MisdesignChecker.visit_class, 'R0901', is_class('django.views.generic.edit.FormView'))
+    suppress_message(linter, _visit_class(MisdesignChecker), 'R0901', is_class('django.views.generic.edit.FormView'))
 
     # model forms have no __init__ method anywhere in their bases
-    suppress_message(linter, ClassChecker.visit_class, 'W0232', is_class('django.forms.models.ModelForm'))
+    suppress_message(linter, _visit_class(ClassChecker), 'W0232', is_class('django.forms.models.ModelForm'))
 
     # forms implement __getitem__ but not __len__, thus raising a "Badly implemented container" warning which
     # we will suppress.
-    suppress_message(linter, MisdesignChecker.leave_class, 'R0924', is_class('django.forms.forms.Form'))
-    suppress_message(linter, MisdesignChecker.leave_class, 'R0924', is_class('django.forms.models.ModelForm'))
+    suppress_message(linter, _leave_class(MisdesignChecker), 'R0924', is_class('django.forms.forms.Form'))
+    suppress_message(linter, _leave_class(MisdesignChecker), 'R0924', is_class('django.forms.models.ModelForm'))
 
     # Meta
-    suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_meta_subclass)
-    suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_meta_subclass)
-    suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_meta_subclass)
-    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_meta_subclass)
+    suppress_message(linter, _visit_class(DocStringChecker), 'missing-docstring', is_model_meta_subclass)
+    suppress_message(linter, _visit_class(NewStyleConflictChecker), 'old-style-class', is_model_meta_subclass)
+    suppress_message(linter, _visit_class(ClassChecker), 'no-init', is_model_meta_subclass)
+    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_meta_subclass)
 
     # Media
-    suppress_message(linter, NameChecker.visit_assname, 'C0103', is_model_media_valid_attributes)
-    suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_media_subclass)
-    suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_media_subclass)
-    suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_media_subclass)
-    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_media_subclass)
+    suppress_message(linter, _visit_assignname(NameChecker), 'C0103', is_model_media_valid_attributes)
+    suppress_message(linter, _visit_class(DocStringChecker), 'missing-docstring', is_model_media_subclass)
+    suppress_message(linter, _visit_class(NewStyleConflictChecker), 'old-style-class', is_model_media_subclass)
+    #suppress_message(linter, _visit_class(ClassChecker), 'W0232', is_model_media_subclass)
+    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_media_subclass)
 
     # Too few public methods started appearing for Views and Models as part of Pylint>=1.4 / astroid>=1.3.3
     # Not sure why, suspect this is a failure to get the parent classes somewhere
     # For now, just suppress it on models and views
-    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_class('django.db.models.base.Model'))
+    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods',
+                     is_class('.Model'))
     # TODO: why does this not work with the fqn of 'View'? Must be something to do with the overriding and transforms
-    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_class('.View'))
+    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_class('.View'))
 
     # Admin
     # Too many public methods (40+/20)
@@ -340,22 +365,22 @@ def apply_augmentations(linter):
     #for method in node.methods():
     #    if not method.name.startswith('_'):
     #        nb_public_methods += 1
-    suppress_message(linter, MisdesignChecker.leave_class, 'R0904', is_model_admin_subclass)
+    suppress_message(linter, _leave_class(MisdesignChecker), 'R0904', is_model_admin_subclass)
 
     # Tests
-    suppress_message(linter, MisdesignChecker.leave_class, 'R0904', is_model_test_case_subclass)
+    suppress_message(linter, _leave_class(MisdesignChecker), 'R0904', is_model_test_case_subclass)
 
     # View
     # Method could be a function (get, post)
-    suppress_message(linter, ClassChecker.leave_function, 'R0201', is_model_view_subclass_method_shouldnt_be_function)
+    suppress_message(linter, _leave_function(ClassChecker), 'R0201', is_model_view_subclass_method_shouldnt_be_function)
     # Unused argument 'request' (get, post)
-    suppress_message(linter, VariablesChecker.leave_function, 'W0613', is_model_view_subclass_unused_argument)
+    suppress_message(linter, _leave_function(VariablesChecker), 'W0613', is_model_view_subclass_unused_argument)
 
     # django-mptt
-    suppress_message(linter, DocStringChecker.visit_class, 'C0111', is_model_mpttmeta_subclass)
-    suppress_message(linter, NewStyleConflictChecker.visit_class, 'C1001', is_model_mpttmeta_subclass)
-    suppress_message(linter, ClassChecker.visit_class, 'W0232', is_model_mpttmeta_subclass)
-    suppress_message(linter, MisdesignChecker.leave_class, 'R0903', is_model_mpttmeta_subclass)
+    suppress_message(linter, _visit_class(DocStringChecker), 'missing-docstring', is_model_mpttmeta_subclass)
+    suppress_message(linter, _visit_class(NewStyleConflictChecker), 'old-style-class', is_model_mpttmeta_subclass)
+    suppress_message(linter, _visit_class(ClassChecker), 'W0232', is_model_mpttmeta_subclass)
+    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_mpttmeta_subclass)
 
     # ForeignKey and OneToOneField
     VariablesChecker.leave_module = wrap(VariablesChecker.leave_module, ignore_import_warnings_for_related_fields)
