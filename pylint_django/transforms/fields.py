@@ -1,4 +1,5 @@
 from astroid import MANAGER, scoped_nodes, nodes, inference_tip
+import sys
 from pylint_django import utils
 
 
@@ -33,7 +34,11 @@ def apply_type_shim(cls, context=None):
     elif cls.name == 'FloatField':
         base_nodes = scoped_nodes.builtin_lookup('float')
     elif cls.name == 'DecimalField':
-        base_nodes = MANAGER.ast_from_module_name('decimal').lookup('Decimal')
+        if sys.versioninfo >= (3, 5):
+            # I dunno, I'm tired and this works :(
+            base_nodes = MANAGER.ast_from_module_name('_decimal').lookup('Decimal')
+        else:
+            base_nodes = MANAGER.ast_from_module_name('decimal').lookup('Decimal')
     elif cls.name in ('SplitDateTimeField', 'DateTimeField'):
         base_nodes = MANAGER.ast_from_module_name('datetime').lookup('datetime')
     elif cls.name == 'TimeField':

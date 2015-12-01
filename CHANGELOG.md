@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.7
+* [#51](https://github.com/landscapeio/pylint-django/issues/51) - Fixed compatibility with pylint 1.5 / astroid 1.4.1
+
 ## Version 0.6.1
 * [#43](https://github.com/landscapeio/pylint-django/issues/43) - Foreign key ID access (`somefk_id`) does not raise an 'attribute not found' warning
 * [#31](https://github.com/landscapeio/pylint-django/issues/31) - Support for custom model managers (thanks [smirolo](https://github.com/smirolo))
