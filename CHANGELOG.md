@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 0.6.1
+* [#43](https://github.com/landscapeio/pylint-django/issues/43) - Foreign key ID access (`somefk_id`) does not raise an 'attribute not found' warning
+* [#31](https://github.com/landscapeio/pylint-django/issues/31) - Support for custom model managers (thanks [smirolo](https://github.com/smirolo))
+* [#48](https://github.com/landscapeio/pylint-django/pull/48) - Added support for django-restframework (thanks [mbertolacci](https://github.com/mbertolacci))
+
 ## Version 0.6
 * Pylint 1.4 dropped support for Python 2.6, therefore a constraint is added that pylint-django will only work with Python2.6 if pylint<=1.3 is installed
 * [#40](https://github.com/landscapeio/pylint-django/issues/40) - pylint 1.4 warned about View and Model classes not having enough public methods; this is suppressed

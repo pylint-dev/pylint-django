@@ -31,4 +31,3 @@ class TestFormSubclass(forms.Form):
 class TestModelFormSubclass(forms.ModelForm):
     class Meta:
         pass
-

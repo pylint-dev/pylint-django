@@ -64,8 +64,46 @@ def foreign_key_sets(chain, node):
     warn.
     """
     quack = False
+    # Note: it would have been nice to import the Manager object from Django and
+    # get its attributes that way - and this used to be the method - but unfortunately
+    # there's no guarantee that Django is properly configured at that stage, and importing
+    # anything from the django.db package causes an ImproperlyConfigured exception.
+    # Therefore we'll fall back on a hard-coded list of attributes which won't be as accurate,
+    # but this is not 100% accurate anyway.
+    manager_attrs = (
+        'none',
+        'all',
+        'count',
+        'dates',
+        'distinct',
+        'extra',
+        'get',
+        'get_or_create',
+        'create',
+        'bulk_create',
+        'filter',
+        'aggregate',
+        'annotate',
+        'complex_filter',
+        'exclude',
+        'in_bulk',
+        'iterator',
+        'latest',
+        'order_by',
+        'select_for_update',
+        'select_related',
+        'prefetch_related',
+        'values',
+        'values_list',
+        'update',
+        'reverse',
+        'defer',
+        'only',
+        'using',
+        'exists',
+    )
 
-    if node.attrname.endswith('_set'):
+    if node.attrname in manager_attrs or node.attrname.endswith('_set'):
         # if this is a X_set method, that's a pretty strong signal that this is the default
         # Django name, rather than one set by related_name
         quack = True
@@ -73,46 +111,6 @@ def foreign_key_sets(chain, node):
         # we will
         if isinstance(node.parent, Getattr):
             func_name = getattr(node.parent, 'attrname', None)
-
-            # Note: it would have been nice to import the Manager object from Django and
-            # get its attributes that way - and this used to be the method - but unfortunately
-            # there's no guarantee that Django is properly configured at that stage, and importing
-            # anything from the django.db package causes an ImproperlyConfigured exception.
-            # Therefore we'll fall back on a hard-coded list of attributes which won't be as accurate,
-            # but this is not 100% accurate anyway.
-            manager_attrs = (
-                'none',
-                'all',
-                'count',
-                'dates',
-                'distinct',
-                'extra',
-                'get',
-                'get_or_create',
-                'create',
-                'bulk_create',
-                'filter',
-                'aggregate',
-                'annotate',
-                'complex_filter',
-                'exclude',
-                'in_bulk',
-                'iterator',
-                'latest',
-                'order_by',
-                'select_for_update',
-                'select_related',
-                'prefetch_related',
-                'values',
-                'values_list',
-                'update',
-                'reverse',
-                'defer',
-                'only',
-                'using',
-                'exists',
-            )
-
             if func_name in manager_attrs:
                 quack = True
 
@@ -125,12 +123,20 @@ def foreign_key_sets(chain, node):
                 pass
             else:
                 for cls in inferred:
-                    if node_is_subclass(cls, 'django.db.models.base.Model'):
+                    if (node_is_subclass(
+                            cls, 'django.db.models.manager.Manager') or
+                            node_is_subclass(cls, 'django.db.models.base.Model')):
                         # This means that we are looking at a subclass of models.Model
                         # and something is trying to access a <something>_set attribute.
                         # Since this could exist, we will return so as not to raise an
                         # error.
                         return
+    chain()
+
+
+def foreign_key_ids(chain, node):
+    if node.attrname.endswith('_id'):
+        return
     chain()
 
 
@@ -162,7 +168,12 @@ def is_model_meta_subclass(node):
 
     parents = ('django.db.models.base.Model',
                'django.forms.forms.Form',
-               'django.forms.models.ModelForm')
+               'django.forms.models.ModelForm',
+               'rest_framework.serializers.ModelSerializer',
+               'rest_framework.generics.GenericAPIView',
+               'rest_framework.viewsets.ReadOnlyModelViewSet',
+               'rest_framework.viewsets.ModelViewSet',
+               'django_filters.filterset.FilterSet',)
     return any([node_is_subclass(node.parent, parent) for parent in parents])
 
 
@@ -311,6 +322,7 @@ def _visit_assignname(checker):
 def apply_augmentations(linter):
     """Apply augmentation and suppression rules."""
     augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_sets)
+    augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_ids)
     suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_model_field_display_method)
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
