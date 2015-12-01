@@ -5,6 +5,7 @@ methods on Django model fields.
 #  pylint: disable=C0111,W5101
 from __future__ import print_function
 from datetime import datetime, date
+from decimal import Decimal
 from django.db import models
 
 
@@ -66,7 +67,7 @@ class LotsOfFieldsModel(models.Model):
         print(self.datefield.isoformat())
 
     def decimalfield_tests(self):
-        print(self.decimalfield.adjusted())
+        print(self.decimalfield.compare(Decimal('1.4')))
 
     def filefield_tests(self):
         print(self.filefield.file)

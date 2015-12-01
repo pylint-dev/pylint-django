@@ -53,6 +53,8 @@ def apply_type_shim(cls, context=None):
     # to die...
     if utils.PY3:
         base_nodes = [n for n in base_nodes[1] if not isinstance(n, nodes.ImportFrom)]
+    else:
+        base_nodes = list(base_nodes[1])
     
     return iter([cls] + base_nodes)
 
