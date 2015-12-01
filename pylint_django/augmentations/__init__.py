@@ -119,11 +119,11 @@ def foreign_key_sets(chain, node):
         children = list(node.get_children())
         for child in children:
             try:
-                inferred = inferred(child)()
+                inferred_cls = inferred(child)()
             except InferenceError:
                 pass
             else:
-                for cls in inferred:
+                for cls in inferred_cls:
                     if (node_is_subclass(cls,
                                          'django.db.models.manager.Manager',
                                          'django.db.models.base.Model',
