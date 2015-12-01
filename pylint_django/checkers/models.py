@@ -1,6 +1,7 @@
 """Models."""
 from astroid import Const
-from astroid.nodes import Assign, Function, AssName, Class
+from pylint_django.compat import ClassDef, FunctionDef, inferred, AssignName
+from astroid.nodes import Assign
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.utils import check_messages
 from pylint.checkers import BaseChecker
@@ -28,7 +29,7 @@ MESSAGES = {
 
 
 def _is_meta_with_abstract(node):
-    if isinstance(node, Class) and node.name == 'Meta':
+    if isinstance(node, ClassDef) and node.name == 'Meta':
         for meta_child in node.get_children():
             if not isinstance(meta_child, Assign):
                 continue
@@ -77,21 +78,23 @@ class ModelChecker(BaseChecker):
             if isinstance(child, Assign):
                 grandchildren = list(child.get_children())
 
-                if not isinstance(grandchildren[0], AssName):
+                if not isinstance(grandchildren[0], AssignName):
                     continue
 
                 name = grandchildren[0].name
                 if name != '__unicode__':
                     continue
 
-                assigned = grandchildren[1].infered()[0]
+                grandchild = grandchildren[1]
+                assigned = inferred(grandchild)()[0]
+
                 if assigned.callable():
                     return
 
                 self.add_message('E%s01' % BASE_ID, args=node.name, node=node)
                 return
 
-            if isinstance(child, Function) and child.name == '__unicode__':
+            if isinstance(child, FunctionDef) and child.name == '__unicode__':
                 if PY3:
                     self.add_message('W%s02' % BASE_ID, args=node.name, node=node)
                 return

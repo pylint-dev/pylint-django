@@ -1,14 +1,15 @@
 from astroid import nodes, InferenceError, inference_tip, UseInferenceDefault
+from pylint_django.compat import ClassDef, instantiate_class, Attribute
 
 
 def is_foreignkey_in_class(node):
     # is this of the form  field = models.ForeignKey
     if not isinstance(node.parent, nodes.Assign):
         return False
-    if not isinstance(node.parent.parent, nodes.Class):
+    if not isinstance(node.parent.parent, ClassDef):
         return False
 
-    if isinstance(node.func, nodes.Getattr):
+    if isinstance(node.func, Attribute):
         attr = node.func.attrname
     elif isinstance(node.func, nodes.Name):
         attr = node.func.name
@@ -34,7 +35,7 @@ def infer_key_classes(node, context=None):
                     break
     else:
         raise UseInferenceDefault
-    return iter([key_cls.instanciate_class()])
+    return iter([instantiate_class(key_cls)()])
 
 
 def add_transform(manager):

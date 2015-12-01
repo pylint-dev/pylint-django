@@ -4,12 +4,13 @@ from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
 from pylint.checkers.variables import VariablesChecker
-from astroid import InferenceError, Getattr
-from astroid.nodes import Class, From
+from astroid import InferenceError
+from pylint_django.compat import ClassDef, ImportFrom, Attribute
 from astroid.scoped_nodes import Class as ScopedClass, Module
 from pylint.__pkginfo__ import numversion as PYLINT_VERSION
 from pylint.checkers.typecheck import TypeChecker
 from pylint_django.utils import node_is_subclass, PY3
+from pylint_django.compat import inferred
 from pylint_plugin_utils import augment_visit, suppress_message
 
 
@@ -31,7 +32,7 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
 
     iterat = to_consume[0].items if PY3 else to_consume[0].iteritems
     for name, stmts in iterat():
-        if isinstance(stmts[0], From):
+        if isinstance(stmts[0], ImportFrom):
             if any([n[0] in ('ForeignKey', 'OneToOneField') for n in stmts[0].names]):
                 continue
         new_things[name] = stmts
@@ -109,7 +110,7 @@ def foreign_key_sets(chain, node):
         quack = True
     else:
         # we will
-        if isinstance(node.parent, Getattr):
+        if isinstance(node.parent, Attribute):
             func_name = getattr(node.parent, 'attrname', None)
             if func_name in manager_attrs:
                 quack = True
@@ -118,7 +119,7 @@ def foreign_key_sets(chain, node):
         children = list(node.get_children())
         for child in children:
             try:
-                inferred = child.infered()
+                inferred = inferred(child)()
             except InferenceError:
                 pass
             else:
@@ -143,7 +144,7 @@ def foreign_key_ids(chain, node):
 
 def is_model_admin_subclass(node):
     """Checks that node is derivative of ModelAdmin class."""
-    if node.name[-5:] != 'Admin' or isinstance(node.parent, Class):
+    if node.name[-5:] != 'Admin' or isinstance(node.parent, ClassDef):
         return False
 
     return node_is_subclass(node, 'django.contrib.admin.options.ModelAdmin')
@@ -151,7 +152,7 @@ def is_model_admin_subclass(node):
 
 def is_model_media_subclass(node):
     """Checks that node is derivative of Media class."""
-    if node.name != 'Media' or not isinstance(node.parent, Class):
+    if node.name != 'Media' or not isinstance(node.parent, ClassDef):
         return False
 
     parents = ('django.contrib.admin.options.ModelAdmin',
@@ -167,7 +168,7 @@ def is_model_media_subclass(node):
 
 def is_model_meta_subclass(node):
     """Checks that node is derivative of Meta class."""
-    if node.name != 'Meta' or not isinstance(node.parent, Class):
+    if node.name != 'Meta' or not isinstance(node.parent, ClassDef):
         return False
 
     parents = ('.Model',  # for the transformed version used here
@@ -186,7 +187,7 @@ def is_model_meta_subclass(node):
 
 def is_model_mpttmeta_subclass(node):
     """Checks that node is derivative of MPTTMeta class."""
-    if node.name != 'MPTTMeta' or not isinstance(node.parent, Class):
+    if node.name != 'MPTTMeta' or not isinstance(node.parent, ClassDef):
         return False
 
     parents = ('django.db.models.base.Model',
@@ -200,7 +201,7 @@ def is_model_mpttmeta_subclass(node):
 
 def is_model_test_case_subclass(node):
     """Checks that node is derivative of TestCase class."""
-    if not node.name.endswith('Test') and not isinstance(node.parent, Class):
+    if not node.name.endswith('Test') and not isinstance(node.parent, ClassDef):
         return False
 
     return node_is_subclass(node, 'django.test.testcases.TestCase')
@@ -242,7 +243,7 @@ def is_model_field_display_method(node):
         # TODO: could validate the names of the fields on the model rather than
         # blindly accepting get_*_display
         try:
-            for cls in node.last_child().infered():
+            for cls in inferred(node.last_child())():
                 if node_is_subclass(cls, 'django.db.models.base.Model', '.Model'):
                     return True
         except InferenceError:
