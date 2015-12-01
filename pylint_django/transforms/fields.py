@@ -24,6 +24,8 @@ def is_model_or_form_field(cls):
 
 def apply_type_shim(cls, context=None):
 
+    fiddle_datetime_bases = False
+
     if cls.name in _STR_FIELDS:
         base_nodes = scoped_nodes.builtin_lookup('str')
     elif cls.name in _INT_FIELDS:
@@ -36,10 +38,13 @@ def apply_type_shim(cls, context=None):
         base_nodes = MANAGER.ast_from_module_name('decimal').lookup('Decimal')
     elif cls.name in ('SplitDateTimeField', 'DateTimeField'):
         base_nodes = MANAGER.ast_from_module_name('datetime').lookup('datetime')
+        fiddle_datetime_bases = True
     elif cls.name == 'TimeField':
         base_nodes = MANAGER.ast_from_module_name('datetime').lookup('time')
+        fiddle_datetime_bases = True
     elif cls.name == 'DateField':
         base_nodes = MANAGER.ast_from_module_name('datetime').lookup('date')
+        fiddle_datetime_bases = True
     elif cls.name == 'ManyToManyField':
         base_nodes = MANAGER.ast_from_module_name('django.db.models.query').lookup('QuerySet')
     elif cls.name in ('ImageField', 'FileField'):
@@ -51,7 +56,7 @@ def apply_type_shim(cls, context=None):
     # check in the StdlibChecker for deprecated methods; one of these nodes
     # is an ImportFrom which has no qname() method, causing the checker
     # to die...
-    if utils.PY3:
+    if utils.PY3 and fiddle_datetime_bases:
         base_nodes = [n for n in base_nodes[1] if not isinstance(n, nodes.ImportFrom)]
     else:
         base_nodes = list(base_nodes[1])
