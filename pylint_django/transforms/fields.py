@@ -35,6 +35,11 @@ def apply_type_shim(cls, context=None):
         base_node = MANAGER.ast_from_module_name('decimal').lookup('Decimal')
     elif cls.name in ('SplitDateTimeField', 'DateTimeField'):
         base_node = MANAGER.ast_from_module_name('datetime').lookup('datetime')
+        # XXX: for some reason, with python3, this particular line triggers a
+        # check in the StdlibChecker for deprecated methods; one of these nodes
+        # is an ImportFrom which has no qname() method, causing the checker
+        # to die...
+        base_node = (base_node[0], base_node[1][:-1])
     elif cls.name == 'TimeField':
         base_node = MANAGER.ast_from_module_name('datetime').lookup('time')
     elif cls.name == 'DateField':
