@@ -23,8 +23,6 @@ def node_is_subclass(cls, subclass_name):
     for base_cls in cls.bases:
         try:
             for inf in base_cls.infered():
-                if 'Model' in subclass_name:
-                    print inf.qname(), subclass_name
                 if inf.qname() == subclass_name:
                     return True
                 if inf != cls and node_is_subclass(inf, subclass_name):
