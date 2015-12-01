@@ -66,7 +66,7 @@ class ModelChecker(BaseChecker):
 
     def _visit_classdef(self, node):
         """Class visitor."""
-        if not node_is_subclass(node, 'django.db.models.base.Model'):
+        if not node_is_subclass(node, 'django.db.models.base.Model', '.Model'):
             # we only care about models
             return
 

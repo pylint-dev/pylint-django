@@ -123,9 +123,10 @@ def foreign_key_sets(chain, node):
                 pass
             else:
                 for cls in inferred:
-                    if (node_is_subclass(
-                            cls, 'django.db.models.manager.Manager') or
-                            node_is_subclass(cls, 'django.db.models.base.Model')):
+                    if (node_is_subclass(cls,
+                                         'django.db.models.manager.Manager',
+                                         'django.db.models.base.Model',
+                                         '.Model')):
                         # This means that we are looking at a subclass of models.Model
                         # and something is trying to access a <something>_set attribute.
                         # Since this could exist, we will return so as not to raise an
@@ -156,9 +157,12 @@ def is_model_media_subclass(node):
     parents = ('django.contrib.admin.options.ModelAdmin',
                'django.forms.widgets.Media',
                'django.db.models.base.Model',
+               '.Model',  # for the transformed version used in this plugin
                'django.forms.forms.Form',
-               'django.forms.models.ModelForm')
-    return any([node_is_subclass(node.parent, parent) for parent in parents])
+               '.Form',
+               'django.forms.models.ModelForm',
+               '.ModelForm')
+    return node_is_subclass(node.parent, *parents)
 
 
 def is_model_meta_subclass(node):
@@ -166,15 +170,18 @@ def is_model_meta_subclass(node):
     if node.name != 'Meta' or not isinstance(node.parent, Class):
         return False
 
-    parents = ('django.db.models.base.Model',
+    parents = ('.Model',  # for the transformed version used here
+               'django.db.models.base.Model',
+               '.Form',
                'django.forms.forms.Form',
+               '.ModelForm',
                'django.forms.models.ModelForm',
                'rest_framework.serializers.ModelSerializer',
                'rest_framework.generics.GenericAPIView',
                'rest_framework.viewsets.ReadOnlyModelViewSet',
                'rest_framework.viewsets.ModelViewSet',
                'django_filters.filterset.FilterSet',)
-    return any([node_is_subclass(node.parent, parent) for parent in parents])
+    return node_is_subclass(node.parent, *parents)
 
 
 def is_model_mpttmeta_subclass(node):
@@ -183,9 +190,12 @@ def is_model_mpttmeta_subclass(node):
         return False
 
     parents = ('django.db.models.base.Model',
+               '.Model',  # for the transformed version used in this plugin
                'django.forms.forms.Form',
-               'django.forms.models.ModelForm')
-    return any([node_is_subclass(node.parent, parent) for parent in parents])
+               '.Form',
+               'django.forms.models.ModelForm',
+               '.ModelForm')
+    return node_is_subclass(node.parent, *parents)
 
 
 def is_model_test_case_subclass(node):
@@ -233,7 +243,7 @@ def is_model_field_display_method(node):
         # blindly accepting get_*_display
         try:
             for cls in node.last_child().infered():
-                if node_is_subclass(cls, 'django.db.models.base.Model'):
+                if node_is_subclass(cls, 'django.db.models.base.Model', '.Model'):
                     return True
         except InferenceError:
             return False
@@ -354,8 +364,8 @@ def apply_augmentations(linter):
     # For now, just suppress it on models and views
     suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods',
                      is_class('.Model'))
-    # TODO: why does this not work with the fqn of 'View'? Must be something to do with the overriding and transforms
-    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_class('.View'))
+    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods',
+                     is_class('.View'))
 
     # Admin
     # Too many public methods (40+/20)

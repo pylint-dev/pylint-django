@@ -12,7 +12,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 
 linter.load_plugin_modules(['pylint_django'])
-linter.global_set_option('required-attributes', ())  # remove required __revision__
+
 
 def module_exists(module_name):
     try:
@@ -21,6 +21,7 @@ def module_exists(module_name):
         return False
     else:
         return True
+
 
 def tests(input_dir, messages_dir):
     callbacks = [cb_test_gen(LintTestUsingFile)]
