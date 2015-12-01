@@ -1,4 +1,5 @@
 from astroid import MANAGER, scoped_nodes, nodes, inference_tip
+from pylint_django import utils
 
 
 _STR_FIELDS = ('CharField', 'SlugField', 'URLField', 'TextField', 'EmailField',
@@ -24,34 +25,36 @@ def is_model_or_form_field(cls):
 def apply_type_shim(cls, context=None):
 
     if cls.name in _STR_FIELDS:
-        base_node = scoped_nodes.builtin_lookup('str')
+        base_nodes = scoped_nodes.builtin_lookup('str')
     elif cls.name in _INT_FIELDS:
-        base_node = scoped_nodes.builtin_lookup('int')
+        base_nodes = scoped_nodes.builtin_lookup('int')
     elif cls.name in _BOOL_FIELDS:
-        base_node = scoped_nodes.builtin_lookup('bool')
+        base_nodes = scoped_nodes.builtin_lookup('bool')
     elif cls.name == 'FloatField':
-        base_node = scoped_nodes.builtin_lookup('float')
+        base_nodes = scoped_nodes.builtin_lookup('float')
     elif cls.name == 'DecimalField':
-        base_node = MANAGER.ast_from_module_name('decimal').lookup('Decimal')
+        base_nodes = MANAGER.ast_from_module_name('decimal').lookup('Decimal')
     elif cls.name in ('SplitDateTimeField', 'DateTimeField'):
-        base_node = MANAGER.ast_from_module_name('datetime').lookup('datetime')
-        # XXX: for some reason, with python3, this particular line triggers a
-        # check in the StdlibChecker for deprecated methods; one of these nodes
-        # is an ImportFrom which has no qname() method, causing the checker
-        # to die...
-        base_node = (base_node[0], base_node[1][:-1])
+        base_nodes = MANAGER.ast_from_module_name('datetime').lookup('datetime')
     elif cls.name == 'TimeField':
-        base_node = MANAGER.ast_from_module_name('datetime').lookup('time')
+        base_nodes = MANAGER.ast_from_module_name('datetime').lookup('time')
     elif cls.name == 'DateField':
-        base_node = MANAGER.ast_from_module_name('datetime').lookup('date')
+        base_nodes = MANAGER.ast_from_module_name('datetime').lookup('date')
     elif cls.name == 'ManyToManyField':
-        base_node = MANAGER.ast_from_module_name('django.db.models.query').lookup('QuerySet')
+        base_nodes = MANAGER.ast_from_module_name('django.db.models.query').lookup('QuerySet')
     elif cls.name in ('ImageField', 'FileField'):
-        base_node = MANAGER.ast_from_module_name('django.core.files.base').lookup('File')
+        base_nodes = MANAGER.ast_from_module_name('django.core.files.base').lookup('File')
     else:
         return iter([cls])
 
-    return iter([cls] + base_node[1])
+    # XXX: for some reason, with python3, this particular line triggers a
+    # check in the StdlibChecker for deprecated methods; one of these nodes
+    # is an ImportFrom which has no qname() method, causing the checker
+    # to die...
+    if utils.PY3:
+        base_nodes = [n for n in base_nodes[1] if not isinstance(n, nodes.ImportFrom)]
+    
+    return iter([cls] + base_nodes)
 
 
 def add_transforms(manager):
