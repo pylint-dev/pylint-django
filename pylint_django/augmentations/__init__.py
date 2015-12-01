@@ -1,4 +1,5 @@
 """Augmentations."""
+#  pylint: disable=invalid-name
 from pylint.checkers.base import DocStringChecker, NameChecker
 from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.classes import ClassChecker
