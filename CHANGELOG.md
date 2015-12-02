@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.7.1
+* [#52](https://github.com/landscapeio/pylint-django/issues/52) - Fixed stupid mistake when using versioninfo
+
 ## Version 0.7
 * [#51](https://github.com/landscapeio/pylint-django/issues/51) - Fixed compatibility with pylint 1.5 / astroid 1.4.1
 
