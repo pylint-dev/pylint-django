@@ -34,7 +34,7 @@ def apply_type_shim(cls, context=None):
     elif cls.name == 'FloatField':
         base_nodes = scoped_nodes.builtin_lookup('float')
     elif cls.name == 'DecimalField':
-        if sys.versioninfo >= (3, 5):
+        if sys.version_info >= (3, 5):
             # I dunno, I'm tired and this works :(
             base_nodes = MANAGER.ast_from_module_name('_decimal').lookup('Decimal')
         else:
