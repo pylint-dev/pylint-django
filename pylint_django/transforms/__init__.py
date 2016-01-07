@@ -26,7 +26,7 @@ def _add_transform(package_name, *class_names):
         if module.name != package_name:
             return
         for class_name in class_names:
-            module._locals[class_name] = fake._locals[class_name]  # pylint: disable=protected-access
+            module._locals[class_name].extend(fake._locals[class_name])  # pylint: disable=protected-access
 
     MANAGER.register_transform(nodes.Module, set_fake_locals)
 
