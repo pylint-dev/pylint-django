@@ -360,7 +360,7 @@ def apply_augmentations(linter):
     suppress_message(linter, _visit_assignname(NameChecker), 'C0103', is_model_media_valid_attributes)
     suppress_message(linter, _visit_class(DocStringChecker), 'missing-docstring', is_model_media_subclass)
     suppress_message(linter, _visit_class(NewStyleConflictChecker), 'old-style-class', is_model_media_subclass)
-    #suppress_message(linter, _visit_class(ClassChecker), 'W0232', is_model_media_subclass)
+    suppress_message(linter, _visit_class(ClassChecker), 'no-init', is_model_media_subclass)
     suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_media_subclass)
 
     # Too few public methods started appearing for Views and Models as part of Pylint>=1.4 / astroid>=1.3.3
