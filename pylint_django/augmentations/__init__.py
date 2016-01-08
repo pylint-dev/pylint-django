@@ -162,6 +162,8 @@ def is_model_media_subclass(node):
                '.Model',  # for the transformed version used in this plugin
                'django.forms.forms.Form',
                '.Form',
+               'django.forms.widgets.Widget',
+               '.Widget',
                'django.forms.models.ModelForm',
                '.ModelForm')
     return node_is_subclass(node.parent, *parents)
