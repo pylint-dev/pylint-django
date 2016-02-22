@@ -39,3 +39,4 @@ _add_transform('django.db.models',
                'Model',
                'Manager')
 _add_transform('django.utils.translation', 'ugettext_lazy')
+_add_transform('mongoengine', 'Document')
