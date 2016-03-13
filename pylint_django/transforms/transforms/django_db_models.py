@@ -15,6 +15,7 @@ class Model(object):
 
 # eliminate E1002 for Manager object
 class Manager(object):
+    get_queryset = lambda *a, **kw: None
     none = lambda *a, **kw: None
     all = lambda *a, **kw: None
     count = lambda *a, **kw: None
