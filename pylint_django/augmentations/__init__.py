@@ -128,7 +128,8 @@ def foreign_key_sets(chain, node):
                     if (node_is_subclass(cls,
                                          'django.db.models.manager.Manager',
                                          'django.db.models.base.Model',
-                                         '.Model')):
+                                         '.Model',
+                                         'django.db.models.fields.related.ForeignObject')):
                         # This means that we are looking at a subclass of models.Model
                         # and something is trying to access a <something>_set attribute.
                         # Since this could exist, we will return so as not to raise an
