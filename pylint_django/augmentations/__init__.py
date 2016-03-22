@@ -284,7 +284,7 @@ def is_templatetags_module_valid_constant(node):
 
 def is_urls_module_valid_constant(node):
     """Suppress warnings for valid constants in urls module."""
-    if node.name not in ('urlpatterns', ):
+    if node.name not in ('urlpatterns', 'app_name'):
         return False
 
     parent = node.parent
