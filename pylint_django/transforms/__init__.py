@@ -28,9 +28,9 @@ def _add_transform(package_name, *class_names):
         for class_name in class_names:
             # This changed from locals to _locals between astroid 1.3 and 1.4
             if hasattr(module, '_locals'):
-                module._locals[class_name] = fake._locals[class_name]  # pylint: disable=protected-access
+                module._locals[class_name].extend(fake._locals[class_name])  # pylint: disable=protected-access
             else:
-                module.locals[class_name] = fake.locals[class_name]
+                module.locals[class_name].extend(fake.locals[class_name])
 
     MANAGER.register_transform(nodes.Module, set_fake_locals)
 
