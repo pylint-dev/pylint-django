@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 0.7.2
+* [#68](https://github.com/landscapeio/pylint-django/pull/68) Suppressed invalid constant warning for "app_name" in urls.py
+* [#67](https://github.com/landscapeio/pylint-django/pull/67) Fix view.args and view.kwargs
+* [#65](https://github.com/landscapeio/pylint-django/pull/65) Add support of mongoengine module.
+* [#59](https://github.com/landscapeio/pylint-django/pull/59) Silence old-style-class for widget Meta
+
 ## Version 0.7.1
 * [#52](https://github.com/landscapeio/pylint-django/issues/52) - Fixed stupid mistake when using versioninfo
 
