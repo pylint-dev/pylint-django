@@ -1,7 +1,6 @@
 sudo: false
 language: python
 python:
-  - "2.6"
   - "2.7"
   - "3.3"
   - "3.4"
@@ -12,6 +11,7 @@ env:
   - DJANGO='Django>=1.6,<1.7' SKIP='3.4 3.5'
   - DJANGO='Django>=1.7,<1.8' SKIP='2.6'
   - DJANGO='Django>=1.8,<1.9' SKIP='2.6'
+  - DJANGO='Django>=1.9,<1.10' SKIP='2.6'
 install:
   scripts/travis-install.sh
 script:
