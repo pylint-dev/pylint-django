@@ -3,6 +3,7 @@
 ## Version 0.7.2
 * [#68](https://github.com/landscapeio/pylint-django/pull/68) Suppressed invalid constant warning for "app_name" in urls.py
 * [#67](https://github.com/landscapeio/pylint-django/pull/67) Fix view.args and view.kwargs
+* [#66](https://github.com/landscapeio/pylint-django/issues/66) accessing _meta no longer causes a protected-access warning as this is a public API as of Django 1.8
 * [#65](https://github.com/landscapeio/pylint-django/pull/65) Add support of mongoengine module.
 * [#59](https://github.com/landscapeio/pylint-django/pull/59) Silence old-style-class for widget Meta
 

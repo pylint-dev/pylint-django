@@ -17,6 +17,14 @@ except ImportError:
         from astroid.util import Uninferable
 
 
+try:
+    django = __import__('django')
+    django_version = django.VERSION
+except ImportError:
+    # if not available, will be handled by the django_installed checker
+    django_version = (1, 5)
+
+
 def inferred(node):
     if hasattr(node, 'inferred'):
         return node.inferred

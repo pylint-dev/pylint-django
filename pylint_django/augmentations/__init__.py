@@ -6,7 +6,7 @@ from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
 from pylint.checkers.variables import VariablesChecker
 from astroid import InferenceError
-from pylint_django.compat import ClassDef, ImportFrom, Attribute
+from pylint_django.compat import ClassDef, ImportFrom, Attribute, django_version
 from astroid.scoped_nodes import Class as ScopedClass, Module
 from pylint.__pkginfo__ import numversion as PYLINT_VERSION
 from pylint.checkers.typecheck import TypeChecker
@@ -299,6 +299,13 @@ def is_urls_module_valid_constant(node):
     return True
 
 
+def allow_meta_protected_access(node):
+    if django_version >= (1, 8):
+        return node.attrname == '_meta'
+    else:
+        return False
+
+
 def is_class(class_name):
     """Shortcut for node_is_subclass."""
     return lambda node: node_is_subclass(node, class_name)
@@ -333,8 +340,13 @@ def _visit_assignname(checker):
     return getattr(checker, 'visit_assignname' if PYLINT_VERSION >= (1, 5) else 'visit_assname')
 
 
+def _visit_assign(checker):
+    return getattr(checker, 'visit_assign')
+
+
 def apply_augmentations(linter):
     """Apply augmentation and suppression rules."""
+
     augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_sets)
     augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_ids)
     suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_model_field_display_method)
@@ -355,6 +367,8 @@ def apply_augmentations(linter):
     suppress_message(linter, _visit_class(NewStyleConflictChecker), 'old-style-class', is_model_meta_subclass)
     suppress_message(linter, _visit_class(ClassChecker), 'no-init', is_model_meta_subclass)
     suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_meta_subclass)
+    suppress_message(linter, _visit_attribute(ClassChecker), 'protected-access', allow_meta_protected_access)
+    #suppress_message(linter, _visit_assign(ClassChecker), 'protected-access', allow_meta_protected_access)
 
     # Media
     suppress_message(linter, _visit_assignname(NameChecker), 'C0103', is_model_media_valid_attributes)
