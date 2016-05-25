@@ -14,3 +14,6 @@ if __name__ == '__main__':
     MODEL.delete()
 
     COUNT = SomeModel.objects.count()
+    # added in django 1.6
+    FIRST = SomeModel.objects.first()
+    LAST = SomeModel.objects.last()

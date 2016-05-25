@@ -346,7 +346,6 @@ def _visit_assign(checker):
 
 def apply_augmentations(linter):
     """Apply augmentation and suppression rules."""
-
     augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_sets)
     augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_ids)
     suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_model_field_display_method)
@@ -368,7 +367,6 @@ def apply_augmentations(linter):
     suppress_message(linter, _visit_class(ClassChecker), 'no-init', is_model_meta_subclass)
     suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_meta_subclass)
     suppress_message(linter, _visit_attribute(ClassChecker), 'protected-access', allow_meta_protected_access)
-    #suppress_message(linter, _visit_assign(ClassChecker), 'protected-access', allow_meta_protected_access)
 
     # Media
     suppress_message(linter, _visit_assignname(NameChecker), 'C0103', is_model_media_valid_attributes)

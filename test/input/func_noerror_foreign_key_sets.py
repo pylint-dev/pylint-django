@@ -12,6 +12,9 @@ class SomeModel(models.Model):
     def get_others(self):
         return self.othermodel_set.all()
 
+    def get_first(self):
+        return self.othermodel_set.first()
+
 
 class OtherModel(models.Model):
     count = models.IntegerField()
