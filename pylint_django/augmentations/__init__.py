@@ -152,7 +152,15 @@ MODELADMIN_ATTRS = {
 
 
 MODEL_ATTRS = {
+    'DoesNotExist',
+    'MultipleObjectsReturned',
+    '_base_manager',
+    '_default_manager',
+    '_meta',
     'delete',
+    'get_next_by_date',
+    'get_previous_by_date',
+    'objects',
     'save',
 }
 
