@@ -4,6 +4,7 @@ import sys
 import unittest
 from django.conf import settings
 from pylint.testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
+from pylint_django.compat import django_version
 
 
 settings.configure()
@@ -18,6 +19,12 @@ linter.load_plugin_modules(['pylint_django'])
 if sys.version_info < (2, 7):
     linter.global_set_option('required-attributes', ())
     linter.global_set_option('disable', ('E0012',))
+
+
+SKIP_TESTS_FOR_DJANGO_VERSION = {
+    # if the value of the dict key is False, skip the test, otherwise run it
+    'func_noerror_protected_meta_access': django_version >= (1, 8)
+}
 
 
 def module_exists(module_name):
@@ -35,7 +42,22 @@ def tests(input_dir, messages_dir):
     input_dir = os.path.join(HERE, input_dir)
     messages_dir = os.path.join(HERE, messages_dir)
 
-    return make_tests(input_dir, messages_dir, None, callbacks)
+    # first tests which pass for all Django versions
+    tests = make_tests(input_dir, messages_dir, None, callbacks)
+
+    # now skip some tests test for specific versions - for example,
+    # _meta access should not work for django<1.8 but should run and
+    # pass for django 1.4 - skip the tests which will be checking
+    # a piece of functionality in pylint-django that should only
+    # in higher versions.
+    specific_tests = []
+    for test_name, version_range in SKIP_TESTS_FOR_DJANGO_VERSION.iteritems():
+        if not version_range:
+            specific_tests.append(test_name)
+    filter_rgx = '(%s)' % '|'.join(specific_tests)
+
+    tests += make_tests(os.path.join(input_dir, 'versions'), messages_dir, filter_rgx, callbacks)
+    return tests
 
 
 def suite():
