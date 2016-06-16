@@ -20,5 +20,5 @@ class ModelWhichLikesMeta(models.Model):
 if __name__ == '__main__':
     MODEL = ModelWhichLikesMeta()
     MODEL.save()
-    print MODEL._meta.get_field('ursuary')
-    print MODEL.do_a_thing()
+    print(MODEL._meta.get_field('ursuary'))
+    print(MODEL.do_a_thing())
