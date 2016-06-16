@@ -61,5 +61,6 @@ setup(
     install_requires=_install_requires,
     license='GPLv2',
     classifiers=_classifiers,
-    keywords='pylint django plugin'
+    keywords='pylint django plugin',
+    zip_safe=False,
 )
