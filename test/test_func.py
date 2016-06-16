@@ -22,8 +22,8 @@ if sys.version_info < (2, 7):
 
 
 SKIP_TESTS_FOR_DJANGO_VERSION = {
-    # if the value of the dict key is False, skip the test, otherwise run it
-    'func_noerror_protected_meta_access': django_version >= (1, 8)
+    # if the second value is False, skip the test, otherwise run it
+    ('func_noerror_protected_meta_access', django_version >= (1, 8)),
 }
 
 
@@ -51,7 +51,7 @@ def tests(input_dir, messages_dir):
     # a piece of functionality in pylint-django that should only
     # in higher versions.
     specific_tests = []
-    for test_name, version_range in SKIP_TESTS_FOR_DJANGO_VERSION.iteritems():
+    for test_name, version_range in SKIP_TESTS_FOR_DJANGO_VERSION:
         if not version_range:
             specific_tests.append(test_name)
     filter_rgx = '(%s)' % '|'.join(specific_tests)
