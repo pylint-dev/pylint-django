@@ -36,6 +36,32 @@ prospector [..other options..]
 * Validates `Model.__unicode__` methods.
 * `Meta` informational classes on forms and models do not generate errors.
 
+# Contributing
+
+Please feel free to add your name to the `CONTRIBUTORS.md` file if you want to be
+credited when pull requests get merged. You can also add to the `CHANGELOG.md` file
+if you wish, although I'll also do that when merging if not.
+
+## Tests
+
+The structure of the test package follows that from pylint itself.
+
+It is fairly simple: create a module starting with `func_` followed by
+a test name, and insert into it some code. The tests will run pylint
+ against these modules. If the idea is that no messages now occur, then
+ that is fine, just check to see if it works by running `scripts/test.sh`.
+
+Ideally, add some pylint error suppression messages to the file to prevent
+spurious warnings, since these are all tiny little modules not designed to
+do anything so there's no need to be perfect.
+
+It is possible to make tests with expected error output, for example, if
+adding a new message or simply accepting that pylint is supposed to warn.
+the `messages` directory contains a list of files which should match the
+name of the test and contain error type, line number, class and expected text.
+These are useful to quickly add "expected messages".
+
+
 # License
 
 `pylint-django` is available under the GPLv2 license.
