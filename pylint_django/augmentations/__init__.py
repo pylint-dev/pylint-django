@@ -7,12 +7,268 @@ from pylint.checkers.newstyle import NewStyleConflictChecker
 from pylint.checkers.variables import VariablesChecker
 from astroid import InferenceError
 from pylint_django.compat import ClassDef, ImportFrom, Attribute, django_version
+from astroid.objects import Super
 from astroid.scoped_nodes import Class as ScopedClass, Module
 from pylint.__pkginfo__ import numversion as PYLINT_VERSION
 from pylint.checkers.typecheck import TypeChecker
 from pylint_django.utils import node_is_subclass, PY3
 from pylint_django.compat import inferred
 from pylint_plugin_utils import augment_visit, suppress_message
+
+from django.views.generic.base import View, RedirectView, ContextMixin
+from django.views.generic.dates import DateMixin, DayMixin, MonthMixin, WeekMixin, YearMixin
+from django.views.generic.detail import SingleObjectMixin, SingleObjectTemplateResponseMixin, TemplateResponseMixin
+from django.views.generic.edit import DeletionMixin, FormMixin, ModelFormMixin
+from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin
+
+
+# Note: it would have been nice to import the Manager object from Django and
+# get its attributes that way - and this used to be the method - but unfortunately
+# there's no guarantee that Django is properly configured at that stage, and importing
+# anything from the django.db package causes an ImproperlyConfigured exception.
+# Therefore we'll fall back on a hard-coded list of attributes which won't be as accurate,
+# but this is not 100% accurate anyway.
+MANAGER_ATTRS = {
+    'none',
+    'all',
+    'count',
+    'dates',
+    'distinct',
+    'extra',
+    'get',
+    'get_or_create',
+    'get_queryset',
+    'create',
+    'bulk_create',
+    'filter',
+    'aggregate',
+    'annotate',
+    'complex_filter',
+    'exclude',
+    'in_bulk',
+    'iterator',
+    'latest',
+    'order_by',
+    'select_for_update',
+    'select_related',
+    'prefetch_related',
+    'values',
+    'values_list',
+    'update',
+    'reverse',
+    'defer',
+    'only',
+    'using',
+    'exists',
+}
+
+
+QS_ATTRS = {
+    'filter',
+    'exclude',
+    'annotate',
+    'order_by',
+    'reverse',
+    'distinct',
+    'values',
+    'values_list',
+    'dates',
+    'datetimes',
+    'none',
+    'all',
+    'select_related',
+    'prefetch_related',
+    'extra',
+    'defer',
+    'only',
+    'using',
+    'select_for_update',
+    'raw',
+    'get',
+    'create',
+    'get_or_create',
+    'update_or_create',
+    'bulk_create',
+    'count',
+    'in_bulk',
+    'iterator',
+    'latest',
+    'earliest',
+    'first',
+    'last',
+    'aggregate',
+    'exists',
+    'update',
+    'delete',
+    'as_manager',
+    'expression',
+    'output_field',
+}
+
+
+MODELADMIN_ATTRS = {
+    # options
+    'actions',
+    'actions_on_top',
+    'actions_on_bottom',
+    'actions_selection_counter',
+    'date_hierarchy',
+    'empty_value_display',
+    'exclude',
+    'fields',
+    'fieldsets',
+    'filter_horizontal',
+    'filter_vertical',
+    'form',
+    'formfield_overrides',
+    'inlines',
+    'list_display',
+    'list_display_links',
+    'list_editable',
+    'list_filter',
+    'list_max_show_all',
+    'list_per_page',
+    'list_select_related',
+    'ordering',
+    'paginator',
+    'prepopulated_fields',
+    'preserve_filters',
+    'radio_fields',
+    'raw_id_fields',
+    'readonly_fields',
+    'save_as',
+    'save_on_top',
+    'search_fields',
+    'show_full_result_count',
+    'view_on_site',
+    # template options
+    'add_form_template',
+    'change_form_template',
+    'change_list_template',
+    'delete_confirmation_template',
+    'delete_selected_confirmation_template',
+    'object_history_template',
+}
+
+
+MODEL_ATTRS = {
+    'DoesNotExist',
+    'MultipleObjectsReturned',
+    '_base_manager',
+    '_default_manager',
+    '_meta',
+    'delete',
+    'get_next_by_date',
+    'get_previous_by_date',
+    'objects',
+    'save',
+}
+
+
+FIELD_ATTRS = {
+    'null',
+    'blank',
+    'choices',
+    'db_column',
+    'db_index',
+    'db_tablespace',
+    'default',
+    'editable',
+    'error_messages',
+    'help_text',
+    'primary_key',
+    'unique',
+    'unique_for_date',
+    'unique_for_month',
+    'unique_for_year',
+    'verbose_name',
+    'validators',
+}
+
+
+CHAR_FIELD_ATTRS = {
+    'max_length',
+}
+
+
+DATE_FIELD_ATTRS = {
+    'auto_now',
+    'auto_now_add',
+}
+
+
+DECIMAL_FIELD_ATTRS = {
+    'max_digits',
+    'decimal_places',
+}
+
+
+FILE_FIELD_ATTRS = {
+    'upload_to',
+    'storage',
+}
+
+
+IMAGE_FIELD_ATTRS = {
+    'height_field',
+    'width_field',
+}
+
+
+IP_FIELD_ATTRS = {
+    'protocol',
+    'unpack_ipv4',
+}
+
+
+SLUG_FIELD_ATTRS = {
+    'allow_unicode',
+}
+
+
+FOREIGNKEY_FIELD_ATTRS = {
+    'limit_choices_to',
+    'related_name',
+    'related_query_name',
+    'to_field',
+    'db_constraint',
+    'swappable',
+}
+
+
+MANYTOMANY_FIELD_ATTRS = {
+    'related_name',
+    'related_query_name',
+    'limit_choices_to',
+    'symmetrical',
+    'through',
+    'through_fields',
+    'db_table',
+    'db_constraint',
+    'swappable',
+}
+
+
+ONETOONE_FIELD_ATTRS = {
+    'parent_link',
+}
+
+
+VIEW_ATTRS = {
+    (
+        (
+            '{}.{}'.format(cls.__module__, cls.__name__),
+            '.{}'.format(cls.__name__)
+        ),
+        tuple(cls.__dict__.keys())
+    ) for cls in (
+        View, RedirectView, ContextMixin,
+        DateMixin, DayMixin, MonthMixin, WeekMixin, YearMixin,
+        SingleObjectMixin, SingleObjectTemplateResponseMixin, TemplateResponseMixin,
+        DeletionMixin, FormMixin, ModelFormMixin,
+        MultipleObjectMixin, MultipleObjectTemplateResponseMixin,
+    )
+}
 
 
 def ignore_import_warnings_for_related_fields(orig_method, self, node):
@@ -66,46 +322,8 @@ def foreign_key_sets(chain, node):
     warn.
     """
     quack = False
-    # Note: it would have been nice to import the Manager object from Django and
-    # get its attributes that way - and this used to be the method - but unfortunately
-    # there's no guarantee that Django is properly configured at that stage, and importing
-    # anything from the django.db package causes an ImproperlyConfigured exception.
-    # Therefore we'll fall back on a hard-coded list of attributes which won't be as accurate,
-    # but this is not 100% accurate anyway.
-    manager_attrs = (
-        'none',
-        'all',
-        'count',
-        'dates',
-        'distinct',
-        'extra',
-        'get',
-        'get_or_create',
-        'create',
-        'bulk_create',
-        'filter',
-        'aggregate',
-        'annotate',
-        'complex_filter',
-        'exclude',
-        'in_bulk',
-        'iterator',
-        'latest',
-        'order_by',
-        'select_for_update',
-        'select_related',
-        'prefetch_related',
-        'values',
-        'values_list',
-        'update',
-        'reverse',
-        'defer',
-        'only',
-        'using',
-        'exists',
-    )
 
-    if node.attrname in manager_attrs or node.attrname.endswith('_set'):
+    if node.attrname in MANAGER_ATTRS or node.attrname.endswith('_set'):
         # if this is a X_set method, that's a pretty strong signal that this is the default
         # Django name, rather than one set by related_name
         quack = True
@@ -113,7 +331,7 @@ def foreign_key_sets(chain, node):
         # we will
         if isinstance(node.parent, Attribute):
             func_name = getattr(node.parent, 'attrname', None)
-            if func_name in manager_attrs:
+            if func_name in MANAGER_ATTRS:
                 quack = True
 
     if quack:
@@ -202,6 +420,124 @@ def is_model_mpttmeta_subclass(node):
     return node_is_subclass(node.parent, *parents)
 
 
+def _attribute_is_magic(node, attrs, parents):
+    """Checks that node is an attribute used inside one of allowed parents"""
+    if node.attrname not in attrs:
+        return False
+    if not node.last_child():
+        return False
+
+    try:
+        for cls in inferred(node.last_child())():
+            if isinstance(cls, Super):
+                cls = cls._self_class
+            if node_is_subclass(cls, *parents) or cls.qname() in parents:
+                return True
+    except InferenceError:
+        pass
+    return False
+
+
+def is_manager_attribute(node):
+    """Checks that node is attribute of Manager or QuerySet class."""
+    parents = ('django.db.models.manager.Manager',
+               '.Manager',
+               'django.db.models.query.QuerySet',
+               '.QuerySet')
+    return _attribute_is_magic(node, MANAGER_ATTRS.union(QS_ATTRS), parents)
+
+
+def is_admin_attribute(node):
+    """Checks that node is attribute of BaseModelAdmin."""
+    parents = ('django.contrib.admin.options.BaseModelAdmin',
+               '.BaseModelAdmin')
+    return _attribute_is_magic(node, MODELADMIN_ATTRS, parents)
+
+
+def is_model_attribute(node):
+    """Checks that node is attribute of Model."""
+    parents = ('django.db.models.base.Model',
+               '.Model')
+    return _attribute_is_magic(node, MODEL_ATTRS, parents)
+
+
+def is_field_attribute(node):
+    """Checks that node is attribute of Field."""
+    parents = ('django.db.models.fields.Field',
+               '.Field')
+    return _attribute_is_magic(node, FIELD_ATTRS, parents)
+
+
+def is_charfield_attribute(node):
+    """Checks that node is attribute of CharField."""
+    parents = ('django.db.models.fields.CharField',
+               '.CharField')
+    return _attribute_is_magic(node, CHAR_FIELD_ATTRS, parents)
+
+
+def is_datefield_attribute(node):
+    """Checks that node is attribute of DateField."""
+    parents = ('django.db.models.fields.DateField',
+               '.DateField')
+    return _attribute_is_magic(node, DATE_FIELD_ATTRS, parents)
+
+
+def is_decimalfield_attribute(node):
+    """Checks that node is attribute of DecimalField."""
+    parents = ('django.db.models.fields.DecimalField',
+               '.DecimalField')
+    return _attribute_is_magic(node, DECIMAL_FIELD_ATTRS, parents)
+
+
+def is_filefield_attribute(node):
+    """Checks that node is attribute of FileField."""
+    parents = ('django.db.models.fields.files.FileField',
+               '.FileField')
+    return _attribute_is_magic(node, FILE_FIELD_ATTRS, parents)
+
+
+def is_imagefield_attribute(node):
+    """Checks that node is attribute of ImageField."""
+    parents = ('django.db.models.fields.files.ImageField',
+               '.ImageField')
+    return _attribute_is_magic(node, IMAGE_FIELD_ATTRS, parents)
+
+
+def is_ipfield_attribute(node):
+    """Checks that node is attribute of GenericIPAddressField."""
+    parents = ('django.db.models.fields.GenericIPAddressField',
+               '.GenericIPAddressField')
+    return _attribute_is_magic(node, IP_FIELD_ATTRS, parents)
+
+
+def is_slugfield_attribute(node):
+    """Checks that node is attribute of SlugField."""
+    parents = ('django.db.models.fields.SlugField',
+               '.SlugField')
+    return _attribute_is_magic(node, SLUG_FIELD_ATTRS, parents)
+
+
+def is_foreignkeyfield_attribute(node):
+    """Checks that node is attribute of ForeignKey."""
+    parents = ('django.db.models.fields.related.ForeignKey',
+               '.ForeignKey')
+    return _attribute_is_magic(node, FOREIGNKEY_FIELD_ATTRS, parents)
+
+
+def is_manytomanyfield_attribute(node):
+    """Checks that node is attribute of ManyToManyField."""
+    parents = ('django.db.models.fields.related.ManyToManyField',
+               '.ManyToManyField')
+    return _attribute_is_magic(node, MANYTOMANY_FIELD_ATTRS, parents)
+
+
+def is_onetoonefield_attribute(node):
+    """Checks that node is attribute of OneToOneField."""
+    parents = ('django.db.models.fields.related.OneToOneField',
+               '.OneToOneField')
+    return _attribute_is_magic(node, ONETOONE_FIELD_ATTRS, parents)
+
+
 def is_model_test_case_subclass(node):
     """Checks that node is derivative of TestCase class."""
     if not node.name.endswith('Test') and not isinstance(node.parent, ClassDef):
@@ -210,9 +546,17 @@ def is_model_test_case_subclass(node):
     return node_is_subclass(node, 'django.test.testcases.TestCase')
 
 
+def generic_is_view_attribute(parents, attrs):
+    """Generates is_X_attribute function for given parents and attrs."""
+    def is_attribute(node):
+        return _attribute_is_magic(node, attrs, parents)
+    return is_attribute
+
+
 def is_model_view_subclass_method_shouldnt_be_function(node):
     """Checks that node is get or post method of the View class."""
     if node.name not in ('get', 'post'):
+
         return False
 
     parent = node.parent
@@ -349,6 +693,25 @@ def apply_augmentations(linter):
     augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_sets)
     augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_ids)
     suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_model_field_display_method)
+
+    # supress errors when accessing magical class attributes
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_manager_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_admin_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_model_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_field_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_charfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_datefield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_decimalfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_filefield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_imagefield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_ipfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_slugfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_foreignkeyfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_manytomanyfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_onetoonefield_attribute)
+
+    for parents, attrs in VIEW_ATTRS:
+        suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', generic_is_view_attribute(parents, attrs))
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
     suppress_message(linter, _visit_class(MisdesignChecker), 'R0901', is_class('django.views.generic.edit.FormView'))
