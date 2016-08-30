@@ -23,7 +23,7 @@ def is_model_or_form_field(cls):
     return is_model_field(cls) or is_form_field(cls)
 
 
-def apply_type_shim(cls, context=None):
+def apply_type_shim(cls, context=None):  # noqa
 
     if cls.name in _STR_FIELDS:
         base_nodes = scoped_nodes.builtin_lookup('str')
