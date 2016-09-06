@@ -9,7 +9,7 @@ _version = '0.7.3'
 _packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"])
 
 _short_description = "pylint-django is a Pylint plugin to aid Pylint in recognising and understanding" \
-                     "errors caused when using the Django framework"
+                     " errors caused when using the Django framework"
 
 
 _transform_dir = 'pylint_django/transforms/transforms'
