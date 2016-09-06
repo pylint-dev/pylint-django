@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.7.3
+
+
 ## Version 0.7.2
 * [#76](https://github.com/landscapeio/pylint-django/pull/76) Better handling of mongoengine querysetmanager
 * [#73](https://github.com/landscapeio/pylint-django/pull/73) (#72)[https://github.com/landscapeio/pylint-django/issues/72] Make package zip safe to help fix some path problems
