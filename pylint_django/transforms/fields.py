@@ -9,10 +9,13 @@ _STR_FIELDS = ('CharField', 'SlugField', 'URLField', 'TextField', 'EmailField',
 _INT_FIELDS = ('IntegerField', 'SmallIntegerField', 'BigIntegerField',
                'PositiveIntegerField', 'PositiveSmallIntegerField')
 _BOOL_FIELDS = ('BooleanField', 'NullBooleanField')
+_RANGE_FIELDS = ('RangeField', 'IntegerRangeField', 'BigIntegerRangeField',
+                 'FloatRangeField', 'DateTimeRangeField', 'DateRangeField')
 
 
 def is_model_field(cls):
-    return cls.qname().startswith('django.db.models.fields')
+    return cls.qname().startswith('django.db.models.fields') or \
+        cls.qname().startswith('django.contrib.postgres.fields')
 
 
 def is_form_field(cls):
@@ -47,10 +50,18 @@ def apply_type_shim(cls, context=None):  # noqa
         base_nodes = MANAGER.ast_from_module_name('datetime').lookup('date')
     elif cls.name == 'DurationField':
         base_nodes = MANAGER.ast_from_module_name('datetime').lookup('timedelta')
+    elif cls.name == 'UUIDField':
+        base_nodes = MANAGER.ast_from_module_name('uuid').lookup('UUID')
     elif cls.name == 'ManyToManyField':
         base_nodes = MANAGER.ast_from_module_name('django.db.models.query').lookup('QuerySet')
     elif cls.name in ('ImageField', 'FileField'):
         base_nodes = MANAGER.ast_from_module_name('django.core.files.base').lookup('File')
+    elif cls.name == 'ArrayField':
+        base_nodes = scoped_nodes.builtin_lookup('list')
+    elif cls.name in ('HStoreField', 'JSONField'):
+        base_nodes = scoped_nodes.builtin_lookup('dict')
+    elif cls.name in _RANGE_FIELDS:
+        base_nodes = MANAGER.ast_from_module_name('psycopg2._range').lookup('Range')
     else:
         return iter([cls])
 
