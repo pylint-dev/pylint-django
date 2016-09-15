@@ -24,6 +24,7 @@ if sys.version_info < (2, 7):
 SKIP_TESTS_FOR_DJANGO_VERSION = {
     # if the second value is False, skip the test, otherwise run it
     ('func_noerror_protected_meta_access', django_version >= (1, 8)),
+    ('func_noerror_uuid_field', django_version >= (1, 8)),
 }
 
 

@@ -34,7 +34,6 @@ class LotsOfFieldsModel(models.Model):
     textfield = models.TextField()
     timefield = models.TimeField()
     urlfield = models.URLField()
-    uuidfield = models.UUIDField()
 
     def boolean_field_tests(self):
         print(self.booleanfield | True)
@@ -80,12 +79,3 @@ class LotsOfFieldsModel(models.Model):
         print(self.smallintegerfield + 3)
         print(self.positiveintegerfield + 2)
         print(self.positivesmallintegerfield + 1)
-
-    def uuidfield_tests(self):
-        print(self.uuidfield.bytes)
-        print(self.uuidfield.bytes_le)
-        print(self.uuidfield.fields[2])
-        print(self.uuidfield.hex)
-        # print(self.uuidfield.int)  # Don't know how to properly check this one
-        print(self.uuidfield.variant)
-        print(self.uuidfield.version)
