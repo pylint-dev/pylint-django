@@ -1,6 +1,7 @@
 from django.db.models import fields as django_fields
 import datetime
 from decimal import Decimal
+from uuid import UUID
 
 
 # --------
@@ -124,4 +125,8 @@ class GenericIPAddressField(str, django_fields.GenericIPAddressField):
 
 
 class IPAddressField(str, django_fields.IPAddressField):
+    pass
+
+
+class UUIDField(UUID, django_fields.UUIDField):
     pass
