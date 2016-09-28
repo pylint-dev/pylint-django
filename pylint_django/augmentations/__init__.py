@@ -398,7 +398,7 @@ def is_model_meta_subclass(node):
                'django.forms.forms.Form',
                '.ModelForm',
                'django.forms.models.ModelForm',
-               'rest_framework.serializers.ModelSerializer',
+               'rest_framework.serializers.BaseSerializer',
                'rest_framework.generics.GenericAPIView',
                'rest_framework.viewsets.ReadOnlyModelViewSet',
                'rest_framework.viewsets.ModelViewSet',
