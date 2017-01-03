@@ -8,15 +8,15 @@ when creating a typical urls.py
 #      CONST_NAME_RGX value
 
 from django.views.generic import TemplateView
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 
 class BoringView(TemplateView):
     pass
 
 
-urlpatterns = patterns('',
-                       url(r'^something',
-                           BoringView.as_view(),
-                           name='something'),
-                      )
+urlpatterns = [
+    url(r'^something',
+        BoringView.as_view(),
+        name='something'),
+]
