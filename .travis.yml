@@ -9,10 +9,10 @@ env:
   - DJANGO='Django>=1.4,<1.5' SKIP='3.3 3.4 3.5'
   - DJANGO='Django>=1.5,<1.6' SKIP='3.3 3.4 3.5'
   - DJANGO='Django>=1.6,<1.7' SKIP='3.4 3.5'
-  - DJANGO='Django>=1.7,<1.8' SKIP='2.6'
+  - DJANGO='Django>=1.7,<1.8' SKIP='2.6 3.5'
   - DJANGO='Django>=1.8,<1.9' SKIP='2.6'
-  - DJANGO='Django>=1.9,<1.10' SKIP='2.6'
-  - DJANGO='Django>=1.10,<1.11' SKIP='2.6'
+  - DJANGO='Django>=1.9,<1.10' SKIP='2.6 3.3'
+  - DJANGO='Django>=1.10,<1.11' SKIP='2.6 3.3'
 install:
   scripts/travis-install.sh
 script:
