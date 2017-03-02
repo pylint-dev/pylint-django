@@ -772,4 +772,11 @@ def apply_augmentations(linter):
     suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_mpttmeta_subclass)
 
     # ForeignKey and OneToOneField
-    VariablesChecker.leave_module = wrap(VariablesChecker.leave_module, ignore_import_warnings_for_related_fields)
+    # Must update this in a thread safe way to support the parallel option on pylint (-j)
+    current_leave_module = VariablesChecker.leave_module
+    if current_leave_module.__name__ == 'leave_module':
+        # current_leave_module is not wrapped
+        # Two threads may hit the next assignment concurrently, but the result is the same
+        VariablesChecker.leave_module = wrap(current_leave_module, ignore_import_warnings_for_related_fields)
+        # VariablesChecker.leave_module is now wrapped
+    # else VariablesChecker.leave_module is already wrapped
