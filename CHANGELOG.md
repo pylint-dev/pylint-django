@@ -1,7 +1,10 @@
 # Changelog
 
-## Version 0.7.3
-
+## Version 0.7.4
+* [#88](https://github.com/landscapeio/pylint-django/pull/88) Fixed builds with Django 1.10 (thanks to [federicobond](https://github.com/federicobond))
+* [#91](https://github.com/landscapeio/pylint-django/pull/91) Fixed race condition when running with pylint parallel execution mode (thanks to [jeremycarroll](https://github.com/jeremycarroll))
+* [#64](https://github.com/landscapeio/pylint-django/issues/64) "Meta is old style class" now suppressed on BaseSerializer too (thanks to [unklphil](https://github.com/unklphil))
+* [#70](https://github.com/landscapeio/pylint-django/pull/70) Updating to handle newer pylint/astroid versions (thanks to [iXce](https://github.com/iXce))
 
 ## Version 0.7.2
 * [#76](https://github.com/landscapeio/pylint-django/pull/76) Better handling of mongoengine querysetmanager

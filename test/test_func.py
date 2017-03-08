@@ -69,5 +69,5 @@ def suite():
     return unittest.TestSuite([unittest.makeSuite(test, suiteClass=unittest.TestSuite)
                                for test in test_list])
 
-if __name__=='__main__':
+if __name__ == '__main__':
     unittest.main(defaultTest='suite')
