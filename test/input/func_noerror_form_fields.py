@@ -23,7 +23,7 @@ class ManyFieldsForm(forms.Form):
     imagefield = forms.ImageField(name='test_image', upload_to='test')
     # note: IPAdressField has been deprecated since django 1.7 so might not
     # be available if using django 1.8+
-    ipaddressfield = getattr(forms, 'IPAddressField', 'GenericIPAddressField')()
+    ipaddressfield = getattr(forms, 'IPAddressField', getattr(forms, 'GenericIPAddressField'))()
     intfield = forms.IntegerField(null=True)
     nullbooleanfield = forms.NullBooleanField()
     slugfield = forms.SlugField()
