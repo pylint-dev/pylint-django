@@ -45,6 +45,8 @@ def apply_type_shim(cls, context=None):  # noqa
         base_nodes = MANAGER.ast_from_module_name('datetime').lookup('time')
     elif cls.name == 'DateField':
         base_nodes = MANAGER.ast_from_module_name('datetime').lookup('date')
+    elif cls.name == 'DurationField':
+        base_nodes = MANAGER.ast_from_module_name('datetime').lookup('timedelta')
     elif cls.name == 'ManyToManyField':
         base_nodes = MANAGER.ast_from_module_name('django.db.models.query').lookup('QuerySet')
     elif cls.name in ('ImageField', 'FileField'):

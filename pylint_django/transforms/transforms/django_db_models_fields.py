@@ -110,6 +110,12 @@ class TimeField(datetime.time, django_fields.TimeField):
             pass
 
 
+class DurationField(datetime.timedelta, django_fields.DurationField):
+    if PY3:
+        def __new__(cls, verbose_name=None, name=None, **kwargs):
+            pass
+
+
 # -------
 # misc
 
