@@ -3,8 +3,12 @@ import os
 import sys
 import unittest
 from django.conf import settings
-from pylint.testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
 from pylint_django.compat import django_version
+
+try:
+    from pylint.testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
+except ImportError:
+    from .testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
 
 
 settings.configure()
