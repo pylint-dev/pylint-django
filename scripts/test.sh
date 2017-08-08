@@ -1,2 +1,2 @@
 #!/bin/bash
-python test/test_func.py
+python -m test.test_func
