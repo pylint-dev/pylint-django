@@ -101,7 +101,13 @@ class TimeField(datetime.time, django_fields.TimeField):
             pass
 
 
-    # --------
+class DurationField(datetime.timedelta, django_fields.DurationField):
+    if PY3:
+        def __new__(cls, *args, **kwargs):
+            pass
+
+
+# --------
 # choice
 
 class ChoiceField(object, django_fields.ChoiceField):
