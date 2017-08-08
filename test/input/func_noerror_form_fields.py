@@ -15,6 +15,7 @@ class ManyFieldsForm(forms.Form):
     datetimefield = forms.DateTimeField(auto_now_add=True)
     datefield = forms.DateField(auto_now_add=True)
     decimalfield = forms.DecimalField(max_digits=5, decimal_places=2)
+    durationfield = forms.DurationField()
     emailfield = forms.EmailField()
     filefield = forms.FileField(name='test_file', upload_to='test')
     filepathfield = forms.FilePathField(path='/some/path')
@@ -59,6 +60,11 @@ class ManyFieldsForm(forms.Form):
 
     def decimalfield_tests(self):
         print(self.decimalfield.adjusted())
+
+    def durationfield_tests(self):
+        now = datetime.now()
+        print(now - self.durationfield)
+        print(self.durationfield.total_seconds())
 
     def filefield_tests(self):
         print(self.filefield)
