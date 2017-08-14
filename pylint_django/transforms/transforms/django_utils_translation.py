@@ -1,1 +1,1 @@
-ugettext_lazy = lambda x: None
+ugettext_lazy = lambda x: ''
