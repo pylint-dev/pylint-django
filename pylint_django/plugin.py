@@ -16,13 +16,7 @@ def register(linter):
     However, we will also use it to amend existing checker config.
     """
     name_checker = get_checker(linter, NameChecker)
-    name_checker.config.good_names += ('qs',)
-
-    # Default pylint.checkers.base.CONST_NAME_RGX = re.compile('(([A-Z_][A-Z0-9_]*)|(__.*__))$').
-    start = name_checker.config.const_rgx.pattern[:-2]
-    end = name_checker.config.const_rgx.pattern[-2:]
-    const_rgx = '%s|(urls|urlpatterns|register)%s' % (start, end)
-    name_checker.config.const_rgx = re.compile(const_rgx)
+    name_checker.config.good_names += ('qs', 'urlpatterns', 'register', 'app_name')
 
     # we don't care about South migrations
     linter.config.black_list += ('migrations', 'south_migrations')
