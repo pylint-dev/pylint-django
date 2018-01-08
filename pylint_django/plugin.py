@@ -1,5 +1,5 @@
 """Common Django module."""
-from pylint.checkers.base import NameChecker
+from pylint.checkers.base import NameChecker, UpperCaseStyle
 from pylint_django.augmentations import apply_augmentations
 from pylint_plugin_utils import get_checker
 import re
@@ -19,6 +19,8 @@ def register(linter):
     name_checker.config.good_names += ('qs',)
 
     # Default pylint.checkers.base.CONST_NAME_RGX = re.compile('(([A-Z_][A-Z0-9_]*)|(__.*__))$').
+    if name_checker.config.const_rgx is None:
+        name_checker.config.const_rgx = UpperCaseStyle.CONST_NAME_RGX
     start = name_checker.config.const_rgx.pattern[:-2]
     end = name_checker.config.const_rgx.pattern[-2:]
     const_rgx = '%s|(urls|urlpatterns|register)%s' % (start, end)
