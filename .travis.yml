@@ -19,3 +19,7 @@ script:
   - PYTHONPATH=. coverage run test/test_func.py
 after_success:
   coveralls
+notifications:
+  email:
+    on_failure: change
+    on_success: never
