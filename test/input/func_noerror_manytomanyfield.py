@@ -2,7 +2,7 @@
 Checks that Pylint does not complain about various
 methods on many-to-many relationships
 """
-#  pylint: disable=C0111,W5101
+#  pylint: disable=C0111
 from django.db import models
 
 
