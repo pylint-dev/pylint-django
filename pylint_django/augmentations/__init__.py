@@ -721,9 +721,10 @@ def apply_augmentations(linter):
     suppress_message(linter, _visit_class(ClassChecker), 'W0232', is_class('django.forms.models.ModelForm'))
 
     # forms implement __getitem__ but not __len__, thus raising a "Badly implemented container" warning which
-    # we will suppress.
-    suppress_message(linter, _leave_class(MisdesignChecker), 'R0924', is_class('django.forms.forms.Form'))
-    suppress_message(linter, _leave_class(MisdesignChecker), 'R0924', is_class('django.forms.models.ModelForm'))
+    # we will suppress. NOTE: removed from pylint, https://github.com/PyCQA/pylint/issues/112
+    # keeping here in case it gets re-implemented
+    # suppress_message(linter, _leave_class(MisdesignChecker), 'R0924', is_class('django.forms.forms.Form'))
+    # suppress_message(linter, _leave_class(MisdesignChecker), 'R0924', is_class('django.forms.models.ModelForm'))
 
     # Meta
     suppress_message(linter, _visit_class(DocStringChecker), 'missing-docstring', is_model_meta_subclass)
