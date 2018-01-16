@@ -2,7 +2,7 @@
 Checks that Pylint does not complain about a fairly standard
 Django Model
 """
-#  pylint: disable=C0111,W5101,W5103
+#  pylint: disable=C0111
 from django.db import models
 
 

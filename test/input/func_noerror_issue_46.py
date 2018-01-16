@@ -1,7 +1,7 @@
 """
 Checks that Pylint does not complain about raising DoesNotExist
 """
-#  pylint: disable=C0111,W5101,W5103
+#  pylint: disable=C0111
 from django.db import models
 
 

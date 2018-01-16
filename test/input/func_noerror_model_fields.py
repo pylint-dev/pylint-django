@@ -2,7 +2,7 @@
 Checks that Pylint does not complain about various
 methods on Django model fields.
 """
-#  pylint: disable=C0111,W5101
+#  pylint: disable=C0111
 from __future__ import print_function
 from datetime import datetime, date
 from decimal import Decimal
