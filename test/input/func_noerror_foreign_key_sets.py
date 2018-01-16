@@ -18,11 +18,12 @@ class SomeModel(models.Model):
 
 class OtherModel(models.Model):
     count = models.IntegerField()
-    something = models.ForeignKey(SomeModel)
+    something = models.ForeignKey(SomeModel, on_delete=models.CASCADE)
 
 
 class ThirdModel(models.Model):
-    whatever = models.ForeignKey(SomeModel, related_name='whatevs')
+    whatever = models.ForeignKey(SomeModel, related_name='whatevs',
+                                 on_delete=models.CASCADE)
 
 
 def count_whatevers():

@@ -10,7 +10,7 @@ class SomeModel(models.Model):
 
 
 class SomeOtherModel(models.Model):
-    some_model = models.ForeignKey(SomeModel)
+    some_model = models.ForeignKey(SomeModel, on_delete=models.CASCADE)
     number = models.IntegerField()
 
     def do_something(self):

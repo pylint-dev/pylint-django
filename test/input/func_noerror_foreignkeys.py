@@ -17,8 +17,8 @@ class ISBN(models.Model):
 
 class Book(models.Model):
     book_name = models.CharField(max_length=100)
-    author = models.ForeignKey(Author)
-    isbn = models.OneToOneField(ISBN)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    isbn = models.OneToOneField(ISBN, on_delete=models.CASCADE)
 
     def get_isbn(self):
         return self.isbn.value
@@ -32,7 +32,7 @@ class Fruit(models.Model):
 
 
 class Seed(models.Model):
-    fruit = ForeignKey(Fruit)
+    fruit = ForeignKey(Fruit, on_delete=models.CASCADE)
 
     def get_fruit_name(self):
         return self.fruit.fruit_name
@@ -43,7 +43,7 @@ class User(models.Model):
 
 
 class UserProfile(models.Model):
-    user = OneToOneField(User)
+    user = OneToOneField(User, on_delete=models.CASCADE)
 
     def get_username(self):
         return self.user.username
