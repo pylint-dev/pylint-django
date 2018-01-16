@@ -6,10 +6,6 @@ python:
 env:
   - DJANGO="1.11,<2.0"
   - DJANGO="2.0,<3.0"
-matrix:
-  include:
-    - python: 2.7
-      env: DJANGO="1.11,<2.0"
 
 install:
   - pip install coverage coveralls
