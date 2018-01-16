@@ -1,5 +1,5 @@
 """
-Ensures that django models without a __unicode__ method are flagged
+Ensures that under PY3 django models with a __unicode__ method are flagged
 """
 #  pylint: disable=missing-docstring
 
@@ -8,7 +8,7 @@ from django.db import models
 
 class SomeModel(models.Model):
     something = models.CharField(max_length=255)
-    # no __unicode__ method
+    # no __str__ method
 
     something.something_else = 1
 
