@@ -1,2 +1,2 @@
 #!/bin/bash
-python test/test_func.py
+PYTHONPATH=. python test/test_func.py
