@@ -715,7 +715,7 @@ def apply_augmentations(linter):
         suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', generic_is_view_attribute(parents, attrs))
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
-    suppress_message(linter, _visit_class(MisdesignChecker), 'R0901', is_class('django.views.generic.edit.FormView'))
+    suppress_message(linter, _visit_class(MisdesignChecker), 'too-many-ancestors', is_class('django.views.generic.edit.FormView'))
 
     # model forms have no __init__ method anywhere in their bases
     suppress_message(linter, _visit_class(ClassChecker), 'W0232', is_class('django.forms.models.ModelForm'))
@@ -739,14 +739,6 @@ def apply_augmentations(linter):
     suppress_message(linter, _visit_class(NewStyleConflictChecker), 'old-style-class', is_model_media_subclass)
     suppress_message(linter, _visit_class(ClassChecker), 'no-init', is_model_media_subclass)
     suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_media_subclass)
-
-    # Too few public methods started appearing for Views and Models as part of Pylint>=1.4 / astroid>=1.3.3
-    # Not sure why, suspect this is a failure to get the parent classes somewhere
-    # For now, just suppress it on models and views
-    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods',
-                     is_class('.Model'))
-    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods',
-                     is_class('.View'))
 
     # Admin
     # Too many public methods (40+/20)
