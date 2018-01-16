@@ -4,7 +4,7 @@ Django python3/2 compatability dectorator is used
 
 See https://github.com/landscapeio/pylint-django/issues/10
 """
-#  pylint: disable=C0111
+#  pylint: disable=missing-docstring
 from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 

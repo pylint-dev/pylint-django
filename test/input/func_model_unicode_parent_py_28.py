@@ -2,7 +2,7 @@
 Ensures that django models whose parent have a
 __unicide__ method are not flagged
 """
-#  pylint: disable=C0111
+#  pylint: disable=missing-docstring
 from django.db import models
 
 

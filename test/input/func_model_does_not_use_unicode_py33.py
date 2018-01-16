@@ -1,7 +1,7 @@
 """
 Ensures that django models without a __unicode__ method are flagged
 """
-#  pylint: disable=C0111
+#  pylint: disable=missing-docstring
 
 from django.db import models
 

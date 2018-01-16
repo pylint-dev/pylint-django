@@ -1,7 +1,7 @@
 """
 Checks that Pylint does not complain about django Forms
 """
-#  pylint: disable=C0111,R0903
+#  pylint: disable=missing-docstring,R0903
 
 from django import forms
 
