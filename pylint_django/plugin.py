@@ -16,7 +16,8 @@ def register(linter):
     However, we will also use it to amend existing checker config.
     """
     name_checker = get_checker(linter, NameChecker)
-    name_checker.config.good_names += ('qs', 'urlpatterns', 'register', 'app_name')
+    name_checker.config.good_names += ('qs', 'urlpatterns', 'register', 'app_name',
+        'handler500')
 
     # we don't care about South migrations
     linter.config.black_list += ('migrations', 'south_migrations')
