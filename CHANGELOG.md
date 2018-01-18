@@ -2,6 +2,7 @@
 
 ## Version 0.8.0 (unreleased)
 
+* This is the last version to support Python 2. Issues a deprecation warning!
 * [#109](http://github.com/landscapeio/pylint-django/pull/109),
   adding 'urlpatterns', 'register', 'app_name' to good names. Obsoletes
   [#111](http://github.com/landscapeio/pylint-django/pull/111), fixes
