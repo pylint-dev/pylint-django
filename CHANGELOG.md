@@ -1,5 +1,30 @@
 # Changelog
 
+## Version 0.8.0 (unreleased)
+
+* [#109](http://github.com/landscapeio/pylint-django/pull/109),
+  adding 'urlpatterns', 'register', 'app_name' to good names. Obsoletes
+  [#111](http://github.com/landscapeio/pylint-django/pull/111), fixes
+  [#108](http://github.com/landscapeio/pylint-django/issues/108)
+  (Vinay Pai)
+* Add 'handler500' to good names (Mr. Senko)
+* [#103](http://github.com/landscapeio/pylint-django/pull/103):
+  Support factory_boy's DjangoModelFactory Meta class (Konstantinos Koukopoulos)
+* [#100](https://github.com/landscapeio/pylint-django/pull/100):
+  Fix E1101:Instance of '__proxy__' has no 'format' member' when using .format()
+  on a ugettext_lazy translation. Fixes
+  [#80](https://github.com/landscapeio/pylint-django/issues/80) (canarduck)
+* [#99](https://github.com/landscapeio/pylint-django/pull/99):
+  Add tests and transforms for DurationField, fixes
+  [#95](https://github.com/landscapeio/pylint-django/issues/95) (James M. Allen)
+* [#92](https://github.com/landscapeio/pylint-django/pull/92):
+  Add json field to WSGIRequest proxy (sjk4sc)
+* [#84](https://github.com/landscapeio/pylint-django/pull/84):
+  Add support for django.contrib.postgres.fields and UUIDField (Villiers Strauss)
+* Stop testing with older Django versions. Currently testing with Django 1.11.x and 2.0
+* Stop testing on Python 2, no functional changes in the source code though
+* Update tests for latest version of pylint (>=1.8)
+
 ## Version 0.7.4
 * [#88](https://github.com/landscapeio/pylint-django/pull/88) Fixed builds with Django 1.10 (thanks to [federicobond](https://github.com/federicobond))
 * [#91](https://github.com/landscapeio/pylint-django/pull/91) Fixed race condition when running with pylint parallel execution mode (thanks to [jeremycarroll](https://github.com/jeremycarroll))

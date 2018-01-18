@@ -6,3 +6,4 @@
 * [lhupfeldt](https://github.com/lhupfeldt)
 * [smirolo](https://github.com/smirolo)
 * [mbertolacci](https://github.com/mbertolacci)
+* [atodorov](https://github.com/atodorov)
