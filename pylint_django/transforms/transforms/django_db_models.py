@@ -8,7 +8,6 @@ class Model(object):
     pk = None
 
     MultipleObjectsReturned = MultipleObjectsReturned
-    DoesNotExist = ObjectDoesNotExist
 
     save = lambda *a, **kw: None
     delete = lambda *a, **kw: None
