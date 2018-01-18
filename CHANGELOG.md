@@ -23,7 +23,9 @@
   Add support for django.contrib.postgres.fields and UUIDField (Villiers Strauss)
 * Stop testing with older Django versions. Currently testing with Django 1.11.x and 2.0
 * Stop testing on Python 2, no functional changes in the source code though
-* Update tests for latest version of pylint (>=1.8)
+* Update tests and require latest version of pylint (>=1.8), fixes
+  [#53](https://github.com/landscapeio/pylint-django/issues/53),
+  [#97](https://github.com/landscapeio/pylint-django/issues/97)
 
 ## Version 0.7.4
 * [#88](https://github.com/landscapeio/pylint-django/pull/88) Fixed builds with Django 1.10 (thanks to [federicobond](https://github.com/federicobond))
