@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 0.8.0 (unreleased)
+## Version 0.8.0 (20 Jan 2018)
 
 * This is the last version to support Python 2. Issues a deprecation warning!
 * [#109](http://github.com/landscapeio/pylint-django/pull/109),
