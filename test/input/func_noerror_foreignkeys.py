@@ -17,7 +17,7 @@ class ISBN(models.Model):
 
 class Book(models.Model):
     book_name = models.CharField(max_length=100)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey('Author', on_delete=models.CASCADE)
     isbn = models.OneToOneField(ISBN, on_delete=models.CASCADE)
 
     def get_isbn(self):
