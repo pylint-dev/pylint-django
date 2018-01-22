@@ -1,4 +1,5 @@
-from astroid import nodes, InferenceError, inference_tip, UseInferenceDefault
+from astroid import MANAGER, nodes, InferenceError, inference_tip, UseInferenceDefault
+from pylint_django.utils import node_is_subclass
 from pylint_django.compat import ClassDef, instantiate_class, Attribute
 
 
@@ -33,6 +34,21 @@ def infer_key_classes(node, context=None):
             else:
                 if key_cls is not None:
                     break
+        elif isinstance(arg, nodes.Const):
+            try:
+                model_name = arg.value.split('.')[-1]  # can be 'Model' or 'app.Model'
+            except AttributeError:
+                break
+
+            for module in MANAGER.astroid_cache.values():
+                if model_name in module.locals:
+                    class_defs = [
+                        module_node for module_node in module.lookup(model_name)[1]
+                        if isinstance(module_node, nodes.ClassDef)
+                        and node_is_subclass(module_node, 'django.db.models.base.Model')
+                    ]
+                    if class_defs:
+                        return iter([instantiate_class(class_defs[0])()])
     else:
         raise UseInferenceDefault
     return iter([instantiate_class(key_cls)()])
