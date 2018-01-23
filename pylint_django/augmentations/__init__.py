@@ -11,6 +11,7 @@ from astroid.objects import Super
 from astroid.scoped_nodes import Class as ScopedClass, Module
 from pylint.__pkginfo__ import numversion as PYLINT_VERSION
 from pylint.checkers.typecheck import TypeChecker
+from pylint.checkers.variables import ScopeConsumer
 from pylint_django.utils import node_is_subclass, PY3
 from pylint_django.compat import inferred
 from pylint_plugin_utils import augment_visit, suppress_message
@@ -280,22 +281,22 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
     form 'from django.db.models import OneToOneField' raise an unused-import
     warning
     """
-    to_consume = self._to_consume[0]  # pylint: disable=W0212
+    consumer = self._to_consume[0]  # pylint: disable=W0212
     # we can disable this warning ('Access to a protected member _to_consume of a client class')
     # as it's not actually a client class, but rather, this method is being monkey patched
     # onto the class and so the access is valid
 
     new_things = {}
 
-    iterat = to_consume[0].items if PY3 else to_consume[0].iteritems
+    iterat = consumer.to_consume.items if PY3 else consumer.to_consume.iteritems
     for name, stmts in iterat():
         if isinstance(stmts[0], ImportFrom):
             if any([n[0] in ('ForeignKey', 'OneToOneField') for n in stmts[0].names]):
                 continue
         new_things[name] = stmts
 
-    new_consume = (new_things,) + to_consume[1:]
-    self._to_consume = [new_consume]  # pylint: disable=W0212
+    consumer._atomic = ScopeConsumer(new_things, consumer.consumed, consumer.scope_type)  # pylint: disable=W0212
+    self._to_consume = [consumer]  # pylint: disable=W0212
 
     return orig_method(self, node)
 
