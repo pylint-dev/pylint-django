@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 0.9 (25 Jan 2018)
+
+* Fix [#120](https://github.com/PyCQA/pylint-django/issues/120) -
+  TypeError: 'NamesConsumer' object does not support indexing (Simone Basso)
+* Fix [#110](https://github.com/PyCQA/pylint-django/issues/120) and
+  [#35](https://github.com/PyCQA/pylint-django/issues/120) - resolve
+  ForeignKey models specified as strings instead of class names (Mr. Senko)
+
 ## Version 0.8.0 (20 Jan 2018)
 
 * This is the last version to support Python 2. Issues a deprecation warning!
