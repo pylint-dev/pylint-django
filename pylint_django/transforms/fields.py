@@ -69,10 +69,9 @@ def apply_type_shim(cls, context=None):  # noqa
     # check in the StdlibChecker for deprecated methods; one of these nodes
     # is an ImportFrom which has no qname() method, causing the checker
     # to die...
-    if utils.PY3:
-        base_nodes = [n for n in base_nodes[1] if not isinstance(n, nodes.ImportFrom)]
-    else:
-        base_nodes = list(base_nodes[1])
+    # It also filters out AssignAttr and AssignName options, which can
+    # occur because of other modules doing monkey-patching
+    base_nodes = [n for n in base_nodes[1] if isinstance(n, nodes.ClassDef)]
 
     return iter([cls] + base_nodes)
 
