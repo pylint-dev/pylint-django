@@ -9,8 +9,7 @@ env:
 
 install:
   - pip install coverage coveralls djangorestframework psycopg2 django-tables2
-  - pip install "Django>=$DJANGO"
-  - pip install git+https://github.com/landscapeio/pylint-plugin-utils.git@master
+  - pip install pylint-plugin-utils "Django>=$DJANGO"
 script:
   - PYTHONPATH=. coverage run test/test_func.py
 after_success:
