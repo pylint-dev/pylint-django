@@ -39,7 +39,7 @@ _install_requires = [
 
 setup(
     name='pylint-django',
-    url='https://github.com/landscapeio/pylint-django',
+    url='https://github.com/PyCQA/pylint-django',
     author='landscape.io',
     author_email='code@landscape.io',
     description=_short_description,
