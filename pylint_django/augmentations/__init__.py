@@ -726,7 +726,8 @@ def apply_augmentations(linter):
         suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', generic_is_view_attribute(parents, attrs))
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
-    suppress_message(linter, _visit_class(MisdesignChecker), 'too-many-ancestors', is_class('django.views.generic.edit.FormView'))
+    suppress_message(linter, _visit_class(MisdesignChecker), 'too-many-ancestors',
+                     is_class('django.views.generic.edit.FormView'))
 
     # model forms have no __init__ method anywhere in their bases
     suppress_message(linter, _visit_class(ClassChecker), 'W0232', is_class('django.forms.models.ModelForm'))
@@ -755,10 +756,10 @@ def apply_augmentations(linter):
     # Too many public methods (40+/20)
     # TODO: Count public methods of django.contrib.admin.options.ModelAdmin and increase
     # MisdesignChecker.config.max_public_methods to this value to count only user' methods.
-    #nb_public_methods = 0
-    #for method in node.methods():
-    #    if not method.name.startswith('_'):
-    #        nb_public_methods += 1
+    # nb_public_methods = 0
+    # for method in node.methods():
+    #     if not method.name.startswith('_'):
+    #         nb_public_methods += 1
     suppress_message(linter, _leave_class(MisdesignChecker), 'R0904', is_model_admin_subclass)
 
     # Tests

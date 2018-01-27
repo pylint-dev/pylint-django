@@ -11,7 +11,8 @@ class Form(BaseForm):
 
 
 class ModelForm(BaseModelForm):
-    save_m2m = lambda: None
+    def save_m2m(self):
+        return None
     cleaned_data = None
     fields = None
     instance = None

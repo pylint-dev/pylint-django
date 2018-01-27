@@ -1,25 +1,28 @@
 # -*- coding: UTF-8 -*-
-from distutils.core import setup
-from setuptools import find_packages
+"""
+Setup module for Pylint plugin for Django.
+"""
 import os
-import sys
+from setuptools import setup, find_packages
 
+VERSION = '0.9.0'
+PACKAGES = find_packages(exclude=[
+    '*.tests',
+    '*.tests.*',
+    'tests.*',
+    'tests',
+])
 
-_version = '0.9.0'
-_packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"])
+SHORT_DESCRIPTION = 'A Pylint plugin to help Pylint understand the Django web framework'
 
-_short_description = "pylint-django is a Pylint plugin to aid Pylint in recognising and understanding" \
-                     " errors caused when using the Django framework"
-
-
-_transform_dir = 'pylint_django/transforms/transforms'
-_package_data = {
+TRANSFORM_DIR = 'pylint_django/transforms/transforms'
+PACKAGE_DATA = {
     'pylint_django': [
-        os.path.join('transforms/transforms', name) for name in os.listdir(_transform_dir)
+        os.path.join('transforms/transforms', name) for name in os.listdir(TRANSFORM_DIR)
     ]
 }
 
-_classifiers = (
+CLASSIFIERS = (
     'Development Status :: 4 - Beta',
     'Environment :: Console',
     'Intended Audience :: Developers',
@@ -30,10 +33,9 @@ _classifiers = (
     'Programming Language :: Python :: 3.6',
 )
 
-
-_install_requires = [
+INSTALL_REQUIRES = [
     'pylint-plugin-utils>=0.2.1',
-    'pylint>=1.8.2'
+    'pylint>=1.8.2',
 ]
 
 
@@ -42,13 +44,13 @@ setup(
     url='https://github.com/PyCQA/pylint-django',
     author='landscape.io',
     author_email='code@landscape.io',
-    description=_short_description,
-    version=_version,
-    packages=_packages,
-    package_data=_package_data,
-    install_requires=_install_requires,
+    description=SHORT_DESCRIPTION,
+    version=VERSION,
+    packages=PACKAGES,
+    package_data=PACKAGE_DATA,
+    install_requires=INSTALL_REQUIRES,
     license='GPLv2',
-    classifiers=_classifiers,
-    keywords='pylint django plugin',
+    classifiers=CLASSIFIERS,
+    keywords=['pylint', 'django', 'plugin'],
     zip_safe=False,
 )
