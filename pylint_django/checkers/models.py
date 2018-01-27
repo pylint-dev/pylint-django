@@ -112,7 +112,7 @@ class ModelChecker(BaseChecker):
                 return
 
         # if the Django compatibility decorator is used then we don't emit a warning
-        # see https://github.com/landscapeio/pylint-django/issues/10
+        # see https://github.com/PyCQA/pylint-django/issues/10
         if node.decorators is not None:
             for decorator in node.decorators.nodes:
                 if getattr(decorator, 'name', None) == 'python_2_unicode_compatible':

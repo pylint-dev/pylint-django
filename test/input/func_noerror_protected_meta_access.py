@@ -2,7 +2,7 @@
 Tests to make sure that access to _meta on a model does not raise
 a protected-access warning, as it is part of the public API since
 Django 1.8
-(see https://github.com/landscapeio/pylint-django/issues/66,
+(see https://github.com/PyCQA/pylint-django/issues/66,
 and https://docs.djangoproject.com/en/1.9/ref/models/meta/)
 """
 #  pylint: disable=missing-docstring
