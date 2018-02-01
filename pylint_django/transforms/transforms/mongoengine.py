@@ -1,6 +1,7 @@
 from mongoengine.errors import DoesNotExist, MultipleObjectsReturned
 from mongoengine.queryset.manager import QuerySetManager
 
+
 class Document(object):
     _meta = None
     objects = QuerySetManager()
@@ -11,4 +12,5 @@ class Document(object):
     MultipleObjectsReturned = MultipleObjectsReturned
     DoesNotExist = DoesNotExist
 
-    save = lambda: None
+    def save(self):
+        return None
