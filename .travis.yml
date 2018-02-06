@@ -1,19 +1,33 @@
-sudo: false
 language: python
 python:
-  - "3.5"
-  - "3.6"
+  - 2.7
+  - 3.4
+  - 3.5
+  - 3.6
 env:
-  - DJANGO="1.11,<2.0"
-  - DJANGO="2.0,<3.0"
+  - DJANGO=1.11
+  - DJANGO=2.0
+matrix:
+  exclude:
+    # Python/Django combinations that aren't officially supported
+    - { python: 2.7, env: DJANGO=2.0 }
+  include:
+    - { python: 3.6, env: TOXENV=flake8 }
+    - { python: 3.6, env: TOXENV=pylint }
+    - { python: 3.6, env: TOXENV=readme }
+  allow_failures:
+    - env: TOXENV=flake8
+    - env: TOXENV=pylint
+    - python: 2.7
 
 install:
-  - pip install coverage coveralls djangorestframework psycopg2 django-tables2
-  - pip install pylint-plugin-utils "Django>=$DJANGO"
+  - pip install tox-travis
 script:
-  - PYTHONPATH=. coverage run test/test_func.py
+  - tox
+
 after_success:
-  coveralls
+  - pip install coveralls
+  - coveralls
 notifications:
   email:
     on_failure: change
