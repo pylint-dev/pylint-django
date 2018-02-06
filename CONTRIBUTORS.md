@@ -7,3 +7,4 @@
 * [smirolo](https://github.com/smirolo)
 * [mbertolacci](https://github.com/mbertolacci)
 * [atodorov](https://github.com/atodorov)
+* [bittner](https://github.com/bittner)
