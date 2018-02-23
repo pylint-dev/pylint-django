@@ -1,3 +1,3 @@
 include LICENSE
 include pylint_django/transforms/transforms/*
-include test/input/func_model_does_not_use_unicode_py33.txt
+include test/input/*.txt test/input/*.rc
