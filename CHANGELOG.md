@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 0.9.1
+
+* Fix [#123](https://github.com/PyCQA/pylint-django/issues/123) -
+  Update links after the move to PyCQA (Mr. Senko)
+* Add test for Meta class from django_tables2 (Mr. Senko)
+* Fix flake8 complaints (Peter Bittner)
+* Add missing .txt and .rc test files to MANIFEST.in (Joseph Herlant)
+
 ## Version 0.9 (25 Jan 2018)
 
 * Fix [#120](https://github.com/PyCQA/pylint-django/issues/120) -

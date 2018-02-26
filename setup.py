@@ -5,7 +5,7 @@ Setup module for Pylint plugin for Django.
 import os
 from setuptools import setup, find_packages
 
-VERSION = '0.9.0'
+VERSION = '0.9.1'
 PACKAGES = find_packages(exclude=[
     '*.tests',
     '*.tests.*',
