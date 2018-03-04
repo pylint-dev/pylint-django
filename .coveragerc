@@ -1,3 +1,5 @@
-
 [run]
 source=pylint_django
+
+[report]
+omit=pylint_django/tests/*

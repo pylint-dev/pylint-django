@@ -8,6 +8,9 @@ import pylint
 sys.path.append(os.path.join(os.path.dirname(pylint.__file__), 'test'))
 import test_functional
 
+# alter sys.path again because the tests now live as a subdirectory
+# of pylint_django
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 from pylint_django.compat import django_version
 
 

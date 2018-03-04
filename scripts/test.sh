@@ -1,2 +1,2 @@
 #!/bin/bash
-PYTHONPATH=. python test/test_func.py
+python pylint_django/tests/test_func.py
