@@ -1,3 +1,4 @@
+include *.md
 include LICENSE
-include pylint_django/transforms/transforms/*
-include test/input/*.txt test/input/*.rc
+include pylint_django/transforms/transforms/*.py
+recursive-include pylint_django/tests/ *.py *.rc *.txt
