@@ -17,6 +17,7 @@ setup(
     install_requires=[
         'pylint-plugin-utils>=0.2.1',
         'pylint>=1.8.2',
+        'Django',
     ],
     license='GPLv2',
     classifiers=[
