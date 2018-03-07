@@ -1,6 +1,14 @@
 # Changelog
 
-## Version 0.9.1
+## Version 0.9.2 (7 March 2018)
+
+* Fix [#129](https://github.com/PyCQA/pylint-django/issues/129) -
+  Move tests under `site-packages/pylint_django` (Mr. Senko)
+* Fix [#96](https://github.com/PyCQA/pylint-django/issues/96) -
+  List Django as a dependency (Mr. Senko)
+
+
+## Version 0.9.1 (26 Feb 2018)
 
 * Fix [#123](https://github.com/PyCQA/pylint-django/issues/123) -
   Update links after the move to PyCQA (Mr. Senko)
