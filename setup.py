@@ -14,6 +14,7 @@ setup(
     description='A Pylint plugin to help Pylint understand the Django web framework',
     version='0.9.2',
     packages=find_packages(),
+    include_package_data=True,
     install_requires=[
         'pylint-plugin-utils>=0.2.1',
         'pylint>=1.8.2',
