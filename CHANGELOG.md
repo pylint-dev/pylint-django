@@ -1,6 +1,13 @@
 # Changelog
 
-## Version 0.9.2 (7 March 2018)
+## Version 0.9.3 (7 March 2018)
+
+* Fix [#133](https://github.com/PyCQA/pylint-django/issues/133) and
+  [#134](https://github.com/PyCQA/pylint-django/issues/134) by including
+  package data when building wheel and tar.gz packages for PyPI (Joseph Herlant)
+
+
+## Version 0.9.2 (broken)
 
 * Fix [#129](https://github.com/PyCQA/pylint-django/issues/129) -
   Move tests under `site-packages/pylint_django` (Mr. Senko)
