@@ -19,6 +19,9 @@ setup(
         'pylint-plugin-utils>=0.2.1',
         'pylint>=1.8.2',
     ],
+    extras_require={
+        'with_django': ['Django'],
+    },
     license='GPLv2',
     classifiers=[
         'Development Status :: 4 - Beta',
