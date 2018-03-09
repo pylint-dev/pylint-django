@@ -2,7 +2,6 @@
 from pylint.checkers.base import NameChecker
 from pylint_plugin_utils import get_checker
 
-from pylint_django.augmentations import apply_augmentations
 from pylint_django.checkers import register_checkers
 
 # we want to import the transforms to make sure they get added to the astroid manager,
@@ -26,4 +25,10 @@ def register(linter):
     register_checkers(linter)
 
     # register any checking fiddlers
-    apply_augmentations(linter)
+    try:
+        from pylint_django.augmentations import apply_augmentations
+        apply_augmentations(linter)
+    except ModuleNotFoundError:
+        # probably trying to execute pylint_django when Django isn't installed
+        # in this case the django-not-installed checker will kick-in
+        pass
