@@ -28,19 +28,18 @@ pip install pylint-django[with_django]
 otherwise sort out your testing environment and please **DO NOT** report issues
 about missing Django!
 
-## Usage
+# Usage
 
-#### Pylint
-
-Ensure `pylint-django` is installed and on your path (`pip install pylint-django`), and then run pylint:
+Ensure `pylint-django` is installed and on your path and then execute:
 
 ```
-pylint --load-plugins pylint_django [..other options..]
+pylint --load-plugins pylint_django [..other options..] <path_to_your_sources>
 ```
 
-#### Prospector
+## Prospector
 
-If you have `prospector` installed, then `pylint-django` will already be installed as a dependency, and will be activated automatically if Django is detected.
+If you have `prospector` installed, then `pylint-django` will already be installed as a dependency,
+and will be activated automatically if Django is detected.
 
 ```
 prospector [..other options..]
@@ -60,14 +59,14 @@ Please feel free to add your name to the `CONTRIBUTORS.md` file if you want to b
 credited when pull requests get merged. You can also add to the `CHANGELOG.md` file
 if you wish, although I'll also do that when merging if not.
 
-## Tests
+# Tests
 
 The structure of the test package follows that from pylint itself.
 
 It is fairly simple: create a module starting with `func_` followed by
 a test name, and insert into it some code. The tests will run pylint
- against these modules. If the idea is that no messages now occur, then
- that is fine, just check to see if it works by running `scripts/test.sh`.
+against these modules. If the idea is that no messages now occur, then
+that is fine, just check to see if it works by running `scripts/test.sh`.
 
 Ideally, add some pylint error suppression messages to the file to prevent
 spurious warnings, since these are all tiny little modules not designed to
