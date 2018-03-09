@@ -7,14 +7,18 @@ python:
 env:
   - DJANGO=1.11
   - DJANGO=2.0
+stages:
+  - django_not_installed
+  - test
 matrix:
   exclude:
     # Python/Django combinations that aren't officially supported
     - { python: 2.7, env: DJANGO=2.0 }
   include:
-    - { python: 3.6, env: TOXENV=flake8 }
-    - { python: 3.6, env: TOXENV=pylint }
-    - { python: 3.6, env: TOXENV=readme }
+    - { stage: django_not_installed, python: 3.6, env: TOXENV=django_not_installed }
+    - { stage: test, python: 3.6, env: TOXENV=flake8 }
+    - { stage: test, python: 3.6, env: TOXENV=pylint }
+    - { stage: test, python: 3.6, env: TOXENV=readme }
   allow_failures:
     - env: TOXENV=flake8
     - env: TOXENV=pylint
