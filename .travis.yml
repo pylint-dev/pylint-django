@@ -9,6 +9,7 @@ env:
   - DJANGO=2.0
 stages:
   - django_not_installed
+  - django_is_installed
   - test
 matrix:
   exclude:
@@ -16,6 +17,7 @@ matrix:
     - { python: 2.7, env: DJANGO=2.0 }
   include:
     - { stage: django_not_installed, python: 3.6, env: TOXENV=django_not_installed }
+    - { stage: django_is_installed, python: 3.6, env: TOXENV=django_is_installed }
     - { stage: test, python: 3.6, env: TOXENV=flake8 }
     - { stage: test, python: 3.6, env: TOXENV=pylint }
     - { stage: test, python: 3.6, env: TOXENV=readme }
