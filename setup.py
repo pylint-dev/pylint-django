@@ -2,7 +2,6 @@
 """
 Setup module for Pylint plugin for Django.
 """
-import os
 from setuptools import setup, find_packages
 
 
