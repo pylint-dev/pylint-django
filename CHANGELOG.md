@@ -1,6 +1,15 @@
 # Changelog
 
-## Version 0.9.3 (7 March 2018)
+## Version 0.9.4 (12 March 2018)
+
+* Add an optional dependency on Django
+* Fix the `DjangoInstalledChecker` so it can actually warn when Django isn't
+  available
+* Fix [#136](https://github.com/PyCQA/pylint-django/issues/136) by adding
+  automated build and sanity test scripts
+
+
+## Version 0.9.3 (removed from PyPI)
 
 * Fix [#133](https://github.com/PyCQA/pylint-django/issues/133) and
   [#134](https://github.com/PyCQA/pylint-django/issues/134) by including
