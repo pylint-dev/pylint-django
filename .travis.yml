@@ -26,7 +26,6 @@ matrix:
     - { stage: test, python: 3.6, env: TOXENV=readme }
     - { stage: build_and_package_sanity, python: 3.6, env: SANITY_CHECK=1 }
   allow_failures:
-    - env: TOXENV=flake8
     - env: TOXENV=pylint
     - python: 2.7
 
