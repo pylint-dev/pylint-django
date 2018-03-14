@@ -14,7 +14,6 @@ from pylint.__pkginfo__ import numversion as PYLINT_VERSION
 from pylint.checkers.typecheck import TypeChecker
 from pylint.checkers.variables import ScopeConsumer
 
-from pylint_django.utils import node_is_subclass, PY3
 from pylint_plugin_utils import augment_visit, suppress_message
 
 from django import VERSION as django_version
@@ -23,6 +22,8 @@ from django.views.generic.dates import DateMixin, DayMixin, MonthMixin, WeekMixi
 from django.views.generic.detail import SingleObjectMixin, SingleObjectTemplateResponseMixin, TemplateResponseMixin
 from django.views.generic.edit import DeletionMixin, FormMixin, ModelFormMixin
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin
+
+from pylint_django.utils import node_is_subclass, PY3
 
 
 # Note: it would have been nice to import the Manager object from Django and
@@ -596,9 +597,9 @@ def is_model_view_subclass_unused_argument(node):
 def is_model_field_display_method(node):
     """Accept model's fields with get_*_display names."""
     if not node.attrname.endswith('_display'):
-        return
+        return False
     if not node.attrname.startswith('get_'):
-        return
+        return False
 
     if node.last_child():
         # TODO: could validate the names of the fields on the model rather than
@@ -660,8 +661,8 @@ def is_urls_module_valid_constant(node):
 def allow_meta_protected_access(node):
     if django_version >= (1, 8):
         return node.attrname == '_meta'
-    else:
-        return False
+
+    return False
 
 
 def is_class(class_name):
