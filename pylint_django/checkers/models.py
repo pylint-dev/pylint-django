@@ -1,11 +1,13 @@
 """Models."""
 from astroid import Const
-from pylint_django.compat import ClassDef, FunctionDef, inferred, AssignName
 from astroid.nodes import Assign
+from astroid.nodes import ClassDef, FunctionDef, AssignName
+
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.utils import check_messages
 from pylint.checkers import BaseChecker
 from pylint.__pkginfo__ import numversion as PYLINT_VERSION
+
 from pylint_django.__pkginfo__ import BASE_ID
 from pylint_django.utils import node_is_subclass, PY3
 
@@ -86,7 +88,7 @@ class ModelChecker(BaseChecker):
                     continue
 
                 grandchild = grandchildren[1]
-                assigned = inferred(grandchild)()[0]
+                assigned = grandchild.inferred()[0]
 
                 if assigned.callable():
                     return

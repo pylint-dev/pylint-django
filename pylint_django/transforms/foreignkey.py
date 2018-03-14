@@ -1,6 +1,7 @@
 from astroid import MANAGER, nodes, InferenceError, inference_tip, UseInferenceDefault
+from astroid.nodes import ClassDef, Attribute
+
 from pylint_django.utils import node_is_subclass
-from pylint_django.compat import ClassDef, instantiate_class, Attribute
 
 
 def is_foreignkey_in_class(node):
@@ -48,10 +49,10 @@ def infer_key_classes(node, context=None):
                         and node_is_subclass(module_node, 'django.db.models.base.Model')
                     ]
                     if class_defs:
-                        return iter([instantiate_class(class_defs[0])()])
+                        return iter([class_defs[0].instantiate_class()])
     else:
         raise UseInferenceDefault
-    return iter([instantiate_class(key_cls)()])
+    return iter([key_cls.instantiate_class()])
 
 
 def add_transform(manager):
