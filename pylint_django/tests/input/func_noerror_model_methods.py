@@ -8,6 +8,7 @@ from django.db import models
 class SomeModel(models.Model):
     pass
 
+
 if __name__ == '__main__':
     MODEL = SomeModel()
     MODEL.save()

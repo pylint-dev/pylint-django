@@ -1,1 +1,2 @@
-ugettext_lazy = lambda x: ''
+def ugettext_lazy(x):
+    return ''

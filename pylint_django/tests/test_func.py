@@ -6,7 +6,7 @@ import pytest
 import pylint
 # because there's no __init__ file in pylint/test/
 sys.path.append(os.path.join(os.path.dirname(pylint.__file__), 'test'))
-import test_functional
+import test_functional  # noqa: E402
 
 # alter sys.path again because the tests now live as a subdirectory
 # of pylint_django

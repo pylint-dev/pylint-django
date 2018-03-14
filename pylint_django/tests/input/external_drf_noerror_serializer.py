@@ -5,6 +5,7 @@ Checks that Pylint does not complain about DRF serializers
 
 from rest_framework import serializers
 
+
 class TestSerializerSubclass(serializers.ModelSerializer):
     class Meta:
         pass
