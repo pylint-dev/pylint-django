@@ -1,21 +1,23 @@
 """Augmentations."""
 #  pylint: disable=invalid-name
+from astroid import InferenceError
+from astroid.objects import Super
+from astroid.nodes import ClassDef, ImportFrom, Attribute
+from astroid.scoped_nodes import Class as ScopedClass, Module
+
 from pylint.checkers.base import DocStringChecker, NameChecker
 from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
 from pylint.checkers.variables import VariablesChecker
-from astroid import InferenceError
-from pylint_django.compat import ClassDef, ImportFrom, Attribute, django_version
-from astroid.objects import Super
-from astroid.scoped_nodes import Class as ScopedClass, Module
 from pylint.__pkginfo__ import numversion as PYLINT_VERSION
 from pylint.checkers.typecheck import TypeChecker
 from pylint.checkers.variables import ScopeConsumer
+
 from pylint_django.utils import node_is_subclass, PY3
-from pylint_django.compat import inferred
 from pylint_plugin_utils import augment_visit, suppress_message
 
+from django import VERSION as django_version
 from django.views.generic.base import View, RedirectView, ContextMixin
 from django.views.generic.dates import DateMixin, DayMixin, MonthMixin, WeekMixin, YearMixin
 from django.views.generic.detail import SingleObjectMixin, SingleObjectTemplateResponseMixin, TemplateResponseMixin
@@ -339,7 +341,7 @@ def foreign_key_sets(chain, node):
         children = list(node.get_children())
         for child in children:
             try:
-                inferred_cls = inferred(child)()
+                inferred_cls = child.inferred()
             except InferenceError:
                 pass
             else:
@@ -440,7 +442,7 @@ def _attribute_is_magic(node, attrs, parents):
         return False
 
     try:
-        for cls in inferred(node.last_child())():
+        for cls in node.last_child().inferred():
             if isinstance(cls, Super):
                 cls = cls._self_class
             if node_is_subclass(cls, *parents) or cls.qname() in parents:
@@ -602,7 +604,7 @@ def is_model_field_display_method(node):
         # TODO: could validate the names of the fields on the model rather than
         # blindly accepting get_*_display
         try:
-            for cls in inferred(node.last_child())():
+            for cls in node.last_child().inferred():
                 if node_is_subclass(cls, 'django.db.models.base.Model', '.Model'):
                     return True
         except InferenceError:
