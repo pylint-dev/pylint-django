@@ -8,4 +8,4 @@ from django.db import models
 
 class SomeModel(models.Model):
     something = models.CharField(max_length=255)
-    __unicode__ = lambda s: str(s.something)
+    __unicode__ = lambda s: str(s.something)  # noqa: E731

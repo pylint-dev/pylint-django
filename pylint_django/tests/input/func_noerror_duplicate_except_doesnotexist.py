@@ -14,6 +14,7 @@ class Book(models.Model):
 class Author(models.Model):
     name = models.CharField(max_length=100)
 
+
 def dummy_func():
     try:
         print("foo")
