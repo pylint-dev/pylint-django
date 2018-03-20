@@ -28,7 +28,7 @@ def register(linter):
     try:
         from pylint_django.augmentations import apply_augmentations
         apply_augmentations(linter)
-    except ModuleNotFoundError:
+    except ImportError:
         # probably trying to execute pylint_django when Django isn't installed
         # in this case the django-not-installed checker will kick-in
         pass
