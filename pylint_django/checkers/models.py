@@ -48,6 +48,27 @@ def _is_meta_with_abstract(node):
     return False
 
 
+def _has_python_2_unicode_compatible_decorator(node):
+    if node.decorators is None:
+        return False
+
+    for decorator in node.decorators.nodes:
+        if getattr(decorator, 'name', None) == 'python_2_unicode_compatible':
+            return True
+
+    return False
+
+
+def _is_unicode_or_str_in_python_2_compatibility(method):
+    if method.name == '__unicode__':
+        return True
+
+    if method.name == '__str__' and _has_python_2_unicode_compatible_decorator(method.parent):
+        return True
+
+    return False
+
+
 class ModelChecker(BaseChecker):
     """Django model checker."""
     __implements__ = IAstroidChecker
@@ -102,12 +123,10 @@ class ModelChecker(BaseChecker):
                 return
 
         # if we get here, then we have no __unicode__ method directly on the class itself
-        if PY3:
-            return
 
         # a different warning is emitted if a parent declares __unicode__
         for method in node.methods():
-            if method.name == '__unicode__':
+            if method.parent != node and _is_unicode_or_str_in_python_2_compatibility(method):
                 # this happens if a parent declares the unicode method but
                 # this node does not
                 self.add_message('W%s03' % BASE_ID, args=node.name, node=node)
@@ -115,9 +134,10 @@ class ModelChecker(BaseChecker):
 
         # if the Django compatibility decorator is used then we don't emit a warning
         # see https://github.com/PyCQA/pylint-django/issues/10
-        if node.decorators is not None:
-            for decorator in node.decorators.nodes:
-                if getattr(decorator, 'name', None) == 'python_2_unicode_compatible':
-                    return
+        if _has_python_2_unicode_compatible_decorator(node):
+            return
+
+        if PY3:
+            return
 
         self.add_message('W%s01' % BASE_ID, args=node.name, node=node)
