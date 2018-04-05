@@ -7,6 +7,11 @@ def __noop(self, *args, **kwargs):
     return None
 
 
+def __noop_list(self, *args, **kwargs):
+    """Just a dumb no-op function to make code a bit more DRY"""
+    return []
+
+
 class Model(object):
     _meta = None
     objects = None
@@ -26,7 +31,7 @@ class Manager(object):
     """
     get_queryset = __noop
     none = __noop
-    all = __noop
+    all = __noop_list
     count = __noop
     dates = __noop
     distinct = __noop
