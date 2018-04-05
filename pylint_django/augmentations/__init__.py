@@ -445,7 +445,7 @@ def _attribute_is_magic(node, attrs, parents):
     try:
         for cls in node.last_child().inferred():
             if isinstance(cls, Super):
-                cls = cls._self_class
+                cls = cls._self_class  # pylint: disable=protected-access
             if node_is_subclass(cls, *parents) or cls.qname() in parents:
                 return True
     except InferenceError:

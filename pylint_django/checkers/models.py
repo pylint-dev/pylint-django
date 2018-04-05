@@ -76,7 +76,7 @@ class ModelChecker(BaseChecker):
     name = 'django-model-checker'
     msgs = MESSAGES
 
-    # XXX: there's a bug in pylint's backwards compatability logic after changing
+    # NOTE: there's a bug in pylint's backwards compatability logic after changing
     # visit method names from visit_class to visit_classdef, see
     # https://bitbucket.org/logilab/pylint/issues/711/new-node-visit-methods-not-backwards
     if PYLINT_VERSION < (1, 5):
