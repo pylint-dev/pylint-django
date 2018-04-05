@@ -4,6 +4,7 @@ Setup module for Pylint plugin for Django.
 """
 from setuptools import setup, find_packages
 
+LONG_DESCRIPTION = open('README.rst').read() + "\n" + open('CHANGELOG.rst').read()
 
 setup(
     name='pylint-django',
@@ -11,6 +12,7 @@ setup(
     author='landscape.io',
     author_email='code@landscape.io',
     description='A Pylint plugin to help Pylint understand the Django web framework',
+    long_description=LONG_DESCRIPTION,
     version='0.9.4',
     packages=find_packages(),
     include_package_data=True,
