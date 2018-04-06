@@ -700,6 +700,12 @@ def wrap(orig_method, with_method):
     return wrap_func
 
 
+def is_wsgi_application(node):
+    frame = node.frame()
+    return node.name == 'application' and isinstance(frame, Module) and \
+        (frame.name == 'wsgi' or frame.path.endswith('wsgi.py') or frame.file.endswith('wsgi.py'))
+
+
 # The names of some visit functions changed in this commit:
 # https://bitbucket.org/logilab/pylint/commits/c94ee95abaa5737f13b91626fe321150c0ddd140
 
@@ -822,3 +828,6 @@ def apply_augmentations(linter):
 
     # supress not-an-iterable for model_utils.managers. See #117
     suppress_message(linter, IterableChecker._check_iterable, 'not-an-iterable', is_model_manager)
+
+    # wsgi.py
+    suppress_message(linter, _visit_assignname(NameChecker), 'invalid-name', is_wsgi_application)
