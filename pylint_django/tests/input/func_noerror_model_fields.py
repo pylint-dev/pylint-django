@@ -76,7 +76,9 @@ class LotsOfFieldsModel(models.Model):
         print(self.durationfield.total_seconds())
 
     def filefield_tests(self):
+        self.filefield.save('/dev/null', 'TEST')
         print(self.filefield.file)
+        self.imagefield.save('/dev/null', 'TEST')
         print(self.imagefield.file)
 
     def numberfield_tests(self):
