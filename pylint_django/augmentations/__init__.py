@@ -756,26 +756,26 @@ def apply_augmentations(linter):
     """Apply augmentation and suppression rules."""
     augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_sets)
     augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_ids)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_model_field_display_method)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_model_field_display_method)
 
     # supress errors when accessing magical class attributes
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_manager_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_admin_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_model_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_field_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_charfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_datefield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_decimalfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_filefield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_imagefield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_ipfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_slugfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_foreignkeyfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_manytomanyfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', is_onetoonefield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_manager_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_admin_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_model_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_field_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_charfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_datefield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_decimalfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_filefield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_imagefield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_ipfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_slugfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_foreignkeyfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_manytomanyfield_attribute)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_onetoonefield_attribute)
 
     for parents, attrs in VIEW_ATTRS:
-        suppress_message(linter, _visit_attribute(TypeChecker), 'E1101', generic_is_view_attribute(parents, attrs))
+        suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', generic_is_view_attribute(parents, attrs))
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
     suppress_message(linter, _visit_class(MisdesignChecker), 'too-many-ancestors',
