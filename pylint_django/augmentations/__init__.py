@@ -421,6 +421,25 @@ def is_model_factory_meta_subclass(node):
     return node_is_subclass(node.parent, *parents)
 
 
+def is_model_factory(node):
+    """Checks that node is derivative of SubFactory class."""
+    try:
+        parent_classes = node.expr.inferred()
+    except:  # noqa: E722, pylint: disable=bare-except
+        return False
+
+    parents = ('factory.declarations.SubFactory',)
+
+    for parent_class in parent_classes:
+        try:
+            if parent_class.qname() in parents:
+                return True
+        except AttributeError:
+            continue
+
+    return False
+
+
 def is_model_mpttmeta_subclass(node):
     """Checks that node is derivative of MPTTMeta class."""
     if node.name != 'MPTTMeta' or not isinstance(node.parent, ClassDef):
@@ -815,6 +834,7 @@ def apply_augmentations(linter):
     suppress_message(linter, _visit_class(NewStyleConflictChecker), 'old-style-class', is_model_factory_meta_subclass)
     suppress_message(linter, _visit_class(ClassChecker), 'W0232', is_model_factory_meta_subclass)
     suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_factory_meta_subclass)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_model_factory)
 
     # ForeignKey and OneToOneField
     # Must update this in a thread safe way to support the parallel option on pylint (-j)
