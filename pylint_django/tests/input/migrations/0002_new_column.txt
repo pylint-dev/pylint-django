@@ -1,0 +1,1 @@
+new-db-field-with-default:28:Migration:migrations.0002_new_column AddField with default value
