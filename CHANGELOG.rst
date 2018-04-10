@@ -3,7 +3,7 @@ Changelog
 
 
 Version 0.10.0 (10 April 2018)
------------------------------
+------------------------------
 
 - Remove the compatibility layer for older astroid versions
 - Make flake8 happy. Fix
