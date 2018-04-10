@@ -13,7 +13,7 @@ setup(
     author_email='code@landscape.io',
     description='A Pylint plugin to help Pylint understand the Django web framework',
     long_description=LONG_DESCRIPTION,
-    version='0.9.4',
+    version='0.10.0',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[

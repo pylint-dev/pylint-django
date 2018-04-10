@@ -1,6 +1,40 @@
 Changelog
 =========
 
+
+Version 0.10.0 (10 April 2018)
+-----------------------------
+
+- Remove the compatibility layer for older astroid versions
+- Make flake8 happy. Fix
+  `#102 <https://github.com/PyCQA/pylint-django/issues/102>`__
+- Fix: compatibility with Python < 3.6 caused by ``ModuleNotFoundError``
+  not available on older versions of Python (Juan Rial)
+- Show README and CHANGELOG on PyPI. Fix
+  `#122 <https://github.com/PyCQA/pylint-django/issues/122>`__
+- Fix explicit unicode check with ``python_2_unicode_compatible`` base models
+  (Federico Bond)
+- Suppress ``not-an-iterable`` message for 'objects'. Fix
+  `#117 <https://github.com/PyCQA/pylint-django/issues/117>`__
+- Teach pylint_django that ``objects.all()`` is subscriptable. Fix
+  `#144 <https://github.com/PyCQA/pylint-django/issues/144>`__
+- Suppress ``invalid-name`` for ``wsgi.application``. Fix
+  `#77 <https://github.com/PyCQA/pylint-django/issues/77>`__
+- Add test for ``WSGIRequest.context``. Closes
+  `#78 <https://github.com/PyCQA/pylint-django/issues/78>`__
+- Register transforms for ``FileField``. Fix
+  `#60 <https://github.com/PyCQA/pylint-django/issues/60>`__
+- New checker ``pylint_django.checkers.db_performance``.
+  Enables checking of migrations and reports when there's an
+  ``AddField`` operation with a default value which may slow down applying
+  migrations on large tables. This may also lead to production tables
+  being locked while migrations are being applied. Fix
+  `#118 <https://github.com/PyCQA/pylint-django/issues/118>`__
+- Suppress ``no-member`` for ``factory.SubFactory`` objects.
+  Useful when model factories use ``factory.SubFactory()`` for foreign
+  key relations.
+
+
 Version 0.9.4 (12 March 2018)
 -----------------------------
 
