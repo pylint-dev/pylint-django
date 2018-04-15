@@ -1,5 +1,11 @@
+import random
+
 from django.core.exceptions import MultipleObjectsReturned \
     as MultipleObjectsReturnedException
+
+
+def __noop_get_or_create(self, *args, **kwargs):
+    return (Model(), bool(random.randint(0, 1)))
 
 
 def __noop(self, *args, **kwargs):
@@ -37,7 +43,7 @@ class Manager(object):
     distinct = __noop
     extra = __noop
     get = __noop
-    get_or_create = __noop
+    get_or_create = __noop_get_or_create
     create = __noop
     bulk_create = __noop
     filter = __noop
