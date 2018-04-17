@@ -1,0 +1,4 @@
+http-response-with-json-dumps:9:say_yes:Instead of HttpResponse(json.dumps(data)) use JsonResponse(data)
+http-response-with-json-dumps:14:say_yes2:Instead of HttpResponse(json.dumps(data)) use JsonResponse(data)
+redundant-content-type-for-json-response:23:redundant_content_type:Redundant content_type parameter for JsonResponse()
+http-response-with-content-type-json:28:content_type_json:Instead of HttpResponse(content_type='application/json') use JsonResponse()
