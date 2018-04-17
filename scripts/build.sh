@@ -12,6 +12,10 @@ find . -type d -name __pycache__ -delete
 find . -type d -name '*.egg-info' | xargs rm -rf
 rm -rf build/ .cache/ dist/ .eggs/ .tox/
 
+# check rst formatting of README/CHANGELOG before building the package
+echo "..... Check rst formatting for PyPI"
+tox -e readme
+
 # then build the packages
 echo "..... Building PyPI packages"
 set -e
