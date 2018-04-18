@@ -1,6 +1,18 @@
 Changelog
 =========
 
+Version 0.11 (18 April 2018), the Moscow edition
+------------------------------------------------
+
+- New ``JsonResponseChecker`` that looks for common anti-patterns with
+  http responses returning JSON. This includes::
+
+    HttpResponse(json.dumps(data))
+    
+    HttpResponse(data, content_type='application/json')
+    
+    JsonResponse(data, content_type=...)
+
 
 Version 0.10.0 (10 April 2018)
 ------------------------------
