@@ -1,5 +1,7 @@
 """Augmentations."""
 #  pylint: disable=invalid-name
+import itertools
+
 from astroid import InferenceError
 from astroid.objects import Super
 from astroid.nodes import ClassDef, ImportFrom, Attribute
@@ -22,6 +24,7 @@ from django.views.generic.dates import DateMixin, DayMixin, MonthMixin, WeekMixi
 from django.views.generic.detail import SingleObjectMixin, SingleObjectTemplateResponseMixin, TemplateResponseMixin
 from django.views.generic.edit import DeletionMixin, FormMixin, ModelFormMixin
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin
+from django.utils import termcolors
 
 from pylint_django.utils import node_is_subclass, PY3
 
@@ -258,6 +261,9 @@ ONETOONE_FIELD_ATTRS = {
 }
 
 
+STYLE_ATTRS = set(itertools.chain.from_iterable(termcolors.PALETTES.values()))
+
+
 VIEW_ATTRS = {
     (
         (
@@ -470,6 +476,11 @@ def _attribute_is_magic(node, attrs, parents):
     except InferenceError:
         pass
     return False
+
+
+def is_style_attribute(node):
+    parents = ('django.core.management.color.Style', )
+    return _attribute_is_magic(node, STYLE_ATTRS, parents)
 
 
 def is_manager_attribute(node):
@@ -757,6 +768,7 @@ def apply_augmentations(linter):
     augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_sets)
     augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_ids)
     suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_model_field_display_method)
+    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_style_attribute)
 
     # supress errors when accessing magical class attributes
     suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_manager_attribute)
