@@ -1,8 +1,20 @@
 Changelog
 =========
 
-Version 0.11 (18 April 2018), the Moscow edition
-------------------------------------------------
+Version 0.11.1 (25 May 2018), the DjangoCon Heidelberg edittion
+---------------------------------------------------------------
+
+- Enable test case for ``urlpatterns`` variable which was previously disabled
+- Disable ``unused-argument`` message for the ``request`` argument passed to
+  view functions. Fix
+  `#155 <https://github.com/PyCQA/pylint-django/issues/155>`__
+- Add transformations for ``model_utils`` managers instead of special-casing them.
+  Fix
+  `#160 <https://github.com/PyCQA/pylint-django/issues/160>`__
+
+
+Version 0.11 (18 April 2018), the TestCon Moscow edition
+--------------------------------------------------------
 
 - New ``JsonResponseChecker`` that looks for common anti-patterns with
   http responses returning JSON. This includes::
