@@ -634,7 +634,14 @@ def is_model_view_subclass_unused_argument(node):
     if not is_model_view_subclass_method_shouldnt_be_function(node):
         return False
 
-    return 'request' in node.argnames()
+    return is_argument_named_request(node)
+
+
+def is_argument_named_request(node):
+    """
+    If an unused-argument is named 'request' ignore that!
+    """
+    return 'request'in node.argnames()
 
 
 def is_model_field_display_method(node):
@@ -821,7 +828,9 @@ def apply_augmentations(linter):
     # Method could be a function (get, post)
     suppress_message(linter, _leave_function(ClassChecker), 'R0201', is_model_view_subclass_method_shouldnt_be_function)
     # Unused argument 'request' (get, post)
-    suppress_message(linter, _leave_function(VariablesChecker), 'W0613', is_model_view_subclass_unused_argument)
+    suppress_message(linter, _leave_function(VariablesChecker), 'unused-argument',
+                     is_model_view_subclass_unused_argument)
+    suppress_message(linter, _leave_function(VariablesChecker), 'unused-argument', is_argument_named_request)
 
     # django-mptt
     suppress_message(linter, _visit_class(DocStringChecker), 'missing-docstring', is_model_mpttmeta_subclass)
