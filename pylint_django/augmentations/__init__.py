@@ -13,7 +13,7 @@ from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
 from pylint.checkers.variables import VariablesChecker
 from pylint.__pkginfo__ import numversion as PYLINT_VERSION
-from pylint.checkers.typecheck import IterableChecker, TypeChecker
+from pylint.checkers.typecheck import TypeChecker
 from pylint.checkers.variables import ScopeConsumer
 
 from pylint_plugin_utils import augment_visit, suppress_message
@@ -492,30 +492,6 @@ def is_manager_attribute(node):
     return _attribute_is_magic(node, MANAGER_ATTRS.union(QS_ATTRS), parents)
 
 
-def is_model_manager(node):
-    """Checks that node is an attribute named `objects` which usually represents
-       an iterator. This function fixes issues #117.
-    """
-    try:
-        # try to get the model manager node, i.e. 'objects'
-        manager = node.func.expr
-    except:  # noqa: E722, pylint: disable=bare-except
-        return False
-
-#    parents = (
-#        'django.db.models.manager.Manager',
-#        '.Manager',
-#        'django.db.models.query.QuerySet',
-#        '.QuerySet',
-#        'model_utils.managers.InheritanceManager',
-#        'model_utils.managers.QueryManager',
-#        'model_utils.managers.SoftDeletableManager',
-#    )
-    # TODO: properly filter based on class instead of the property name
-    # return _attribute_is_magic(manager, ['objects'], parents)
-    return isinstance(manager, Attribute) and manager.attrname == 'objects'
-
-
 def is_admin_attribute(node):
     """Checks that node is attribute of BaseModelAdmin."""
     parents = ('django.contrib.admin.options.BaseModelAdmin',
@@ -866,9 +842,6 @@ def apply_augmentations(linter):
         VariablesChecker.leave_module = wrap(current_leave_module, ignore_import_warnings_for_related_fields)
         # VariablesChecker.leave_module is now wrapped
     # else VariablesChecker.leave_module is already wrapped
-
-    # supress not-an-iterable for model_utils.managers. See #117
-    suppress_message(linter, IterableChecker._check_iterable, 'not-an-iterable', is_model_manager)
 
     # wsgi.py
     suppress_message(linter, _visit_assignname(NameChecker), 'invalid-name', is_wsgi_application)
