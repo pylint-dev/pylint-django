@@ -88,6 +88,17 @@ This plugin is disabled by default! To enable it::
     pylint --load-plugins pylint_django --load-plugins pylint_django.checkers.db_performance
 
 
+Known issues
+------------
+
+If you reference foreign-key models by their name (as string) ``pylint-django`` may not be
+able to find the model and will report issues because it has no idea what the underlying
+type of this field is. If your ``models.py`` itself is not importing the foreign-key class
+there's probably some import problem (circular dependencies) preventing referencing the
+foreign-key class directly, in which case ``pylint-django`` can't do a huge amount.
+If it's just done for convenience that's really up to you the developer to fix.
+
+
 Contributing
 ------------
 
