@@ -46,5 +46,9 @@ _add_transform('django.db.models',
                'Manager')
 _add_transform('django.utils.translation', 'ugettext_lazy')
 _add_transform('mongoengine', 'Document')
+_add_transform('model_utils.managers',
+               'InheritanceManager',
+               'QueryManager',
+               'SoftDeletableManager')
 # register transform for FileField/ImageField, see #60
 _add_transform('django.db.models.fields.files', 'FileField')

@@ -40,7 +40,7 @@ class Manager(object):
     get_or_create = __noop
     create = __noop
     bulk_create = __noop
-    filter = __noop
+    filter = __noop_list
     aggregate = __noop
     annotate = __noop
     complex_filter = __noop
