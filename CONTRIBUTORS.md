@@ -8,3 +8,4 @@
 * [mbertolacci](https://github.com/mbertolacci)
 * [atodorov](https://github.com/atodorov)
 * [bittner](https://github.com/bittner)
+* [federicobond](https://github.com/federicobond)
