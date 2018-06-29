@@ -12,7 +12,6 @@ from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.classes import ClassChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
 from pylint.checkers.variables import VariablesChecker
-from pylint.__pkginfo__ import numversion as PYLINT_VERSION
 from pylint.checkers.typecheck import TypeChecker
 from pylint.checkers.variables import ScopeConsumer
 
@@ -719,65 +718,38 @@ def is_wsgi_application(node):
         (frame.name == 'wsgi' or frame.path.endswith('wsgi.py') or frame.file.endswith('wsgi.py'))
 
 
-# The names of some visit functions changed in this commit:
-# https://bitbucket.org/logilab/pylint/commits/c94ee95abaa5737f13b91626fe321150c0ddd140
-
-def _visit_class(checker):
-    return getattr(checker, 'visit_classdef' if PYLINT_VERSION >= (1, 5) else 'visit_class')
-
-
-def _visit_attribute(checker):
-    return getattr(checker, 'visit_attribute' if PYLINT_VERSION >= (1, 5) else 'visit_getattr')
-
-
-def _leave_class(checker):
-    return getattr(checker, 'leave_classdef' if PYLINT_VERSION >= (1, 5) else 'leave_class')
-
-
-def _leave_function(checker):
-    return getattr(checker, 'leave_functiondef' if PYLINT_VERSION >= (1, 5) else 'leave_function')
-
-
-def _visit_assignname(checker):
-    return getattr(checker, 'visit_assignname' if PYLINT_VERSION >= (1, 5) else 'visit_assname')
-
-
-def _visit_assign(checker):
-    return getattr(checker, 'visit_assign')
-
-
 def apply_augmentations(linter):
     """Apply augmentation and suppression rules."""
-    augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_sets)
-    augment_visit(linter, _visit_attribute(TypeChecker), foreign_key_ids)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_model_field_display_method)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_style_attribute)
+    augment_visit(linter, TypeChecker.visit_attribute, foreign_key_sets)
+    augment_visit(linter, TypeChecker.visit_attribute, foreign_key_ids)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_model_field_display_method)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_style_attribute)
 
     # supress errors when accessing magical class attributes
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_manager_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_admin_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_model_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_field_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_charfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_datefield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_decimalfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_filefield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_imagefield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_ipfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_slugfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_foreignkeyfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_manytomanyfield_attribute)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_onetoonefield_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_manager_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_admin_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_model_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_field_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_charfield_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_datefield_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_decimalfield_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_filefield_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_imagefield_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_ipfield_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_slugfield_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_foreignkeyfield_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_manytomanyfield_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_onetoonefield_attribute)
 
     for parents, attrs in VIEW_ATTRS:
-        suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', generic_is_view_attribute(parents, attrs))
+        suppress_message(linter, TypeChecker.visit_attribute, 'no-member', generic_is_view_attribute(parents, attrs))
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
-    suppress_message(linter, _visit_class(MisdesignChecker), 'too-many-ancestors',
+    suppress_message(linter, MisdesignChecker.visit_classdef, 'too-many-ancestors',
                      is_class('django.views.generic.edit.FormView'))
 
     # model forms have no __init__ method anywhere in their bases
-    suppress_message(linter, _visit_class(ClassChecker), 'W0232', is_class('django.forms.models.ModelForm'))
+    suppress_message(linter, ClassChecker.visit_classdef, 'W0232', is_class('django.forms.models.ModelForm'))
 
     # forms implement __getitem__ but not __len__, thus raising a "Badly implemented container" warning which
     # we will suppress. NOTE: removed from pylint, https://github.com/PyCQA/pylint/issues/112
@@ -786,18 +758,18 @@ def apply_augmentations(linter):
     # suppress_message(linter, _leave_class(MisdesignChecker), 'R0924', is_class('django.forms.models.ModelForm'))
 
     # Meta
-    suppress_message(linter, _visit_class(DocStringChecker), 'missing-docstring', is_model_meta_subclass)
-    suppress_message(linter, _visit_class(NewStyleConflictChecker), 'old-style-class', is_model_meta_subclass)
-    suppress_message(linter, _visit_class(ClassChecker), 'no-init', is_model_meta_subclass)
-    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_meta_subclass)
-    suppress_message(linter, _visit_attribute(ClassChecker), 'protected-access', allow_meta_protected_access)
+    suppress_message(linter, DocStringChecker.visit_classdef, 'missing-docstring', is_model_meta_subclass)
+    suppress_message(linter, NewStyleConflictChecker.visit_classdef, 'old-style-class', is_model_meta_subclass)
+    suppress_message(linter, ClassChecker.visit_classdef, 'no-init', is_model_meta_subclass)
+    suppress_message(linter, MisdesignChecker.leave_classdef, 'too-few-public-methods', is_model_meta_subclass)
+    suppress_message(linter, ClassChecker.visit_attribute, 'protected-access', allow_meta_protected_access)
 
     # Media
-    suppress_message(linter, _visit_assignname(NameChecker), 'C0103', is_model_media_valid_attributes)
-    suppress_message(linter, _visit_class(DocStringChecker), 'missing-docstring', is_model_media_subclass)
-    suppress_message(linter, _visit_class(NewStyleConflictChecker), 'old-style-class', is_model_media_subclass)
-    suppress_message(linter, _visit_class(ClassChecker), 'no-init', is_model_media_subclass)
-    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_media_subclass)
+    suppress_message(linter, NameChecker.visit_assignname, 'C0103', is_model_media_valid_attributes)
+    suppress_message(linter, DocStringChecker.visit_classdef, 'missing-docstring', is_model_media_subclass)
+    suppress_message(linter, NewStyleConflictChecker.visit_classdef, 'old-style-class', is_model_media_subclass)
+    suppress_message(linter, ClassChecker.visit_classdef, 'no-init', is_model_media_subclass)
+    suppress_message(linter, MisdesignChecker.leave_classdef, 'too-few-public-methods', is_model_media_subclass)
 
     # Admin
     # Too many public methods (40+/20)
@@ -807,31 +779,32 @@ def apply_augmentations(linter):
     # for method in node.methods():
     #     if not method.name.startswith('_'):
     #         nb_public_methods += 1
-    suppress_message(linter, _leave_class(MisdesignChecker), 'R0904', is_model_admin_subclass)
+    suppress_message(linter, MisdesignChecker.leave_classdef, 'R0904', is_model_admin_subclass)
 
     # Tests
-    suppress_message(linter, _leave_class(MisdesignChecker), 'R0904', is_model_test_case_subclass)
+    suppress_message(linter, MisdesignChecker.leave_classdef, 'R0904', is_model_test_case_subclass)
 
     # View
     # Method could be a function (get, post)
-    suppress_message(linter, _leave_function(ClassChecker), 'R0201', is_model_view_subclass_method_shouldnt_be_function)
+    suppress_message(linter, ClassChecker.leave_functiondef, 'R0201',
+                     is_model_view_subclass_method_shouldnt_be_function)
     # Unused argument 'request' (get, post)
-    suppress_message(linter, _leave_function(VariablesChecker), 'unused-argument',
+    suppress_message(linter, VariablesChecker.leave_functiondef, 'unused-argument',
                      is_model_view_subclass_unused_argument)
-    suppress_message(linter, _leave_function(VariablesChecker), 'unused-argument', is_argument_named_request)
+    suppress_message(linter, VariablesChecker.leave_functiondef, 'unused-argument', is_argument_named_request)
 
     # django-mptt
-    suppress_message(linter, _visit_class(DocStringChecker), 'missing-docstring', is_model_mpttmeta_subclass)
-    suppress_message(linter, _visit_class(NewStyleConflictChecker), 'old-style-class', is_model_mpttmeta_subclass)
-    suppress_message(linter, _visit_class(ClassChecker), 'W0232', is_model_mpttmeta_subclass)
-    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_mpttmeta_subclass)
+    suppress_message(linter, DocStringChecker.visit_classdef, 'missing-docstring', is_model_mpttmeta_subclass)
+    suppress_message(linter, NewStyleConflictChecker.visit_classdef, 'old-style-class', is_model_mpttmeta_subclass)
+    suppress_message(linter, ClassChecker.visit_classdef, 'W0232', is_model_mpttmeta_subclass)
+    suppress_message(linter, MisdesignChecker.leave_classdef, 'too-few-public-methods', is_model_mpttmeta_subclass)
 
     # factory_boy's DjangoModelFactory
-    suppress_message(linter, _visit_class(DocStringChecker), 'missing-docstring', is_model_factory_meta_subclass)
-    suppress_message(linter, _visit_class(NewStyleConflictChecker), 'old-style-class', is_model_factory_meta_subclass)
-    suppress_message(linter, _visit_class(ClassChecker), 'W0232', is_model_factory_meta_subclass)
-    suppress_message(linter, _leave_class(MisdesignChecker), 'too-few-public-methods', is_model_factory_meta_subclass)
-    suppress_message(linter, _visit_attribute(TypeChecker), 'no-member', is_model_factory)
+    suppress_message(linter, DocStringChecker.visit_classdef, 'missing-docstring', is_model_factory_meta_subclass)
+    suppress_message(linter, NewStyleConflictChecker.visit_classdef, 'old-style-class', is_model_factory_meta_subclass)
+    suppress_message(linter, ClassChecker.visit_classdef, 'W0232', is_model_factory_meta_subclass)
+    suppress_message(linter, MisdesignChecker.leave_classdef, 'too-few-public-methods', is_model_factory_meta_subclass)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_model_factory)
 
     # ForeignKey and OneToOneField
     # Must update this in a thread safe way to support the parallel option on pylint (-j)
@@ -844,4 +817,4 @@ def apply_augmentations(linter):
     # else VariablesChecker.leave_module is already wrapped
 
     # wsgi.py
-    suppress_message(linter, _visit_assignname(NameChecker), 'invalid-name', is_wsgi_application)
+    suppress_message(linter, NameChecker.visit_assignname, 'invalid-name', is_wsgi_application)
