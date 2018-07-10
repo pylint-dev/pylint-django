@@ -15,7 +15,7 @@ QUERYSET_FUNCS = (
 def is_queryset_producing_call(node):
 
     if isinstance(node.func, Attribute):
-        # TODO here, tis currently identifies ANY attribute named 'filter'
+        # TODO here, this currently identifies ANY attribute named 'filter'
         # not just the one on Managers/QuerySets
         if node.func.attrname in QUERYSET_FUNCS:
             return True
