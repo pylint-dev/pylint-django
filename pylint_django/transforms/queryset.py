@@ -34,6 +34,7 @@ def infer_queryset(call_node, context=None):
 
     return iter([node.instantiate_class() for node in base_nodes])
 
+
 def add_transforms(manager):
 
     manager.register_transform(nodes.Call,

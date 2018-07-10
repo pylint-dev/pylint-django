@@ -5,6 +5,7 @@ when they in fact return QuerySets
 
 from django.db import models
 
+
 class SomeModelQuerySet(models.QuerySet):
     """ A missing docstring """
     @staticmethod
