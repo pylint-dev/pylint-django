@@ -4,14 +4,20 @@ from astroid.nodes import Attribute
 from pylint_django import utils
 
 
-def is_queryset_producing_call(node):
+# function calls of a django.db.models.Manager that return a django.db.models.QuerySet
+QUERYSET_FUNCS = (
+    'get_queryset',
+    'filter',
+    'all',
+)
 
-    func_name = None
+
+def is_queryset_producing_call(node):
 
     if isinstance(node.func, Attribute):
         # TODO here, tis currently identifies ANY attribute named 'filter'
         # not just the one on Managers/QuerySets
-        if node.func.attrname == 'filter':
+        if node.func.attrname in QUERYSET_FUNCS:
             return True
 
     return False
@@ -30,6 +36,6 @@ def infer_queryset(call_node, context=None):
 
 def add_transforms(manager):
 
-    manager.register_transform(nodes.Call, # maybe could use nodes.CallFunc?
+    manager.register_transform(nodes.Call,
                                inference_tip(infer_queryset),
                                is_queryset_producing_call)
