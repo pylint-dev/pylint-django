@@ -4,6 +4,7 @@ python:
   - 3.4
   - 3.5
   - 3.6
+  - "3.7-dev"
 env:
   # note: latest versions first b/c the top-most is included in new
   # build stages if not specified
@@ -18,6 +19,7 @@ matrix:
   exclude:
     # Python/Django combinations that aren't officially supported
     - { python: 2.7, env: DJANGO=2.0 }
+    - { python: "3.7-dev", env: DJANGO=1.11 }
   include:
     - { stage: django_not_installed, python: 3.6, env: TOXENV=django_not_installed }
     - { stage: django_is_installed, python: 3.6, env: TOXENV=django_is_installed }
@@ -33,7 +35,6 @@ install:
   - pip install tox-travis
 script:
   - |
-
         if [ -z "$SANITY_CHECK" ]; then
             tox
         else
