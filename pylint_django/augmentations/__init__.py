@@ -5,7 +5,7 @@ import itertools
 from astroid import InferenceError
 from astroid.objects import Super
 from astroid.nodes import ClassDef, ImportFrom, Attribute
-from astroid.scoped_nodes import Class as ScopedClass, Module
+from astroid.scoped_nodes import ClassDef as ScopedClass, Module
 
 from pylint.checkers.base import DocStringChecker, NameChecker
 from pylint.checkers.design_analysis import MisdesignChecker
@@ -754,8 +754,8 @@ def apply_augmentations(linter):
     # forms implement __getitem__ but not __len__, thus raising a "Badly implemented container" warning which
     # we will suppress. NOTE: removed from pylint, https://github.com/PyCQA/pylint/issues/112
     # keeping here in case it gets re-implemented
-    # suppress_message(linter, _leave_class(MisdesignChecker), 'R0924', is_class('django.forms.forms.Form'))
-    # suppress_message(linter, _leave_class(MisdesignChecker), 'R0924', is_class('django.forms.models.ModelForm'))
+    # suppress_message(linter, _leave_classdef(MisdesignChecker), 'R0924', is_class('django.forms.forms.Form'))
+    # suppress_message(linter, _leave_classdef(MisdesignChecker), 'R0924', is_class('django.forms.models.ModelForm'))
 
     # Meta
     suppress_message(linter, DocStringChecker.visit_classdef, 'missing-docstring', is_model_meta_subclass)

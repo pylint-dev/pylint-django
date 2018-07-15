@@ -24,7 +24,7 @@ def infer_key_classes(node, context=None):
     for arg in node.args:
         # typically the class of the foreign key will
         # be the first argument, so we'll go from left to right
-        if isinstance(arg, (nodes.Name, nodes.Getattr)):
+        if isinstance(arg, (nodes.Name, nodes.Attribute)):
             try:
                 key_cls = None
                 for inferred in arg.infer(context=context):
@@ -56,5 +56,5 @@ def infer_key_classes(node, context=None):
 
 
 def add_transform(manager):
-    manager.register_transform(nodes.CallFunc, inference_tip(infer_key_classes),
+    manager.register_transform(nodes.Call, inference_tip(infer_key_classes),
                                is_foreignkey_in_class)
