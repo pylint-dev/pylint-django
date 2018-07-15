@@ -80,4 +80,4 @@ def apply_type_shim(cls, _context=None):  # noqa
 
 
 def add_transforms(manager):
-    manager.register_transform(nodes.Class, inference_tip(apply_type_shim), is_model_or_form_field)
+    manager.register_transform(nodes.ClassDef, inference_tip(apply_type_shim), is_model_or_form_field)
