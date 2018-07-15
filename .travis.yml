@@ -1,6 +1,5 @@
 language: python
 python:
-  - 2.7
   - 3.4
   - 3.5
   - 3.6
@@ -18,7 +17,6 @@ stages:
 matrix:
   exclude:
     # Python/Django combinations that aren't officially supported
-    - { python: 2.7, env: DJANGO=2.0 }
     - { python: "3.7-dev", env: DJANGO=1.11 }
   include:
     - { stage: django_not_installed, python: 3.6, env: TOXENV=django_not_installed }
@@ -29,7 +27,6 @@ matrix:
     - { stage: build_and_package_sanity, python: 3.6, env: SANITY_CHECK=1 }
   allow_failures:
     - env: TOXENV=pylint
-    - python: 2.7
 
 install:
   - pip install tox-travis
