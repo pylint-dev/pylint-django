@@ -4,8 +4,11 @@ Changelog
 Unreleased
 ----------
 
+- Requires pylint >= 2.0 which doesn't support Python 2 anymore!
+
 - Add modelform-uses-unicode check to flag dangerous use of the exclude
   attribute in ModelForm.Meta.
+
 
 Version 0.11.1 (25 May 2018), the DjangoCon Heidelberg edittion
 ---------------------------------------------------------------

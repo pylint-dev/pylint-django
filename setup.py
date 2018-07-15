@@ -18,7 +18,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'pylint-plugin-utils>=0.4',
-        'pylint>=1.8.2',
+        'pylint>=2.0',
     ],
     extras_require={
         'with_django': ['Django'],
