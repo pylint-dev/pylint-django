@@ -69,6 +69,7 @@ Features
 * Fixes pylint's knowledge of the types of Model and Form field attributes
 * Validates ``Model.__unicode__`` methods.
 * ``Meta`` informational classes on forms and models do not generate errors.
+* Flags dangerous use of the exclude attribute in ModelForm.Meta.
 
 
 Additional plugins
