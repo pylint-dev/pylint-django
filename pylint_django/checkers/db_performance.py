@@ -40,7 +40,7 @@ def _is_migrations_module(node):
     if not isinstance(node, astroid.Module):
         return False
 
-    return 'migrations' in node.path and not node.path.endswith('__init__.py')
+    return 'migrations' in node.path[0] and not node.path[0].endswith('__init__.py')
 
 
 class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
@@ -102,7 +102,7 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
         last_name_space = ''
         latest_migrations = []
         for module in self._migration_modules:
-            name_space = module.path.split('migrations')[0]
+            name_space = module.path[0].split('migrations')[0]
             if name_space != last_name_space:
                 last_name_space = name_space
                 latest_migrations.append(module)
