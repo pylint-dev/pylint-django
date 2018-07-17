@@ -714,8 +714,17 @@ def wrap(orig_method, with_method):
 
 def is_wsgi_application(node):
     frame = node.frame()
-    return node.name == 'application' and isinstance(frame, Module) and \
-        (frame.name == 'wsgi' or frame.path.endswith('wsgi.py') or frame.file.endswith('wsgi.py'))
+
+    if node.name == 'application' and isinstance(frame, Module):
+        path_ends_with_wsgi = False
+        for path in frame.path:
+            if path.endswith('wsgi.py'):
+                path_ends_with_wsgi = True
+                break
+
+        return frame.name == 'wsgi' or path_ends_with_wsgi or frame.file.endswith('wsgi.py')
+
+    return False
 
 
 def apply_augmentations(linter):
