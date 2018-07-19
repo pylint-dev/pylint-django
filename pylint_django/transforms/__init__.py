@@ -6,11 +6,12 @@ from astroid import MANAGER
 from astroid.builder import AstroidBuilder
 from astroid import nodes
 
-from pylint_django.transforms import foreignkey, fields
+from pylint_django.transforms import foreignkey, fields, queryset
 
 
 foreignkey.add_transform(MANAGER)
 fields.add_transforms(MANAGER)
+queryset.add_transforms(MANAGER)
 
 
 def _add_transform(package_name, *class_names):
