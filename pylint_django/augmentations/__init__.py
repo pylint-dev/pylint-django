@@ -427,17 +427,20 @@ def is_model_factory_meta_subclass(node):
 
 
 def is_model_factory(node):
-    """Checks that node is derivative of SubFactory class."""
+    """Checks that node is derivative of DjangoModelFactory or SubFactory class."""
     try:
         parent_classes = node.expr.inferred()
     except:  # noqa: E722, pylint: disable=bare-except
         return False
 
-    parents = ('factory.declarations.SubFactory',)
+    parents = ('factory.declarations.SubFactory', 'factory.django.DjangoModelFactory')
 
     for parent_class in parent_classes:
         try:
             if parent_class.qname() in parents:
+                return True
+
+            if node_is_subclass(parent_class, *parents):
                 return True
         except AttributeError:
             continue
