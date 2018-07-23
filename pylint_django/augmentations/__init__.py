@@ -412,17 +412,8 @@ def is_model_meta_subclass(node):
                'rest_framework.generics.GenericAPIView',
                'rest_framework.viewsets.ReadOnlyModelViewSet',
                'rest_framework.viewsets.ModelViewSet',
-               'django_filters.filterset.FilterSet',)
-    return node_is_subclass(node.parent, *parents)
-
-
-def is_model_factory_meta_subclass(node):
-    """Checks that node is derivative of DjangoModelFactory class."""
-    if node.name != 'Meta' or not isinstance(node.parent, ClassDef):
-        return False
-
-    parents = ('factory.django.DjangoModelFactory',
-               '.DjangoModelFactory',)
+               'django_filters.filterset.FilterSet',
+               'factory.django.DjangoModelFactory',)
     return node_is_subclass(node.parent, *parents)
 
 
@@ -803,10 +794,6 @@ def apply_augmentations(linter):
     suppress_message(linter, MisdesignChecker.leave_classdef, 'too-few-public-methods', is_model_mpttmeta_subclass)
 
     # factory_boy's DjangoModelFactory
-    suppress_message(linter, DocStringChecker.visit_classdef, 'missing-docstring', is_model_factory_meta_subclass)
-    suppress_message(linter, NewStyleConflictChecker.visit_classdef, 'old-style-class', is_model_factory_meta_subclass)
-    suppress_message(linter, ClassChecker.visit_classdef, 'W0232', is_model_factory_meta_subclass)
-    suppress_message(linter, MisdesignChecker.leave_classdef, 'too-few-public-methods', is_model_factory_meta_subclass)
     suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_model_factory)
 
     # ForeignKey and OneToOneField
