@@ -30,21 +30,6 @@ def _add_transform(package_name):
     astroid.register_module_extender(astroid.MANAGER, package_name, fake_module_builder)
 
 
-# TODO: no sure what to do with commented out code! It looks like
-# we don't need these transforms anymore
-
-# _add_transform('django.core.handlers.wsgi', 'WSGIRequest')
-# _add_transform('django.views.generic.base', 'View')
-# _add_transform('django.forms', 'Form')
-# _add_transform('django.forms', 'ModelForm')
-# _add_transform('django.db.models',
-#               'Model',
-#               'Manager')
 _add_transform('django.utils.translation')
-# _add_transform('mongoengine', 'Document')
-# _add_transform('model_utils.managers',
-#               'InheritanceManager',
-#               'QueryManager',
-#               'SoftDeletableManager')
 # register transform for FileField/ImageField, see #60
 _add_transform('django.db.models.fields.files')
