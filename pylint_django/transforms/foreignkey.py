@@ -37,12 +37,31 @@ def infer_key_classes(node, context=None):
                     break
         elif isinstance(arg, nodes.Const):
             try:
-                model_name = arg.value.split('.')[-1]  # can be 'Model' or 'app.Model'
+                # can be 'Model' or 'app.Model'
+                module_name, _, model_name = arg.value.rpartition('.')
             except AttributeError:
                 break
 
+            # when ForeignKey is specified only by class name we assume that
+            # this class must be found in the current module
+            if not module_name:
+                current_module = node.frame()
+                while not isinstance(current_module, nodes.Module):
+                    current_module = current_module.parent.frame()
+
+                module_name = current_module.name
+            elif not module_name.endswith('models'):
+                # otherwise Django allows specifying an app name first, e.g.
+                # ForeignKey('auth.User') so we try to convert that to
+                # 'auth.models', 'User' which works nicely with the `endswith()`
+                # comparison below
+                module_name += '.models'
+
             for module in MANAGER.astroid_cache.values():
-                if model_name in module.locals:
+                # only load model classes from modules which match the module in
+                # which *we think* they are defined. This will prevent infering
+                # other models of the same name which are found elsewhere!
+                if model_name in module.locals and module.name.endswith(module_name):
                     class_defs = [
                         module_node for module_node in module.lookup(model_name)[1]
                         if isinstance(module_node, nodes.ClassDef)
