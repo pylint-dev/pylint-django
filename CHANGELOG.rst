@@ -1,17 +1,16 @@
 Changelog
 =========
 
-Unreleased
-----------
+Version 2.0 (25 July 2018)
+--------------------------
 
 - Requires pylint >= 2.0 which doesn't support Python 2 anymore!
-
 - Add modelform-uses-unicode check to flag dangerous use of the exclude
-  attribute in ModelForm.Meta.
+  attribute in ModelForm.Meta (Federico Bond).
 
 
-Version 0.11.1 (25 May 2018), the DjangoCon Heidelberg edittion
----------------------------------------------------------------
+Version 0.11.1 (25 May 2018), the DjangoCon Heidelberg edition
+--------------------------------------------------------------
 
 - Enable test case for ``urlpatterns`` variable which was previously disabled
 - Disable ``unused-argument`` message for the ``request`` argument passed to
