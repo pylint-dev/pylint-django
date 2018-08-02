@@ -281,6 +281,11 @@ VIEW_ATTRS = {
 }
 
 
+FORM_ATTRS = {
+    'declared_fields',
+}
+
+
 def ignore_import_warnings_for_related_fields(orig_method, self, node):
     """
     Replaces the leave_module method on the VariablesChecker class to
@@ -577,6 +582,12 @@ def is_onetoonefield_attribute(node):
     return _attribute_is_magic(node, ONETOONE_FIELD_ATTRS, parents)
 
 
+def is_form_attribute(node):
+    """Checks that node is attribute of Form."""
+    parents = ('django.forms.forms.Form', 'django.forms.models.ModelForm')
+    return _attribute_is_magic(node, FORM_ATTRS, parents)
+
+
 def is_model_test_case_subclass(node):
     """Checks that node is derivative of TestCase class."""
     if not node.name.endswith('Test') and not isinstance(node.parent, ClassDef):
@@ -735,6 +746,7 @@ def apply_augmentations(linter):
     suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_foreignkeyfield_attribute)
     suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_manytomanyfield_attribute)
     suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_onetoonefield_attribute)
+    suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_form_attribute)
 
     for parents, attrs in VIEW_ATTRS:
         suppress_message(linter, TypeChecker.visit_attribute, 'no-member', generic_is_view_attribute(parents, attrs))

@@ -6,6 +6,7 @@ methods on Django form forms.
 from __future__ import print_function
 from datetime import datetime, date
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 
 
 class ManyFieldsForm(forms.Form):
@@ -69,3 +70,6 @@ class ManyFieldsForm(forms.Form):
 
     def numberfield_tests(self):
         print(self.intfield + 5)
+
+
+_ = UserCreationForm.declared_fields
