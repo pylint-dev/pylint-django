@@ -4,6 +4,7 @@ methods on many-to-many relationships
 """
 #  pylint: disable=missing-docstring
 from django.db import models
+from django.contrib.auth.models import AbstractUser, Permission
 
 
 class Book(models.Model):
@@ -24,3 +25,28 @@ class Author(models.Model):
 
     def wrote_how_many(self):
         return self.wrote.count()
+
+
+# Custom permissions for CustomUser
+USER_PERMS = ['change_customuser', 'add_customuser']
+
+
+class CustomUser(AbstractUser):  # pylint: disable=model-no-explicit-unicode
+    class Meta:
+        verbose_name = 'CustomUser'
+        verbose_name_plural = 'CustomUsers'
+        app_label = "users"
+
+    def grant_permissions(self):
+        ''' Example adding permissions to User '''
+        self.user_permissions.clear()
+        for perm in USER_PERMS:
+            perm = Permission.objects.get(codename=perm)
+            self.user_permissions.add(perm)
+        return self.user_permissions
+
+    def save(self, *args, **kwargs):
+        ''' Saving while granting new permissions '''
+        self.is_staff = True
+        super(CustomUser, self).save()
+        self.grant_permissions()
