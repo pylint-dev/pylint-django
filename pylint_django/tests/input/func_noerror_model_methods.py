@@ -20,3 +20,4 @@ if __name__ == '__main__':
     LAST = SomeModel.objects.last()
 
     DB_RECORD, CREATED = SomeModel.objects.get_or_create(name='Tester')
+    EXCLUDED_IDS = [obj.pk for obj in SomeModel.objects.exclude(name__isnull=True)]
