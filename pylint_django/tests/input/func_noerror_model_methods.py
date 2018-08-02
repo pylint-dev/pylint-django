@@ -6,7 +6,7 @@ from django.db import models
 
 
 class SomeModel(models.Model):
-    pass
+    name = models.CharField(max_length=64)
 
 
 if __name__ == '__main__':
@@ -18,3 +18,5 @@ if __name__ == '__main__':
     # added in django 1.6
     FIRST = SomeModel.objects.first()
     LAST = SomeModel.objects.last()
+
+    DB_RECORD, CREATED = SomeModel.objects.get_or_create(name='Tester')
