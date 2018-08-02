@@ -36,6 +36,9 @@ class LotsOfFieldsModel(models.Model):
     timefield = models.TimeField()
     urlfield = models.URLField()
 
+    def __str__(self):
+        return self.id
+
     def boolean_field_tests(self):
         print(self.booleanfield | True)
         print(self.nullbooleanfield | True)
