@@ -158,6 +158,7 @@ MODELADMIN_ATTRS = {
 
 
 MODEL_ATTRS = {
+    'id',
     'DoesNotExist',
     'MultipleObjectsReturned',
     '_base_manager',
