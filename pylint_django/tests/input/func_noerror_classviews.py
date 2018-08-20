@@ -4,7 +4,8 @@ when using Class-based Views
 """
 #  pylint: disable=missing-docstring
 
-from django.views.generic import TemplateView
+from django.http import JsonResponse
+from django.views.generic import TemplateView, View
 
 
 class BoringView(TemplateView):
@@ -15,3 +16,10 @@ class BoringView(TemplateView):
             'args': self.args,
             'kwargs': self.kwargs
         }
+
+
+class JsonView(View):
+    def post(self, request):
+        # do something with objects but don't use
+        # self or request
+        return JsonResponse({'rc': 0, 'response': 'ok'})
