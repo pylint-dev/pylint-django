@@ -1,6 +1,22 @@
 Changelog
 =========
 
+Version 2.0.1 (20 Aug 2018)
+---------------------------
+
+- Enable testing with Django 2.1
+- Add test for Model.objects.get_or_create(). Close
+  `#156 <https://github.com/PyCQA/pylint-django/issues/156>`__
+- Add test for objects.exclude(). Close
+  `#177 <https://github.com/PyCQA/pylint-django/issues/177>`__
+- Fix Instance of 'Model' has no 'id' member (no-member),
+  fix Class 'UserCreationForm' has no 'declared_fields' member. Close
+  `#184 <https://github.com/PyCQA/pylint-django/issues/184>`__
+- Fix for Instance of 'ManyToManyField' has no 'add' member. Close
+  `#163 <https://github.com/PyCQA/pylint-django/issues/163>`__
+- Add test & fix for unused arguments on class based views
+
+
 Version 2.0 (25 July 2018)
 --------------------------
 
