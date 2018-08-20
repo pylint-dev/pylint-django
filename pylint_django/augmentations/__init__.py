@@ -608,15 +608,17 @@ def generic_is_view_attribute(parents, attrs):
 def is_model_view_subclass_method_shouldnt_be_function(node):
     """Checks that node is get or post method of the View class."""
     if node.name not in ('get', 'post'):
-
         return False
 
     parent = node.parent
     while parent and not isinstance(parent, ScopedClass):
         parent = parent.parent
 
-    subclass = '.View'
-    return parent is not None and parent.name.endswith('View') and node_is_subclass(parent, subclass)
+    subclass = ('django.views.View',
+                'django.views.generic.View',
+                'django.views.generic.base.View',)
+
+    return parent is not None and node_is_subclass(parent, *subclass)
 
 
 def is_model_view_subclass_unused_argument(node):
@@ -635,7 +637,7 @@ def is_argument_named_request(node):
     """
     If an unused-argument is named 'request' ignore that!
     """
-    return 'request'in node.argnames()
+    return 'request' in node.argnames()
 
 
 def is_model_field_display_method(node):
@@ -795,7 +797,7 @@ def apply_augmentations(linter):
 
     # View
     # Method could be a function (get, post)
-    suppress_message(linter, ClassChecker.leave_functiondef, 'R0201',
+    suppress_message(linter, ClassChecker.leave_functiondef, 'no-self-use',
                      is_model_view_subclass_method_shouldnt_be_function)
     # Unused argument 'request' (get, post)
     suppress_message(linter, VariablesChecker.leave_functiondef, 'unused-argument',
