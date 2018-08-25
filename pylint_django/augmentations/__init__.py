@@ -447,6 +447,23 @@ def is_model_factory(node):
     return False
 
 
+def is_factory_post_generation_method(node):
+    if not node.decorators:
+        return False
+
+    for decorator in node.decorators.get_children():
+        try:
+            inferred = decorator.inferred()
+        except InferenceError:
+            continue
+
+        for target in inferred:
+            if target.qname() == 'factory.helpers.post_generation':
+                return True
+
+    return False
+
+
 def is_model_mpttmeta_subclass(node):
     """Checks that node is derivative of MPTTMeta class."""
     if node.name != 'MPTTMeta' or not isinstance(node.parent, ClassDef):
@@ -812,6 +829,7 @@ def apply_augmentations(linter):
 
     # factory_boy's DjangoModelFactory
     suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_model_factory)
+    suppress_message(linter, ClassChecker.visit_functiondef, 'no-self-argument', is_factory_post_generation_method)
 
     # ForeignKey and OneToOneField
     # Must update this in a thread safe way to support the parallel option on pylint (-j)
