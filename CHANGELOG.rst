@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 2.0.2 (26 Aug 2018)
+---------------------------
+
+- Suppress false-positive no-self-argument in factory.post_generation. Fix
+  `#190 <https://github.com/PyCQA/pylint-django/issues/190>`_ (Federico Bond)
+
+
 Version 2.0.1 (20 Aug 2018)
 ---------------------------
 
