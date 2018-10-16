@@ -13,6 +13,9 @@ pylint-django
 .. image:: https://img.shields.io/pypi/v/pylint-django.svg
     :target: https://pypi.python.org/pypi/pylint-django
 
+.. image:: https://github.com/PyCQA/pylint-django/blob/master/tidelift_logo.png
+    :target: https://tidelift.com/subscription/pkg/pypi-pylint-django?utm_source=pypi-pylint-django&utm_medium=referral&utm_campaign=readme
+    :alt: Get professional support for pylint-django
 
 About
 -----
