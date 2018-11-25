@@ -9,3 +9,5 @@
 * [atodorov](https://github.com/atodorov)
 * [bittner](https://github.com/bittner)
 * [federicobond](https://github.com/federicobond)
+* [clintonb](https://github.com/clintonb)
+
