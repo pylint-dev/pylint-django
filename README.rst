@@ -103,7 +103,7 @@ If it's just done for convenience that's really up to you the developer to fix.
 Contributing
 ------------
 
-Please feel free to add your name to the ``CONTRIBUTORS.rst`` file if you want to
+Please feel free to add your name to the ``CONTRIBUTORS.md`` file if you want to
 be credited when pull requests get merged. You can also add to the
 ``CHANGELOG.rst`` file if you wish, although we'll also do that when merging.
 
