@@ -1,7 +1,7 @@
 """Utils."""
 import sys
 
-from astroid.util import Uninferable 
+from astroid.util import Uninferable
 from astroid.bases import Instance
 from astroid.nodes import ClassDef
 from astroid.exceptions import InferenceError
