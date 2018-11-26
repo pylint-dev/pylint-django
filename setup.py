@@ -22,6 +22,7 @@ setup(
     ],
     extras_require={
         'with_django': ['Django'],
+        'for_tests': ['django_tables2', 'factory-boy'],
     },
     license='GPLv2',
     classifiers=[

@@ -1,3 +1,7 @@
+# flake8: noqa
+# pylint: skip-file
+# no sane linter can figure out the hackiness in this compatability layer...
+
 try:
     from astroid.nodes import ClassDef, FunctionDef, ImportFrom, AssignName, Attribute
 except ImportError:

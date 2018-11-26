@@ -27,6 +27,7 @@ matrix:
 
 install:
   - pip install tox-travis
+  - pip install -e .[for_tests]
 script:
   - |
         if [ -z "$SANITY_CHECK" ]; then

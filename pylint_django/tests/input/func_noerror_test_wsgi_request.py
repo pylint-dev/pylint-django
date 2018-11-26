@@ -9,7 +9,6 @@ from django.db import models
 
 class SomeModel(models.Model):
     """Just a model."""
-    pass
 
 
 class SomeTestCase(TestCase):

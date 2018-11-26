@@ -8,8 +8,7 @@ Various suggestions about JSON http responses
 
 import astroid
 
-from pylint import interfaces
-from pylint import checkers
+from pylint import interfaces, checkers
 from pylint.checkers import utils
 from pylint_django.__pkginfo__ import BASE_ID
 
