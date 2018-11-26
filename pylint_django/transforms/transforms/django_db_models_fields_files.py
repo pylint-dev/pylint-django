@@ -1,3 +1,4 @@
+# pylint: disable=super-init-not-called
 from django.db.models.fields import files as django_fields
 
 

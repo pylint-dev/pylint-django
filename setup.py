@@ -13,7 +13,7 @@ setup(
     author_email='code@landscape.io',
     description='A Pylint plugin to help Pylint understand the Django web framework',
     long_description=LONG_DESCRIPTION,
-    version='2.0.2',
+    version='2.0.3',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
@@ -22,6 +22,7 @@ setup(
     ],
     extras_require={
         'with_django': ['Django'],
+        'for_tests': ['django_tables2', 'factory-boy'],
     },
     license='GPLv2',
     classifiers=[

@@ -1,11 +1,11 @@
 """Utils."""
 import sys
 
-from astroid.util import YES
 from astroid.bases import Instance
-from astroid.nodes import ClassDef
 from astroid.exceptions import InferenceError
+from astroid.nodes import ClassDef
 
+from pylint_django.compat import Uninferable
 
 PY3 = sys.version_info >= (3, 0)
 
@@ -15,7 +15,7 @@ def node_is_subclass(cls, *subclass_names):
     if not isinstance(cls, (ClassDef, Instance)):
         return False
 
-    if cls.bases == YES:
+    if cls.bases == Uninferable:
         return False
     for base_cls in cls.bases:
         try:
