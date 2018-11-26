@@ -745,6 +745,14 @@ def is_wsgi_application(node):
         (frame.name == 'wsgi' or frame.path[0].endswith('wsgi.py') or frame.file.endswith('wsgi.py'))
 
 
+# Compat helpers
+def pylint_newstyle_classdef_compat(linter, warning_name, augment):
+    if not hasattr(NewStyleConflictChecker, 'visit_classdef'):
+        return
+    suppress_message(linter, NewStyleConflictChecker.visit_classdef, 'old-style-class', is_model_meta_subclass)
+
+
+# augment things
 def apply_augmentations(linter):
     """Apply augmentation and suppression rules."""
     augment_visit(linter, TypeChecker.visit_attribute, foreign_key_sets)
@@ -787,7 +795,7 @@ def apply_augmentations(linter):
 
     # Meta
     suppress_message(linter, DocStringChecker.visit_classdef, 'missing-docstring', is_model_meta_subclass)
-    suppress_message(linter, NewStyleConflictChecker.visit_classdef, 'old-style-class', is_model_meta_subclass)
+    pylint_newstyle_classdef_compat(linter, 'old-style-class', is_model_meta_subclass)
     suppress_message(linter, ClassChecker.visit_classdef, 'no-init', is_model_meta_subclass)
     suppress_message(linter, MisdesignChecker.leave_classdef, 'too-few-public-methods', is_model_meta_subclass)
     suppress_message(linter, ClassChecker.visit_attribute, 'protected-access', allow_meta_protected_access)
@@ -795,7 +803,7 @@ def apply_augmentations(linter):
     # Media
     suppress_message(linter, NameChecker.visit_assignname, 'C0103', is_model_media_valid_attributes)
     suppress_message(linter, DocStringChecker.visit_classdef, 'missing-docstring', is_model_media_subclass)
-    suppress_message(linter, NewStyleConflictChecker.visit_classdef, 'old-style-class', is_model_media_subclass)
+    pylint_newstyle_classdef_compat(linter, 'old-style-class', is_model_media_subclass)
     suppress_message(linter, ClassChecker.visit_classdef, 'no-init', is_model_media_subclass)
     suppress_message(linter, MisdesignChecker.leave_classdef, 'too-few-public-methods', is_model_media_subclass)
 
@@ -823,7 +831,7 @@ def apply_augmentations(linter):
 
     # django-mptt
     suppress_message(linter, DocStringChecker.visit_classdef, 'missing-docstring', is_model_mpttmeta_subclass)
-    suppress_message(linter, NewStyleConflictChecker.visit_classdef, 'old-style-class', is_model_mpttmeta_subclass)
+    pylint_newstyle_classdef_compat(linter, 'old-style-class', is_model_mpttmeta_subclass)
     suppress_message(linter, ClassChecker.visit_classdef, 'W0232', is_model_mpttmeta_subclass)
     suppress_message(linter, MisdesignChecker.leave_classdef, 'too-few-public-methods', is_model_mpttmeta_subclass)
 
