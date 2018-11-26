@@ -1,11 +1,11 @@
 """Utils."""
 import sys
 
-from pylint_django.compat import Uninferable
 from astroid.bases import Instance
-from astroid.nodes import ClassDef
 from astroid.exceptions import InferenceError
+from astroid.nodes import ClassDef
 
+from pylint_django.compat import Uninferable
 
 PY3 = sys.version_info >= (3, 0)
 

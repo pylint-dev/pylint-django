@@ -749,7 +749,7 @@ def is_wsgi_application(node):
 def pylint_newstyle_classdef_compat(linter, warning_name, augment):
     if not hasattr(NewStyleConflictChecker, 'visit_classdef'):
         return
-    suppress_message(linter, NewStyleConflictChecker.visit_classdef, warning_name, augment)
+    suppress_message(linter, getattr(NewStyleConflictChecker, 'visit_classdef'), warning_name, augment)
 
 
 # augment things

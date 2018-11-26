@@ -1,2 +1,2 @@
-def ugettext_lazy(x):
+def ugettext_lazy(_):
     return ''

@@ -13,6 +13,7 @@ def _get_child_meta(node):
     for child in node.get_children():
         if isinstance(child, ClassDef) and child.name == 'Meta':
             return child
+    return None
 
 
 class FormChecker(BaseChecker):
