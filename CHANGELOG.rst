@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 2.0.3 (26 Nov 2018)
+---------------------------
+
+- Fixing compatability between ranges of astroid (2.0.4 -> 2.1) and pylint (2.1.1 -> 2.2)
+  `#201 <https://github.com/PyCQA/pylint-django/issues/201>` and `#202 <https://github.com/PyCQA/pylint-django/issues/202>`
+
 Version 2.0.2 (26 Aug 2018)
 ---------------------------
 
