@@ -787,12 +787,6 @@ def apply_augmentations(linter):
     # model forms have no __init__ method anywhere in their bases
     suppress_message(linter, ClassChecker.visit_classdef, 'W0232', is_class('django.forms.models.ModelForm'))
 
-    # forms implement __getitem__ but not __len__, thus raising a "Badly implemented container" warning which
-    # we will suppress. NOTE: removed from pylint, https://github.com/PyCQA/pylint/issues/112
-    # keeping here in case it gets re-implemented
-    # suppress_message(linter, _leave_classdef(MisdesignChecker), 'R0924', is_class('django.forms.forms.Form'))
-    # suppress_message(linter, _leave_classdef(MisdesignChecker), 'R0924', is_class('django.forms.models.ModelForm'))
-
     # Meta
     suppress_message(linter, DocStringChecker.visit_classdef, 'missing-docstring', is_model_meta_subclass)
     pylint_newstyle_classdef_compat(linter, 'old-style-class', is_model_meta_subclass)
