@@ -13,6 +13,7 @@ except ImportError:
         Getattr as Attribute,
     )
 
+# pylint 2.04->2.2 : YES was renamed to Uninferable, then YES became deprecated, then was removed
 try:
     from astroid.bases import YES as Uninferable
 except ImportError:
