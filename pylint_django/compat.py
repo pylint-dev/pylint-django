@@ -28,16 +28,3 @@ except ImportError:
     # if not available, will be handled by the django_installed checker
     django_version = (1, 5)
 
-
-def inferred(node):
-    if hasattr(node, "inferred"):
-        return node.inferred
-    else:
-        return node.infered
-
-
-def instantiate_class(node):
-    if hasattr(node, "instantiate_class"):
-        return node.instantiate_class
-    else:
-        return node.instanciate_class
