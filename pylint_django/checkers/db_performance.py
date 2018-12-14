@@ -117,7 +117,8 @@ def register(linter):
     """Required method to auto register this checker."""
     # don't blacklist migrations for this checker
     new_black_list = list(linter.config.black_list)
-    new_black_list.remove('migrations')
+    if 'migrations' in new_black_list:
+        new_black_list.remove('migrations')
     linter.config.black_list = new_black_list
 
     linter.register_checker(NewDbFieldWithDefaultChecker(linter))
