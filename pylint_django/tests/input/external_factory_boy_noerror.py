@@ -15,7 +15,7 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField()
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, related_name='books', on_delete=models.CASCADE)
 
 
 class AuthorFactory(factory.django.DjangoModelFactory):
@@ -40,6 +40,9 @@ class BookTestCase(test.LiveServerTestCase):
     def _fixture_setup(self):
         super(BookTestCase, self)._fixture_setup()
         self.book = BookFactory()
+        _author = AuthorFactory()
+        _first_book = _author.books.first()
+        self.assertIsNotNone(_first_book)
 
     def test_author_is_not_none(self):
         self.assertGreater(self.book.pk, 0)

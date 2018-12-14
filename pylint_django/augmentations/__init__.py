@@ -507,6 +507,7 @@ def is_manager_attribute(node):
     """Checks that node is attribute of Manager or QuerySet class."""
     parents = ('django.db.models.manager.Manager',
                '.Manager',
+               'factory.base.BaseFactory.build',
                'django.db.models.query.QuerySet',
                '.QuerySet')
     return _attribute_is_magic(node, MANAGER_ATTRS.union(QS_ATTRS), parents)
