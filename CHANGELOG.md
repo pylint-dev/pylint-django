@@ -1,5 +1,15 @@
 # Changelog
 
+## Version 0.8.1 (14 Dec 2018)
+
+* Backported fix for
+  [#120](https://github.com/PyCQA/pylint-django/issues/120).
+
+**WARNING:** this release has not been tested via our regular CI process
+because the 0.8.x branch is missing lots of internal infrastructure and it
+will not be generally supported! This version is provided as a last-resort
+measure for users who can't upgrade to the 2.x series! Use at your own risk!
+
 ## Version 0.8.0 (20 Jan 2018)
 
 * This is the last version to support Python 2. Issues a deprecation warning!

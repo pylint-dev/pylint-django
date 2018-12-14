@@ -5,7 +5,7 @@ import os
 import sys
 
 
-_version = '0.8.0'
+_version = '0.8.1'
 _packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"])
 
 _short_description = "pylint-django is a Pylint plugin to aid Pylint in recognising and understanding" \
