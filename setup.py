@@ -22,7 +22,8 @@ setup(
     ],
     extras_require={
         'with_django': ['Django'],
-        'for_tests': ['django_tables2', 'factory-boy'],
+        'for_tests': ['coverage', 'djangorestframework', 'django-model-utils', 'django-tables2',
+                      'factory-boy', 'psycopg2', 'pytest'],
     },
     license='GPLv2',
     classifiers=[
