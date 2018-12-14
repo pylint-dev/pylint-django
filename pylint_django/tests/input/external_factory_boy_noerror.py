@@ -31,6 +31,7 @@ class BookFactory(factory.django.DjangoModelFactory):
 
     title = factory.Sequence(lambda n: 'Book %d' % n)
     author = factory.SubFactory(AuthorFactory)
+    reviewer = factory.LazyFunction(Author.objects.first())
 
 
 class BookTestCase(test.LiveServerTestCase):
@@ -46,3 +47,6 @@ class BookTestCase(test.LiveServerTestCase):
 
         self.assertIsNotNone(self.book.title)
         self.assertIsNotNone(self.book.author.name)
+
+    def test_reviewer_is_not_none(self):
+        self.assertGreater(self.book.reviewer.pk, 0)

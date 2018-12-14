@@ -432,7 +432,9 @@ def is_model_factory(node):
     except:  # noqa: E722, pylint: disable=bare-except
         return False
 
-    parents = ('factory.declarations.SubFactory', 'factory.django.DjangoModelFactory')
+    parents = ('factory.declarations.LazyFunction',
+               'factory.declarations.SubFactory',
+               'factory.django.DjangoModelFactory')
 
     for parent_class in parent_classes:
         try:
