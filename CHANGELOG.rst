@@ -1,8 +1,17 @@
 Changelog
 =========
 
-Version 2.0.4 (17 Dec 2018)
+Version 2.0.5 (17 Dec 2018)
 ---------------------------
+
+Bumping the version number because there's been a mix-up between
+GitHub tags and the versions pushed to PyPI for 2.0.3 and 2.0.4.
+
+Please use 2.0.5 which includes the changes mentioned below!
+
+
+Version 2.0.4 (do not use)
+--------------------------
 
 - Avoid traceback with concurrent execution. Fix
   `#197 <https://github.com/PyCQA/pylint-django/issues/197>`_
@@ -12,8 +21,8 @@ Version 2.0.4 (17 Dec 2018)
   `PR #207 <http://github.com/PyCQA/pylint-django/pull/207>`_
 
 
-Version 2.0.3 (26 Nov 2018)
----------------------------
+Version 2.0.3 (do not use)
+--------------------------
 
 - Fixing compatability between ranges of astroid (2.0.4 -> 2.1) and
   pylint (2.1.1 -> 2.2).
