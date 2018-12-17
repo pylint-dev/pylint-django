@@ -1,11 +1,24 @@
 Changelog
 =========
 
+Version 2.0.4 (17 Dec 2018)
+---------------------------
+
+- Avoid traceback with concurrent execution. Fix
+  `#197 <https://github.com/PyCQA/pylint-django/issues/197>`_
+- Suppress ``no-member`` errors for ``LazyFunction`` in factories
+- Suppress ``no-member`` errors for ``RelatedManager`` fields
+- Clean up compatibility code:
+  `PR #207 <http://github.com/PyCQA/pylint-django/pull/207>`_
+
+
 Version 2.0.3 (26 Nov 2018)
 ---------------------------
 
-- Fixing compatability between ranges of astroid (2.0.4 -> 2.1) and pylint (2.1.1 -> 2.2)
-  `#201 <https://github.com/PyCQA/pylint-django/issues/201>` and `#202 <https://github.com/PyCQA/pylint-django/issues/202>`
+- Fixing compatability between ranges of astroid (2.0.4 -> 2.1) and
+  pylint (2.1.1 -> 2.2).
+  `#201 <https://github.com/PyCQA/pylint-django/issues/201>`_ and
+  `#202 <https://github.com/PyCQA/pylint-django/issues/202>`_
 
 Version 2.0.2 (26 Aug 2018)
 ---------------------------
