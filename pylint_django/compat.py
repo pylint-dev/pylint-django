@@ -22,3 +22,7 @@ except ImportError:
     except ImportError:
         from astroid.util import Uninferable
 
+import pylint
+
+# pylint before version 2.3 does not support load_configuration() hook.
+LOAD_CONFIGURATION_SUPPORTED = pylint.__pkginfo__.numversion >= (2, 3)

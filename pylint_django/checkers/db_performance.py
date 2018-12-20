@@ -13,6 +13,7 @@ from pylint import interfaces
 from pylint import checkers
 from pylint.checkers import utils
 from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django import compat
 
 
 def _is_addfield_with_default(call):
@@ -113,12 +114,16 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
                     self.add_message('new-db-field-with-default', args=module.name, node=node)
 
 
-def register(linter):
-    """Required method to auto register this checker."""
+def load_configuration(linter):
     # don't blacklist migrations for this checker
     new_black_list = list(linter.config.black_list)
     if 'migrations' in new_black_list:
         new_black_list.remove('migrations')
     linter.config.black_list = new_black_list
 
+
+def register(linter):
+    """Required method to auto register this checker."""
     linter.register_checker(NewDbFieldWithDefaultChecker(linter))
+    if not compat.LOAD_CONFIGURATION_SUPPORTED:
+        load_configuration(linter)
