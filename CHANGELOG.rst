@@ -11,6 +11,7 @@ Version 2.0.6 (27 Feb 2019)
   and `#216 <https://github.com/PyCQA/pylint-django/issues/216>`_ (@aerostitch)
 - Add support for new load_configuration hook of pylint
   `#214 <https://github.com/PyCQA/pylint-django/issues/214>`_ (@matusvalo)
+- 'urlpatterns' no longer reported as an invalid constant name
 
 
 Version 2.0.5 (17 Dec 2018)
