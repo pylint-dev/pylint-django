@@ -1,6 +1,18 @@
 Changelog
 =========
 
+Version 2.0.6 (27 Feb 2019)
+---------------------------
+
+- Updating dependency version of pylint-plugin-utils as pylint 2.3 release
+  was not compatible `#220 <https://github.com/PyCQA/pylint-django/issues/220>`_
+- Improvements to tox.ini:
+  `#217 <https://github.com/PyCQA/pylint-django/issues/217>`_
+  and `#216 <https://github.com/PyCQA/pylint-django/issues/216>`_ (@aerostitch)
+- Add support for new load_configuration hook of pylint
+  `#214 <https://github.com/PyCQA/pylint-django/issues/214>`_ (@matusvalo)
+
+
 Version 2.0.5 (17 Dec 2018)
 ---------------------------
 
@@ -79,9 +91,9 @@ Version 0.11 (18 April 2018), the TestCon Moscow edition
   http responses returning JSON. This includes::
 
     HttpResponse(json.dumps(data))
-    
+
     HttpResponse(data, content_type='application/json')
-    
+
     JsonResponse(data, content_type=...)
 
 
