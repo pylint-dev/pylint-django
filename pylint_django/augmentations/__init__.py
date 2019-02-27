@@ -762,6 +762,7 @@ def apply_augmentations(linter):
     augment_visit(linter, TypeChecker.visit_attribute, foreign_key_ids)
     suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_model_field_display_method)
     suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_style_attribute)
+    suppress_message(linter, NameChecker.visit_assignname, 'invalid-name', is_urls_module_valid_constant)
 
     # supress errors when accessing magical class attributes
     suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_manager_attribute)
