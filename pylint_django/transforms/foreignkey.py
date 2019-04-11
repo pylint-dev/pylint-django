@@ -1,3 +1,5 @@
+from itertools import chain
+
 from astroid import MANAGER, nodes, InferenceError, inference_tip, UseInferenceDefault
 from astroid.nodes import ClassDef, Attribute
 
@@ -21,7 +23,10 @@ def is_foreignkey_in_class(node):
 
 
 def infer_key_classes(node, context=None):
-    for arg in node.args:
+    keyword_args = [kw.value for kw in node.keywords]
+    all_args = chain(node.args, keyword_args)
+
+    for arg in all_args:
         # typically the class of the foreign key will
         # be the first argument, so we'll go from left to right
         if isinstance(arg, (nodes.Name, nodes.Attribute)):
