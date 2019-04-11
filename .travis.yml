@@ -4,6 +4,7 @@ python:
   - 3.5
   - 3.6
   - 3.7
+  - 3.7-dev
 env:
   # note: latest versions first b/c the top-most is included in new
   # build stages if not specified
