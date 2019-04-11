@@ -7,6 +7,10 @@ from django.db import models
 from django.db.models import ForeignKey, OneToOneField
 
 
+class Genre(models.Model):
+    name = models.CharField(max_length=100)
+
+
 class Author(models.Model):
     author_name = models.CharField(max_length=100)
 
@@ -17,8 +21,10 @@ class ISBN(models.Model):
 
 class Book(models.Model):
     book_name = models.CharField(max_length=100)
-    author = models.ForeignKey('Author', on_delete=models.CASCADE)
-    isbn = models.OneToOneField(ISBN, on_delete=models.CASCADE)
+    # Check this works with and without `to` keyword
+    author = models.ForeignKey(to='Author', on_delete=models.CASCADE)
+    isbn = models.OneToOneField(to=ISBN, on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
 
     def get_isbn(self):
         return self.isbn.value
@@ -32,7 +38,7 @@ class Fruit(models.Model):
 
 
 class Seed(models.Model):
-    fruit = ForeignKey(Fruit, on_delete=models.CASCADE)
+    fruit = ForeignKey(to=Fruit, on_delete=models.CASCADE)
 
     def get_fruit_name(self):
         return self.fruit.fruit_name
@@ -56,3 +62,11 @@ class UserPreferences(models.Model):
         https://github.com/PyCQA/pylint-django/issues/35
     """
     user = ForeignKey('User', on_delete=models.CASCADE)
+
+
+class UserAddress(models.Model):
+    user = OneToOneField(to='User', on_delete=models.CASCADE)
+    line_1 = models.CharField(max_length=100)
+    line_2 = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=100)
