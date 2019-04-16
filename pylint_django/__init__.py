@@ -10,3 +10,4 @@ if sys.version_info < (3, ):
                              "Please migrate to Python 3!")
 
 register = plugin.register  # pylint: disable=invalid-name
+load_configuration = plugin.load_configuration  # pylint: disable=invalid-name
