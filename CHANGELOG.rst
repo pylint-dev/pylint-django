@@ -1,6 +1,17 @@
 Changelog
 =========
 
+Version 2.0.7 (16 April 2019)
+-----------------------------
+
+- Fixed ``AstroidImportError`` for ``DecimalField``. Fix
+  `#221 <https://github.com/PyCQA/pylint-django/issues/221>`_ (Daniil Kharkov)
+- Add ``load_configuration()`` in ``pylint_django/__init__.py``. Fix #222
+  `#222 <https://github.com/PyCQA/pylint-django/issues/222>`_
+- Support ForeignKey relations with ``to`` keyword. Fix
+  `#223 <https://github.com/PyCQA/pylint-django/issues/223>`_ (Daniil Kharkov)
+
+
 Version 2.0.6 (27 Feb 2019)
 ---------------------------
 
