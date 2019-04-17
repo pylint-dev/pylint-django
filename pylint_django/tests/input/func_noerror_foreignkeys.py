@@ -55,6 +55,17 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+class Human(models.Model):
+    child = ForeignKey('self', on_delete=models.SET_NULL, null=True)
+    parent = ForeignKey(to='self', on_delete=models.SET_NULL, null=True)
+
+    def get_grandchild(self):
+        return self.child.child
+
+    def get_grandparent(self):
+        return self.parent.parent
+
+
 class UserPreferences(models.Model):
     """
         Used for testing FK which refers to another model by

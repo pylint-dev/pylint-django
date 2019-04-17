@@ -1,6 +1,9 @@
 from itertools import chain
 
-from astroid import MANAGER, nodes, InferenceError, inference_tip, UseInferenceDefault
+from astroid import (
+    MANAGER, nodes, InferenceError, inference_tip,
+    UseInferenceDefault
+)
 from astroid.nodes import ClassDef, Attribute
 
 from pylint_django.utils import node_is_subclass
@@ -42,8 +45,17 @@ def infer_key_classes(node, context=None):
                     break
         elif isinstance(arg, nodes.Const):
             try:
-                # can be 'Model' or 'app.Model'
-                module_name, _, model_name = arg.value.rpartition('.')
+                # can be 'self , 'Model' or 'app.Model'
+                if arg.value == 'self':
+                    module_name = ''
+                    # for relations with `to` first parent be Keyword(arg='to')
+                    # and we need to go deeper in parent tree to get model name
+                    if isinstance(arg.parent, nodes.Keyword) and arg.parent.arg == 'to':
+                        model_name = arg.parent.parent.parent.parent.name
+                    else:
+                        model_name = arg.parent.parent.parent.name
+                else:
+                    module_name, _, model_name = arg.value.rpartition('.')
             except AttributeError:
                 break
 
