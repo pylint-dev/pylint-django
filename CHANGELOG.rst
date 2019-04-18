@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 2.0.8 (18 April 2019)
+-----------------------------
+
+- Support recursive (self) ForeignKey relations. Fix
+  `#208 <https://github.com/PyCQA/pylint-django/issues/208>`_ (Daniil Kharkov)
+
+
 Version 2.0.7 (16 April 2019)
 -----------------------------
 
