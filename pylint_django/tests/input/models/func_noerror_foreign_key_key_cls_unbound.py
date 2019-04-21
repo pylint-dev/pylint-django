@@ -4,11 +4,10 @@ in module of models package
 """
 # pylint: disable=missing-docstring,wrong-import-position
 from django.db import models
-from django.db.models import ForeignKey
 
 
 class FairyTail(models.Model):
-    # this fails key_cls UnboundLocalError: local variable 'key_cls' referenced before assignment
+    # fails with "UnboundLocalError: local variable 'key_cls' referenced before assignment"
     author = models.ForeignKey(to='input.Author', null=True, on_delete=models.CASCADE)
 
     def get_author_name(self):

@@ -28,9 +28,8 @@ def is_foreignkey_in_class(node):
 def _get_model_class_defs_from_module(module, model_name, module_name):
     class_defs = []
     for module_node in module.lookup(model_name)[1]:
-        if isinstance(module_node, nodes.ClassDef) and node_is_subclass(
-            module_node, "django.db.models.base.Model"
-        ):
+        if (isinstance(module_node, nodes.ClassDef)
+                and node_is_subclass(module_node, 'django.db.models.base.Model')):
             class_defs.append(module_node)
         elif isinstance(module_node, nodes.ImportFrom):
             imported_module = module_node.do_import_module()
@@ -90,11 +89,11 @@ def infer_key_classes(node, context=None):
                 # 'auth.models', 'User' which works nicely with the `endswith()`
                 # comparison below
                 module_name += '.models'
-                # ensure that module is loaded in cache, for cases when models is a package
+                # ensure that module is loaded in astroid_cache, for cases when models is a package
                 if module_name not in MANAGER.astroid_cache:
                     MANAGER.ast_from_module_name(module_name)
 
-            # create list from dict_values, because it may be modified in loop
+            # create list from dict_values, because it may be modified in a loop
             for module in list(MANAGER.astroid_cache.values()):
                 # only load model classes from modules which match the module in
                 # which *we think* they are defined. This will prevent infering
