@@ -4,6 +4,11 @@ Changelog
 Version 2.0.8 (18 April 2019)
 -----------------------------
 
+- Fix `UnboundLocalError: local variable 'key_cls' referenced before assignment`` for FK when using ``to`` as string pointing to model when models is a package
+  
+Version 2.0.8 (18 April 2019)
+-----------------------------
+
 - Support recursive (self) ForeignKey relations. Fix
   `#208 <https://github.com/PyCQA/pylint-django/issues/208>`_ (Daniil Kharkov)
 
