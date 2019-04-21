@@ -11,3 +11,4 @@
 * [federicobond](https://github.com/federicobond)
 * [matusvalo](https://github.com/matusvalo)
 * [fadedDexofan](https://github.com/fadeddexofan)
+* [imomaliev](https://github.com/imomaliev)
