@@ -25,6 +25,23 @@ def is_foreignkey_in_class(node):
     return attr in ('OneToOneField', 'ForeignKey')
 
 
+def _get_model_class_defs_from_module(module, model_name, module_name):
+    class_defs = []
+    for module_node in module.lookup(model_name)[1]:
+        if isinstance(module_node, nodes.ClassDef) and node_is_subclass(
+            module_node, "django.db.models.base.Model"
+        ):
+            class_defs.append(module_node)
+        elif isinstance(module_node, nodes.ImportFrom):
+            imported_module = module_node.do_import_module()
+            class_defs.extend(
+                _get_model_class_defs_from_module(
+                    imported_module, model_name, module_name
+                )
+            )
+    return class_defs
+
+
 def infer_key_classes(node, context=None):
     keyword_args = [kw.value for kw in node.keywords]
     all_args = chain(node.args, keyword_args)
@@ -73,17 +90,20 @@ def infer_key_classes(node, context=None):
                 # 'auth.models', 'User' which works nicely with the `endswith()`
                 # comparison below
                 module_name += '.models'
+                # ensure that module is loaded in cache, for cases when models is a package
+                if module_name not in MANAGER.astroid_cache:
+                    MANAGER.ast_from_module_name(module_name)
 
-            for module in MANAGER.astroid_cache.values():
+            # create list from dict_values, because it may be modified in loop
+            for module in list(MANAGER.astroid_cache.values()):
                 # only load model classes from modules which match the module in
                 # which *we think* they are defined. This will prevent infering
                 # other models of the same name which are found elsewhere!
                 if model_name in module.locals and module.name.endswith(module_name):
-                    class_defs = [
-                        module_node for module_node in module.lookup(model_name)[1]
-                        if isinstance(module_node, nodes.ClassDef)
-                        and node_is_subclass(module_node, 'django.db.models.base.Model')
-                    ]
+                    class_defs = _get_model_class_defs_from_module(
+                        module, model_name, module_name
+                    )
+
                     if class_defs:
                         return iter([class_defs[0].instantiate_class()])
     else:
