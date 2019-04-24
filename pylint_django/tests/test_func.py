@@ -56,7 +56,6 @@ def get_tests(input_dir='input', sort=False):
 
 
 TESTS = get_tests()
-TESTS.extend(get_tests('input/models'))
 TESTS_NAMES = [t.base for t in TESTS]
 
 

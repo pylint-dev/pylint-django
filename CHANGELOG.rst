@@ -4,7 +4,7 @@ Changelog
 Version 2.0.9 (dev)
 -----------------------------
 
-- Fix ``UnboundLocalError: local variable 'key_cls' referenced before assignment`` for FK when using ``to`` as string pointing to model when models is a package
+- Fix ``UnboundLocalError: local variable 'key_cls' referenced before assignment`` for cases when models is a python package, the ``to`` argument is a string that is used in this pattern ``app.Model`` and also there is some other ``bool`` const like ``null=True`` right after ``to``. (Sardorbek Imomaliev)
   
 Version 2.0.8 (18 April 2019)
 -----------------------------
