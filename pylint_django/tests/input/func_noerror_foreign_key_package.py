@@ -2,7 +2,7 @@
 Checks that Pylint does not complain about ForeignKey pointing to model
 in module of models package
 """
-# pylint: disable=missing-docstring,wrong-import-position
+# pylint: disable=missing-docstring
 from django.db import models
 
 
