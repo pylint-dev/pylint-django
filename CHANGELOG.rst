@@ -1,11 +1,17 @@
 Changelog
 =========
 
-Version 2.0.9 (dev)
+Version 2.0.9 (26 April 2019)
 -----------------------------
 
-- Fix ``UnboundLocalError: local variable 'key_cls' referenced before assignment`` for cases when models is a python package, the ``to`` argument is a string that is used in this pattern ``app.Model`` and also there is some other ``bool`` const like ``null=True`` right after ``to``. (Sardorbek Imomaliev)
-  
+- Fix ``UnboundLocalError: local variable 'key_cls' referenced before assignment``
+  for cases when models is a python package, the ``to`` argument is a string
+  that is used in this pattern ``app.Model`` and also there is some other
+  ``bool`` const like ``null=True`` right after ``to``. (Sardorbek Imomaliev)
+- Don't crash if ForeignKey field doesn't have keyword arguments Fix
+  `#230 <https://github.com/PyCQA/pylint-django/issues/230>`_
+
+
 Version 2.0.8 (18 April 2019)
 -----------------------------
 
