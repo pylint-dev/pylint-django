@@ -44,7 +44,7 @@ def _get_model_class_defs_from_module(module, model_name, module_name):
 def infer_key_classes(node, context=None):
     keyword_args = []
     if node.keywords:
-        keyword_args = [kw.value for kw in node.keywords]
+        keyword_args = [kw.value for kw in node.keywords if kw.arg == 'to']
     all_args = chain(node.args, keyword_args)
 
     for arg in all_args:
