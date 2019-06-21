@@ -1,5 +1,6 @@
 """Augmentations."""
 #  pylint: disable=invalid-name
+import functools
 import itertools
 
 from astroid import InferenceError
@@ -739,6 +740,7 @@ def is_class(class_name):
 
 
 def wrap(orig_method, with_method):
+    @functools.wraps(orig_method)
     def wrap_func(*args, **kwargs):
         with_method(orig_method, *args, **kwargs)
     return wrap_func
