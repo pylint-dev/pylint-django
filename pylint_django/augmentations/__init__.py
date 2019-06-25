@@ -248,6 +248,8 @@ MANYTOMANY_FIELD_ATTRS = {
     'clear',
     'related_name',
     'related_query_name',
+    'remove',
+    'set',
     'limit_choices_to',
     'symmetrical',
     'through',

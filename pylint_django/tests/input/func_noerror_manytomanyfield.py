@@ -45,6 +45,15 @@ class CustomUser(AbstractUser):  # pylint: disable=model-no-explicit-unicode
             self.user_permissions.add(perm)
         return self.user_permissions
 
+    def add_permission(self, permission):
+        self.user_permissions.add(permission)
+
+    def remove_permission(self, permission):
+        self.user_permissions.remove(permission)
+
+    def set_permissions(self, permissions):
+        self.user_permissions.set(permissions)
+
     def save(self, *args, **kwargs):
         ''' Saving while granting new permissions '''
         self.is_staff = True
