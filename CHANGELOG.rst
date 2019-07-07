@@ -8,7 +8,6 @@ Version 2.0.10 (07 July 2019), Novi sad etition
 - Suppress ``no-member`` for ``ManyToManyField``. Fix
   `#192 <https://github.com/PyCQA/pylint-django/issues/192>`_ and
   `#237 <https://github.com/PyCQA/pylint-django/issues/237>`_ (Pierre Chiquet)
-    "remove" and "set" methods were missing on RelatedManager
 
 - Fix ``UnboundLocalError`` with ``ForeignKey(to=)``. Fix
   `#232 <https://github.com/PyCQA/pylint-django/issues/232>`_ (Sardorbek Imomaliev)
