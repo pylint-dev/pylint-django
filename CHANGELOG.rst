@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-Version 2.0.10 (07 July 2019), Novi sad etition
+Version 2.0.10 (07 July 2019), Novi Sad etition
 -----------------------------------------------
 
 - Suppress ``no-member`` for ``ManyToManyField``. Fix
