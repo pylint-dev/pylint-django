@@ -7,7 +7,7 @@ Version 2.0.11 (10 July 2019)
 - Use ``functools.wrap`` to preserve ``leave_module`` info (Mohit Solanki)
 
 
-Version 2.0.10 (07 July 2019), Novi Sad etition
+Version 2.0.10 (07 July 2019), Novi Sad edition
 -----------------------------------------------
 
 - Suppress ``no-member`` for ``ManyToManyField``. Fix
