@@ -63,7 +63,7 @@ def infer_key_classes(node, context=None):
                     break
         elif isinstance(arg, nodes.Const):
             try:
-                # can be 'self , 'Model' or 'app.Model'
+                # can be 'self' , 'Model' or 'app.Model'
                 if arg.value == 'self':
                     module_name = ''
                     # for relations with `to` first parent be Keyword(arg='to')
