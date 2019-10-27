@@ -1,0 +1,2 @@
+unused-argument:18:user_detail:Unused argument 'user_id':HIGH
+unused-argument:24:UserView.get:Unused argument 'user_id':INFERENCE

@@ -644,23 +644,17 @@ def is_model_view_subclass_method_shouldnt_be_function(node):
     return parent is not None and node_is_subclass(parent, *subclass)
 
 
-def is_model_view_subclass_unused_argument(node):
+def ignore_unused_argument_warnings_for_request(orig_method, self, stmt, name):
     """
-    Checks that node is get or post method of the View class and it has valid arguments.
+    Ignore unused-argument warnings for function arguments named "request".
 
-    TODO: Bad checkings, need to be more smart.
+    The signature of Django view functions require the request argument but it is okay if the request is not used.
+    This function should be used as a wrapper for the `VariablesChecker._is_name_ignored` method.
     """
-    if not is_model_view_subclass_method_shouldnt_be_function(node):
-        return False
+    if name == 'request':
+        return True
 
-    return is_argument_named_request(node)
-
-
-def is_argument_named_request(node):
-    """
-    If an unused-argument is named 'request' ignore that!
-    """
-    return 'request' in node.argnames()
+    return orig_method(self, stmt, name)
 
 
 def is_model_field_display_method(node):
@@ -742,7 +736,7 @@ def is_class(class_name):
 def wrap(orig_method, with_method):
     @functools.wraps(orig_method)
     def wrap_func(*args, **kwargs):
-        with_method(orig_method, *args, **kwargs)
+        return with_method(orig_method, *args, **kwargs)
     return wrap_func
 
 
@@ -757,6 +751,31 @@ def pylint_newstyle_classdef_compat(linter, warning_name, augment):
     if not hasattr(NewStyleConflictChecker, 'visit_classdef'):
         return
     suppress_message(linter, getattr(NewStyleConflictChecker, 'visit_classdef'), warning_name, augment)
+
+
+def apply_wrapped_augmentations():
+    """
+    Apply augmentation and supression rules through monkey patching of pylint.
+    """
+    # NOTE: The monkey patching is done with wrap and needs to be done in a thread safe manner to support the
+    # parallel option of pylint (-j).
+    # This is achieved by comparing __name__ of the monkey patched object to the original value and only patch it if
+    # these are equal.
+
+    # Unused argument 'request' (get, post)
+    current_is_name_ignored = VariablesChecker._is_name_ignored  # pylint: disable=protected-access
+    if current_is_name_ignored.__name__ == '_is_name_ignored':
+        # pylint: disable=protected-access
+        VariablesChecker._is_name_ignored = wrap(current_is_name_ignored, ignore_unused_argument_warnings_for_request)
+
+    # ForeignKey and OneToOneField
+    current_leave_module = VariablesChecker.leave_module
+    if current_leave_module.__name__ == 'leave_module':
+        # current_leave_module is not wrapped
+        # Two threads may hit the next assignment concurrently, but the result is the same
+        VariablesChecker.leave_module = wrap(current_leave_module, ignore_import_warnings_for_related_fields)
+        # VariablesChecker.leave_module is now wrapped
+    # else VariablesChecker.leave_module is already wrapped
 
 
 # augment things
@@ -826,10 +845,6 @@ def apply_augmentations(linter):
     # Method could be a function (get, post)
     suppress_message(linter, ClassChecker.leave_functiondef, 'no-self-use',
                      is_model_view_subclass_method_shouldnt_be_function)
-    # Unused argument 'request' (get, post)
-    suppress_message(linter, VariablesChecker.leave_functiondef, 'unused-argument',
-                     is_model_view_subclass_unused_argument)
-    suppress_message(linter, VariablesChecker.leave_functiondef, 'unused-argument', is_argument_named_request)
 
     # django-mptt
     suppress_message(linter, DocStringChecker.visit_classdef, 'missing-docstring', is_model_mpttmeta_subclass)
@@ -841,15 +856,7 @@ def apply_augmentations(linter):
     suppress_message(linter, TypeChecker.visit_attribute, 'no-member', is_model_factory)
     suppress_message(linter, ClassChecker.visit_functiondef, 'no-self-argument', is_factory_post_generation_method)
 
-    # ForeignKey and OneToOneField
-    # Must update this in a thread safe way to support the parallel option on pylint (-j)
-    current_leave_module = VariablesChecker.leave_module
-    if current_leave_module.__name__ == 'leave_module':
-        # current_leave_module is not wrapped
-        # Two threads may hit the next assignment concurrently, but the result is the same
-        VariablesChecker.leave_module = wrap(current_leave_module, ignore_import_warnings_for_related_fields)
-        # VariablesChecker.leave_module is now wrapped
-    # else VariablesChecker.leave_module is already wrapped
-
     # wsgi.py
     suppress_message(linter, NameChecker.visit_assignname, 'invalid-name', is_wsgi_application)
+
+    apply_wrapped_augmentations()
