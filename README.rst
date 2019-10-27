@@ -124,6 +124,10 @@ a test name, and insert into it some code. The tests will run pylint
 against these modules. If the idea is that no messages now occur, then
 that is fine, just check to see if it works by running ``scripts/test.sh``.
 
+Any command line argument passed to ``scripts/test.sh`` will be passed to the internal invocation of ``pytest``.
+For example if you want to debug the tests you can execute ``scripts/test.sh --capture=no``.
+A specific test case can be run by filtering based on the file name of the test case ``./scripts/test.sh -k 'func_noerror_views'``.
+
 Ideally, add some pylint error suppression messages to the file to prevent
 spurious warnings, since these are all tiny little modules not designed to
 do anything so there's no need to be perfect.
