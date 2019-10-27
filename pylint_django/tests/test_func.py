@@ -29,6 +29,7 @@ class PylintDjangoLintModuleTest(test_functional.LintModuleTest):
     def __init__(self, test_file):
         super(PylintDjangoLintModuleTest, self).__init__(test_file)
         self._linter.load_plugin_modules(['pylint_django'])
+        self._linter.load_plugin_configuration()
 
 
 class PylintDjangoDbPerformanceTest(PylintDjangoLintModuleTest):
@@ -39,6 +40,7 @@ class PylintDjangoDbPerformanceTest(PylintDjangoLintModuleTest):
     def __init__(self, test_file):
         super(PylintDjangoDbPerformanceTest, self).__init__(test_file)
         self._linter.load_plugin_modules(['pylint_django.checkers.db_performance'])
+        self._linter.load_plugin_configuration()
 
 
 def get_tests(input_dir='input', sort=False):
