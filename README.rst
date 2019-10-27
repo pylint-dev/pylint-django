@@ -136,7 +136,7 @@ It is possible to make tests with expected error output, for example, if
 adding a new message or simply accepting that pylint is supposed to warn.
 A ``test_file_name.txt`` file contains a list of expected error messages in the
 format
-``error-type:line number:class name or empty:1st line of detailed error text``.
+``error-type:line number:class name or empty:1st line of detailed error text:confidence or empty``.
 
 
 License
