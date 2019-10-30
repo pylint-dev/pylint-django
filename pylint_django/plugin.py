@@ -30,6 +30,7 @@ def register(linter):
 
     # register any checking fiddlers
     try:
+        # pylint: disable=import-outside-toplevel
         from pylint_django.augmentations import apply_augmentations
         apply_augmentations(linter)
     except ImportError:
