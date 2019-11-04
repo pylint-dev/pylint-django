@@ -1,6 +1,19 @@
 Changelog
 =========
 
+Version 2.0.12 (04 Nov 2019)
+----------------------------
+
+- Fix too broad suppression of ``unused-argument`` warnings for functions and
+  methods where the first argument is named ``request``. Now issues warnings
+  for the rest of the arguments if they are unused. Fix
+  `#249 <https://github.com/PyCQA/pylint-django/issues/249>`_ (Pascal Urban)
+- Pass arguments of ``scripts/test.sh`` to ``test_func/pytest`` to ease
+  development (Pascal Urban)
+- Document behavior when ForeignKey fields are referenced as strings. Fix
+  `#241 <https://github.com/PyCQA/pylint-django/issues/241>`_
+
+
 Version 2.0.11 (10 July 2019)
 -----------------------------
 
