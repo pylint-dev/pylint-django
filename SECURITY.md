@@ -12,7 +12,8 @@ currently being supported with security updates.
 ## Reporting a Vulnerability
 
 In case you have found a security problem with pylint-django *DO NOT* report
-it into GitHub Issues. Instead go to https://tidelift.com/docs/security
+it into GitHub Issues. Instead go to
+[https://tidelift.com/security](https://tidelift.com/security)
 and follow the instructions there.
 
 At least one of the package maintainers ([@atodorov](http://github.com/atodorov))
