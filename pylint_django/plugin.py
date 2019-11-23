@@ -15,7 +15,8 @@ def load_configuration(linter):
     Amend existing checker config.
     """
     name_checker = get_checker(linter, NameChecker)
-    name_checker.config.good_names += ('qs', 'urlpatterns', 'register', 'app_name', 'handler500')
+    name_checker.config.good_names += ('qs', 'urlpatterns', 'register', 'app_name',
+                                       'handler400', 'handler403', 'handler404', 'handler500')
 
     # we don't care about South migrations
     linter.config.black_list += ('migrations', 'south_migrations')
