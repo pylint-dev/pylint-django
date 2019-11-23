@@ -811,6 +811,12 @@ def apply_augmentations(linter):
     suppress_message(linter, MisdesignChecker.visit_classdef, 'too-many-ancestors',
                      is_class('django.views.generic.edit.FormView'))
 
+    # class-based generic views just have a longer inheritance chain
+    suppress_message(linter, MisdesignChecker.visit_classdef, 'too-many-ancestors',
+                     is_class('django.views.generic.detail.BaseDetailView'))
+    suppress_message(linter, MisdesignChecker.visit_classdef, 'too-many-ancestors',
+                     is_class('django.views.generic.edit.ProcessFormView'))
+
     # model forms have no __init__ method anywhere in their bases
     suppress_message(linter, ClassChecker.visit_classdef, 'W0232', is_class('django.forms.models.ModelForm'))
 
