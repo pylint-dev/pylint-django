@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 2.0.13 (23 Nov 2019), HackBulgaria edition
+--------------------------------------------------
+
+- Suppress ``too-many-ancestors`` for class-based generic views
+- Add ``handler400``, ``handler403``, ``handler404`` to good_names. Fix
+  `#248 <https://github.com/PyCQA/pylint-django/issues/248>`_
+
+
 Version 2.0.12 (04 Nov 2019)
 ----------------------------
 
