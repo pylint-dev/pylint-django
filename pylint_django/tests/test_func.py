@@ -5,14 +5,18 @@ import pytest
 
 import pylint
 
-if os.path.isdir(os.path.join(os.path.dirname(pylint.__file__), 'test')):
-    # because there's no __init__ file in pylint/test
-    sys.path.append(os.path.join(os.path.dirname(pylint.__file__), 'test'))
-else:
-    # after version 2.4 pylint stopped shipping the test directory
-    # as part of the package so we check it out locally for testing
-    # but some distro re-add tests in the packages so only do that when not done at all
-    sys.path.append(os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests'))
+# If PYLINT_TESTS_PATH is set it should be used to specify where to pull the tests from
+pylint_tests_path = os.getenv('PYLINT_TESTS_PATH', '')
+if pylint_tests_path == '':
+    if os.path.isdir(os.path.join(os.path.dirname(pylint.__file__), 'test')):
+        # because there's no __init__ file in pylint/test
+        pylint_tests_path = os.path.join(os.path.dirname(pylint.__file__), 'test')
+    else:
+        # after version 2.4 pylint stopped shipping the test directory
+        # as part of the package so we check it out locally for testing
+        # but some distro re-add tests in the packages so only do that when not done at all
+        pylint_tests_path = os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests')
+sys.path.append(pylint_tests_path)
 
 import test_functional  # noqa: E402
 
