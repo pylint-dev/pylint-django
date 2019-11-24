@@ -5,15 +5,27 @@ import pytest
 
 import pylint
 
-if pylint.__version__ >= '2.4':
-    # after version 2.4 pylint stopped shipping the test directory
-    # as part of the package so we check it out locally for testing
-    sys.path.append(os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests'))
-else:
-    # because there's no __init__ file in pylint/test/
-    sys.path.append(os.path.join(os.path.dirname(pylint.__file__), 'test'))
 
-import test_functional  # noqa: E402
+try:
+    # pylint 2.5: test_functional has been moved to pylint.testutils
+    from pylint.testutils import FunctionalTestFile, LintModuleTest
+except (ImportError, AttributeError):
+    # specify directly the directory containing test_functional.py
+    test_functional_dir = os.getenv('PYLINT_TEST_FUNCTIONAL_DIR', '')
+
+    # otherwise look for in in ~/pylint/tests - pylint 2.4
+    # this is the pylint git checkout dir, not the pylint module dir
+    if not os.path.isdir(test_functional_dir):
+        test_functional_dir = os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests')
+
+    # or site-packages/pylint/test/ - pylint before 2.4
+    if not os.path.isdir(test_functional_dir):
+        test_functional_dir = os.path.join(os.path.dirname(pylint.__file__), 'test')
+
+    sys.path.append(test_functional_dir)
+
+    from test_functional import FunctionalTestFile, LintModuleTest
+
 
 # alter sys.path again because the tests now live as a subdirectory
 # of pylint_django
@@ -22,7 +34,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(os.path.join(os.path.dirname(__file__), 'input'))
 
 
-class PylintDjangoLintModuleTest(test_functional.LintModuleTest):
+class PylintDjangoLintModuleTest(LintModuleTest):
     """
         Only used so that we can load this plugin into the linter!
     """
@@ -53,7 +65,7 @@ def get_tests(input_dir='input', sort=False):
     suite = []
     for fname in os.listdir(input_dir):
         if fname != '__init__.py' and fname.endswith('.py'):
-            suite.append(test_functional.FunctionalTestFile(input_dir, fname))
+            suite.append(FunctionalTestFile(input_dir, fname))
 
     # when testing the db_performance plugin we need to sort by input file name
     # because the plugin reports the errors in close() which appends them to the
