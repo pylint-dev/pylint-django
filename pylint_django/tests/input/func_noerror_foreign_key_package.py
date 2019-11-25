@@ -7,7 +7,7 @@ from django.db import models
 
 
 class Book(models.Model):
-    author = models.ForeignKey(to='input.Author', on_delete=models.CASCADE)
+    author = models.ForeignKey(to='pylint_django.tests.input.Author', on_delete=models.CASCADE)
 
     def get_author_name(self):
         return self.author.id
