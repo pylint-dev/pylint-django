@@ -15,7 +15,7 @@ if pylint_test_func_path != '':
 try:
     # pylint <= 2.4 case
     from test_functional import FunctionalTestFile, LintModuleTest  # noqa: E402
-except (ModuleNotFoundError, AttributeError):
+except (ImportError, AttributeError):
     try:
         from pylint.testutils import FunctionalTestFile, LintModuleTest
     except (ImportError, AttributeError):
@@ -30,7 +30,7 @@ except (ModuleNotFoundError, AttributeError):
             sys.path.append(os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests'))
         try:
             from test_functional import FunctionalTestFile, LintModuleTest  # noqa: E402
-        except (ModuleNotFoundError, AttributeError):
+        except (ImportError, AttributeError):
             from pylint.testutils import FunctionalTestFile, LintModuleTest
 
 # alter sys.path again because the tests now live as a subdirectory
