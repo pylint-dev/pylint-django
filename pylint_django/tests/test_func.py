@@ -21,9 +21,9 @@ sys.path.append(pylint_test_func_path)
 # test_functional has been moved to pylint.testutils as part of the pytlint 2.5 release
 try:
     # pylint <= 2.4 case
-    import test_functional  # noqa: E402
+    from test_functional import FunctionalTestFile, LintModuleTest  # noqa: E402
 except ImportError:
-    from pylint import testutils as test_functional
+    from pylint.testutils import FunctionalTestFile, LintModuleTest
 
 # alter sys.path again because the tests now live as a subdirectory
 # of pylint_django
@@ -32,7 +32,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(os.path.join(os.path.dirname(__file__), 'input'))
 
 
-class PylintDjangoLintModuleTest(test_functional.LintModuleTest):
+class PylintDjangoLintModuleTest(LintModuleTest):
     """
         Only used so that we can load this plugin into the linter!
     """
@@ -63,7 +63,7 @@ def get_tests(input_dir='input', sort=False):
     suite = []
     for fname in os.listdir(input_dir):
         if fname != '__init__.py' and fname.endswith('.py'):
-            suite.append(test_functional.FunctionalTestFile(input_dir, fname))
+            suite.append(FunctionalTestFile(input_dir, fname))
 
     # when testing the db_performance plugin we need to sort by input file name
     # because the plugin reports the errors in close() which appends them to the
