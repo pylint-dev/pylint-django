@@ -26,9 +26,6 @@ matrix:
     - { stage: test, python: 3.6, env: TOXENV=readme }
     - { stage: build_and_package_sanity, python: 3.6, env: SANITY_CHECK=1 }
 
-before_install:
-  - git clone --depth 1 https://github.com/PyCQA/pylint.git ~/pylint
-
 install:
   - pip install tox-travis
   - pip install -e .[for_tests]

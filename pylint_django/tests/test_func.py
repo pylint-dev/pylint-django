@@ -6,6 +6,7 @@ import pytest
 import pylint
 
 # PYLINT_TEST_FUNCTIONAL_PATH is can be used to force where to pull the classes used for functional testing
+# Just make sure you use the exact same version as the one pylint version installed or just add that to PYTHONPATH
 pylint_test_func_path = os.getenv('PYLINT_TEST_FUNCTIONAL_PATH', '')
 if pylint_test_func_path != '':
     sys.path.append(pylint_test_func_path)
@@ -19,15 +20,15 @@ except (ImportError, AttributeError):
     try:
         from pylint.testutils import FunctionalTestFile, LintModuleTest
     except (ImportError, AttributeError):
+        # test in other more exotic directories
         if os.path.isdir(os.path.join(os.path.dirname(pylint.__file__), 'test')):
-            # because there's no __init__ file in pylint/test
+            # pre pylint 2.4, pylint was putting files in pylint/test
             sys.path.append(os.path.join(os.path.dirname(pylint.__file__), 'test'))
-        else:
-            # after version 2.4 pylint stopped shipping the test directory
-            # as part of the package so we check it out locally for testing
+        elif os.path.isdir(os.path.join(os.path.dirname(pylint.__file__), '..', 'tests')):
+            # after version 2.4 pylint moved the test to a 'tests' folder at the root of the github tree
+            # to stopped shipping the tests along with the pip package
             # but some distro re-add tests in the packages so only do that when not done at all
-            # Just make sure you use the exact same version as the one installed for the test files!!!
-            sys.path.append(os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests'))
+            sys.path.append(os.path.join(os.path.dirname(pylint.__file__), '..', 'tests'))
         try:
             from test_functional import FunctionalTestFile, LintModuleTest  # noqa: E402
         except (ImportError, AttributeError):
