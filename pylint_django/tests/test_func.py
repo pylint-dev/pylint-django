@@ -29,6 +29,9 @@ except (ImportError, AttributeError):
             # to stopped shipping the tests along with the pip package
             # but some distro re-add tests in the packages so only do that when not done at all
             sys.path.append(os.path.join(os.path.dirname(pylint.__file__), '..', 'tests'))
+        else:
+            # This is a transitional hack specific to pylint 2.4 on travis and should be irrelevant anywhere else
+            sys.path.append(os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests'))
         try:
             from test_functional import FunctionalTestFile, LintModuleTest  # noqa: E402
         except (ImportError, AttributeError):
