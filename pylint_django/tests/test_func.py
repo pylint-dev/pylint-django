@@ -16,11 +16,11 @@ if pylint_test_func_path == '':
         # as part of the package so we check it out locally for testing
         # but some distro re-add tests in the packages so only do that when not done at all
         pylint_test_func_path = os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests')
-sys.path.append(pylint_tests_path)
+sys.path.append(pylint_test_func_path)
 
 # test_functional has been moved to pylint.testutils as part of the pytlint 2.5 release
 try:
-    import pylint.testutils as test_functional
+    from pylint import testutils as test_functional
 except ImportError:
     # pylint <= 2.4 case
     import test_functional  # noqa: E402
