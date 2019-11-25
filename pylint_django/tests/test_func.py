@@ -20,10 +20,10 @@ sys.path.append(pylint_test_func_path)
 
 # test_functional has been moved to pylint.testutils as part of the pytlint 2.5 release
 try:
-    from pylint import testutils as test_functional
-except ImportError:
     # pylint <= 2.4 case
     import test_functional  # noqa: E402
+except ImportError:
+    from pylint import testutils as test_functional
 
 # alter sys.path again because the tests now live as a subdirectory
 # of pylint_django
