@@ -5,20 +5,25 @@ import pytest
 
 import pylint
 
-# If PYLINT_TESTS_PATH is set it should be used to specify where to pull the tests from
-pylint_tests_path = os.getenv('PYLINT_TESTS_PATH', '')
-if pylint_tests_path == '':
+# If PYLINT_TEST_FUNCTIONAL_PATH is set it should be used to specify where to pull the test_functional method from.
+pylint_test_func_path = os.getenv('PYLINT_TEST_FUNCTIONAL_PATH', '')
+if pylint_test_func_path == '':
     if os.path.isdir(os.path.join(os.path.dirname(pylint.__file__), 'test')):
         # because there's no __init__ file in pylint/test
-        pylint_tests_path = os.path.join(os.path.dirname(pylint.__file__), 'test')
+        pylint_test_func_path = os.path.join(os.path.dirname(pylint.__file__), 'test')
     else:
         # after version 2.4 pylint stopped shipping the test directory
         # as part of the package so we check it out locally for testing
         # but some distro re-add tests in the packages so only do that when not done at all
-        pylint_tests_path = os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests')
+        pylint_test_func_path = os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests')
 sys.path.append(pylint_tests_path)
 
-import test_functional  # noqa: E402
+# test_functional has been moved to pylint.testutils as part of the pytlint 2.5 release
+try:
+    import pylint.testutils as test_functional
+except ImportError:
+    # pylint <= 2.4 case
+    import test_functional  # noqa: E402
 
 # alter sys.path again because the tests now live as a subdirectory
 # of pylint_django
