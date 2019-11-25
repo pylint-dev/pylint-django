@@ -20,6 +20,7 @@ except (ImportError, AttributeError):
     try:
         from pylint.testutils import FunctionalTestFile, LintModuleTest
     except (ImportError, AttributeError):
+        print("DEBUG: This should not appear on pylint 2.5")
         # test in other more exotic directories
         if os.path.isdir(os.path.join(os.path.dirname(pylint.__file__), 'test')):
             # pre pylint 2.4, pylint was putting files in pylint/test
@@ -30,6 +31,7 @@ except (ImportError, AttributeError):
             # but some distro re-add tests in the packages so only do that when not done at all
             sys.path.append(os.path.join(os.path.dirname(pylint.__file__), '..', 'tests'))
         else:
+            print("DEBUG: we should not enter this condition with pylint 2.5")
             # This is a transitional hack specific to pylint 2.4 on travis and should be irrelevant anywhere else
             sys.path.append(os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests'))
         try:
