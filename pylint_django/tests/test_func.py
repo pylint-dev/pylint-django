@@ -5,7 +5,7 @@ import pytest
 
 import pylint
 
-# If PYLINT_TEST_FUNCTIONAL_PATH is set it should be used to specify where to pull the test_functional method from.
+# PYLINT_TEST_FUNCTIONAL_PATH is can be used to force where to pull the classes used for functional testing
 pylint_test_func_path = os.getenv('PYLINT_TEST_FUNCTIONAL_PATH', '')
 if pylint_test_func_path == '':
     if os.path.isdir(os.path.join(os.path.dirname(pylint.__file__), 'test')):
@@ -22,7 +22,7 @@ sys.path.append(pylint_test_func_path)
 try:
     # pylint <= 2.4 case
     from test_functional import FunctionalTestFile, LintModuleTest  # noqa: E402
-except ImportError:
+except AttributeError:
     from pylint.testutils import FunctionalTestFile, LintModuleTest
 
 # alter sys.path again because the tests now live as a subdirectory
