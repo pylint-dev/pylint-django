@@ -7,23 +7,30 @@ import pylint
 
 # PYLINT_TEST_FUNCTIONAL_PATH is can be used to force where to pull the classes used for functional testing
 pylint_test_func_path = os.getenv('PYLINT_TEST_FUNCTIONAL_PATH', '')
-if pylint_test_func_path == '':
-    if os.path.isdir(os.path.join(os.path.dirname(pylint.__file__), 'test')):
-        # because there's no __init__ file in pylint/test
-        pylint_test_func_path = os.path.join(os.path.dirname(pylint.__file__), 'test')
-    else:
-        # after version 2.4 pylint stopped shipping the test directory
-        # as part of the package so we check it out locally for testing
-        # but some distro re-add tests in the packages so only do that when not done at all
-        pylint_test_func_path = os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests')
-sys.path.append(pylint_test_func_path)
+if pylint_test_func_path != '':
+    sys.path.append(pylint_test_func_path)
 
 # test_functional has been moved to pylint.testutils as part of the pytlint 2.5 release
+# so we try first to load the basic cases and then look in more exotic places
 try:
     # pylint <= 2.4 case
     from test_functional import FunctionalTestFile, LintModuleTest  # noqa: E402
 except AttributeError:
-    from pylint.testutils import FunctionalTestFile, LintModuleTest
+    try:
+        from pylint.testutils import FunctionalTestFile, LintModuleTest
+    except AttributeError:
+        if os.path.isdir(os.path.join(os.path.dirname(pylint.__file__), 'test')):
+            # because there's no __init__ file in pylint/test
+            sys.path.append(os.path.join(os.path.dirname(pylint.__file__), 'test'))
+        else:
+            # after version 2.4 pylint stopped shipping the test directory
+            # as part of the package so we check it out locally for testing
+            # but some distro re-add tests in the packages so only do that when not done at all
+            sys.path.append(os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests'))
+        try:
+            from test_functional import FunctionalTestFile, LintModuleTest  # noqa: E402
+        except AttributeError:
+            from pylint.testutils import FunctionalTestFile, LintModuleTest
 
 # alter sys.path again because the tests now live as a subdirectory
 # of pylint_django
