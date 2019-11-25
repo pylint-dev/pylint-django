@@ -5,6 +5,8 @@ import pytest
 
 import pylint
 
+print('DEBUG: pylint version: {}'.format(pylint.__version__))
+
 # PYLINT_TEST_FUNCTIONAL_PATH is can be used to force where to pull the classes used for functional testing
 # Just make sure you use the exact same version as the one pylint version installed or just add that to PYTHONPATH
 pylint_test_func_path = os.getenv('PYLINT_TEST_FUNCTIONAL_PATH', '')
@@ -15,26 +17,31 @@ if pylint_test_func_path != '':
 # so we try first to load the basic cases and then look in more exotic places
 try:
     # pylint <= 2.4 case
+    # TODO: remove when the minimum supported version of pylint is 2.5.
     from test_functional import FunctionalTestFile, LintModuleTest  # noqa: E402
 except (ImportError, AttributeError):
     try:
         from pylint.testutils import FunctionalTestFile, LintModuleTest
     except (ImportError, AttributeError):
-        print("DEBUG: This should not appear on pylint 2.5")
         # test in other more exotic directories
         if os.path.isdir(os.path.join(os.path.dirname(pylint.__file__), 'test')):
             # pre pylint 2.4, pylint was putting files in pylint/test
+            # TODO: remove when the minimum supported version of pylint is 2.4.
             sys.path.append(os.path.join(os.path.dirname(pylint.__file__), 'test'))
         elif os.path.isdir(os.path.join(os.path.dirname(pylint.__file__), '..', 'tests')):
             # after version 2.4 pylint moved the test to a 'tests' folder at the root of the github tree
             # to stopped shipping the tests along with the pip package
             # but some distro re-add tests in the packages so only do that when not done at all
+            # TODO: remove when the minimum supported version of pylint is 2.5.
             sys.path.append(os.path.join(os.path.dirname(pylint.__file__), '..', 'tests'))
         else:
-            print("DEBUG: we should not enter this condition with pylint 2.5")
             # This is a transitional hack specific to pylint 2.4 on travis and should be irrelevant anywhere else
+            # TODO: remove when the minimum supported version of pylint is 2.5.
             sys.path.append(os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests'))
         try:
+            print("DEBUG: we should not enter this condition with pylint 2.5")
+            # TODO: remove when the minimum supported version of pylint is 2.5.
+            sys.path.append(os.path.join(os.path.dirname(pylint.__file__), 'test'))
             from test_functional import FunctionalTestFile, LintModuleTest  # noqa: E402
         except (ImportError, AttributeError):
             from pylint.testutils import FunctionalTestFile, LintModuleTest
