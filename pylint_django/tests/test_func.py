@@ -5,8 +5,6 @@ import pytest
 
 import pylint
 
-print('DEBUG: pylint version: {}'.format(pylint.__version__))
-
 # PYLINT_TEST_FUNCTIONAL_PATH is can be used to force where to pull the classes used for functional testing
 # Just make sure you use the exact same version as the one pylint version installed or just add that to PYTHONPATH
 pylint_test_func_path = os.getenv('PYLINT_TEST_FUNCTIONAL_PATH', '')
@@ -39,7 +37,6 @@ except (ImportError, AttributeError):
             # TODO: remove when the minimum supported version of pylint is 2.5.
             sys.path.append(os.path.join(os.getenv('HOME', '/home/travis'), 'pylint', 'tests'))
         try:
-            print("DEBUG: we should not enter this condition with pylint 2.5")
             # TODO: remove when the minimum supported version of pylint is 2.5.
             sys.path.append(os.path.join(os.path.dirname(pylint.__file__), 'test'))
             from test_functional import FunctionalTestFile, LintModuleTest  # noqa: E402
