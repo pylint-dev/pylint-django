@@ -743,7 +743,7 @@ def wrap(orig_method, with_method):
 def is_wsgi_application(node):
     frame = node.frame()
     return node.name == 'application' and isinstance(frame, Module) and \
-        (frame.name == 'asgi' or frame.path[0].endswith('asgi.py') or frame.file.endswith('asgi.py') or \
+        ((frame.name == 'asgi' or frame.path[0].endswith('asgi.py') or frame.file.endswith('asgi.py') or \
         (frame.name == 'wsgi' or frame.path[0].endswith('wsgi.py') or frame.file.endswith('wsgi.py'))
 
 
