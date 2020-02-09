@@ -13,3 +13,4 @@
 * [fadedDexofan](https://github.com/fadeddexofan)
 * [imomaliev](https://github.com/imomaliev)
 * [psrb](https://github.com/psrb)
+* [WayneLambert](https://github.com/WayneLambert)
