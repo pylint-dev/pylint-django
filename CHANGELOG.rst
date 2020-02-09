@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 2.0.14 (09 Feb 2020)
+--------------------------------------------------
+
+- Add support for Django 3.0 and Python 3.8
+
+
 Version 2.0.13 (23 Nov 2019), HackBulgaria edition
 --------------------------------------------------
 
