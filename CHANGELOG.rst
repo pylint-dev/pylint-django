@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 2.0.14 (09 Feb 2020)
+Version 2.0.14
 --------------------------------------------------
 
 - Add support for Django 3.0 and Python 3.8
