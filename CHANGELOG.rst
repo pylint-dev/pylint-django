@@ -1,10 +1,12 @@
 Changelog
 =========
 
-Version 2.0.14
---------------------------------------------------
+Version 2.0.14 (25 Feb 2020)
+----------------------------
 
-- Add support for Django 3.0 and Python 3.8
+- Add support for Django 3.0 and Python 3.8 (Wayne Lambert)
+- Support ASGI. Fix
+  `#258 <https://github.com/PyCQA/pylint-django/issues/258>`_ (Sander Maijers)
 
 
 Version 2.0.13 (23 Nov 2019), HackBulgaria edition
