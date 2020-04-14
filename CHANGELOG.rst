@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 2.0.15 (14 Apr 2020)
+----------------------------
+
+- Do not report error for ``gettext_lazy`` (Antonin MOREL)
+
+
 Version 2.0.14 (25 Feb 2020)
 ----------------------------
 
