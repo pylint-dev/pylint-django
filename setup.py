@@ -38,4 +38,7 @@ setup(
     ],
     keywords=['pylint', 'django', 'plugin'],
     zip_safe=False,
+    project_urls={
+        'Changelog': 'https://github.com/PyCQA/pylint-django/blob/master/CHANGELOG.rst',
+    },
 )
