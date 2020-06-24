@@ -87,10 +87,28 @@ def infer_key_classes(node, context=None):
                 module_name = current_module.name
             elif not module_name.endswith('models'):
                 # otherwise Django allows specifying an app name first, e.g.
-                # ForeignKey('auth.User') so we try to convert that to
-                # 'auth.models', 'User' which works nicely with the `endswith()`
-                # comparison below
-                module_name += '.models'
+                # ForeignKey('auth.User')
+
+                supported_django_version_installed = False
+                try:
+                    import django
+                    supported_django_version_installed = (django.VERSION[0] == 3)
+                except ImportError:
+                    pass
+
+                if supported_django_version_installed:
+                    # If Django is installed we can use it to resolve the module name
+                    from django.apps import apps
+
+                    app = app.get_app_config(module_name)
+                    model = app.get_model(model_name)
+                    module_name = model.__module__
+                else:
+                    # Otherwise we try to convert that to
+                    # 'auth.models', 'User' which works nicely with the `endswith()`
+                    # comparison below
+                    module_name += '.models'
+                
                 # ensure that module is loaded in astroid_cache, for cases when models is a package
                 if module_name not in MANAGER.astroid_cache:
                     MANAGER.ast_from_module_name(module_name)
