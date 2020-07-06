@@ -14,3 +14,5 @@
 * [imomaliev](https://github.com/imomaliev)
 * [psrb](https://github.com/psrb)
 * [WayneLambert](https://github.com/WayneLambert)
+* [alejandro-angulo](https://github.com/alejandro-angulo)
+
