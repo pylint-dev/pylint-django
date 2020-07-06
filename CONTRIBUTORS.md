@@ -15,4 +15,5 @@
 * [psrb](https://github.com/psrb)
 * [WayneLambert](https://github.com/WayneLambert)
 * [alejandro-angulo](https://github.com/alejandro-angulo)
+* [brymut](https://github.com/brymut)
 

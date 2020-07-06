@@ -1,5 +1,6 @@
 """Utils."""
 import sys
+import astroid
 
 from astroid.bases import Instance
 from astroid.exceptions import InferenceError
@@ -30,3 +31,10 @@ def node_is_subclass(cls, *subclass_names):
             continue
 
     return False
+
+
+def is_migrations_module(node):
+    if not isinstance(node, astroid.Module):
+        return False
+
+    return 'migrations' in node.path[0] and not node.path[0].endswith('__init__.py')
