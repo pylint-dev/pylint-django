@@ -14,6 +14,7 @@ from pylint import checkers
 from pylint.checkers import utils
 from pylint_django.__pkginfo__ import BASE_ID
 from pylint_django import compat
+from pylint_django.utils import is_migrations_module
 
 
 def _is_addfield_with_default(call):
@@ -35,13 +36,6 @@ def _is_addfield_with_default(call):
                     return True
 
     return False
-
-
-def _is_migrations_module(node):
-    if not isinstance(node, astroid.Module):
-        return False
-
-    return 'migrations' in node.path[0] and not node.path[0].endswith('__init__.py')
 
 
 class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
@@ -69,7 +63,7 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
     _possible_offences = {}
 
     def visit_module(self, node):
-        if _is_migrations_module(node):
+        if is_migrations_module(node):
             self._migration_modules.append(node)
 
     def visit_call(self, node):
@@ -78,7 +72,7 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
         except:  # noqa: E722, pylint: disable=bare-except
             return
 
-        if not _is_migrations_module(module):
+        if not is_migrations_module(module):
             return
 
         if _is_addfield_with_default(node):
@@ -114,6 +108,38 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
                     self.add_message('new-db-field-with-default', args=module.name, node=node)
 
 
+class MissingBackwardsMigrationChecker(checkers.BaseChecker):
+    __implements__ = (interfaces.IAstroidChecker,)
+
+    name = 'missing-backwards-migration-callable'
+
+    msgs = {'W%s05' % BASE_ID: ('%s Always include backwards migration callable',
+                                'missing-backwards-migration-callable',
+                                'Always include a backwards/reverse callable counterpart'
+                                ' so that the migration is not irreversable.')}
+
+    @utils.check_messages('missing-backwards-migration-callable')
+    def visit_call(self, node):
+        try:
+            module = node.frame().parent
+        except:  # noqa: E722, pylint: disable=bare-except
+            return
+
+        if not is_migrations_module(module):
+            return
+
+        if node.func.as_string().endswith('RunPython') and len(node.args) < 2:
+            if node.keywords:
+                for keyword in node.keywords:
+                    if keyword.arg == 'reverse_code':
+                        return
+                self.add_message('missing-backwards-migration-callable',
+                                 args=module.name, node=node)
+            else:
+                self.add_message('missing-backwards-migration-callable',
+                                 args=module.name, node=node)
+
+
 def load_configuration(linter):
     # don't blacklist migrations for this checker
     new_black_list = list(linter.config.black_list)
@@ -125,5 +151,6 @@ def load_configuration(linter):
 def register(linter):
     """Required method to auto register this checker."""
     linter.register_checker(NewDbFieldWithDefaultChecker(linter))
+    linter.register_checker(MissingBackwardsMigrationChecker(linter))
     if not compat.LOAD_CONFIGURATION_SUPPORTED:
         load_configuration(linter)
