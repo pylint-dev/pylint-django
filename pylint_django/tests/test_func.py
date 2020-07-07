@@ -1,4 +1,4 @@
-
+import csv
 import os
 import sys
 import pytest
@@ -9,6 +9,13 @@ import pylint
 try:
     # pylint 2.5: test_functional has been moved to pylint.testutils
     from pylint.testutils import FunctionalTestFile, LintModuleTest
+
+    if "test" not in csv.list_dialects():
+        class test_dialect(csv.excel):
+            delimiter = ":"
+            lineterminator = "\n"
+
+        csv.register_dialect("test", test_dialect)
 except (ImportError, AttributeError):
     # specify directly the directory containing test_functional.py
     test_functional_dir = os.getenv('PYLINT_TEST_FUNCTIONAL_DIR', '')
