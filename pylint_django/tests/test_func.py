@@ -15,7 +15,6 @@ try:
             delimiter = ":"
             lineterminator = "\n"
 
-
         csv.register_dialect("test", test_dialect)
 except (ImportError, AttributeError):
     # specify directly the directory containing test_functional.py
