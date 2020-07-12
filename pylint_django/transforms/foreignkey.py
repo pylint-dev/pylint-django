@@ -98,6 +98,7 @@ def infer_key_classes(node, context=None):
 
                 if django_installed:
                     # If Django is installed we can use it to resolve the module name
+                    django.setup()
                     from django.apps import apps
 
                     app = apps.get_app_config(module_name)
