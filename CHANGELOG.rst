@@ -1,6 +1,18 @@
 Changelog
 =========
 
+Version 2.1.0 (12 Jul 2020)
+---------------------------
+
+- New checker to warn about missing backwards data migrations (Bryan Mutai)
+- Rename ``pylint_django.checkers.db_performance`` to
+  ``pylint_django.checkers.migrations``
+- Add URL to project Changelog for PyPI (Ville Skyttä)
+- Fix failing test suite b/c of missing CSV dialect. Fix
+  `#268 <https://github.com/PyCQA/pylint-django/issues/268>`_
+  (Alejandro Angulo)
+
+
 Version 2.0.15 (14 Apr 2020)
 ----------------------------
 
