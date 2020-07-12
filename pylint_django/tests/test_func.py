@@ -51,14 +51,14 @@ class PylintDjangoLintModuleTest(LintModuleTest):
         self._linter.load_plugin_configuration()
 
 
-class PylintDjangoDbPerformanceTest(PylintDjangoLintModuleTest):
+class PylintDjangoMigrationsTest(PylintDjangoLintModuleTest):
     """
         Only used so that we can load
-        pylint_django.checkers.db_performance into the linter!
+        pylint_django.checkers.migrations into the linter!
     """
     def __init__(self, test_file):
-        super(PylintDjangoDbPerformanceTest, self).__init__(test_file)
-        self._linter.load_plugin_modules(['pylint_django.checkers.db_performance'])
+        super().__init__(test_file)
+        self._linter.load_plugin_modules(['pylint_django.checkers.migrations'])
         self._linter.load_plugin_configuration()
 
 
@@ -74,7 +74,7 @@ def get_tests(input_dir='input', sort=False):
         if fname != '__init__.py' and fname.endswith('.py'):
             suite.append(FunctionalTestFile(input_dir, fname))
 
-    # when testing the db_performance plugin we need to sort by input file name
+    # when testing the migrations plugin we need to sort by input file name
     # because the plugin reports the errors in close() which appends them to the
     # report for the last file in the list
     if sort:
@@ -96,14 +96,14 @@ def test_everything(test_file):
     LintTest._runTest()
 
 
-# NOTE: define tests for the db_performance checker!
-DB_PERFORMANCE_TESTS = get_tests('input/migrations', True)
-DB_PERFORMANCE_TESTS_NAMES = [t.base for t in DB_PERFORMANCE_TESTS]
+# NOTE: define tests for the migrations checker!
+MIGRATIONS_TESTS = get_tests('input/migrations', True)
+MIGRATIONS_TESTS_NAMES = [t.base for t in MIGRATIONS_TESTS]
 
 
-@pytest.mark.parametrize("test_file", DB_PERFORMANCE_TESTS, ids=DB_PERFORMANCE_TESTS_NAMES)
-def test_db_performance_plugin(test_file):
-    LintTest = PylintDjangoDbPerformanceTest(test_file)
+@pytest.mark.parametrize("test_file", MIGRATIONS_TESTS, ids=MIGRATIONS_TESTS_NAMES)
+def test_migrations_plugin(test_file):
+    LintTest = PylintDjangoMigrationsTest(test_file)
     LintTest.setUp()
     LintTest._runTest()
 
