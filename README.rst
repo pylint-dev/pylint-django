@@ -75,18 +75,21 @@ Features
 Additional plugins
 ------------------
 
-``pylint_django.checkers.db_performance`` looks for migrations which add new
-model fields and these fields have a default value. According to
-`Django docs <https://docs.djangoproject.com/en/2.0/topics/migrations/#postgresql>`__
-this may have performance penalties especially on large tables. The prefered way
-is to add a new DB column with ``null=True`` because it will be created instantly
-and then possibly populate the table with the desired default values.
+``pylint_django.checkers.migrations`` looks for migrations which:
 
-Only the last migration from a sub-directory will be examined!
+- add new model fields and these fields have a default value. According to
+  `Django docs <https://docs.djangoproject.com/en/2.0/topics/migrations/#postgresql>`_
+  this may have performance penalties especially on large tables. The prefered way
+  is to add a new DB column with ``null=True`` because it will be created instantly
+  and then possibly populate the table with the desired default values.
+  Only the last migration from a sub-directory will be examined;
+- are ``migrations.RunPython()`` without a reverse callable - these will result in
+  non reversible data migrations;
+
 
 This plugin is disabled by default! To enable it::
 
-    pylint --load-plugins pylint_django --load-plugins pylint_django.checkers.db_performance
+    pylint --load-plugins pylint_django --load-plugins pylint_django.checkers.migrations
 
 
 Known issues
