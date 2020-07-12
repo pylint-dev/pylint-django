@@ -1,4 +1,5 @@
 from itertools import chain
+from importlib.util import find_spec
 
 from astroid import (
     MANAGER, nodes, InferenceError, inference_tip,
@@ -39,6 +40,18 @@ def _get_model_class_defs_from_module(module, model_name, module_name):
                 )
             )
     return class_defs
+
+
+def _module_name_from_django_model_resolution(model_name, module_name):
+    import django  # pylint: disable=import-outside-toplevel
+    django.setup()
+    from django.apps import apps  # pylint: disable=import-outside-toplevel
+
+    app = apps.get_app_config(module_name)
+    model = app.get_model(model_name)
+    module_name = model.__module__
+
+    return module_name
 
 
 def infer_key_classes(node, context=None):
@@ -89,31 +102,22 @@ def infer_key_classes(node, context=None):
                 # otherwise Django allows specifying an app name first, e.g.
                 # ForeignKey('auth.User')
 
-                use_django_model_resolving = False
-                try:
-                    import django
-                    use_django_model_resolving = True
-                except ImportError:
-                    pass
+                django_spec = find_spec('django')
+                use_django_model_resolution = bool(django_spec)
 
-                if use_django_model_resolving:
+                if use_django_model_resolution:
                     # If Django is installed we can use it to resolve the module name
                     try:
-                        django.setup()
-                        from django.apps import apps
-
-                        app = apps.get_app_config(module_name)
-                        model = app.get_model(model_name)
-                        module_name = model.__module__
+                        module_name = _module_name_from_django_model_resolution(model_name, module_name)
                     except LookupError:
-                        use_django_model_resolving = False
+                        use_django_model_resolution = False
 
-                if not use_django_model_resolving:
+                if not use_django_model_resolution:
                     # Otherwise we try to convert that to
                     # 'auth.models', 'User' which works nicely with the `endswith()`
                     # comparison below
                     module_name += '.models'
-                
+
                 # ensure that module is loaded in astroid_cache, for cases when models is a package
                 if module_name not in MANAGER.astroid_cache:
                     MANAGER.ast_from_module_name(module_name)
