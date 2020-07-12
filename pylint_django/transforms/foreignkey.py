@@ -89,22 +89,26 @@ def infer_key_classes(node, context=None):
                 # otherwise Django allows specifying an app name first, e.g.
                 # ForeignKey('auth.User')
 
-                django_installed = False
+                use_django_model_resolving = False
                 try:
                     import django
-                    django_installed = True
+                    use_django_model_resolving = True
                 except ImportError:
                     pass
 
-                if django_installed:
+                if use_django_model_resolving:
                     # If Django is installed we can use it to resolve the module name
-                    django.setup()
-                    from django.apps import apps
+                    try:
+                        django.setup()
+                        from django.apps import apps
 
-                    app = apps.get_app_config(module_name)
-                    model = app.get_model(model_name)
-                    module_name = model.__module__
-                else:
+                        app = apps.get_app_config(module_name)
+                        model = app.get_model(model_name)
+                        module_name = model.__module__
+                    except LookupError:
+                        use_django_model_resolving = False
+
+                if not use_django_model_resolving:
                     # Otherwise we try to convert that to
                     # 'auth.models', 'User' which works nicely with the `endswith()`
                     # comparison below
