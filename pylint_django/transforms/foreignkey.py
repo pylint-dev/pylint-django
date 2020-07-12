@@ -89,14 +89,14 @@ def infer_key_classes(node, context=None):
                 # otherwise Django allows specifying an app name first, e.g.
                 # ForeignKey('auth.User')
 
-                supported_django_version_installed = False
+                django_installed = False
                 try:
                     import django
-                    supported_django_version_installed = (django.VERSION[0] == 3)
+                    django_installed = True
                 except ImportError:
                     pass
 
-                if supported_django_version_installed:
+                if django_installed:
                     # If Django is installed we can use it to resolve the module name
                     from django.apps import apps
 
