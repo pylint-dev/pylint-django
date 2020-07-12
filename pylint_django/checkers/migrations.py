@@ -114,7 +114,7 @@ class MissingBackwardsMigrationChecker(checkers.BaseChecker):
 
     name = 'missing-backwards-migration-callable'
 
-    msgs = {'W%s05' % BASE_ID: ('%s Always include backwards migration callable',
+    msgs = {'W%s97' % BASE_ID: ('%s Always include backwards migration callable',
                                 'missing-backwards-migration-callable',
                                 'Always include a backwards/reverse callable counterpart'
                                 ' so that the migration is not irreversable.')}
