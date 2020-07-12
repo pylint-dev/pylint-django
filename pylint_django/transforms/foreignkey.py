@@ -100,7 +100,7 @@ def infer_key_classes(node, context=None):
                     # If Django is installed we can use it to resolve the module name
                     from django.apps import apps
 
-                    app = app.get_app_config(module_name)
+                    app = apps.get_app_config(module_name)
                     model = app.get_model(model_name)
                     module_name = model.__module__
                 else:
