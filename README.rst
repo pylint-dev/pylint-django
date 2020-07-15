@@ -95,10 +95,9 @@ This plugin is disabled by default! To enable it::
 Known issues
 ------------
 
-If Django is not installed and  you reference foreign-key models by their name (as
-string) ``pylint-django`` may not be able to find the model and will report issues
-because it has no idea what the underlying type of this field is. Supported options
-are::
+If you reference foreign-key models by their name (as string) ``pylint-django`` may not be
+able to find the model and will report issues because it has no idea what the underlying
+type of this field is. Supported options are::
 
 - ``self`` and ``Model`` - look for this class in the current module which is being examined
 - ``app.Model`` - try loading ``app.models`` into the AST parser and look for ``Model`` there

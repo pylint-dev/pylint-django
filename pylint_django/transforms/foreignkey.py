@@ -101,18 +101,14 @@ def infer_key_classes(node, context=None):
             elif not module_name.endswith('models'):
                 # otherwise Django allows specifying an app name first, e.g.
                 # ForeignKey('auth.User')
+                django_model_resolution_failed = False
 
-                django_spec = find_spec('django')
-                use_django_model_resolution = bool(django_spec)
+                try:
+                    module_name = _module_name_from_django_model_resolution(model_name, module_name)
+                except LookupError:
+                    django_model_resolution_failed = True
 
-                if use_django_model_resolution:
-                    # If Django is installed we can use it to resolve the module name
-                    try:
-                        module_name = _module_name_from_django_model_resolution(model_name, module_name)
-                    except LookupError:
-                        use_django_model_resolution = False
-
-                if not use_django_model_resolution:
+                if django_model_resolution_failed:
                     # Otherwise we try to convert that to
                     # 'auth.models', 'User' which works nicely with the `endswith()`
                     # comparison below
