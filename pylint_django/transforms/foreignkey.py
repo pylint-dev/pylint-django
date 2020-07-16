@@ -1,5 +1,4 @@
 from itertools import chain
-from importlib.util import find_spec
 
 from astroid import (
     MANAGER, nodes, InferenceError, inference_tip,
@@ -101,15 +100,10 @@ def infer_key_classes(node, context=None):
             elif not module_name.endswith('models'):
                 # otherwise Django allows specifying an app name first, e.g.
                 # ForeignKey('auth.User')
-                django_model_resolution_failed = False
-
                 try:
                     module_name = _module_name_from_django_model_resolution(model_name, module_name)
                 except LookupError:
-                    django_model_resolution_failed = True
-
-                if django_model_resolution_failed:
-                    # Otherwise we try to convert that to
+                    # If Django's model resolution fails we try to convert that to
                     # 'auth.models', 'User' which works nicely with the `endswith()`
                     # comparison below
                     module_name += '.models'

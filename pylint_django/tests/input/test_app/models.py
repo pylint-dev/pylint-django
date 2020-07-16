@@ -1,5 +1,1 @@
-from django.db import models
-
-
-class Author(models.Model):
-    pass
+from models.author import Author  # noqa: F401

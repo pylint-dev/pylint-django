@@ -10,4 +10,3 @@ DEBUG = True
 INSTALLED_APPS = [
     'test_app',
 ]
-
