@@ -2,12 +2,10 @@
 from django.db import migrations
 
 
-# pylint: disable=unused-argument
 def forwards_test(apps, schema_editor):
     pass
 
 
-# pylint: disable=unused-argument
 def backwards_test(apps, schema_editor):
     pass
 
