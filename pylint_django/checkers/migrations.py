@@ -13,6 +13,9 @@ import astroid
 from pylint import interfaces
 from pylint import checkers
 from pylint.checkers import utils
+
+from pylint_plugin_utils import suppress_message
+
 from pylint_django.__pkginfo__ import BASE_ID
 from pylint_django import compat
 from pylint_django.utils import is_migrations_module
@@ -141,6 +144,18 @@ class MissingBackwardsMigrationChecker(checkers.BaseChecker):
                                  args=module.name, node=node)
 
 
+def is_in_migrations(node):
+    """
+        RunPython() migrations receive forward/backwards functions with signature:
+
+            def func(apps, schema_editor):
+
+        which could be unused. This augmentation will suppress all 'unused-argument'
+        messages coming from functions in migration modules.
+    """
+    return is_migrations_module(node.parent)
+
+
 def load_configuration(linter):
     # don't blacklist migrations for this checker
     new_black_list = list(linter.config.black_list)
@@ -155,3 +170,8 @@ def register(linter):
     linter.register_checker(MissingBackwardsMigrationChecker(linter))
     if not compat.LOAD_CONFIGURATION_SUPPORTED:
         load_configuration(linter)
+
+    # apply augmentations for migration checkers
+    # Unused arguments for migrations
+    suppress_message(linter, checkers.variables.VariablesChecker.leave_functiondef,
+                     'unused-argument', is_in_migrations)

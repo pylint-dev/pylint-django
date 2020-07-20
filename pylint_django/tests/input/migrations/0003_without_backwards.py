@@ -2,7 +2,6 @@
 from django.db import migrations
 
 
-# pylint: disable=unused-argument
 def forwards_test(apps, schema_editor):
     pass
 
