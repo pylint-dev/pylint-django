@@ -6,6 +6,9 @@ from astroid import (
 )
 from astroid.nodes import ClassDef, Attribute
 
+import django
+from django.apps import apps
+
 from pylint_django.utils import node_is_subclass
 
 
@@ -42,15 +45,12 @@ def _get_model_class_defs_from_module(module, model_name, module_name):
 
 
 def _module_name_from_django_model_resolution(model_name, module_name):
-    import django  # pylint: disable=import-outside-toplevel
     django.setup()
-    from django.apps import apps  # pylint: disable=import-outside-toplevel
 
     app = apps.get_app_config(module_name)
     model = app.get_model(model_name)
-    module_name = model.__module__
 
-    return module_name
+    return model.__module__
 
 
 def infer_key_classes(node, context=None):

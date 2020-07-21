@@ -6,7 +6,7 @@ import pytest
 import pylint
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pylint_django.tests.conftest')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pylint_django.tests.settings')
 
 try:
     # pylint 2.5: test_functional has been moved to pylint.testutils

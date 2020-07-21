@@ -8,3 +8,4 @@ from django.db import models
 
 class Book(models.Model):
     author = models.ForeignKey("test_app.Author", models.CASCADE)
+    user = models.ForeignKey("auth.User", models.PROTECT)
