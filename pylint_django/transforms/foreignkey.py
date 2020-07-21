@@ -41,6 +41,17 @@ def _get_model_class_defs_from_module(module, model_name, module_name):
     return class_defs
 
 
+def _module_name_from_django_model_resolution(model_name, module_name):
+    import django  # pylint: disable=import-outside-toplevel
+    django.setup()
+    from django.apps import apps  # pylint: disable=import-outside-toplevel
+
+    app = apps.get_app_config(module_name)
+    model = app.get_model(model_name)
+
+    return model.__module__
+
+
 def infer_key_classes(node, context=None):
     keyword_args = []
     if node.keywords:
@@ -87,10 +98,15 @@ def infer_key_classes(node, context=None):
                 module_name = current_module.name
             elif not module_name.endswith('models'):
                 # otherwise Django allows specifying an app name first, e.g.
-                # ForeignKey('auth.User') so we try to convert that to
-                # 'auth.models', 'User' which works nicely with the `endswith()`
-                # comparison below
-                module_name += '.models'
+                # ForeignKey('auth.User')
+                try:
+                    module_name = _module_name_from_django_model_resolution(model_name, module_name)
+                except LookupError:
+                    # If Django's model resolution fails we try to convert that to
+                    # 'auth.models', 'User' which works nicely with the `endswith()`
+                    # comparison below
+                    module_name += '.models'
+
                 # ensure that module is loaded in astroid_cache, for cases when models is a package
                 if module_name not in MANAGER.astroid_cache:
                     MANAGER.ast_from_module_name(module_name)
