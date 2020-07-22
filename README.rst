@@ -70,7 +70,7 @@ Features
 * Validates ``Model.__unicode__`` methods.
 * ``Meta`` informational classes on forms and models do not generate errors.
 * Flags dangerous use of the exclude attribute in ModelForm.Meta.
-- Uses Django's internal machinery to try and resolve models referenced as
+* Uses Django's internal machinery to try and resolve models referenced as
   strings in ForeignKey fields. That relies on ``django.setup()`` which needs
   the appropriate project settings defined!
 

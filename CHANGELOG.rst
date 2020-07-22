@@ -1,6 +1,17 @@
 Changelog
 =========
 
+Version 2.2.0 (22 Jul 2020)
+---------------------------
+
+- Rely on Django to resolve string references in ForeignKey fields. Refs
+  `#243 <https://github.com/PyCQA/pylint-django/issues/243>`_ (Alejandro Angulo)
+- Suppress ``unused-argument`` for functions in migration modules. Fix
+  `#267 <https://github.com/PyCQA/pylint-django/issues/267>`_
+- New checker for hard-coded ``auth.User``. Fix
+  `#244 <https://github.com/PyCQA/pylint-django/issues/244>`_
+
+
 Version 2.1.0 (12 Jul 2020)
 ---------------------------
 
