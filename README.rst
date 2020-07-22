@@ -46,7 +46,7 @@ Usage
 
 Ensure ``pylint-django`` is installed and on your path and then execute::
 
-    pylint --load-plugins pylint_django [..other options..] <path_to_your_sources>
+    DJANGO_SETTINGS_MODULE=your.app.settings pylint --load-plugins pylint_django [..other options..] <path_to_your_sources>
 
 
 Prospector
@@ -70,6 +70,9 @@ Features
 * Validates ``Model.__unicode__`` methods.
 * ``Meta`` informational classes on forms and models do not generate errors.
 * Flags dangerous use of the exclude attribute in ModelForm.Meta.
+- Uses Django's internal machinery to try and resolve models referenced as
+  strings in ForeignKey fields. That relies on ``django.setup()`` which needs
+  the appropriate project settings defined!
 
 
 Additional plugins
@@ -90,23 +93,6 @@ Additional plugins
 This plugin is disabled by default! To enable it::
 
     pylint --load-plugins pylint_django --load-plugins pylint_django.checkers.migrations
-
-
-Known issues
-------------
-
-If you reference foreign-key models by their name (as string) ``pylint-django`` may not be
-able to find the model and will report issues because it has no idea what the underlying
-type of this field is. Supported options are::
-
-- ``self`` and ``Model`` - look for this class in the current module which is being examined
-- ``app.Model`` - try loading ``app.models`` into the AST parser and look for ``Model`` there
-
-
-If your ``models.py`` itself is not importing the foreign-key class
-there's probably some import problem (likely circular dependencies) preventing referencing
-the foreign-key class directly. In this case ``pylint-django`` can't do much about it.
-We always recommend referencing foreign-key models by their classes.
 
 
 Contributing
