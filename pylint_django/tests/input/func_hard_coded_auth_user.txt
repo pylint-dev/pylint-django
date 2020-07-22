@@ -1,0 +1,3 @@
+imported-auth-user:5::User model imported from django.contrib.auth.models
+imported-auth-user:6::User model imported from django.contrib.auth.models
+hard-coded-auth-user:10:PullRequest:Hard-coded 'auth.User'
