@@ -26,6 +26,7 @@ class AuthUserChecker(checkers.BaseChecker):
         if node.value == 'auth.User':
             self.add_message('hard-coded-auth-user', node=node)
 
+    @utils.check_messages('imported-auth-user')
     def visit_importfrom(self, node):
         if node.modname == 'django.contrib.auth.models':
             for imported_names in node.names:
