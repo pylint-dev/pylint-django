@@ -53,6 +53,8 @@ def _module_name_from_django_model_resolution(model_name, module_name):
 
 
 def infer_key_classes(node, context=None):
+    from django.core.exceptions import ImproperlyConfigured  # pylint: disable=import-outside-toplevel
+
     keyword_args = []
     if node.keywords:
         keyword_args = [kw.value for kw in node.keywords if kw.arg == 'to']
@@ -106,6 +108,9 @@ def infer_key_classes(node, context=None):
                     # 'auth.models', 'User' which works nicely with the `endswith()`
                     # comparison below
                     module_name += '.models'
+                except ImproperlyConfigured:
+                    raise RuntimeError("DJANGO_SETTINGS_MODULE required for resolving ForeignKey "
+                                       "string references, see Usage section in README!")
 
                 # ensure that module is loaded in astroid_cache, for cases when models is a package
                 if module_name not in MANAGER.astroid_cache:
