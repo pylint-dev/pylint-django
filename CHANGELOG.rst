@@ -1,6 +1,16 @@
 Changelog
 =========
 
+Version 2.3.0 (05 Aug 2020)
+---------------------------
+
+- Improvement in error message for ``missing-backwards-migration-callable``
+  (Bryan Mutai)
+- Start testing with Django 3.1 on Python 3.8
+- Better error message when Django is not configured. Closes
+  `#277 <https://github.com/PyCQA/pylint-django/issues/277>`_
+
+
 Version 2.2.0 (22 Jul 2020)
 ---------------------------
 
