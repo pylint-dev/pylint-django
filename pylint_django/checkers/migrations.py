@@ -117,7 +117,7 @@ class MissingBackwardsMigrationChecker(checkers.BaseChecker):
 
     name = 'missing-backwards-migration-callable'
 
-    msgs = {'W%s97' % BASE_ID: ('%s Always include backwards migration callable',
+    msgs = {'W%s97' % BASE_ID: ('Always include backwards migration callable',
                                 'missing-backwards-migration-callable',
                                 'Always include a backwards/reverse callable counterpart'
                                 ' so that the migration is not irreversable.')}
@@ -138,10 +138,10 @@ class MissingBackwardsMigrationChecker(checkers.BaseChecker):
                     if keyword.arg == 'reverse_code':
                         return
                 self.add_message('missing-backwards-migration-callable',
-                                 args=module.name, node=node)
+                                 node=node)
             else:
                 self.add_message('missing-backwards-migration-callable',
-                                 args=module.name, node=node)
+                                 node=node)
 
 
 def is_in_migrations(node):
