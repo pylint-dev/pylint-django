@@ -1,4 +1,4 @@
-missing-backwards-migration-callable:12:Migration:pylint_django.tests.input.migrations.0003_without_backwards Always include backwards migration callable
-missing-backwards-migration-callable:13:Migration:pylint_django.tests.input.migrations.0003_without_backwards Always include backwards migration callable
-missing-backwards-migration-callable:15:Migration:pylint_django.tests.input.migrations.0003_without_backwards Always include backwards migration callable
-missing-backwards-migration-callable:17:Migration:pylint_django.tests.input.migrations.0003_without_backwards Always include backwards migration callable
+missing-backwards-migration-callable:12:Migration:Always include backwards migration callable
+missing-backwards-migration-callable:13:Migration:Always include backwards migration callable
+missing-backwards-migration-callable:15:Migration:Always include backwards migration callable
+missing-backwards-migration-callable:17:Migration:Always include backwards migration callable
