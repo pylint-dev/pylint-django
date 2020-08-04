@@ -19,6 +19,7 @@ matrix:
   include:
     - { stage: django_not_installed, python: 3.6, env: TOXENV=django_not_installed }
     - { stage: django_is_installed, python: 3.6, env: TOXENV=django_is_installed }
+    - { stage: test, python: 3.8, env: DJANGO=3.1 }
     - { stage: test, python: 3.6, env: DJANGO=3.0 }
     - { stage: test, python: 3.6, env: DJANGO=2.0 }
     - { stage: test, python: 3.6, env: DJANGO=1.11 }
