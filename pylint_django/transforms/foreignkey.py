@@ -110,7 +110,8 @@ def infer_key_classes(node, context=None):
                     module_name += '.models'
                 except ImproperlyConfigured:
                     raise RuntimeError("DJANGO_SETTINGS_MODULE required for resolving ForeignKey "
-                                       "string references, see Usage section in README!")
+                                       "string references, see Usage section in README at "
+                                       "https://pypi.org/project/pylint-django/!")
 
                 # ensure that module is loaded in astroid_cache, for cases when models is a package
                 if module_name not in MANAGER.astroid_cache:
