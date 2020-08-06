@@ -1,5 +1,5 @@
 """Models."""
-from astroid.nodes import Assign, ClassDef
+from astroid.nodes import Assign, AssignName, ClassDef
 
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.utils import check_messages
@@ -41,14 +41,10 @@ class FormChecker(BaseChecker):
             return
 
         for child in meta.get_children():
-            if not isinstance(child, Assign):
+            if (not isinstance(child, Assign)
+                    or not isinstance(child.targets[0], AssignName)):
                 continue
 
-            # Capture and ignore AttributeError raised when targets[0] does not
-            # have an attribute "name"
-            try:
-                if child.targets[0].name == 'exclude':
-                    self.add_message('W%s04' % BASE_ID, node=child)
-                    break
-            except AttributeError:
-                pass
+            if child.targets[0].name == 'exclude':
+                self.add_message('W%s04' % BASE_ID, node=child)
+                break
