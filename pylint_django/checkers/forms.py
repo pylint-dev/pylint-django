@@ -44,6 +44,11 @@ class FormChecker(BaseChecker):
             if not isinstance(child, Assign):
                 continue
 
-            if child.targets[0].name == 'exclude':
-                self.add_message('W%s04' % BASE_ID, node=child)
-                break
+            # Capture and ignore AttributeError raised when targets[0] does not
+            # have an attribute "name"
+            try:
+                if child.targets[0].name == 'exclude':
+                    self.add_message('W%s04' % BASE_ID, node=child)
+                    break
+            except AttributeError:
+                pass
