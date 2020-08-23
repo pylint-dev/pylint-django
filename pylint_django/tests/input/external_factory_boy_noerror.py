@@ -38,7 +38,7 @@ class BookTestCase(test.LiveServerTestCase):
     serialized_rollback = True
 
     def _fixture_setup(self):
-        super(BookTestCase, self)._fixture_setup()
+        super()._fixture_setup()
         self.book = BookFactory()
         _author = AuthorFactory()
         _first_book = _author.books.first()

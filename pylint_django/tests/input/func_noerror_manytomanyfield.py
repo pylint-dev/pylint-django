@@ -57,5 +57,5 @@ class CustomUser(AbstractUser):  # pylint: disable=model-no-explicit-unicode
     def save(self, *args, **kwargs):
         ''' Saving while granting new permissions '''
         self.is_staff = True
-        super(CustomUser, self).save()
+        super().save()
         self.grant_permissions()
