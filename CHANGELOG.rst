@@ -1,6 +1,17 @@
 Changelog
 =========
 
+Version 2.3.1 (TBD)
+-------------------
+
+- Allowed configuration of the Django settings module to be used via a
+  commandline argument `#286 <https://github.com/PyCAQ/pylint-django/issues/286>`_
+- If Django settings are not specified via a commandline argument or environment
+  variable, an error is issued but defaults are loaded from Django, removing the
+  fatal error behaviour. `#277 <https://github.com/PyCAQ/pylint-django/issues/277>`__
+  and `#243 <https://github.com/PyCAQ/pylint-django/issues/243>`__
+- Fixed tests to work with pylint>2.6
+
 Version 2.3.0 (05 Aug 2020)
 ---------------------------
 

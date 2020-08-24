@@ -1,10 +1,12 @@
 from __future__ import absolute_import
+
+import astroid
 from pylint.checkers import BaseChecker
-from pylint.interfaces import IAstroidChecker
 from pylint.checkers.utils import check_messages
+from pylint.interfaces import IAstroidChecker
+
 from pylint_django.__pkginfo__ import BASE_ID
 from pylint_django.transforms import foreignkey
-import astroid
 
 
 class ForeignKeyStringsChecker(BaseChecker):
@@ -41,15 +43,27 @@ Consider passing in an explicit Django configuration file to match your project 
         ),
     )
 
-    msgs = {"E%s10" % BASE_ID: ("Django was not configured. For more information run pylint --load-plugins=pylint_django --help-msg=django-not-configured", "django-not-configured", _LONG_MESSAGE),
-    "F%s10" % BASE_ID: (
-        'Provided Django settings %s could not be loaded',
-        'django-settings-module-not-found',
-        'The provided Django settings module %s was not found on the path'
-    )}
+    msgs = {
+        "E%s10"
+        % BASE_ID: (
+            "Django was not configured. For more information run"
+            "pylint --load-plugins=pylint_django --help-msg=django-not-configured",
+            "django-not-configured",
+            _LONG_MESSAGE,
+        ),
+        "F%s10"
+        % BASE_ID: (
+            "Provided Django settings %s could not be loaded",
+            "django-settings-module-not-found",
+            "The provided Django settings module %s was not found on the path",
+        ),
+    }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._raise_warning = False
 
     def open(self):
-        self._raise_warning = False
         # This is a bit of a hacky workaround. pylint-django does not *require* that
         # Django is configured explicitly, and will use some basic defaults in that
         # case. However, as this is a WARNING not a FATAL, the error must be raised
@@ -66,15 +80,15 @@ Consider passing in an explicit Django configuration file to match your project 
         # must wait until some module is inspected to be able to raise... so that
         # state is stashed in this property.
 
-        from django.core.exceptions import (
+        from django.core.exceptions import (  # pylint: disable=import-outside-toplevel
             ImproperlyConfigured,
-        )  # pylint: disable=import-outside-toplevel
+        )
 
         try:
             import django  # pylint: disable=import-outside-toplevel
 
             django.setup()
-            from django.apps import apps  # pylint: disable=import-outside-toplevel
+            from django.apps import apps  # noqa pylint: disable=import-outside-toplevel,unused-import
         except ImproperlyConfigured:
             # this means that Django wasn't able to configure itself using some defaults
             # provided (likely in a DJANGO_SETTINGS_MODULE environment variable)
@@ -83,21 +97,33 @@ Consider passing in an explicit Django configuration file to match your project 
                 # we will warn the user that they haven't actually configured Django themselves
                 self._raise_warning = True
                 # but use django defaults then...
-                from django.conf import settings  # pylint: disable=import-outside-toplevel
+                from django.conf import (  # pylint: disable=import-outside-toplevel
+                    settings,
+                )
                 settings.configure()
                 django.setup()
             else:
                 # see if we can load the provided settings module
                 try:
-                    from django.conf import settings, Settings  # pylint: disable=import-outside-toplevel
+                    from django.conf import (  # pylint: disable=import-outside-toplevel
+                        settings,
+                        Settings,
+                    )
+
                     settings.configure(Settings(self.config.django_settings_module))
                     django.setup()
                 except ImportError:
                     # we could not find the provided settings module...
                     # at least here it is a fatal error so we can just raise this immediately
-                    self.add_message('django-settings-module-not-found', args=self.config.django_settings_module)
+                    self.add_message(
+                        "django-settings-module-not-found",
+                        args=self.config.django_settings_module,
+                    )
                     # however we'll trundle on with basic settings
-                    from django.conf import settings  # pylint: disable=import-outside-toplevel
+                    from django.conf import (  # pylint: disable=import-outside-toplevel
+                        settings,
+                    )
+
                     settings.configure()
                     django.setup()
 
@@ -107,7 +133,6 @@ Consider passing in an explicit Django configuration file to match your project 
         # TODO: this is a bit messy having so many inline imports but in order to avoid
         # duplicating the django_installed checker, it'll do for now. In the future, merging
         # those two checkers together might make sense.
-
 
     @check_messages("django-not-configured")
     def visit_module(self, node):

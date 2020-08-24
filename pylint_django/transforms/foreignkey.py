@@ -108,10 +108,10 @@ def infer_key_classes(node, context=None):
                     # 'auth.models', 'User' which works nicely with the `endswith()`
                     # comparison below
                     module_name += '.models'
-                except ImproperlyConfigured:
+                except ImproperlyConfigured as exep:
                     raise RuntimeError("DJANGO_SETTINGS_MODULE required for resolving ForeignKey "
                                        "string references, see Usage section in README at "
-                                       "https://pypi.org/project/pylint-django/!")
+                                       "https://pypi.org/project/pylint-django/!") from exep
 
                 # ensure that module is loaded in astroid_cache, for cases when models is a package
                 if module_name not in MANAGER.astroid_cache:

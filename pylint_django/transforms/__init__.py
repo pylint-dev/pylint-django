@@ -18,7 +18,6 @@ from pylint_django.transforms import fields
 fields.add_transforms(astroid.MANAGER)
 
 
-
 def _add_transform(package_name):
     def fake_module_builder():
         """
