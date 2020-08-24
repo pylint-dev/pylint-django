@@ -1,14 +1,22 @@
-"""Transforms."""
+"""
+These transforms replace the Django types with adapted versions to provide
+additional typing and method inference to pylint. All of these transforms
+are considered "global" to pylint-django, in that all checks and improvements
+requre them to be loaded. Additional transforms specific to checkers are loaded
+by the checker rather than here.
+
+For example, the ForeignKeyStringsChecker loads the foreignkey.py transforms
+itself as it may be disabled independently of the rest of pylint-django
+"""
 import os
 import re
 
 import astroid
 
-from pylint_django.transforms import foreignkey, fields
+from pylint_django.transforms import fields
 
-
-foreignkey.add_transform(astroid.MANAGER)
 fields.add_transforms(astroid.MANAGER)
+
 
 
 def _add_transform(package_name):

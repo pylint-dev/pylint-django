@@ -156,7 +156,7 @@ def is_in_migrations(node):
     return is_migrations_module(node.parent)
 
 
-def load_configuration(linter):
+def load_configuration(linter):  # TODO this is redundant and can be  removed
     # don't blacklist migrations for this checker
     new_black_list = list(linter.config.black_list)
     if 'migrations' in new_black_list:

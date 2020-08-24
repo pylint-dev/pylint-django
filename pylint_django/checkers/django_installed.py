@@ -20,8 +20,11 @@ class DjangoInstalledChecker(BaseChecker):
     }
 
     @check_messages('django-not-available')
-    def close(self):
+    def open(self):
         try:
             __import__('django')
         except ImportError:
-            self.add_message('F%s01' % BASE_ID)
+            # mild hack: this error is added before any modules have been inspected
+            # so we need to set some kind of value to prevent the linter failing to it
+            self.linter.set_current_module('project global')
+            self.add_message('django-not-available')
