@@ -44,10 +44,21 @@ about missing Django!
 Usage
 -----
 
-Ensure ``pylint-django`` is installed and on your path and then execute::
+
+Ensure ``pylint-django`` is installed and on your path. In order to access some
+of the internal Django features to improve pylint inspections, you should also
+provide a Django settings module appropriate to your project. This can be done
+either with an environment variable::
 
     DJANGO_SETTINGS_MODULE=your.app.settings pylint --load-plugins pylint_django [..other options..] <path_to_your_sources>
 
+Alternatively, this can be passed in as a commandline flag::
+
+    pylint --load-plugins pylint_django --django-settings-module=your.app.settings [..other options..] <path_to_your_sources>
+
+If you do not configure Django, default settings will be used but this will not include, for
+example, which applications to include in `INSTALLED_APPS` and so the linting and type inference
+will be less accurate. It is recommended to specify a settings module.
 
 Prospector
 ----------
