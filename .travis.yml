@@ -45,7 +45,7 @@ script:
 
 after_success:
   - |
-        if [ -z "$SANITY_CHECK" ]; then
+        if [ -z "$SANITY_CHECK" ] && [ -z "$TOXENV" ]; then
             pip install coveralls
             coveralls
         fi
