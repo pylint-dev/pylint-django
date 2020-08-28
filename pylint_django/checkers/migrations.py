@@ -156,20 +156,10 @@ def is_in_migrations(node):
     return is_migrations_module(node.parent)
 
 
-def load_configuration(linter):  # TODO this is redundant and can be  removed
-    # don't blacklist migrations for this checker
-    new_black_list = list(linter.config.black_list)
-    if 'migrations' in new_black_list:
-        new_black_list.remove('migrations')
-    linter.config.black_list = new_black_list
-
-
 def register(linter):
     """Required method to auto register this checker."""
     linter.register_checker(NewDbFieldWithDefaultChecker(linter))
     linter.register_checker(MissingBackwardsMigrationChecker(linter))
-    if not compat.LOAD_CONFIGURATION_SUPPORTED:
-        load_configuration(linter)
 
     # apply augmentations for migration checkers
     # Unused arguments for migrations
