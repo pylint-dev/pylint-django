@@ -4,8 +4,8 @@ from astroid.nodes import Assign
 from astroid.nodes import ClassDef, FunctionDef, AssignName
 
 from pylint.interfaces import IAstroidChecker
-from pylint.checkers.utils import check_messages
 from pylint.checkers import BaseChecker
+from pylint.checkers.utils import check_messages
 
 from pylint_django.__pkginfo__ import BASE_ID
 from pylint_django.utils import node_is_subclass
@@ -15,13 +15,13 @@ MESSAGES = {
     "E%d01"
     % BASE_ID: (
         "__str__ on a model must be callable (%s)",
-        "model-unicode-not-callable",
+        "model-str-not-callable",
         "Django models require a callable __str__ method",
     ),
     "W%d01"
     % BASE_ID: (
         "No __str__ method on model (%s)",
-        "model-missing-unicode",
+        "model-missing-str",
         "Django models should implement a __str__ method for string representation "
         "(see https://docs.djangoproject.com/en/3.1/ref/models/instances/#django.db.models.Model.__str__)",
     ),
@@ -35,7 +35,7 @@ MESSAGES = {
     "W%d03"
     % BASE_ID: (
         "Model does not explicitly define __str__ (%s)",
-        "model-no-explicit-unicode",
+        "model-no-explicit-str",
         "Django models should implement a __str__ method for string representation. "
         "A parent class of this model does, but ideally all models should be explicit.",
     ),
@@ -57,29 +57,6 @@ def _is_meta_with_abstract(node):
             if meta_child.value.value:
                 # this class is abstract
                 return True
-    return False
-
-
-def _has_python_2_unicode_compatible_decorator(node):
-    if node.decorators is None:
-        return False
-
-    for decorator in node.decorators.nodes:
-        if getattr(decorator, "name", None) == "python_2_unicode_compatible":
-            return True
-
-    return False
-
-
-def _is_unicode_or_str_in_python_2_compatibility(method):
-    if method.name == "__unicode__":
-        return True
-
-    if method.name == "__str__" and _has_python_2_unicode_compatible_decorator(
-        method.parent
-    ):
-        return True
-
     return False
 
 
@@ -127,17 +104,10 @@ class ModelChecker(BaseChecker):
 
         # if we get here, then we have no __str__ method directly on the class itself
 
-        # a different warning is emitted if a parent declares __str__
+        # a different warning is emitted if a parent declares __unicode__
         for method in node.methods():
-            if method.parent != node and _is_unicode_or_str_in_python_2_compatibility(
-                method
-            ):
-                # this happens if a parent declares the unicode method but
+            if method.parent != node and method.name == '__str__':
+                # this happens if a parent declares the str method but
                 # this node does not
                 self.add_message("W%s03" % BASE_ID, args=node.name, node=node)
                 return
-
-        # if the Django compatibility decorator is used then we don't emit a warning
-        # see https://github.com/PyCQA/pylint-django/issues/10
-        if _has_python_2_unicode_compatible_decorator(node):
-            return
