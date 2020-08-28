@@ -2,7 +2,7 @@
 Checks that Pylint does not complain about various
 methods on Django model fields.
 """
-#  pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,missing-docstring
 from __future__ import print_function
 from datetime import datetime, date
 from decimal import Decimal

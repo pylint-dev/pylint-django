@@ -2,7 +2,7 @@
 Checks that Pylint does not complain about attributes and methods
 when creating a typical urls.py
 """
-#  pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,missing-docstring
 
 from django.views.generic import TemplateView
 from django.conf.urls import url

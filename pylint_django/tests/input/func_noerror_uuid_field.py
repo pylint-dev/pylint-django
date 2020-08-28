@@ -1,7 +1,7 @@
 """
 Checks that Pylint does not complain about UUID fields.
 """
-#  pylint: disable=C0111,W5101
+# pylint: disable=model-no-explicit-str,C0111,W5101
 from __future__ import print_function
 from django.db import models
 

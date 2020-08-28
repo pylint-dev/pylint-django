@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.0/topics/migrations/#postgresql
 > For this reason, it’s recommended you always create new columns with
 > null=True, as this way they will be added immediately.
 """
-# pylint: disable=missing-docstring, invalid-name
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,missing-docstring, invalid-name
 from datetime import timedelta
 from django.db import migrations, models
 

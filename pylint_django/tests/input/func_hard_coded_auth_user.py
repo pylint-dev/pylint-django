@@ -1,4 +1,4 @@
-# pylint: disable=missing-docstring, wildcard-import, unused-wildcard-import
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,missing-docstring, wildcard-import, unused-wildcard-import
 # flake8: noqa=F401, F403
 
 from django.db import models

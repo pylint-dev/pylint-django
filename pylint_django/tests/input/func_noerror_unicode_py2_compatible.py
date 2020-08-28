@@ -4,7 +4,7 @@ Django python3/2 compatability dectorator is used
 
 See https://github.com/PyCQA/pylint-django/issues/10
 """
-#  pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,missing-docstring
 from six import python_2_unicode_compatible
 from django.db import models
 

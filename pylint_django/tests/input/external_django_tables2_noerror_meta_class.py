@@ -2,7 +2,7 @@
 # don't produce old-style-class warnings, see
 # https://github.com/PyCQA/pylint-django/issues/56
 
-# pylint: disable=missing-docstring,too-few-public-methods
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,missing-docstring,too-few-public-methods
 
 from django.db import models
 import django_tables2 as tables

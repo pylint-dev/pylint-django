@@ -2,7 +2,7 @@
 Test to validate that pylint_django doesn't produce
 Instance of 'SubFactory' has no 'pk' member (no-member) warnings
 """
-# pylint: disable=attribute-defined-outside-init, missing-docstring, too-few-public-methods
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,attribute-defined-outside-init, missing-docstring, too-few-public-methods
 import factory
 
 from django import test

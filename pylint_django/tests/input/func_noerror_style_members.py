@@ -1,7 +1,7 @@
 # Test that using `color_style` or `no_style`
 # doesn't raise no-member error
 #
-# pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,missing-docstring
 
 from django.core.management.color import color_style, no_style
 

@@ -2,7 +2,7 @@
 # doesn't raise issues, see
 # https://github.com/PyCQA/pylint-django/issues/144
 #
-# pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,missing-docstring
 
 from django.db import models
 

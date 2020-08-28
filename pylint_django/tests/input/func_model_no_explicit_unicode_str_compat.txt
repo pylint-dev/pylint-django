@@ -1,1 +1,1 @@
-model-no-explicit-unicode:18:SomeModel:Model does not explicitly define __str__ (SomeModel)
+model-no-explicit-str:16:SomeModelX:Model does not explicitly define __str__ (SomeModelX)

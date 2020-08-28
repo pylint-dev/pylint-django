@@ -2,7 +2,7 @@
 Checks that Pylint still complains about unused-arguments for other
 arguments if a function/method contains an argument named `request`.
 """
-# pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,missing-docstring
 
 from django.http import JsonResponse
 from django.views import View
@@ -12,7 +12,7 @@ from django.views import View
 # warning will not be generated.
 # Therefore define request here to cover this behaviour in this test case.
 
-request = None  # pylint: disable=invalid-name
+request = None  # pylint: disable=model-no-explicit-str,model-no-explicit-str,invalid-name
 
 
 def user_detail(request, user_id):  # [unused-argument]

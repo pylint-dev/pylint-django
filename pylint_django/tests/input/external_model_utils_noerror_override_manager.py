@@ -2,7 +2,7 @@
 # with a manager from the django-model-utils package pylint-django
 # does not report not-an-iterator error, see
 # https://github.com/PyCQA/pylint-django/issues/117
-# pylint: disable=missing-docstring, invalid-name
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,missing-docstring, invalid-name
 
 from model_utils.managers import InheritanceManager
 

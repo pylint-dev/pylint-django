@@ -1,4 +1,4 @@
-# pylint: disable=missing-docstring,wrong-import-position
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,missing-docstring,wrong-import-position
 from django.db import models
 
 

@@ -2,7 +2,7 @@
 Checks that Pylint does not complain about various
 methods on many-to-many relationships
 """
-#  pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,missing-docstring
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Permission
 
@@ -31,7 +31,7 @@ class Author(models.Model):
 USER_PERMS = ['change_customuser', 'add_customuser']
 
 
-class CustomUser(AbstractUser):  # pylint: disable=model-no-explicit-unicode
+class CustomUser(AbstractUser):
     class Meta:
         verbose_name = 'CustomUser'
         verbose_name_plural = 'CustomUsers'

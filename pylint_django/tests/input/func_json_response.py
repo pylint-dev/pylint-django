@@ -1,4 +1,4 @@
-# pylint: disable=missing-docstring, line-too-long
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,missing-docstring, line-too-long
 
 import json
 from django import http

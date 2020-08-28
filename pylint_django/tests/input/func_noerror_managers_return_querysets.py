@@ -2,7 +2,7 @@
 Checks that Pylint does not complain about Manager methods returning lists
 when they in fact return QuerySets
 """
-
+# pylint: disable=model-no-explicit-str
 from django.db import models
 
 

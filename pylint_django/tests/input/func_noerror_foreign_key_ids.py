@@ -1,7 +1,7 @@
 """
 Checks that Pylint does not complain about foreign key id access
 """
-#  pylint: disable=missing-docstring,wrong-import-position
+# pylint: disable=model-no-explicit-str,missing-docstring,wrong-import-position
 from django.db import models
 
 

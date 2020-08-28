@@ -1,7 +1,7 @@
 """
 Checks that Pylint complains about ModelForm using exclude
 """
-#  pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,missing-docstring
 from django import forms
 
 

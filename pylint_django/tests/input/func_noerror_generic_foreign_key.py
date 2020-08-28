@@ -2,7 +2,7 @@
 Checks that Pylint does not complain about GenericForeignKey fields:
 https://github.com/PyCQA/pylint-django/issues/230
 """
-# pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,missing-docstring
 
 from django.db import models
 from django.contrib.contenttypes.models import ContentType

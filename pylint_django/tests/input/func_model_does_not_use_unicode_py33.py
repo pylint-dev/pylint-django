@@ -1,7 +1,7 @@
 """
 Ensures that under PY3 django models with a __unicode__ method are flagged
 """
-#  pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,missing-docstring
 
 from django.db import models
 

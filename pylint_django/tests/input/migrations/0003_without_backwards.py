@@ -1,4 +1,4 @@
-# pylint: disable=missing-docstring, invalid-name
+# pylint: disable=model-no-explicit-str,model-no-explicit-str,missing-docstring, invalid-name
 from django.db import migrations
 
 

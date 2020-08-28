@@ -1,7 +1,7 @@
 """
 Checks that Pylint does not complain about raising DoesNotExist
 """
-#  pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,missing-docstring
 from django.db import models
 
 

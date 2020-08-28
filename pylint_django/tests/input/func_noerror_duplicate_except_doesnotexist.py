@@ -3,7 +3,7 @@ Checks that Pylint does not complain about duplicate
 except blocks catching DoesNotExist exceptions:
 https://github.com/PyCQA/pylint-django/issues/81
 """
-#  pylint: disable=missing-docstring
+# pylint: disable=model-no-explicit-str,missing-docstring
 from django.db import models
 
 

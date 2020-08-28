@@ -10,6 +10,9 @@ from django.db import models
 class SomeModel(models.Model):
     """Just a model."""
 
+    def __str__(self):
+        return str(self.id)
+
 
 class SomeTestCase(TestCase):
     """A test cast."""
@@ -19,3 +22,6 @@ class SomeTestCase(TestCase):
         response = self.client.get('/get/some/thing/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['object'], expected_object)
+
+    def __str__(self):
+        return str(self.id)
