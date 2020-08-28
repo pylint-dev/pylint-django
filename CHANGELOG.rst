@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 2.3.1 (TBD)
+Version 3.0.0 (TBD)
 -------------------
 
 - Allowed configuration of the Django settings module to be used via a
@@ -11,6 +11,8 @@ Version 2.3.1 (TBD)
   fatal error behaviour. `#277 <https://github.com/PyCAQ/pylint-django/issues/277>`__
   and `#243 <https://github.com/PyCAQ/pylint-django/issues/243>`__
 - Fixed tests to work with pylint>2.6
+- Removed compatibility layer for Python2 and older versions of Django since
+pylint, pylint-django and Django do not support Python2 any more. `#288 <https://github.com/PyCAQ/pylint-django/issues/288>`_
 
 Version 2.3.0 (05 Aug 2020)
 ---------------------------
