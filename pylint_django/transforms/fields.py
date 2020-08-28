@@ -3,8 +3,6 @@ from astroid import (
     AstroidImportError
 )
 
-from pylint_django import utils
-
 
 _STR_FIELDS = ('CharField', 'SlugField', 'URLField', 'TextField', 'EmailField',
                'CommaSeparatedIntegerField', 'FilePathField', 'GenericIPAddressField',

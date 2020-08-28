@@ -1,5 +1,4 @@
 """Utils."""
-import sys
 import astroid
 
 from astroid.bases import Instance

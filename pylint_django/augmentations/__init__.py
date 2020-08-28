@@ -18,7 +18,7 @@ from pylint.checkers.variables import ScopeConsumer
 
 from pylint_plugin_utils import augment_visit, suppress_message
 
-from django import VERSION as django_version
+from django import VERSION as DJANGO_VERSION
 from django.views.generic.base import View, RedirectView, ContextMixin
 from django.views.generic.dates import DateMixin, DayMixin, MonthMixin, WeekMixin, YearMixin
 from django.views.generic.detail import SingleObjectMixin, SingleObjectTemplateResponseMixin, TemplateResponseMixin
@@ -721,7 +721,7 @@ def is_urls_module_valid_constant(node):
 
 
 def allow_meta_protected_access(node):
-    if django_version >= (1, 8):
+    if DJANGO_VERSION >= (1, 8):
         return node.attrname == '_meta'
 
     return False
