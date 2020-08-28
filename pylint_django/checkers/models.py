@@ -112,7 +112,7 @@ class ModelChecker(BaseChecker):
                 # this model declares a __str__ method so we can stop checking
                 return
 
-            elif method.parent != node:
+            if method.parent != node:
                 # this happens if a parent declares the str method but
                 # this node does not
                 self.add_message("W%s03" % BASE_ID, args=node.name, node=node)
