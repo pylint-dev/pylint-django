@@ -8,8 +8,6 @@ from astroid.nodes import ClassDef
 
 from pylint_django.compat import Uninferable
 
-PY3 = sys.version_info >= (3, 0)  # TODO: pylint_django doesn't support Py2 any more
-
 
 def node_is_subclass(cls, *subclass_names):
     """Checks if cls node has parent with subclass_name."""

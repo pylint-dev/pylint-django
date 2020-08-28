@@ -8,23 +8,23 @@ from pylint.checkers.utils import check_messages
 from pylint.checkers import BaseChecker
 
 from pylint_django.__pkginfo__ import BASE_ID
-from pylint_django.utils import node_is_subclass, PY3
+from pylint_django.utils import node_is_subclass
 
 
 MESSAGES = {
-    'E%d01' % BASE_ID: ("__unicode__ on a model must be callable (%s)",
+    'E%d01' % BASE_ID: ("__str__ on a model must be callable (%s)",
                         'model-unicode-not-callable',
-                        "Django models require a callable __unicode__ method"),
-    'W%d01' % BASE_ID: ("No __unicode__ method on model (%s)",
+                        "Django models require a callable __str__ method"),
+    'W%d01' % BASE_ID: ("No __str__ method on model (%s)",
                         'model-missing-unicode',
-                        "Django models should implement a __unicode__ method for string representation"),
+                        "Django models should implement a __str__ method for string representation (see https://docs.djangoproject.com/en/3.1/ref/models/instances/#django.db.models.Model.__str__)"),
     'W%d02' % BASE_ID: ("Found __unicode__ method on model (%s). Python3 uses __str__.",
                         'model-has-unicode',
                         "Django models should not implement a __unicode__ "
                         "method for string representation when using Python3"),
-    'W%d03' % BASE_ID: ("Model does not explicitly define __unicode__ (%s)",
+    'W%d03' % BASE_ID: ("Model does not explicitly define __str__ (%s)",
                         'model-no-explicit-unicode',
-                        "Django models should implement a __unicode__ method for string representation. "
+                        "Django models should implement a __str__ method for string representation. "
                         "A parent class of this model does, but ideally all models should be explicit.")
 }
 
@@ -93,7 +93,7 @@ class ModelChecker(BaseChecker):
                     continue
 
                 name = grandchildren[0].name
-                if name != '__unicode__':
+                if name != '__str__':
                     continue
 
                 grandchild = grandchildren[1]
@@ -106,13 +106,12 @@ class ModelChecker(BaseChecker):
                 return
 
             if isinstance(child, FunctionDef) and child.name == '__unicode__':
-                if PY3:
-                    self.add_message('W%s02' % BASE_ID, args=node.name, node=node)
+                self.add_message('W%s02' % BASE_ID, args=node.name, node=node)
                 return
 
-        # if we get here, then we have no __unicode__ method directly on the class itself
+        # if we get here, then we have no __str__ method directly on the class itself
 
-        # a different warning is emitted if a parent declares __unicode__
+        # a different warning is emitted if a parent declares __str__
         for method in node.methods():
             if method.parent != node and _is_unicode_or_str_in_python_2_compatibility(method):
                 # this happens if a parent declares the unicode method but
@@ -124,8 +123,3 @@ class ModelChecker(BaseChecker):
         # see https://github.com/PyCQA/pylint-django/issues/10
         if _has_python_2_unicode_compatible_decorator(node):
             return
-
-        if PY3:
-            return
-
-        self.add_message('W%s01' % BASE_ID, args=node.name, node=node)

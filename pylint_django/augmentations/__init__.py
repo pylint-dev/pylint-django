@@ -26,7 +26,7 @@ from django.views.generic.edit import DeletionMixin, FormMixin, ModelFormMixin
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin
 from django.utils import termcolors
 
-from pylint_django.utils import node_is_subclass, PY3
+from pylint_django.utils import node_is_subclass
 
 
 # Note: it would have been nice to import the Manager object from Django and
@@ -307,8 +307,7 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
 
     new_things = {}
 
-    iterat = consumer.to_consume.items if PY3 else consumer.to_consume.iteritems
-    for name, stmts in iterat():
+    for name, stmts in consumer.to_consume.items():
         if isinstance(stmts[0], ImportFrom):
             if any([n[0] in ('ForeignKey', 'OneToOneField') for n in stmts[0].names]):
                 continue
