@@ -68,7 +68,7 @@ class ModelChecker(BaseChecker):
     name = "django-model-checker"
     msgs = MESSAGES
 
-    @check_messages("model-missing-unicode")
+    @check_messages("model-str-not-callable", "model-missing-str", "model-has-unicode", "model-no-explicit-str")
     def visit_classdef(self, node):
         """Class visitor."""
         if not node_is_subclass(node, "django.db.models.base.Model", ".Model"):
@@ -102,12 +102,22 @@ class ModelChecker(BaseChecker):
                 self.add_message("W%s02" % BASE_ID, args=node.name, node=node)
                 return
 
-        # if we get here, then we have no __str__ method directly on the class itself
-
         # a different warning is emitted if a parent declares __unicode__
         for method in node.methods():
-            if method.parent != node and method.name == '__str__':
+            if method.name != '__str__':
+                # only looking for __str__ methods
+                continue
+
+            if method.parent == node:
+                # this model declares a __str__ method so we can stop checking
+                return
+
+            elif method.parent != node:
                 # this happens if a parent declares the str method but
                 # this node does not
                 self.add_message("W%s03" % BASE_ID, args=node.name, node=node)
                 return
+
+        # if we get here, we have no __str__ method at all, although this is unlikely
+        # since the Django BaseModel does, but still.
+        self.add_message("W%s01" % BASE_ID, args=node.name, node=node)
