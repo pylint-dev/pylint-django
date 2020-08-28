@@ -26,5 +26,5 @@ class DjangoInstalledChecker(BaseChecker):
         except ImportError:
             # mild hack: this error is added before any modules have been inspected
             # so we need to set some kind of value to prevent the linter failing to it
-            self.linter.set_current_module('project global')
+            self.linter.set_current_module('pylint_django')
             self.add_message('django-not-available')
