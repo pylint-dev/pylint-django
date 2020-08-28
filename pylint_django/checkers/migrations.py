@@ -17,7 +17,6 @@ from pylint.checkers import utils
 from pylint_plugin_utils import suppress_message
 
 from pylint_django.__pkginfo__ import BASE_ID
-from pylint_django import compat
 from pylint_django.utils import is_migrations_module
 
 
