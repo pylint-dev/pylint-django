@@ -11,6 +11,8 @@ Version 2.3.1 (TBD)
   fatal error behaviour. `#277 <https://github.com/PyCAQ/pylint-django/issues/277>`__
   and `#243 <https://github.com/PyCAQ/pylint-django/issues/243>`__
 - Fixed tests to work with pylint>2.6
+- Cleaned up some redundant (and possibly unused) blacklist management surrounding
+  linting of DB migrations `#289 <https://github.com/PyCQA/pylint-django/issues/289>_`
 
 Version 2.3.0 (05 Aug 2020)
 ---------------------------
