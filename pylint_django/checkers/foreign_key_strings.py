@@ -127,7 +127,7 @@ Consider passing in an explicit Django configuration file to match your project 
                     settings.configure()
                     django.setup()
 
-        # now we can add the trasforms speciifc to this checker
+        # now we can add the trasforms specifc to this checker
         foreignkey.add_transform(astroid.MANAGER)
 
         # TODO: this is a bit messy having so many inline imports but in order to avoid
