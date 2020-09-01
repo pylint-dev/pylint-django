@@ -31,3 +31,12 @@ class TestFormSubclass(forms.Form):
 class TestModelFormSubclass(forms.ModelForm):
     class Meta:
         pass
+
+
+class TestFormWidgetAssignment(forms.Form):
+
+    multi_field = forms.MultipleChoiceField(choices=[('1', 'First'), ('2', 'Second')])
+
+    class Meta:
+        widgets = {}
+        widgets['multi_field'] = forms.CheckboxSelectMultiple
