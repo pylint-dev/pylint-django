@@ -44,6 +44,7 @@ MANAGER_ATTRS = {
     'extra',
     'get',
     'get_or_create',
+    'update_or_create',
     'get_queryset',
     'create',
     'bulk_create',
