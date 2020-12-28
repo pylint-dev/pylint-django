@@ -15,6 +15,9 @@ class SomeModel(models.Model):
     def get_first(self):
         return self.othermodel_set.first()
 
+    def othermodel_update_or_create(self):
+        return self.othermodel_set.update_or_create()
+
 
 class OtherModel(models.Model):
     count = models.IntegerField()
