@@ -1,16 +1,23 @@
 Changelog
 =========
 
-Version 2.3.1 (TBD)
--------------------
+Version 2.4.0 (06 Jan 2021)
+---------------------------
 
 - Allowed configuration of the Django settings module to be used via a
   commandline argument `#286 <https://github.com/PyCQA/pylint-django/issues/286>`_
 - If Django settings are not specified via a commandline argument or environment
   variable, an error is issued but defaults are loaded from Django, removing the
-  fatal error behaviour. `#277 <https://github.com/PyCQA/pylint-django/issues/277>`__
-  and `#243 <https://github.com/PyCQA/pylint-django/issues/243>`__
+  fatal error behaviour. `#277 <https://github.com/PyCQA/pylint-django/issues/277>`_
+  and `#243 <https://github.com/PyCQA/pylint-django/issues/243>`_
 - Fixed tests to work with pylint>2.6
+- Fixed ``AttributeError: 'Subscript' object has no attribute 'name'`` error.
+  Closes `#284 <https://github.com/PyCQA/pylint-django/issues/284>`_ (@uy-rrodriguez)
+- Pin Faker version to Prevent Asteroid Crash (James Pulec)
+- Remove Python 3.5 Support (EOL since Sept 2020 and Faker requires 3.6 anyway)
+  (James Pulec)
+- Fixed reverse manager ``update_or_create`` calls (James Pulec)
+
 
 Version 2.3.0 (05 Aug 2020)
 ---------------------------
