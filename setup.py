@@ -19,7 +19,7 @@ setup(
     install_requires=[
         'pylint-plugin-utils>=0.5',
         'pylint>=2.0',
-        'Faker==5.0.1',
+        'Faker<=5.0.1',
     ],
     extras_require={
         'with_django': ['Django'],
