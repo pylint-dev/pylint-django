@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 2.4.1 (07 Jan 2021)
+---------------------------
+
+- Relaxed Faker package versioning requirement for ``Faker`` (Robin Chow)
+
+
 Version 2.4.0 (06 Jan 2021)
 ---------------------------
 
