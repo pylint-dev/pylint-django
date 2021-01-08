@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 2.4.2 (08 Jan 2021)
+---------------------------
+
+- Moved `Faker` dependencies to test-only `#304 <https://github.com/PyCQA/pylint-django/issues/304>`_
+
+
 Version 2.4.1 (07 Jan 2021)
 ---------------------------
 
