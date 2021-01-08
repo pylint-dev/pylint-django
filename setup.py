@@ -19,11 +19,10 @@ setup(
     install_requires=[
         'pylint-plugin-utils>=0.5',
         'pylint>=2.0',
-        'Faker<=5.0.1',
     ],
     extras_require={
         'with_django': ['Django'],
-        'for_tests': ['django_tables2', 'factory-boy', 'coverage', 'pytest'],
+        'for_tests': ['django_tables2', 'factory-boy', 'coverage', 'pytest', 'Faker<=5.0.1'],
     },
     license='GPLv2',
     classifiers=[
