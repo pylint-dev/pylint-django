@@ -45,6 +45,9 @@ class CustomUser(AbstractUser):  # pylint: disable=model-no-explicit-unicode
             self.user_permissions.add(perm)
         return self.user_permissions
 
+    def get_permissions(self):
+        self.user_permissions.all()
+
     def add_permission(self, permission):
         self.user_permissions.add(permission)
 

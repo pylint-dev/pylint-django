@@ -1,6 +1,13 @@
 Changelog
 =========
 
+
+Version 2.4.3 (05 Mar 2021)
+---------------------------
+
+- Added `all` to available ManyToMany field attributes. (@ypcrumble)
+
+
 Version 2.4.2 (08 Jan 2021)
 ---------------------------
 

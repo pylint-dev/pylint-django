@@ -247,6 +247,7 @@ FOREIGNKEY_FIELD_ATTRS = {
 
 MANYTOMANY_FIELD_ATTRS = {
     'add',
+    'all',
     'clear',
     'related_name',
     'related_query_name',
