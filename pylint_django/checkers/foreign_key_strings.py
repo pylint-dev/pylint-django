@@ -46,7 +46,7 @@ Consider passing in an explicit Django configuration file to match your project 
     msgs = {
         "E%s10"
         % BASE_ID: (
-            "Django was not configured. For more information run"
+            "Django was not configured. For more information run "
             "pylint --load-plugins=pylint_django --help-msg=django-not-configured",
             "django-not-configured",
             _LONG_MESSAGE,
@@ -127,7 +127,7 @@ Consider passing in an explicit Django configuration file to match your project 
                     settings.configure()
                     django.setup()
 
-        # now we can add the trasforms specifc to this checker
+        # Now we can add the transforms specific to this checker
         foreignkey.add_transform(astroid.MANAGER)
 
         # TODO: this is a bit messy having so many inline imports but in order to avoid
