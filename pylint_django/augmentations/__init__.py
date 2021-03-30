@@ -630,8 +630,8 @@ def generic_is_view_attribute(parents, attrs):
 
 
 def is_model_view_subclass_method_shouldnt_be_function(node):
-    """Checks that node is get or post method of the View class."""
-    if node.name not in ('get', 'post'):
+    """Checks that node is a default http method (i.e get, post, put, and more) of the View class."""
+    if node.name not in View.http_method_names:
         return False
 
     parent = node.parent
