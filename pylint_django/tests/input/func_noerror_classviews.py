@@ -58,7 +58,7 @@ class JsonHeadView(View):
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
-class JsonOptionsSView(View):
+class JsonOptionsView(View):
     def options(self, request):
         # do something with objects but don't use
         # self or request
