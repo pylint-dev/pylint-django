@@ -32,7 +32,9 @@ before_install:
   - git clone --depth 1 https://github.com/PyCQA/pylint.git --branch 2.4 --single-branch ~/pylint
 
 install:
+  - sudo apt-get update
   - sudo apt-get install build-essential libssl-dev libffi-dev python3-dev cargo
+  - pip install -U pip setuptools
   - pip install tox-travis
   - pip install -e .[for_tests]
 script:
@@ -42,6 +44,10 @@ script:
         else
             ./scripts/build.sh
         fi
+
+after_failure:
+  - |
+        cat /home/travis/build/PyCQA/pylint-django/.tox/readme/log/readme-1.log
 
 after_success:
   - |
