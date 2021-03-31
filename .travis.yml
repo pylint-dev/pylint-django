@@ -32,6 +32,7 @@ before_install:
   - git clone --depth 1 https://github.com/PyCQA/pylint.git --branch 2.4 --single-branch ~/pylint
 
 install:
+  - sudo apt-get install build-essential libssl-dev libffi-dev python3-dev cargo
   - pip install tox-travis
   - pip install -e .[for_tests]
 script:
