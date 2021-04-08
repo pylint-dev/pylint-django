@@ -23,56 +23,56 @@ class BoringView(TemplateView):
 
 
 class JsonGetView(View):
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 class JsonPostView(View):
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 class JsonPutView(View):
-    def put(self, request):
+    def put(self, request, *args, **kwargs):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 class JsonPatchView(View):
-    def patch(self, request):
+    def patch(self, request, *args, **kwargs):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 class JsonDeleteView(View):
-    def delete(self, request):
+    def delete(self, request, *args, **kwargs):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 class JsonHeadView(View):
-    def head(self, request):
+    def head(self, request, *args, **kwargs):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 class JsonOptionsView(View):
-    def options(self, request):
+    def options(self, request, *args, **kwargs):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 class JsonTraceView(View):
-    def trace(self, request):
+    def trace(self, request, *args, **kwargs):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
