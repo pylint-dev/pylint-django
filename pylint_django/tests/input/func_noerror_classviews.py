@@ -21,12 +21,13 @@ class BoringView(TemplateView):
             'kwargs': self.kwargs
         }
 
-    
+
 class JsonGetView(View):
     def get(self, request):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
+
 
 class JsonPostView(View):
     def post(self, request):
@@ -34,11 +35,13 @@ class JsonPostView(View):
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
+
 class JsonPutView(View):
     def put(self, request):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
+
 
 class JsonPatchView(View):
     def patch(self, request):
@@ -46,11 +49,13 @@ class JsonPatchView(View):
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
+
 class JsonDeleteView(View):
     def delete(self, request):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
+
 
 class JsonHeadView(View):
     def head(self, request):
@@ -58,17 +63,20 @@ class JsonHeadView(View):
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
+
 class JsonOptionsView(View):
     def options(self, request):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
+
 class JsonTraceView(View):
     def trace(self, request):
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
+
 
 class Book(models.Model):
     name = models.CharField(max_length=100)
