@@ -22,7 +22,7 @@ setup(
     ],
     extras_require={
         'with_django': ['Django'],
-        'for_tests': ['django_tables2', 'factory-boy', 'coverage', 'pytest', 'Faker<=5.0.1'],
+        'for_tests': ['django_tables2', 'factory-boy', 'coverage', 'pytest'],
     },
     license='GPLv2',
     classifiers=[
