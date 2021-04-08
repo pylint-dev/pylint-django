@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+- Start testing with Django 3.2 on Python 3.9
+
+
 Version 2.4.2 (08 Jan 2021)
 ---------------------------
 
