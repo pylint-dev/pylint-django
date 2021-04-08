@@ -652,7 +652,7 @@ def ignore_unused_argument_warnings_for_request(orig_method, self, stmt, name):
     The signature of Django view functions require the request argument but it is okay if the request is not used.
     This function should be used as a wrapper for the `VariablesChecker._is_name_ignored` method.
     """
-    if name == 'request':
+    if name in ('request', 'args', 'kwargs'):
         return True
 
     return orig_method(self, stmt, name)
