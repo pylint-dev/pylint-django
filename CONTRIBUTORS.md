@@ -16,4 +16,5 @@
 * [WayneLambert](https://github.com/WayneLambert)
 * [alejandro-angulo](https://github.com/alejandro-angulo)
 * [brymut](https://github.com/brymut)
-
+* [michael-k](https://github.com/michael-k)
+* [naquiroz](https://github.com/naquiroz)
