@@ -58,7 +58,7 @@ class JsonDeleteView(View):
 
 
 class JsonHeadView(View):
-    def head(self, request, *args, **kwargs):
+    def head(self, request, *args, **kwargs):  # pylint: disable=method-hidden
         # do something with objects but don't use
         # self or request
         return JsonResponse({'rc': 0, 'response': 'ok'})
