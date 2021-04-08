@@ -311,7 +311,7 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
     iterat = consumer.to_consume.items if PY3 else consumer.to_consume.iteritems
     for name, stmts in iterat():
         if isinstance(stmts[0], ImportFrom):
-            if any([n[0] in ('ForeignKey', 'OneToOneField') for n in stmts[0].names]):
+            if any(n[0] in ('ForeignKey', 'OneToOneField') for n in stmts[0].names):
                 continue
         new_things[name] = stmts
 
