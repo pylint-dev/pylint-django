@@ -18,3 +18,4 @@
 * [brymut](https://github.com/brymut)
 * [michael-k](https://github.com/michael-k)
 * [naquiroz](https://github.com/naquiroz)
+* [john-sandall](https://github.com/john-sandall)

@@ -7,6 +7,8 @@ Unreleased
 - Start testing with Django 3.2 on Python 3.9 (Michael K.)
 - Teach pylint-django about all HTTP methods from the View class, not only
   ``get`` and ``post`` (Nicolás Quiroz)
+- Typo fixes for
+  `#314 <https://github.com/PyCQA/pylint-django/issues/314>`_ (John Sandall)
 - Ignore ``unused-argument`` for ``*args``, ``**kwards`` in view method signatures
 
 
