@@ -2,7 +2,7 @@
 Checks that Pylint does not complain about various
 methods on Django form forms.
 """
-#  pylint: disable=missing-docstring,R0904
+#  pylint: disable=missing-docstring
 from __future__ import print_function
 from datetime import datetime, date
 from django import forms

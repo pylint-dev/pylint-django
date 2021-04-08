@@ -1,1 +1,1 @@
-model-has-unicode:9:SomeModel:Found __unicode__ method on model (SomeModel). Python3 uses __str__.
+model-has-unicode:9:0:SomeModel:Found __unicode__ method on model (SomeModel). Python3 uses __str__.
