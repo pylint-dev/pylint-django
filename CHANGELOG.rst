@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Unreleased
-----------
+Version 2.4.3 (09 Apr 2021)
+---------------------------
 
 - Start testing with Django 3.2 on Python 3.9 (Michael K.)
 - Teach pylint-django about all HTTP methods from the View class, not only
