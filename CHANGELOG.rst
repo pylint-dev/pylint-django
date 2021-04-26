@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 2.4.4 (26 Apr 2021)
+---------------------------
+
+- Fix compatibility issues with pylint >= 2.8. Fixes
+  `#322 <https://github.com/PyCQA/pylint-django/issues/322>`_ and
+  `#323 <https://github.com/PyCQA/pylint-django/issues/323>`_
+
+
 Version 2.4.3 (09 Apr 2021)
 ---------------------------
 
