@@ -23,7 +23,7 @@ setup(
     ],
     extras_require={
         "with_django": ["Django"],
-        "for_tests": ["django_tables2", "factory-boy", "coverage", "pytest", "wheel"],
+        "for_tests": ["django_tables2", "factory-boy", "coverage", "pytest", "wheel", "django-tastypie"],
     },
     license="GPLv2",
     classifiers=[
