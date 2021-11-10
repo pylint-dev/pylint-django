@@ -757,7 +757,7 @@ def pylint_newstyle_classdef_compat(linter, warning_name, augment):
 
 def apply_wrapped_augmentations():
     """
-    Apply augmentation and supression rules through monkey patching of pylint.
+    Apply augmentation and suppression rules through monkey patching of pylint.
     """
     # NOTE: The monkey patching is done with wrap and needs to be done in a thread safe manner to support the
     # parallel option of pylint (-j).

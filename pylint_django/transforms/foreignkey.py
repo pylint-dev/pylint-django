@@ -120,7 +120,7 @@ def infer_key_classes(node, context=None):
             # create list from dict_values, because it may be modified in a loop
             for module in list(MANAGER.astroid_cache.values()):
                 # only load model classes from modules which match the module in
-                # which *we think* they are defined. This will prevent infering
+                # which *we think* they are defined. This will prevent inferring
                 # other models of the same name which are found elsewhere!
                 if model_name in module.locals and module.name.endswith(module_name):
                     class_defs = _get_model_class_defs_from_module(
