@@ -78,9 +78,12 @@ Consider passing in an explicit Django configuration file to match your project 
         # must wait until some module is inspected to be able to raise... so that
         # state is stashed in this property.
 
-        from django.core.exceptions import (  # pylint: disable=import-outside-toplevel
-            ImproperlyConfigured,
-        )
+        try:
+            from django.core.exceptions import (  # pylint: disable=import-outside-toplevel
+                ImproperlyConfigured,
+            )
+        except ModuleNotFoundError:
+            return
 
         try:
             import django  # pylint: disable=import-outside-toplevel
