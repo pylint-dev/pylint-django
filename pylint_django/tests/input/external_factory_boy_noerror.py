@@ -2,7 +2,7 @@
 Test to validate that pylint_django doesn't produce
 Instance of 'SubFactory' has no 'pk' member (no-member) warnings
 """
-# pylint: disable=attribute-defined-outside-init, missing-docstring, too-few-public-methods, consider-using-f-string
+# pylint: disable=attribute-defined-outside-init, missing-docstring, too-few-public-methods
 import factory
 from django import test
 from django.db import models
@@ -21,14 +21,14 @@ class AuthorFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = "Author"
 
-    name = factory.Sequence(lambda n: "Author %d" % n)
+    name = factory.Sequence(lambda n: f"Author {n}")
 
 
 class BookFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = "Book"
 
-    title = factory.Sequence(lambda n: "Book %d" % n)
+    title = factory.Sequence(lambda n: f"Book {n}")
     author = factory.SubFactory(AuthorFactory)
     reviewer = factory.LazyFunction(Author.objects.first())
 

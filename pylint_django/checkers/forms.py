@@ -22,8 +22,7 @@ class FormChecker(BaseChecker):
 
     name = "django-form-checker"
     msgs = {
-        "W%d04"
-        % BASE_ID: (
+        f"W{BASE_ID}04": (
             "Use explicit fields instead of exclude in ModelForm",
             "modelform-uses-exclude",
             "Prevents accidentally allowing users to set fields, " "especially when adding new fields to a Model",
@@ -47,5 +46,5 @@ class FormChecker(BaseChecker):
                 continue
 
             if child.targets[0].name == "exclude":
-                self.add_message("W%s04" % BASE_ID, node=child)
+                self.add_message(f"W{BASE_ID}04", node=child)
                 break

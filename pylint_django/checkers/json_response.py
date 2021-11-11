@@ -24,20 +24,17 @@ class JsonResponseChecker(checkers.BaseChecker):
     # configuration section name
     name = "json-response-checker"
     msgs = {
-        "R%s01"
-        % BASE_ID: (
+        f"R{BASE_ID}01": (
             "Instead of HttpResponse(json.dumps(data)) use JsonResponse(data)",
             "http-response-with-json-dumps",
             "Used when json.dumps() is used as an argument to HttpResponse().",
         ),
-        "R%s02"
-        % BASE_ID: (
+        f"R{BASE_ID}02": (
             "Instead of HttpResponse(content_type='application/json') use JsonResponse()",
             "http-response-with-content-type-json",
             "Used when HttpResponse() is returning application/json.",
         ),
-        "R%s03"
-        % BASE_ID: (
+        f"R{BASE_ID}03": (
             "Redundant content_type parameter for JsonResponse()",
             "redundant-content-type-for-json-response",
             "Used when JsonResponse() contains content_type parameter. "

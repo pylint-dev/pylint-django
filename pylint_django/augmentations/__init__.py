@@ -281,7 +281,10 @@ STYLE_ATTRS = set(itertools.chain.from_iterable(termcolors.PALETTES.values()))
 
 VIEW_ATTRS = {
     (
-        ("{}.{}".format(cls.__module__, cls.__name__), ".{}".format(cls.__name__)),
+        (
+            f"{cls.__module__}.{cls.__name__}",
+            f".{cls.__name__}",
+        ),
         tuple(cls.__dict__.keys()),
     )
     for cls in (

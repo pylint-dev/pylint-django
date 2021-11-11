@@ -44,15 +44,13 @@ Consider passing in an explicit Django configuration file to match your project 
     )
 
     msgs = {
-        "E%s10"
-        % BASE_ID: (
+        f"E{BASE_ID}10": (
             "Django was not configured. For more information run "
             "pylint --load-plugins=pylint_django --help-msg=django-not-configured",
             "django-not-configured",
             _LONG_MESSAGE,
         ),
-        "F%s10"
-        % BASE_ID: (
+        f"F{BASE_ID}10": (
             "Provided Django settings %s could not be loaded",
             "django-settings-module-not-found",
             "The provided Django settings module %s was not found on the path",
