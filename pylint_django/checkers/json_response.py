@@ -23,17 +23,17 @@ class JsonResponseChecker(checkers.BaseChecker):
 
     # configuration section name
     name = 'json-response-checker'
-    msgs = {'R%s01' % BASE_ID: ("Instead of HttpResponse(json.dumps(data)) use JsonResponse(data)",
-                                'http-response-with-json-dumps',
-                                'Used when json.dumps() is used as an argument to HttpResponse().'),
-            'R%s02' % BASE_ID: ("Instead of HttpResponse(content_type='application/json') use JsonResponse()",
-                                'http-response-with-content-type-json',
-                                'Used when HttpResponse() is returning application/json.'),
-            'R%s03' % BASE_ID: ("Redundant content_type parameter for JsonResponse()",
-                                'redundant-content-type-for-json-response',
-                                'Used when JsonResponse() contains content_type parameter. '
-                                'This is either redundant or the content_type is not JSON '
-                                'which is probably an error.')}
+    msgs = {f'R{BASE_ID}01': ("Instead of HttpResponse(json.dumps(data)) use JsonResponse(data)",
+                              'http-response-with-json-dumps',
+                              'Used when json.dumps() is used as an argument to HttpResponse().'),
+            f'R{BASE_ID}02': ("Instead of HttpResponse(content_type='application/json') use JsonResponse()",
+                              'http-response-with-content-type-json',
+                              'Used when HttpResponse() is returning application/json.'),
+            f'R{BASE_ID}03': ("Redundant content_type parameter for JsonResponse()",
+                              'redundant-content-type-for-json-response',
+                              'Used when JsonResponse() contains content_type parameter. '
+                              'This is either redundant or the content_type is not JSON '
+                              'which is probably an error.')}
 
     @utils.check_messages('http-response-with-json-dumps',
                           'http-response-with-content-type-json',

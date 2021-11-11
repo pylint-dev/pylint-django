@@ -22,14 +22,14 @@ class AuthorFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = 'Author'
 
-    name = factory.Sequence(lambda n: 'Author %d' % n)
+    name = factory.Sequence(lambda n: f'Author {n}')
 
 
 class BookFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = 'Book'
 
-    title = factory.Sequence(lambda n: 'Book %d' % n)
+    title = factory.Sequence(lambda n: f'Book {n}')
     author = factory.SubFactory(AuthorFactory)
     reviewer = factory.LazyFunction(Author.objects.first())
 

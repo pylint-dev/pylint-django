@@ -58,10 +58,10 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
 
     # configuration section name
     name = 'new-db-field-with-default'
-    msgs = {'W%s98' % BASE_ID: ("%s AddField with default value",
-                                'new-db-field-with-default',
-                                'Used when Pylint detects migrations adding new '
-                                'fields with a default value.')}
+    msgs = {f'W{BASE_ID}98': ("%s AddField with default value",
+                              'new-db-field-with-default',
+                              'Used when Pylint detects migrations adding new '
+                              'fields with a default value.')}
 
     _migration_modules = []
     _possible_offences = {}
@@ -117,10 +117,10 @@ class MissingBackwardsMigrationChecker(checkers.BaseChecker):
 
     name = 'missing-backwards-migration-callable'
 
-    msgs = {'W%s97' % BASE_ID: ('Always include backwards migration callable',
-                                'missing-backwards-migration-callable',
-                                'Always include a backwards/reverse callable counterpart'
-                                ' so that the migration is not irreversable.')}
+    msgs = {f'W{BASE_ID}97': ('Always include backwards migration callable',
+                              'missing-backwards-migration-callable',
+                              'Always include a backwards/reverse callable counterpart'
+                              ' so that the migration is not irreversable.')}
 
     @utils.check_messages('missing-backwards-migration-callable')
     def visit_call(self, node):
