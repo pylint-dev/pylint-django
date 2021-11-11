@@ -49,7 +49,7 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
     especially on large tables:
     https://docs.djangoproject.com/en/2.0/topics/migrations/#postgresql
 
-    The prefered way is to add a new DB column with null=True because it will
+    The preferred way is to add a new DB column with null=True because it will
     be created instantly and then possibly populate the table with the
     desired default values.
     """

@@ -22,7 +22,7 @@ def _add_transform(package_name):
     def fake_module_builder():
         """
             Build a fake module to use within transformations.
-            @package_name is a parameter from the outher scope b/c according to
+            @package_name is a parameter from the outer scope b/c according to
             the docs this can't receive any parameters.
             http://pylint.pycqa.org/projects/astroid/en/latest/extending.html?highlight=MANAGER#module-extender-transforms
         """
