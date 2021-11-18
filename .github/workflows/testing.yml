@@ -59,9 +59,11 @@ jobs:
             tox
 
       - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            pip install coveralls
+            coveralls
 
   build_and_package_sanity:
     runs-on: ubuntu-latest
