@@ -14,12 +14,14 @@ class DjangoInstalledChecker(BaseChecker):
         f"F{BASE_ID}01": (
             "Django is not available on the PYTHONPATH",
             "django-not-available",
-            "Django could not be imported by the pylint-django plugin, so most Django related " "improvements to pylint will fail.",
+            "Django could not be imported by the pylint-django plugin, so most Django related "
+            "improvements to pylint will fail.",
         ),
         f"W{BASE_ID}99": (
             "Placeholder message to prevent disabling of checker",
             "django-not-available-placeholder",
-            "PyLint does not recognise checkers as being enabled unless they have at least" " one message which is not fatal...",
+            "PyLint does not recognise checkers as being enabled unless they have at least"
+            " one message which is not fatal...",
         ),
     }
 

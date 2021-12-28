@@ -46,7 +46,8 @@ Consider passing in an explicit Django configuration file to match your project 
     msgs = {
         # pylint: disable=implicit-str-concat
         f"E{BASE_ID}10": (
-            "Django was not configured. For more information run " "pylint --load-plugins=pylint_django --help-msg=django-not-configured",
+            "Django was not configured. For more information run "
+            "pylint --load-plugins=pylint_django --help-msg=django-not-configured",
             "django-not-configured",
             _LONG_MESSAGE,
         ),
