@@ -13,12 +13,12 @@ class AuthUserChecker(checkers.BaseChecker):
         f"E{BASE_ID}41": (
             "Hard-coded 'auth.User'",
             "hard-coded-auth-user",
-            "Don't hard-code the auth.User model. " "Use settings.AUTH_USER_MODEL instead!",
+            "Don't hard-code the auth.User model. Use settings.AUTH_USER_MODEL instead!",
         ),
         f"E{BASE_ID}42": (
             "User model imported from django.contrib.auth.models",
             "imported-auth-user",
-            "Don't import django.contrib.auth.models.User model. " "Use django.contrib.auth.get_user_model() instead!",
+            "Don't import django.contrib.auth.models.User model. Use django.contrib.auth.get_user_model() instead!",
         ),
     }
 

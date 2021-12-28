@@ -25,7 +25,7 @@ class FormChecker(BaseChecker):
         f"W{BASE_ID}04": (
             "Use explicit fields instead of exclude in ModelForm",
             "modelform-uses-exclude",
-            "Prevents accidentally allowing users to set fields, " "especially when adding new fields to a Model",
+            "Prevents accidentally allowing users to set fields, especially when adding new fields to a Model",
         )
     }
 

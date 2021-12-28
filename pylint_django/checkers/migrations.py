@@ -59,7 +59,7 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
         f"W{BASE_ID}98": (
             "%s AddField with default value",
             "new-db-field-with-default",
-            "Used when Pylint detects migrations adding new " "fields with a default value.",
+            "Used when Pylint detects migrations adding new fields with a default value.",
         )
     }
 
@@ -121,7 +121,7 @@ class MissingBackwardsMigrationChecker(checkers.BaseChecker):
         f"W{BASE_ID}97": (
             "Always include backwards migration callable",
             "missing-backwards-migration-callable",
-            "Always include a backwards/reverse callable counterpart" " so that the migration is not irreversable.",
+            "Always include a backwards/reverse callable counterpart so that the migration is not irreversable.",
         )
     }
 
