@@ -10,6 +10,7 @@ class DjangoInstalledChecker(BaseChecker):
     name = "django-installed-checker"
 
     msgs = {
+        # pylint: disable=implicit-str-concat
         f"F{BASE_ID}01": (
             "Django is not available on the PYTHONPATH",
             "django-not-available",
