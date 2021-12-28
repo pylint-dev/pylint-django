@@ -4,8 +4,8 @@ pylint-django
 .. image:: https://github.com/PyCQA/pylint-django/actions/workflows/testing.yml/badge.svg
     :target: https://github.com/PyCQA/pylint-django/actions/workflows/testing.yml
 
-.. image:: https://coveralls.io/repos/PyCQA/pylint-django/badge.svg
-    :target: https://coveralls.io/r/PyCQA/pylint-django
+.. image:: https://coveralls.io/repos/github/PyCQA/pylint-django/badge.svg?branch=master
+     :target: https://coveralls.io/github/PyCQA/pylint-django?branch=master
 
 .. image:: https://img.shields.io/pypi/v/pylint-django.svg
     :target: https://pypi.python.org/pypi/pylint-django
