@@ -1,1 +1,1 @@
-new-db-field-with-default:28:8:Migration:pylint_django.tests.input.migrations.0002_new_column AddField with default value
+new-db-field-with-default:28:8:32:9:Migration:pylint_django.tests.input.migrations.0002_new_column AddField with default value:UNDEFINED

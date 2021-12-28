@@ -1,2 +1,2 @@
-unused-argument:18:25:user_detail:Unused argument 'user_id':HIGH
-unused-argument:24:27:UserView.get:Unused argument 'user_id':INFERENCE
+unused-argument:18:25:18:32:user_detail:Unused argument 'user_id':HIGH
+unused-argument:24:27:24:34:UserView.get:Unused argument 'user_id':INFERENCE
