@@ -1,4 +1,4 @@
 missing-backwards-migration-callable:12:8:12:30:Migration:Always include backwards migration callable:UNDEFINED
-missing-backwards-migration-callable:13:8:14:26:Migration:Always include backwards migration callable:UNDEFINED
-missing-backwards-migration-callable:15:8:16:31:Migration:Always include backwards migration callable:UNDEFINED
-missing-backwards-migration-callable:17:8:18:45:Migration:Always include backwards migration callable:UNDEFINED
+missing-backwards-migration-callable:13:8:13:43:Migration:Always include backwards migration callable:UNDEFINED
+missing-backwards-migration-callable:14:8:14:48:Migration:Always include backwards migration callable:UNDEFINED
+missing-backwards-migration-callable:15:8:15:62:Migration:Always include backwards migration callable:UNDEFINED
