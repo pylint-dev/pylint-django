@@ -27,9 +27,10 @@ def _add_transform(package_name):
         http://pylint.pycqa.org/projects/astroid/en/latest/extending.html?highlight=MANAGER#module-extender-transforms
         """
         transforms_dir = os.path.join(os.path.dirname(__file__), "transforms")
-        fake_module_path = os.path.join(transforms_dir, "%s.py" % re.sub(r"\.", "_", package_name))
+        transformed_name = re.sub(r"\.", "_", package_name)
+        fake_module_path = os.path.join(transforms_dir, f"{transformed_name}.py")
 
-        with open(fake_module_path) as modulefile:
+        with open(fake_module_path, encoding="utf-8") as modulefile:
             fake_module = modulefile.read()
 
         return astroid.builder.AstroidBuilder(astroid.MANAGER).string_build(fake_module)

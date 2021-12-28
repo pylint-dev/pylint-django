@@ -9,26 +9,22 @@ from pylint_django.__pkginfo__ import BASE_ID
 from pylint_django.utils import PY3, node_is_subclass
 
 MESSAGES = {
-    "E%d01"
-    % BASE_ID: (
+    f"E{BASE_ID}01": (
         "__unicode__ on a model must be callable (%s)",
         "model-unicode-not-callable",
         "Django models require a callable __unicode__ method",
     ),
-    "W%d01"
-    % BASE_ID: (
+    f"W{BASE_ID}01": (
         "No __unicode__ method on model (%s)",
         "model-missing-unicode",
         "Django models should implement a __unicode__ method for string representation",
     ),
-    "W%d02"
-    % BASE_ID: (
+    f"W{BASE_ID}02": (
         "Found __unicode__ method on model (%s). Python3 uses __str__.",
         "model-has-unicode",
-        "Django models should not implement a __unicode__ " "method for string representation when using Python3",
+        "Django models should not implement a __unicode__ method for string representation when using Python3",
     ),
-    "W%d03"
-    % BASE_ID: (
+    f"W{BASE_ID}03": (
         "Model does not explicitly define __unicode__ (%s)",
         "model-no-explicit-unicode",
         "Django models should implement a __unicode__ method for string representation. "
@@ -111,12 +107,12 @@ class ModelChecker(BaseChecker):
                 if assigned.callable():
                     return
 
-                self.add_message("E%s01" % BASE_ID, args=node.name, node=node)
+                self.add_message(f"E{BASE_ID}01", args=node.name, node=node)
                 return
 
             if isinstance(child, FunctionDef) and child.name == "__unicode__":
                 if PY3:
-                    self.add_message("W%s02" % BASE_ID, args=node.name, node=node)
+                    self.add_message(f"W{BASE_ID}02", args=node.name, node=node)
                 return
 
         # if we get here, then we have no __unicode__ method directly on the class itself
@@ -126,7 +122,7 @@ class ModelChecker(BaseChecker):
             if method.parent != node and _is_unicode_or_str_in_python_2_compatibility(method):
                 # this happens if a parent declares the unicode method but
                 # this node does not
-                self.add_message("W%s03" % BASE_ID, args=node.name, node=node)
+                self.add_message(f"W{BASE_ID}03", args=node.name, node=node)
                 return
 
         # if the Django compatibility decorator is used then we don't emit a warning
@@ -137,4 +133,4 @@ class ModelChecker(BaseChecker):
         if PY3:
             return
 
-        self.add_message("W%s01" % BASE_ID, args=node.name, node=node)
+        self.add_message(f"W{BASE_ID}01", args=node.name, node=node)

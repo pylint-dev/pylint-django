@@ -10,17 +10,15 @@ class AuthUserChecker(checkers.BaseChecker):
     name = "auth-user-checker"
 
     msgs = {
-        "E%d41"
-        % BASE_ID: (
+        f"E{BASE_ID}41": (
             "Hard-coded 'auth.User'",
             "hard-coded-auth-user",
-            "Don't hard-code the auth.User model. " "Use settings.AUTH_USER_MODEL instead!",
+            "Don't hard-code the auth.User model. Use settings.AUTH_USER_MODEL instead!",
         ),
-        "E%d42"
-        % BASE_ID: (
+        f"E{BASE_ID}42": (
             "User model imported from django.contrib.auth.models",
             "imported-auth-user",
-            "Don't import django.contrib.auth.models.User model. " "Use django.contrib.auth.get_user_model() instead!",
+            "Don't import django.contrib.auth.models.User model. Use django.contrib.auth.get_user_model() instead!",
         ),
     }
 

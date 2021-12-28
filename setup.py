@@ -4,7 +4,8 @@ Setup module for Pylint plugin for Django.
 """
 from setuptools import find_packages, setup
 
-LONG_DESCRIPTION = open("README.rst").read() + "\n" + open("CHANGELOG.rst").read()
+with open("README.rst", encoding="utf-8") as readme, open("CHANGELOG.rst", encoding="utf-8") as changelog:
+    LONG_DESCRIPTION = readme.read() + "\n" + changelog.read()
 
 setup(
     name="pylint-django",
@@ -22,7 +23,7 @@ setup(
     ],
     extras_require={
         "with_django": ["Django"],
-        "for_tests": ["django_tables2", "factory-boy", "coverage", "pytest"],
+        "for_tests": ["django_tables2", "factory-boy", "coverage", "pytest", "wheel"],
     },
     license="GPLv2",
     classifiers=[

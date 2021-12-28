@@ -1,11 +1,8 @@
 pylint-django
 =============
 
-.. image:: https://travis-ci.org/PyCQA/pylint-django.svg?branch=master
-    :target: https://travis-ci.org/PyCQA/pylint-django
-
-.. image:: https://landscape.io/github/landscapeio/pylint-django/master/landscape.png
-    :target: https://landscape.io/github/landscapeio/pylint-django
+.. image:: https://github.com/PyCQA/pylint-django/actions/workflows/testing.yml/badge.svg
+    :target: https://github.com/PyCQA/pylint-django/actions/workflows/testing.yml
 
 .. image:: https://coveralls.io/repos/PyCQA/pylint-django/badge.svg
     :target: https://coveralls.io/r/PyCQA/pylint-django

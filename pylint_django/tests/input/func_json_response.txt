@@ -1,4 +1,4 @@
-http-response-with-json-dumps:9:11:9:64:say_yes:Instead of HttpResponse(json.dumps(data)) use JsonResponse(data):UNDEFINED
-http-response-with-json-dumps:14:11:14:46:say_yes2:Instead of HttpResponse(json.dumps(data)) use JsonResponse(data):UNDEFINED
-redundant-content-type-for-json-response:23:11:23:67:redundant_content_type:Redundant content_type parameter for JsonResponse():UNDEFINED
-http-response-with-content-type-json:28:11:28:67:content_type_json:Instead of HttpResponse(content_type='application/json') use JsonResponse():UNDEFINED
+http-response-with-json-dumps:10:11:10:64:say_yes:Instead of HttpResponse(json.dumps(data)) use JsonResponse(data):UNDEFINED
+http-response-with-json-dumps:15:11:15:46:say_yes2:Instead of HttpResponse(json.dumps(data)) use JsonResponse(data):UNDEFINED
+redundant-content-type-for-json-response:24:11:24:67:redundant_content_type:Redundant content_type parameter for JsonResponse():UNDEFINED
+http-response-with-content-type-json:29:11:29:67:content_type_json:Instead of HttpResponse(content_type='application/json') use JsonResponse():UNDEFINED

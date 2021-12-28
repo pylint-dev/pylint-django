@@ -1,0 +1,87 @@
+name: testing
+
+on:
+  push:
+    branches: master
+  pull_request:
+
+jobs:
+  sanity:
+    name: sanity / ${{ matrix.toxenv }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.6]
+        toxenv: [django_not_installed, django_is_installed, flake8, pylint, readme]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Execute tests
+        run: |
+            pip install tox
+            pip install -e .[for_tests]
+
+            export TOXENV=${{ matrix.toxenv }}
+            export PYTHON=${{ matrix.python-version }}
+            tox
+
+
+  test:
+    name: test / Django@${{ matrix.django-version }} / Python@${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.6, 3.7, 3.8, 3.9]
+        django-version: [-main, 3.2, 3.1, "3.0", "2.0", 1.11]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Execute tests
+        run: |
+            pip install tox
+            pip install -e .[for_tests]
+
+            export DJANGO=${{ matrix.django-version }}
+            export PYTHON=${{ matrix.python-version }}
+            export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
+            tox
+
+      - name: Coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            pip install coveralls
+            coveralls --service=github
+
+  build_and_package_sanity:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build
+        run: |
+            pip install tox
+            pip install -e .[for_tests]
+
+            ./scripts/build.sh
