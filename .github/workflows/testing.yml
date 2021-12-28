@@ -64,7 +64,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             pip install coveralls
-            coveralls
+            coveralls --service=github
 
   build_and_package_sanity:
     runs-on: ubuntu-latest
