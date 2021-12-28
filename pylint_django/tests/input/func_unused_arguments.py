@@ -17,24 +17,25 @@ request = None  # pylint: disable=invalid-name
 
 def user_detail(request, user_id):  # [unused-argument]
     # nothing is done with user_id
-    return JsonResponse({'username': 'steve'})
+    return JsonResponse({"username": "steve"})
 
 
 class UserView(View):
     def get(self, request, user_id):  # [unused-argument]
         # nothing is done with user_id
-        return JsonResponse({'username': 'steve'})
+        return JsonResponse({"username": "steve"})
 
 
 # The following views are already covered in other test cases.
 # They are included here for completeness sake.
 
+
 def welcome_view(request):
     # just don't use `request' b/c we could have Django views
     # which never use it!
-    return JsonResponse({'message': 'welcome'})
+    return JsonResponse({"message": "welcome"})
 
 
 class CBV(View):
     def get(self, request):
-        return JsonResponse({'message': 'hello world'})
+        return JsonResponse({"message": "hello world"})

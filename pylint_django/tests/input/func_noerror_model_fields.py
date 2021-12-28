@@ -4,8 +4,10 @@ methods on Django model fields.
 """
 #  pylint: disable=missing-docstring
 from __future__ import print_function
-from datetime import datetime, date
+
+from datetime import date, datetime
 from decimal import Decimal
+
 from django.db import models
 
 
@@ -20,11 +22,11 @@ class LotsOfFieldsModel(models.Model):
     decimalfield = models.DecimalField(max_digits=5, decimal_places=2)
     durationfield = models.DurationField()
     emailfield = models.EmailField()
-    filefield = models.FileField(name='test_file', upload_to='test')
+    filefield = models.FileField(name="test_file", upload_to="test")
     filepathfield = models.FilePathField()
     floatfield = models.FloatField()
     genericipaddressfield = models.GenericIPAddressField()
-    imagefield = models.ImageField(name='test_image', upload_to='test')
+    imagefield = models.ImageField(name="test_image", upload_to="test")
     ipaddressfield = models.IPAddressField()
     intfield = models.IntegerField(null=True)
     nullbooleanfield = models.NullBooleanField()
@@ -46,19 +48,19 @@ class LotsOfFieldsModel(models.Model):
     def string_field_tests(self):
         print(self.charfield.strip())
         print(self.charfield.upper())
-        print(self.charfield.replace('x', 'y'))
+        print(self.charfield.replace("x", "y"))
 
         print(self.filepathfield.strip())
         print(self.filepathfield.upper())
-        print(self.filepathfield.replace('x', 'y'))
+        print(self.filepathfield.replace("x", "y"))
 
         print(self.emailfield.strip())
         print(self.emailfield.upper())
-        print(self.emailfield.replace('x', 'y'))
+        print(self.emailfield.replace("x", "y"))
 
         print(self.textfield.strip())
         print(self.textfield.upper())
-        print(self.textfield.replace('x', 'y'))
+        print(self.textfield.replace("x", "y"))
 
     def datetimefield_tests(self):
         now = datetime.now()
@@ -71,7 +73,7 @@ class LotsOfFieldsModel(models.Model):
         print(self.datefield.isoformat())
 
     def decimalfield_tests(self):
-        print(self.decimalfield.compare(Decimal('1.4')))
+        print(self.decimalfield.compare(Decimal("1.4")))
 
     def durationfield_tests(self):
         now = datetime.now()
@@ -79,9 +81,9 @@ class LotsOfFieldsModel(models.Model):
         print(self.durationfield.total_seconds())
 
     def filefield_tests(self):
-        self.filefield.save('/dev/null', 'TEST')
+        self.filefield.save("/dev/null", "TEST")
         print(self.filefield.file)
-        self.imagefield.save('/dev/null', 'TEST')
+        self.imagefield.save("/dev/null", "TEST")
         print(self.imagefield.file)
 
     def numberfield_tests(self):

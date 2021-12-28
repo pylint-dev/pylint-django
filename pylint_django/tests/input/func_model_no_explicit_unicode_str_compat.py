@@ -12,7 +12,7 @@ from six import python_2_unicode_compatible
 @python_2_unicode_compatible
 class BaseModel(models.Model):
     def __str__(self):
-        return 'Foo'
+        return "Foo"
 
 
 class SomeModel(BaseModel):  # [model-no-explicit-unicode]

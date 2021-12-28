@@ -1,0 +1,26 @@
+# https://pre-commit.com/
+repos:
+  - repo: git://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: debug-statements
+  # code formatting
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8
+        args: [ --max-line-length=120 ]
+  - repo: https://github.com/python/black
+    rev: 21.9b0
+    hooks:
+      - id: black
+        args: [--safe, --line-length=120]
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        args: ['--profile', 'black']

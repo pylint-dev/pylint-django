@@ -26,11 +26,11 @@ class PostgresFieldsModel(models.Model):
     def dictfield_tests(self):
         print(self.hstorefield.keys())
         print(self.hstorefield.values())
-        print(self.hstorefield.update({'foo': 'bar'}))
+        print(self.hstorefield.update({"foo": "bar"}))
 
         print(self.jsonfield.keys())
         print(self.jsonfield.values())
-        print(self.jsonfield.update({'foo': 'bar'}))
+        print(self.jsonfield.update({"foo": "bar"}))
 
     def rangefield_tests(self):
         print(self.rangefield.lower)

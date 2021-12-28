@@ -4,9 +4,8 @@
 # https://github.com/PyCQA/pylint-django/issues/117
 # pylint: disable=missing-docstring, invalid-name
 
-from model_utils.managers import InheritanceManager
-
 from django.db import models
+from model_utils.managers import InheritanceManager
 
 
 class BaseModel(models.Model):

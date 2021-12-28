@@ -4,9 +4,9 @@ https://github.com/PyCQA/pylint-django/issues/230
 """
 # pylint: disable=missing-docstring
 
-from django.db import models
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
 
 
 class Ownership(models.Model):

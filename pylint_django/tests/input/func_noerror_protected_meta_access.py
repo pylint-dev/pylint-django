@@ -7,6 +7,7 @@ and https://docs.djangoproject.com/en/1.9/ref/models/meta/)
 """
 #  pylint: disable=missing-docstring
 from __future__ import print_function
+
 from django.db import models
 
 
@@ -14,11 +15,11 @@ class ModelWhichLikesMeta(models.Model):
     ursuary = models.BooleanField(default=False)
 
     def do_a_thing(self):
-        return self._meta.get_field('ursuary')
+        return self._meta.get_field("ursuary")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     MODEL = ModelWhichLikesMeta()
     MODEL.save()
-    print(MODEL._meta.get_field('ursuary'))
+    print(MODEL._meta.get_field("ursuary"))
     print(MODEL.do_a_thing())

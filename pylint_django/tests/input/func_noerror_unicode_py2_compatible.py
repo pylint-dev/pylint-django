@@ -4,9 +4,10 @@ Django python3/2 compatability decorator is used
 
 See https://github.com/PyCQA/pylint-django/issues/10
 """
+from django.db import models
+
 #  pylint: disable=missing-docstring
 from six import python_2_unicode_compatible
-from django.db import models
 
 
 @python_2_unicode_compatible

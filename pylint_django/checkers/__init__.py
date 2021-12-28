@@ -1,10 +1,10 @@
 """Checkers."""
-from pylint_django.checkers.django_installed import DjangoInstalledChecker
-from pylint_django.checkers.models import ModelChecker
-from pylint_django.checkers.json_response import JsonResponseChecker
-from pylint_django.checkers.forms import FormChecker
 from pylint_django.checkers.auth_user import AuthUserChecker
+from pylint_django.checkers.django_installed import DjangoInstalledChecker
 from pylint_django.checkers.foreign_key_strings import ForeignKeyStringsChecker
+from pylint_django.checkers.forms import FormChecker
+from pylint_django.checkers.json_response import JsonResponseChecker
+from pylint_django.checkers.models import ModelChecker
 
 
 def register_checkers(linter):

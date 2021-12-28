@@ -2,9 +2,10 @@
 Checks that Pylint does not complain about various
 methods on many-to-many relationships
 """
+from django.contrib.auth.models import AbstractUser, Permission
+
 #  pylint: disable=missing-docstring
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Permission
 
 
 class Book(models.Model):
@@ -14,8 +15,7 @@ class Book(models.Model):
 
 class Author(models.Model):
     name = models.CharField(max_length=100)
-    wrote = models.ManyToManyField(Book, verbose_name="Book",
-                                   related_name='books')
+    wrote = models.ManyToManyField(Book, verbose_name="Book", related_name="books")
 
     def get_good_books(self):
         return self.wrote.filter(good=True)
@@ -28,17 +28,17 @@ class Author(models.Model):
 
 
 # Custom permissions for CustomUser
-USER_PERMS = ['change_customuser', 'add_customuser']
+USER_PERMS = ["change_customuser", "add_customuser"]
 
 
 class CustomUser(AbstractUser):  # pylint: disable=model-no-explicit-unicode
     class Meta:
-        verbose_name = 'CustomUser'
-        verbose_name_plural = 'CustomUsers'
+        verbose_name = "CustomUser"
+        verbose_name_plural = "CustomUsers"
         app_label = "users"
 
     def grant_permissions(self):
-        ''' Example adding permissions to User '''
+        """Example adding permissions to User"""
         self.user_permissions.clear()
         for perm in USER_PERMS:
             perm = Permission.objects.get(codename=perm)
@@ -55,7 +55,7 @@ class CustomUser(AbstractUser):  # pylint: disable=model-no-explicit-unicode
         self.user_permissions.set(permissions)
 
     def save(self, *args, **kwargs):
-        ''' Saving while granting new permissions '''
+        """Saving while granting new permissions"""
         self.is_staff = True
         super().save()
         self.grant_permissions()

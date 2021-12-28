@@ -10,10 +10,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(),  # [missing-backwards-migration-callable]
-        migrations.RunPython(  # [missing-backwards-migration-callable]
-            forwards_test),
-        migrations.RunPython(  # [missing-backwards-migration-callable]
-            code=forwards_test),
-        migrations.RunPython(  # [missing-backwards-migration-callable]
-            code=forwards_test, atomic=False)
+        migrations.RunPython(forwards_test),  # [missing-backwards-migration-callable]
+        migrations.RunPython(code=forwards_test),  # [missing-backwards-migration-callable]
+        migrations.RunPython(code=forwards_test, atomic=False),  # [missing-backwards-migration-callable]
     ]

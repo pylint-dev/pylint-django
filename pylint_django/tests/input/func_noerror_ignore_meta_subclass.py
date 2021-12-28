@@ -9,4 +9,4 @@ from django.db import models
 
 class SomeModel(models.Model):
     class Meta:
-        ordering = ('-id',)
+        ordering = ("-id",)

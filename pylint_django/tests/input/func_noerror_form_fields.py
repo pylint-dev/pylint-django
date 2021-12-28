@@ -4,7 +4,9 @@ methods on Django form forms.
 """
 #  pylint: disable=missing-docstring
 from __future__ import print_function
-from datetime import datetime, date
+
+from datetime import date, datetime
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
@@ -18,11 +20,11 @@ class ManyFieldsForm(forms.Form):
     decimalfield = forms.DecimalField(max_digits=5, decimal_places=2)
     durationfield = forms.DurationField()
     emailfield = forms.EmailField()
-    filefield = forms.FileField(name='test_file', upload_to='test')
-    filepathfield = forms.FilePathField(path='/some/path')
+    filefield = forms.FileField(name="test_file", upload_to="test")
+    filepathfield = forms.FilePathField(path="/some/path")
     floatfield = forms.FloatField()
     genericipaddressfield = forms.GenericIPAddressField()
-    imagefield = forms.ImageField(name='test_image', upload_to='test')
+    imagefield = forms.ImageField(name="test_image", upload_to="test")
     intfield = forms.IntegerField(null=True)
     nullbooleanfield = forms.NullBooleanField()
     slugfield = forms.SlugField()
@@ -36,15 +38,15 @@ class ManyFieldsForm(forms.Form):
     def string_field_tests(self):
         print(self.charfield.strip())
         print(self.charfield.upper())
-        print(self.charfield.replace('x', 'y'))
+        print(self.charfield.replace("x", "y"))
 
         print(self.filepathfield.strip())
         print(self.filepathfield.upper())
-        print(self.filepathfield.replace('x', 'y'))
+        print(self.filepathfield.replace("x", "y"))
 
         print(self.emailfield.strip())
         print(self.emailfield.upper())
-        print(self.emailfield.replace('x', 'y'))
+        print(self.emailfield.replace("x", "y"))
 
     def datetimefield_tests(self):
         now = datetime.now()

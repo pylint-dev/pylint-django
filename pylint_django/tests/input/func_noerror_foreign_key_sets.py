@@ -25,8 +25,7 @@ class OtherModel(models.Model):
 
 
 class ThirdModel(models.Model):
-    whatever = models.ForeignKey(SomeModel, related_name='whatevs',
-                                 on_delete=models.CASCADE)
+    whatever = models.ForeignKey(SomeModel, related_name="whatevs", on_delete=models.CASCADE)
 
 
 def count_whatevers():

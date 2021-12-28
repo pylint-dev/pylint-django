@@ -7,4 +7,4 @@ from django import forms
 
 class PersonForm(forms.ModelForm):
     class Meta:
-        exclude = ('email',)  # [modelform-uses-exclude]
+        exclude = ("email",)  # [modelform-uses-exclude]

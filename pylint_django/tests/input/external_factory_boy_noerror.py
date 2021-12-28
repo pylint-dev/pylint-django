@@ -4,7 +4,6 @@ Instance of 'SubFactory' has no 'pk' member (no-member) warnings
 """
 # pylint: disable=attribute-defined-outside-init, missing-docstring, too-few-public-methods, consider-using-f-string
 import factory
-
 from django import test
 from django.db import models
 
@@ -15,21 +14,21 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField()
-    author = models.ForeignKey(Author, related_name='books', on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, related_name="books", on_delete=models.CASCADE)
 
 
 class AuthorFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = 'Author'
+        model = "Author"
 
-    name = factory.Sequence(lambda n: 'Author %d' % n)
+    name = factory.Sequence(lambda n: "Author %d" % n)
 
 
 class BookFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = 'Book'
+        model = "Book"
 
-    title = factory.Sequence(lambda n: 'Book %d' % n)
+    title = factory.Sequence(lambda n: "Book %d" % n)
     author = factory.SubFactory(AuthorFactory)
     reviewer = factory.LazyFunction(Author.objects.first())
 

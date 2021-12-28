@@ -8,12 +8,12 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
     operations = [
         migrations.CreateModel(
-            name='TestRun',
+            name="TestRun",
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True)),
-                ('summary', models.TextField()),
-                ('environment_id', models.IntegerField(default=0)),
-                ('auto_update_run_status', models.BooleanField(default=False)),
+                ("id", models.AutoField(serialize=False, primary_key=True)),
+                ("summary", models.TextField()),
+                ("environment_id", models.IntegerField(default=0)),
+                ("auto_update_run_status", models.BooleanField(default=False)),
             ],
         ),
     ]

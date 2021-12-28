@@ -88,7 +88,11 @@ Consider passing in an explicit Django configuration file to match your project 
             import django  # pylint: disable=import-outside-toplevel
 
             django.setup()
-            from django.apps import apps  # noqa pylint: disable=import-outside-toplevel,unused-import
+            from django.apps import (  # noqa pylint: disable=import-outside-toplevel,unused-import
+                apps,
+            )
+
+            # flake8: noqa=F401, F403
         except ImproperlyConfigured:
             # this means that Django wasn't able to configure itself using some defaults
             # provided (likely in a DJANGO_SETTINGS_MODULE environment variable)
@@ -100,14 +104,15 @@ Consider passing in an explicit Django configuration file to match your project 
                 from django.conf import (  # pylint: disable=import-outside-toplevel
                     settings,
                 )
+
                 settings.configure()
                 django.setup()
             else:
                 # see if we can load the provided settings module
                 try:
                     from django.conf import (  # pylint: disable=import-outside-toplevel
-                        settings,
                         Settings,
+                        settings,
                     )
 
                     settings.configure(Settings(self.config.django_settings_module))

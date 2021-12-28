@@ -14,20 +14,21 @@ https://docs.djangoproject.com/en/2.0/topics/migrations/#postgresql
 """
 # pylint: disable=missing-docstring, invalid-name
 from datetime import timedelta
+
 from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('input', '0001_noerror_initial'),
+        ("input", "0001_noerror_initial"),
     ]
 
     operations = [
         # add a timedelta field
         migrations.AddField(  # [new-db-field-with-default]
-            model_name='testrun',
-            name='estimated_time',
+            model_name="testrun",
+            name="estimated_time",
             field=models.DurationField(default=timedelta(0)),
         ),
     ]

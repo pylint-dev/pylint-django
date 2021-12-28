@@ -9,7 +9,7 @@ class SomeModel(models.Model):
     name = models.CharField(max_length=64)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     MODEL = SomeModel()
     MODEL.save()
     MODEL.delete()
@@ -19,5 +19,5 @@ if __name__ == '__main__':
     FIRST = SomeModel.objects.first()
     LAST = SomeModel.objects.last()
 
-    DB_RECORD, CREATED = SomeModel.objects.get_or_create(name='Tester')
+    DB_RECORD, CREATED = SomeModel.objects.get_or_create(name="Tester")
     EXCLUDED_IDS = [obj.pk for obj in SomeModel.objects.exclude(name__isnull=True)]

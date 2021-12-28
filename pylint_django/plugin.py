@@ -2,12 +2,11 @@
 from pylint.checkers.base import NameChecker
 from pylint_plugin_utils import get_checker
 
-from pylint_django.checkers import register_checkers
-
 # we want to import the transforms to make sure they get added to the astroid manager,
 # however we don't actually access them directly, so we'll disable the warning
 from pylint_django import transforms  # noqa, pylint: disable=unused-import
 from pylint_django import compat
+from pylint_django.checkers import register_checkers
 
 
 def load_configuration(linter):
@@ -15,11 +14,19 @@ def load_configuration(linter):
     Amend existing checker config.
     """
     name_checker = get_checker(linter, NameChecker)
-    name_checker.config.good_names += ('qs', 'urlpatterns', 'register', 'app_name',
-                                       'handler400', 'handler403', 'handler404', 'handler500')
+    name_checker.config.good_names += (
+        "qs",
+        "urlpatterns",
+        "register",
+        "app_name",
+        "handler400",
+        "handler403",
+        "handler404",
+        "handler500",
+    )
 
     # we don't care about South migrations
-    linter.config.black_list += ('migrations', 'south_migrations')
+    linter.config.black_list += ("migrations", "south_migrations")
 
 
 def register(linter):
@@ -33,6 +40,7 @@ def register(linter):
     try:
         # pylint: disable=import-outside-toplevel
         from pylint_django.augmentations import apply_augmentations
+
         apply_augmentations(linter)
     except ImportError:
         # probably trying to execute pylint_django when Django isn't installed

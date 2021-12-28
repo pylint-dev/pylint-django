@@ -4,4 +4,4 @@ from django.db import models
 
 class Author(models.Model):
     class Meta:
-        app_label = 'test_app'
+        app_label = "test_app"

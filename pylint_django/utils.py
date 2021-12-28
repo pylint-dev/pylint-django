@@ -1,7 +1,7 @@
 """Utils."""
 import sys
-import astroid
 
+import astroid
 from astroid.bases import Instance
 from astroid.exceptions import InferenceError
 from astroid.nodes import ClassDef
@@ -37,4 +37,4 @@ def is_migrations_module(node):
     if not isinstance(node, astroid.Module):
         return False
 
-    return 'migrations' in node.path[0] and not node.path[0].endswith('__init__.py')
+    return "migrations" in node.path[0] and not node.path[0].endswith("__init__.py")

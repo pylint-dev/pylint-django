@@ -22,7 +22,7 @@ class ISBN(models.Model):
 class Book(models.Model):
     book_name = models.CharField(max_length=100)
     # Check this works with and without `to` keyword
-    author = models.ForeignKey(to='Author', on_delete=models.CASCADE)
+    author = models.ForeignKey(to="Author", on_delete=models.CASCADE)
     isbn = models.OneToOneField(to=ISBN, on_delete=models.CASCADE)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
 
@@ -56,8 +56,8 @@ class UserProfile(models.Model):
 
 
 class Human(models.Model):
-    child = ForeignKey('self', on_delete=models.SET_NULL, null=True)
-    parent = ForeignKey(to='self', on_delete=models.SET_NULL, null=True)
+    child = ForeignKey("self", on_delete=models.SET_NULL, null=True)
+    parent = ForeignKey(to="self", on_delete=models.SET_NULL, null=True)
 
     def get_grandchild(self):
         return self.child.child
@@ -68,15 +68,16 @@ class Human(models.Model):
 
 class UserPreferences(models.Model):
     """
-        Used for testing FK which refers to another model by
-        string, not model class, see
-        https://github.com/PyCQA/pylint-django/issues/35
+    Used for testing FK which refers to another model by
+    string, not model class, see
+    https://github.com/PyCQA/pylint-django/issues/35
     """
-    user = ForeignKey('User', on_delete=models.CASCADE)
+
+    user = ForeignKey("User", on_delete=models.CASCADE)
 
 
 class UserAddress(models.Model):
-    user = OneToOneField(to='User', on_delete=models.CASCADE)
+    user = OneToOneField(to="User", on_delete=models.CASCADE)
     line_1 = models.CharField(max_length=100)
     line_2 = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
