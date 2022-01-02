@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 2.5.0 (2 Jan 2022)
+Version 2.5.0 (02 Jan 2022)
 ---------------------------
 
 Bugfixes
