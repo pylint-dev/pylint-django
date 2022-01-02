@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 2.5 [WIP]
+Version 2.5 (2 Jan 2022)
 ---------------------------
 
 Bugfixes
@@ -12,6 +12,7 @@ Bugfixes
 New
 ~~~
 
+- Removed false positive error of missing member in TextChoices tuples `#298 <https://github.com/PyCQA/pylint-django/issues/298>`_ (see pulls `#330 <https://github.com/PyCQA/pylint-django/pull/330>`_ and `#345 <https://github.com/PyCQA/pylint-django/pull/345>`_)
 - Moved from Travis CI to GitHub Actions (`#366 <https://github.com/PyCQA/pylint-django/pull/366>`_ and `#340 <https://github.com/PyCQA/pylint-django/pull/340>`_)
 - Added pre-commit configuration and began enforcing black/isort code formatting
 - Multiple test fixes (including `#338 <https://github.com/PyCQA/pylint-django/issues/338>`_) - newer versions of pylint expect a different format for the expected messages txt files.
