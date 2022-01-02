@@ -3,10 +3,19 @@ Changelog
 
 Version 2.5 [WIP]
 ---------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Fixed compatability with astroid 2.9.1 (`#343 <https://github.com/PyCQA/pylint-django/issues/343>`_)
+
+New
+~~~
+
 - Moved from Travis CI to GitHub Actions (`#366 <https://github.com/PyCQA/pylint-django/pull/366>`_ and `#340 <https://github.com/PyCQA/pylint-django/pull/340>`_)
-- Added pre-commit configuration and began enforcing black/isort code formatting (TODO: add github action to enforce)
+- Added pre-commit configuration and began enforcing black/isort code formatting
 - Multiple test fixes (including `#338 <https://github.com/PyCQA/pylint-django/issues/338>`_) - newer versions of pylint expect a different format for the expected messages txt files.
-- TODO: Bumped dependency for pylint-django-utils to get `multi-threaded pylint support <https://github.com/PyCQA/pylint-plugin-utils/pull/21>`_
+- Bumped dependency for pylint-django-utils to get `multi-threaded pylint support <https://github.com/PyCQA/pylint-plugin-utils/pull/21>`_
 
 Version 2.4.4 (26 Apr 2021)
 ---------------------------

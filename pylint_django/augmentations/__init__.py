@@ -5,9 +5,9 @@ import itertools
 
 from astroid import InferenceError
 from astroid.nodes import Attribute, ClassDef, ImportFrom
+from astroid.nodes.scoped_nodes import ClassDef as ScopedClass
+from astroid.nodes.scoped_nodes import Module
 from astroid.objects import Super
-from astroid.scoped_nodes import ClassDef as ScopedClass
-from astroid.scoped_nodes import Module
 from django import VERSION as django_version
 from django.utils import termcolors
 from django.views.generic.base import ContextMixin, RedirectView, View

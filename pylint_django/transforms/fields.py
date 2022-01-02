@@ -1,4 +1,5 @@
-from astroid import MANAGER, AstroidImportError, inference_tip, nodes, scoped_nodes
+from astroid import MANAGER, AstroidImportError, inference_tip, nodes
+from astroid.nodes import scoped_nodes
 
 from pylint_django import utils
 
