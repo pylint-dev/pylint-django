@@ -13,6 +13,11 @@ def is_foreignkey_in_class(node):
     if not isinstance(node.parent.parent, ClassDef):
         return False
 
+    # Make sure the outfit class is the subclass of django.db.models.Model
+    is_in_django_model_class = node_is_subclass(node.parent.parent, "django.db.models.base.Model", ".Model")
+    if not is_in_django_model_class:
+        return False
+
     if isinstance(node.func, Attribute):
         attr = node.func.attrname
     elif isinstance(node.func, nodes.Name):
