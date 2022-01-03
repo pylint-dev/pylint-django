@@ -9,13 +9,13 @@ repos:
         args: [--fix=lf]
       - id: debug-statements
   # code formatting
-  - repo: https://gitlab.com/pycqa/flake8
+  - repo: https://github.com/PyCQA/flake8
     rev: 4.0.1
     hooks:
       - id: flake8
         args: [ --max-line-length=120 ]
-  - repo: https://github.com/python/black
-    rev: 21.9b0
+  - repo: https://github.com/psf/black
+    rev: 21.12b0
     hooks:
       - id: black
         args: [--safe, --line-length=120]
