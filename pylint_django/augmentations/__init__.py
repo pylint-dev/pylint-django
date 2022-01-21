@@ -761,9 +761,17 @@ def allow_meta_protected_access(node):
     return False
 
 
-def is_class(class_name):
+class IsClass:
+    def __init__(self, class_name):
+        self.class_name = class_name
+
+    def __call__(self, node):
+        return node_is_subclass(node, self.class_name)
+
+
+def is_class(class_name) -> IsClass:
     """Shortcut for node_is_subclass."""
-    return lambda node: node_is_subclass(node, class_name)
+    return IsClass(class_name)
 
 
 def wrap(orig_method, with_method):
