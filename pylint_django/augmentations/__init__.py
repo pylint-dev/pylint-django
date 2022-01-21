@@ -645,13 +645,18 @@ def is_model_test_case_subclass(node):
     return node_is_subclass(node, "django.test.testcases.TestCase")
 
 
-def generic_is_view_attribute(parents, attrs):
+class IsAttribute:
+    def __init__(self, parents, attrs):
+        self.parents = parents
+        self.attrs = attrs
+
+    def __call__(self, node):
+        return _attribute_is_magic(node, self.attrs, self.parents)
+
+
+def generic_is_view_attribute(parents, attrs) -> IsAttribute:
     """Generates is_X_attribute function for given parents and attrs."""
-
-    def is_attribute(node):
-        return _attribute_is_magic(node, attrs, parents)
-
-    return is_attribute
+    return IsAttribute(parents, attrs)
 
 
 def is_model_view_subclass_method_shouldnt_be_function(node):
