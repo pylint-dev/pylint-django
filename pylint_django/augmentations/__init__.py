@@ -654,11 +654,6 @@ class IsAttribute:
         return _attribute_is_magic(node, self.attrs, self.parents)
 
 
-def generic_is_view_attribute(parents, attrs) -> IsAttribute:
-    """Generates is_X_attribute function for given parents and attrs."""
-    return IsAttribute(parents, attrs)
-
-
 def is_model_view_subclass_method_shouldnt_be_function(node):
     """Checks that node is a default http method (i.e get, post, put, and more) of the View class."""
     if node.name not in View.http_method_names:
@@ -866,7 +861,7 @@ def apply_augmentations(linter):
             linter,
             TypeChecker.visit_attribute,
             "no-member",
-            generic_is_view_attribute(parents, attrs),
+            IsAttribute(parents, attrs),
         )
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
