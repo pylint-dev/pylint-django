@@ -769,11 +769,6 @@ class IsClass:
         return node_is_subclass(node, self.class_name)
 
 
-def is_class(class_name) -> IsClass:
-    """Shortcut for node_is_subclass."""
-    return IsClass(class_name)
-
-
 def wrap(orig_method, with_method):
     @functools.wraps(orig_method)
     def wrap_func(*args, **kwargs):
@@ -879,7 +874,7 @@ def apply_augmentations(linter):
         linter,
         MisdesignChecker.visit_classdef,
         "too-many-ancestors",
-        is_class("django.views.generic.edit.FormView"),
+        IsClass("django.views.generic.edit.FormView"),
     )
 
     # class-based generic views just have a longer inheritance chain
@@ -887,13 +882,13 @@ def apply_augmentations(linter):
         linter,
         MisdesignChecker.visit_classdef,
         "too-many-ancestors",
-        is_class("django.views.generic.detail.BaseDetailView"),
+        IsClass("django.views.generic.detail.BaseDetailView"),
     )
     suppress_message(
         linter,
         MisdesignChecker.visit_classdef,
         "too-many-ancestors",
-        is_class("django.views.generic.edit.ProcessFormView"),
+        IsClass("django.views.generic.edit.ProcessFormView"),
     )
 
     # model forms have no __init__ method anywhere in their bases
@@ -901,7 +896,7 @@ def apply_augmentations(linter):
         linter,
         ClassChecker.visit_classdef,
         "W0232",
-        is_class("django.forms.models.ModelForm"),
+        IsClass("django.forms.models.ModelForm"),
     )
 
     # Meta
