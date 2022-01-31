@@ -89,11 +89,24 @@ def apply_type_shim(cls, _context=None):  # noqa
     # is an ImportFrom which has no qname() method, causing the checker
     # to die...
     if utils.PY3:
-        base_nodes = [n for n in base_nodes[1] if not isinstance(n, nodes.ImportFrom)]
+        base_nodes = [_valid_base_node(n, _context) for n in base_nodes[1]]
+        base_nodes = [n for n in base_nodes if n]
     else:
         base_nodes = list(base_nodes[1])
 
     return iter([cls] + base_nodes)
+
+
+def _valid_base_node(node, context):
+    """Attempts to convert `node` to a valid base node, returns None if it cannot."""
+    if isinstance(node, nodes.AssignAttr):
+        inferred = next(node.parent.value.infer(context), None)
+        if inferred and isinstance(node, nodes.ClassDef):
+            return inferred
+        return None
+    if isinstance(node, nodes.ImportFrom):
+        return None
+    return node
 
 
 def add_transforms(manager):
