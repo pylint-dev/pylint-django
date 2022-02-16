@@ -645,7 +645,7 @@ def is_model_test_case_subclass(node):
     return node_is_subclass(node, "django.test.testcases.TestCase")
 
 
-class IsAttribute:
+class IsAttribute:  # pylint: disable=too-few-public-methods
     def __init__(self, parents, attrs):
         self.parents = parents
         self.attrs = attrs
@@ -756,7 +756,7 @@ def allow_meta_protected_access(node):
     return False
 
 
-class IsClass:
+class IsClass:  # pylint: disable=too-few-public-methods
     def __init__(self, class_name):
         self.class_name = class_name
 

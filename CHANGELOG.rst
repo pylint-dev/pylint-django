@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 2.5.1 (16 Feb 2022)
+---------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Fixed picking for `augment_visit` (`#276 <https://github.com/PyCQA/pylint-django/issues/276>`_)
+
 Version 2.5.0 (02 Jan 2022)
 ---------------------------
 
