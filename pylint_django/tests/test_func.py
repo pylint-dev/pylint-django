@@ -1,5 +1,6 @@
 import csv
 import os
+import pickle
 import sys
 
 import pylint
@@ -110,6 +111,16 @@ def test_migrations_plugin(test_file):
     LintTest = PylintDjangoMigrationsTest(test_file)
     LintTest.setUp()
     LintTest._runTest()
+
+
+@pytest.mark.parametrize("test_file", MIGRATIONS_TESTS[:1], ids=MIGRATIONS_TESTS_NAMES[:1])
+def test_linter_should_be_pickleable_with_pylint_djang_plugin_installed(test_file):
+    LintTest = PylintDjangoMigrationsTest(test_file)
+    LintTest.setUp()
+
+    # LintModuleTest sets reporter to instance of FunctionalTestReporter that is not picklable
+    LintTest._linter.reporter = None
+    pickle.dumps(LintTest._linter)
 
 
 if __name__ == "__main__":

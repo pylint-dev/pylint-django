@@ -645,13 +645,13 @@ def is_model_test_case_subclass(node):
     return node_is_subclass(node, "django.test.testcases.TestCase")
 
 
-def generic_is_view_attribute(parents, attrs):
-    """Generates is_X_attribute function for given parents and attrs."""
+class IsAttribute:
+    def __init__(self, parents, attrs):
+        self.parents = parents
+        self.attrs = attrs
 
-    def is_attribute(node):
-        return _attribute_is_magic(node, attrs, parents)
-
-    return is_attribute
+    def __call__(self, node):
+        return _attribute_is_magic(node, self.attrs, self.parents)
 
 
 def is_model_view_subclass_method_shouldnt_be_function(node):
@@ -756,9 +756,12 @@ def allow_meta_protected_access(node):
     return False
 
 
-def is_class(class_name):
-    """Shortcut for node_is_subclass."""
-    return lambda node: node_is_subclass(node, class_name)
+class IsClass:
+    def __init__(self, class_name):
+        self.class_name = class_name
+
+    def __call__(self, node):
+        return node_is_subclass(node, self.class_name)
 
 
 def wrap(orig_method, with_method):
@@ -858,7 +861,7 @@ def apply_augmentations(linter):
             linter,
             TypeChecker.visit_attribute,
             "no-member",
-            generic_is_view_attribute(parents, attrs),
+            IsAttribute(parents, attrs),
         )
 
     # formviews have too many ancestors, there's nothing the user of the library can do about that
@@ -866,7 +869,7 @@ def apply_augmentations(linter):
         linter,
         MisdesignChecker.visit_classdef,
         "too-many-ancestors",
-        is_class("django.views.generic.edit.FormView"),
+        IsClass("django.views.generic.edit.FormView"),
     )
 
     # class-based generic views just have a longer inheritance chain
@@ -874,13 +877,13 @@ def apply_augmentations(linter):
         linter,
         MisdesignChecker.visit_classdef,
         "too-many-ancestors",
-        is_class("django.views.generic.detail.BaseDetailView"),
+        IsClass("django.views.generic.detail.BaseDetailView"),
     )
     suppress_message(
         linter,
         MisdesignChecker.visit_classdef,
         "too-many-ancestors",
-        is_class("django.views.generic.edit.ProcessFormView"),
+        IsClass("django.views.generic.edit.ProcessFormView"),
     )
 
     # model forms have no __init__ method anywhere in their bases
@@ -888,7 +891,7 @@ def apply_augmentations(linter):
         linter,
         ClassChecker.visit_classdef,
         "W0232",
-        is_class("django.forms.models.ModelForm"),
+        IsClass("django.forms.models.ModelForm"),
     )
 
     # Meta
