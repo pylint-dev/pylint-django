@@ -21,7 +21,7 @@ Version 2.5.1 (16 Feb 2022)
 Bugfixes
 ~~~~~~~~
 
-- Fixed picking for `augment_visit` (`#276 <https://github.com/PyCQA/pylint-django/issues/276>`_)
+- Fixed pickling for `augment_visit` (`#276 <https://github.com/PyCQA/pylint-django/issues/276>`_)
 
 Version 2.5.0 (02 Jan 2022)
 ---------------------------
@@ -29,7 +29,7 @@ Version 2.5.0 (02 Jan 2022)
 Bugfixes
 ~~~~~~~~
 
-- Fixed compatability with astroid 2.9.1 (`#343 <https://github.com/PyCQA/pylint-django/issues/343>`_)
+- Fixed compatibility with astroid 2.9.1 (`#343 <https://github.com/PyCQA/pylint-django/issues/343>`_)
 
 New
 ~~~
