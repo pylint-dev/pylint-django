@@ -1,6 +1,20 @@
 Changelog
 =========
 
+Version 2.5.2 (18 Feb 2022)
+---------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Fixed crash with assigning a class to a variable, and referencing the variable when subclassing (`#349 <https://github.com/PyCQA/pylint-django/issues/349>`_)
+
+Other
+~~~~~
+
+- CI now tests against Django 4.0
+
+
 Version 2.5.1 (16 Feb 2022)
 ---------------------------
 
