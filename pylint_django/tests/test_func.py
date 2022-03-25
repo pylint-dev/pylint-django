@@ -2,6 +2,7 @@ import csv
 import os
 import pickle
 import sys
+from pathlib import Path
 
 import pylint
 import pytest
@@ -10,7 +11,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pylint_django.tests.settings")
 
 try:
     # pylint 2.5: test_functional has been moved to pylint.testutils
-    from pylint.testutils import FunctionalTestFile, LintModuleTest
+    from pylint.testutils import FunctionalTestFile, LintModuleTest, lint_module_test
 
     if "test" not in csv.list_dialects():
 
@@ -19,6 +20,8 @@ try:
             lineterminator = "\n"
 
         csv.register_dialect("test", test_dialect)
+
+    lint_module_test.PYLINTRC = Path(__file__).parent / "testing_pylintrc"
 except (ImportError, AttributeError):
     # specify directly the directory containing test_functional.py
     test_functional_dir = os.getenv("PYLINT_TEST_FUNCTIONAL_DIR", "")
@@ -50,6 +53,7 @@ class PylintDjangoLintModuleTest(LintModuleTest):
     """
 
     def __init__(self, test_file):
+        # if hasattr(test_file, 'option_file') and test_file.option_file is None:
         super(PylintDjangoLintModuleTest, self).__init__(test_file)
         self._linter.load_plugin_modules(["pylint_django"])
         self._linter.load_plugin_configuration()
@@ -114,7 +118,7 @@ def test_migrations_plugin(test_file):
 
 
 @pytest.mark.parametrize("test_file", MIGRATIONS_TESTS[:1], ids=MIGRATIONS_TESTS_NAMES[:1])
-def test_linter_should_be_pickleable_with_pylint_djang_plugin_installed(test_file):
+def test_linter_should_be_pickleable_with_pylint_django_plugin_installed(test_file):
     LintTest = PylintDjangoMigrationsTest(test_file)
     LintTest.setUp()
 

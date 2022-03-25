@@ -36,7 +36,7 @@ from pylint.checkers.typecheck import TypeChecker
 from pylint.checkers.variables import ScopeConsumer, VariablesChecker
 from pylint_plugin_utils import augment_visit, suppress_message
 
-from pylint_django.utils import node_is_subclass
+from pylint_django.utils import PY3, node_is_subclass
 
 # Note: it would have been nice to import the Manager object from Django and
 # get its attributes that way - and this used to be the method - but unfortunately
@@ -329,7 +329,8 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
 
     new_things = {}
 
-    for name, stmts in consumer.to_consume.items():
+    iterat = consumer.to_consume.items if PY3 else consumer.to_consume.iteritems
+    for name, stmts in iterat():
         if isinstance(stmts[0], ImportFrom):
             if any(n[0] in ("ForeignKey", "OneToOneField") for n in stmts[0].names):
                 continue
