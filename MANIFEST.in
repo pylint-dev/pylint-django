@@ -2,4 +2,5 @@ include *.md
 include *.rst
 include LICENSE
 include pylint_django/transforms/transforms/*.py
+include pylint_django/tests/testing_pylintrc
 recursive-include pylint_django/tests/ *.py *.rc *.txt
