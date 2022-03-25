@@ -36,7 +36,7 @@ from pylint.checkers.typecheck import TypeChecker
 from pylint.checkers.variables import ScopeConsumer, VariablesChecker
 from pylint_plugin_utils import augment_visit, suppress_message
 
-from pylint_django.utils import PY3, node_is_subclass
+from pylint_django.utils import node_is_subclass
 
 # Note: it would have been nice to import the Manager object from Django and
 # get its attributes that way - and this used to be the method - but unfortunately
@@ -329,14 +329,22 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
 
     new_things = {}
 
-    iterat = consumer.to_consume.items if PY3 else consumer.to_consume.iteritems
-    for name, stmts in iterat():
+    for name, stmts in consumer.to_consume.items:
         if isinstance(stmts[0], ImportFrom):
             if any(n[0] in ("ForeignKey", "OneToOneField") for n in stmts[0].names):
                 continue
         new_things[name] = stmts
 
-    consumer._atomic = ScopeConsumer(new_things, consumer.consumed, consumer.scope_type)  # pylint: disable=W0212
+    # ScopeConsumer changed between pylint 2.12 and 2.13
+    # see https://github.com/PyCQA/pylint/issues/5970#issuecomment-1078778393
+    if hasattr(consumer, "consumed_uncertain"):
+        # this is pylint >= 2.13, and the ScopeConsumer tuple has an additional field
+        sc_args = (new_things, consumer.consumed, consumer.consumed_uncertain, consumer.scope_type)
+    else:
+        # this is <2.13 and does not have the consumer_uncertain field
+        sc_args = (new_things, consumer.consumed, consumer.scope_type)
+
+    consumer._atomic = ScopeConsumer(*sc_args)  # pylint: disable=W0212
     self._to_consume = [consumer]  # pylint: disable=W0212
 
     return orig_method(self, node)

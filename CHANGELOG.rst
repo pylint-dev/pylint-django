@@ -1,6 +1,19 @@
 Changelog
 =========
 
+Version 2.5.3 (25 Mär 2022)
+---------------------------
+
+Bugfixes
+~~~~~~~~
+
+- Fixed compatibility issue between pylint `2.12` and `2.13` to construct `ScopeConsumer` tuples correctly depending on version (`#358 <https://github.com/PyCQA/pylint-django/issues/358>`_)
+
+Other
+~~~~~
+
+- pylint version is now pinned to `<3` to give breathing space to update pylint-django before the major update lands
+
 Version 2.5.2 (18 Feb 2022)
 ---------------------------
 

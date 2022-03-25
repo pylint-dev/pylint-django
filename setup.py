@@ -14,12 +14,12 @@ setup(
     author_email="code@landscape.io",
     description="A Pylint plugin to help Pylint understand the Django web framework",
     long_description=LONG_DESCRIPTION,
-    version="2.5.2",
+    version="2.5.3",
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
         "pylint-plugin-utils>=0.7",
-        "pylint>=2.0",
+        "pylint>=2.0,<3",
     ],
     extras_require={
         "with_django": ["Django"],
