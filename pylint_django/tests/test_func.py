@@ -9,6 +9,8 @@ import pytest
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pylint_django.tests.settings")
 
+HERE = Path(__file__).parent
+
 try:
     # pylint 2.5: test_functional has been moved to pylint.testutils
     from pylint.testutils import FunctionalTestFile, LintModuleTest, lint_module_test
@@ -21,7 +23,7 @@ try:
 
         csv.register_dialect("test", test_dialect)
 
-    lint_module_test.PYLINTRC = Path(__file__).parent / "testing_pylintrc"
+    lint_module_test.PYLINTRC = HERE / "testing_pylintrc"
 except (ImportError, AttributeError):
     # specify directly the directory containing test_functional.py
     test_functional_dir = os.getenv("PYLINT_TEST_FUNCTIONAL_DIR", "")
@@ -40,11 +42,7 @@ except (ImportError, AttributeError):
     from test_functional import FunctionalTestFile, LintModuleTest
 
 
-# alter sys.path again because the tests now live as a subdirectory
-# of pylint_django
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
-# so we can find migrations
-sys.path.append(os.path.join(os.path.dirname(__file__), "input"))
+sys.path += [str(p.absolute()) for p in (HERE, HERE / "../../", HERE / "input")]
 
 
 class PylintDjangoLintModuleTest(LintModuleTest):
@@ -75,13 +73,12 @@ def get_tests(input_dir="input", sort=False):
     def _file_name(test):
         return test.base
 
-    HERE = os.path.dirname(os.path.abspath(__file__))
-    input_dir = os.path.join(HERE, input_dir)
+    input_dir = HERE / input_dir
 
     suite = []
-    for fname in os.listdir(input_dir):
-        if fname != "__init__.py" and fname.endswith(".py"):
-            suite.append(FunctionalTestFile(input_dir, fname))
+    for fname in input_dir.iterdir():
+        if fname.name != "__init__.py" and fname.name.endswith(".py"):
+            suite.append(FunctionalTestFile(str(input_dir.absolute()), str(fname.absolute())))
 
     # when testing the migrations plugin we need to sort by input file name
     # because the plugin reports the errors in close() which appends them to the
