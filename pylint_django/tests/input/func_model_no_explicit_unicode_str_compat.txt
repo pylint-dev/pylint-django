@@ -1,1 +1,1 @@
-model-no-explicit-unicode:18:0:19:8:SomeModel:Model does not explicitly define __unicode__ (SomeModel):UNDEFINED
+model-no-explicit-unicode:18:0:18:15:SomeModel:Model does not explicitly define __unicode__ (SomeModel):UNDEFINED
