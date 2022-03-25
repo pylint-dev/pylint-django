@@ -329,7 +329,7 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
 
     new_things = {}
 
-    for name, stmts in consumer.to_consume.items:
+    for name, stmts in consumer.to_consume.items():
         if isinstance(stmts[0], ImportFrom):
             if any(n[0] in ("ForeignKey", "OneToOneField") for n in stmts[0].names):
                 continue
