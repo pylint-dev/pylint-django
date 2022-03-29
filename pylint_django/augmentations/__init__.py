@@ -799,16 +799,15 @@ def is_wsgi_application(node):
 
 def is_wsgi_request(node):
     def is_inside_test_case():
-        test_case_parent = 'django.test.testcases.SimpleTestCase'
+        test_case_parent = "django.test.testcases.SimpleTestCase"
 
         for ancestor in node.node_ancestors():
-            if getattr(ancestor, "type", None) == 'class':
+            if getattr(ancestor, "type", None) == "class":
                 for class_ancestor in ancestor.mro():
                     if class_ancestor.qname() == test_case_parent:
                         return True
 
         return False
-
 
     wsgi_request_parent = "django.core.handlers.wsgi.WSGIRequest"
 
