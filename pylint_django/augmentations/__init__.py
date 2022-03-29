@@ -797,6 +797,39 @@ def is_wsgi_application(node):
     )
 
 
+def is_wsgi_request(node):
+    def is_inside_test_case():
+        test_case_parent = 'django.test.testcases.SimpleTestCase'
+
+        for ancestor in node.node_ancestors():
+            if getattr(ancestor, "type", None) == 'class':
+                for class_ancestor in ancestor.mro():
+                    if class_ancestor.qname() == test_case_parent:
+                        return True
+
+        return False
+
+
+    wsgi_request_parent = "django.core.handlers.wsgi.WSGIRequest"
+
+    try:
+        parent_classes = node.expr.inferred()
+    except:  # noqa: E722, pylint: disable=bare-except
+        return False
+
+    for parent_class in parent_classes:
+        try:
+            if parent_class.qname() == wsgi_request_parent:
+                return True and is_inside_test_case()
+
+            if node_is_subclass(parent_class, wsgi_request_parent):
+                return True and is_inside_test_case()
+        except AttributeError:
+            continue
+
+    return False
+
+
 # Compat helpers
 def pylint_newstyle_classdef_compat(linter, warning_name, augment):
     if not hasattr(NewStyleConflictChecker, "visit_classdef"):
@@ -991,5 +1024,6 @@ def apply_augmentations(linter):
 
     # wsgi.py
     suppress_message(linter, NameChecker.visit_assignname, "invalid-name", is_wsgi_application)
+    suppress_message(linter, TypeChecker.visit_attribute, "no-member", is_wsgi_request)
 
     apply_wrapped_augmentations()
