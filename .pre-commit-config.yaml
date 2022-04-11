@@ -1,7 +1,7 @@
 # https://pre-commit.com/
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: v4.2.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -15,7 +15,7 @@ repos:
       - id: flake8
         args: [ --max-line-length=120 ]
   - repo: https://github.com/psf/black
-    rev: 22.1.0
+    rev: 22.3.0
     hooks:
       - id: black
         args: [--safe, --line-length=120]
