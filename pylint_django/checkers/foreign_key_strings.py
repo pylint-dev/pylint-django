@@ -101,20 +101,15 @@ Consider passing in an explicit Django configuration file to match your project 
         try:
             import django  # pylint: disable=import-outside-toplevel
 
-            if (
-                os.environ.get("DJANGO_SETTINGS_MODULE") is None
-                or os.environ.get("DJANGO_CONFIGURATION") is None
-            ):
+            if os.environ.get("DJANGO_SETTINGS_MODULE") is None or os.environ.get("DJANGO_CONFIGURATION") is None:
                 try:
                     os.environ.setdefault(
                         "DJANGO_SETTINGS_MODULE",
-                        os.environ.get("DJANGO_SETTINGS_MODULE")
-                        or self.config.django_settings_module,
+                        os.environ.get("DJANGO_SETTINGS_MODULE") or self.config.django_settings_module,
                     )
                     os.environ.setdefault(
                         "DJANGO_CONFIGURATION",
-                        os.environ.get("DJANGO_CONFIGURATION")
-                        or self.config.django_configuration,
+                        os.environ.get("DJANGO_CONFIGURATION") or self.config.django_configuration,
                     )
                 except TypeError as ex:
                     missing_module = ""
@@ -122,9 +117,7 @@ Consider passing in an explicit Django configuration file to match your project 
                         missing_module = "DJANGO_SETTINGS_MODULE"
                     else:
                         missing_module = "DJANGO_CONFIGURATION"
-                    raise RuntimeError(
-                        f"{missing_module} required to initialize Django project settings"
-                    ) from ex
+                    raise RuntimeError(f"{missing_module} required to initialize Django project settings") from ex
                 importer.install()
 
             django.setup()
