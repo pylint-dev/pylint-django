@@ -1,6 +1,9 @@
 from __future__ import absolute_import
 
+import os
+
 import astroid
+from configurations import importer
 from pylint.checkers import BaseChecker
 from pylint.checkers.utils import check_messages
 from pylint.interfaces import IAstroidChecker
@@ -39,6 +42,15 @@ Consider passing in an explicit Django configuration file to match your project 
                 "type": "string",
                 "metavar": "<django settings module>",
                 "help": "A module containing Django settings to be used while linting.",
+            },
+        ),
+        (
+            "django-configuration",
+            {
+                "default": None,
+                "type": "string",
+                "metavar": "<django configuration>",
+                "help": "The configuration for Django to use while linting.",
             },
         ),
     )
@@ -88,6 +100,32 @@ Consider passing in an explicit Django configuration file to match your project 
 
         try:
             import django  # pylint: disable=import-outside-toplevel
+
+            if (
+                os.environ.get("DJANGO_SETTINGS_MODULE") is None
+                or os.environ.get("DJANGO_CONFIGURATION") is None
+            ):
+                try:
+                    os.environ.setdefault(
+                        "DJANGO_SETTINGS_MODULE",
+                        os.environ.get("DJANGO_SETTINGS_MODULE")
+                        or self.config.django_settings_module,
+                    )
+                    os.environ.setdefault(
+                        "DJANGO_CONFIGURATION",
+                        os.environ.get("DJANGO_CONFIGURATION")
+                        or self.config.django_configuration,
+                    )
+                except TypeError as ex:
+                    missing_module = ""
+                    if self.config.django_settings_module is None:
+                        missing_module = "DJANGO_SETTINGS_MODULE"
+                    else:
+                        missing_module = "DJANGO_CONFIGURATION"
+                    raise RuntimeError(
+                        f"{missing_module} required to initialize Django project settings"
+                    ) from ex
+                importer.install()
 
             django.setup()
             from django.apps import (  # noqa pylint: disable=import-outside-toplevel,unused-import
