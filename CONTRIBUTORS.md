@@ -20,3 +20,4 @@
 * [naquiroz](https://github.com/naquiroz)
 * [john-sandall](https://github.com/john-sandall)
 * [dineshtrivedi](https://github.com/dineshtrivedi)
+* [jhhayashi](https://github.com/jhhayashi)

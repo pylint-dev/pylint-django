@@ -895,6 +895,14 @@ def apply_augmentations(linter):
         IsClass("django.views.generic.edit.ProcessFormView"),
     )
 
+    # ModelViewSet also suffers from too many ancestors
+    suppress_message(
+        linter,
+        MisdesignChecker.visit_classdef,
+        "too-many-ancestors",
+        IsClass("rest_framework.viewsets.ModelViewSet"),
+    )
+
     # model forms have no __init__ method anywhere in their bases
     suppress_message(
         linter,
