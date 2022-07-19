@@ -24,7 +24,7 @@ jobs:
 
       - name: Execute tests
         run: |
-            pip install tox
+            pip install tox==3.24.5
             pip install -e .[for_tests]
 
             export TOXENV=${{ matrix.toxenv }}
@@ -50,7 +50,7 @@ jobs:
 
       - name: Execute tests
         run: |
-            pip install tox
+            pip install tox==3.24.5
             pip install -e .[for_tests]
 
             export DJANGO=${{ matrix.django-version }}
@@ -84,7 +84,7 @@ jobs:
 
       - name: Execute tests
         run: |
-            pip install tox
+            pip install tox==3.24.5
             pip install -e .[for_tests]
 
             export DJANGO=${{ matrix.django-version }}
@@ -115,7 +115,7 @@ jobs:
 
       - name: Build
         run: |
-            pip install tox
+            pip install tox==3.24.5
             pip install -e .[for_tests]
 
             ./scripts/build.sh
