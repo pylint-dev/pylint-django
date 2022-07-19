@@ -23,7 +23,7 @@ try:
 
         csv.register_dialect("test", test_dialect)
 
-    lint_module_test.PYLINTRC = HERE / "testing_pylint.rc"
+    lint_module_test.PYLINTRC = HERE / "testing_pylintrc"
 except (ImportError, AttributeError):
     # specify directly the directory containing test_functional.py
     test_functional_dir = os.getenv("PYLINT_TEST_FUNCTIONAL_DIR", "")
