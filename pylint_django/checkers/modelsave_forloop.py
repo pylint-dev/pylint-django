@@ -1,8 +1,10 @@
 from astroid.nodes import Call
 from pylint import checkers, interfaces
+from pylint.checkers import utils
 
 from pylint_django.__pkginfo__ import BASE_ID
 from pylint_django.utils import node_is_subclass
+# from pylint_django.augmentations import is_manager_attribute
 
 
 class ModelSaveForLoopChecker(checkers.BaseChecker):
@@ -25,6 +27,8 @@ class ModelSaveForLoopChecker(checkers.BaseChecker):
         ),
     }
 
+    @utils.check_messages("model-save-in-forloop")
+    @utils.check_messages("model-create-in-forloop")
     def visit_for(self, node):
         """
         Checks for a Model.create() inside of a for loop
