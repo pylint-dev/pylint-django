@@ -5,7 +5,7 @@ from pylint_django.__pkginfo__ import BASE_ID
 from pylint_django.utils import node_is_subclass
 
 
-class ModelCreateForLoopChecker(checkers.BaseChecker):
+class ModelSaveForLoopChecker(checkers.BaseChecker):
     __implements__ = (interfaces.IAstroidChecker)
 
     name = "model-save-forloop-checker"

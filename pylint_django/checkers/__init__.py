@@ -5,7 +5,7 @@ from pylint_django.checkers.foreign_key_strings import ForeignKeyStringsChecker
 from pylint_django.checkers.forms import FormChecker
 from pylint_django.checkers.json_response import JsonResponseChecker
 from pylint_django.checkers.models import ModelChecker
-from pylint_django.checkers.modelcreate_forloop import ModelCreateForLoopChecker
+from pylint_django.checkers.modelsave_forloop import ModelSaveForLoopChecker
 
 
 def register_checkers(linter):
@@ -16,4 +16,4 @@ def register_checkers(linter):
     linter.register_checker(FormChecker(linter))
     linter.register_checker(AuthUserChecker(linter))
     linter.register_checker(ForeignKeyStringsChecker(linter))
-    linter.register_checker(ModelCreateForLoopChecker(linter))
+    linter.register_checker(ModelSaveForLoopChecker(linter))
