@@ -33,8 +33,8 @@ class ModelSaveForLoopChecker(checkers.BaseChecker):
         """
         Checks for a Model.create() inside of a for loop
         """
-        for subnode in node.body:
-            if not node_is_subclass(node, "django.db.models.base.Model",
+        for subnode in node.get_children():
+            if not node_is_subclass(subnode, "django.db.models.base.Model",
                                     ".Model"):
                 # We care about models only
                 return
