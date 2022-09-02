@@ -13,21 +13,22 @@ class ModelSaveForLoopChecker(checkers.BaseChecker):
 
     msgs = {
         f"R{BASE_ID}04": (
-            "'Model.create()' in for loop",
-            "model-create-in-forloop",
+            "Consider using 'Model.bulk_create()'",
+            "consider-using-bulk-create",
             "Using 'Model.create()' inside a for loop may impact performance. "
-            "Use 'Model.bulk_create()' instead."
+            "Consider using 'Model.bulk_create()' instead."
         ),
         f"R{BASE_ID}05": (
-            "'Model.save()' in for loop",
-            "model-save-in-forloop",
+            "Consider using 'Model.bulk_*()",
+            "consider-using-bulk-create-save",
             "Using 'Model.save()' inside a for loop may impact performance. "
-            "Use 'Model.bulk_update()' or 'Model.bulk_create()' instead."
+            "Consider using 'Model.bulk_update()' or "
+            "'Model.bulk_create()' instead."
         ),
     }
 
-    @utils.check_messages("model-save-in-forloop")
-    @utils.check_messages("model-create-in-forloop")
+    @utils.check_messages("consider-using-bulk-create")
+    @utils.check_messages("consider-using-bulk-create-save")
     def visit_for(self, node):
         """
         Checks for a Model.create() inside of a for loop
