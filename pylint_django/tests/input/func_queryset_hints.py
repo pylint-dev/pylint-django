@@ -8,7 +8,7 @@ from django.db import models
 
 
 class Book(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)  # [consider-using-bulk-create]
 
     class Meta:
         app_label = "test_app"
@@ -16,15 +16,20 @@ class Book(models.Model):
 
 def for_create():
     for i in range(10):
-        Book.objects.create(name=str(i))
+        Book.objects.create(name=str(i))  # [consider-using-bulk-create]
 
 
 def for_nested_if_create():
     for i in range(10):
         if i % 2 == 0:
-            Book.objects.create(name=str(i))
+            Book.objects.create(name=str(i))  # [consider-using-bulk-create]
 
 
 def assigned_for_create():
     for i in range(10):
-        _ = Book.objects.create(name=str(i))
+        _ = Book.objects.create(name=str(i))  # [consider-using-bulk-create]
+
+
+def for_filter():
+    for i in range(10):
+        _ = Book.objects.filter(name=str(i))  # [consider-using-in-queries]

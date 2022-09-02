@@ -1,3 +1,4 @@
-model-create-in-forloop:19:8:19:40:for_create:'Model.create()' in for loop:UNDEFINED
-model-create-in-forloop:25:12:25:44:for_nested_if_create:'Model.create()' in for loop:UNDEFINED
-model-create-in-forloop:30:12:30:49:assigned_for_create:'Model.create()' in for loop:UNDEFINED
+consider-using-bulk-create:19:8:19:40:for_create:Consider using 'Model.bulk_create()':UNDEFINED
+consider-using-bulk-create:25:12:25:44:for_nested_if_create:Consider using 'Model.bulk_create()':UNDEFINED
+consider-using-bulk-create:30:12:30:49:assigned_for_create:Consider using 'Model.bulk_create()':UNDEFINED
+consider-using-in-queries:35:12:35:49:for_filter:Consider using 'Model.bulk_*():UNDEFINED
