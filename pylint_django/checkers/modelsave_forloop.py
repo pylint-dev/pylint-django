@@ -38,7 +38,8 @@ class ModelSaveForLoopChecker(checkers.BaseChecker):
             for child in subnode.get_children():
                 if isinstance(child, Expr):
                     for subchild in child.get_children():
-                        self._check_forloop_create_save(subchild)
+                        if isinstance(subchild, Call):
+                            self._check_forloop_create_save(subchild)
                 if isinstance(child, Call):
                     self._check_forloop_create_save(child)
 
