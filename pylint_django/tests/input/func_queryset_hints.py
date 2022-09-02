@@ -23,3 +23,8 @@ def for_nested_if_create():
     for i in range(10):
         if i % 2 == 0:
             Book.objects.create(name=str(i))
+
+
+def assigned_for_create():
+    for i in range(10):
+        _ = Book.objects.create(name=str(i))

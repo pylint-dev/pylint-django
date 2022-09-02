@@ -1,9 +1,8 @@
-from astroid.nodes import Call
+from astroid.nodes import Call, Expr
 from pylint import checkers, interfaces
 from pylint.checkers import utils
 
 from pylint_django.__pkginfo__ import BASE_ID
-from pylint_django.utils import node_is_subclass
 # from pylint_django.augmentations import is_manager_attribute
 
 
@@ -32,15 +31,19 @@ class ModelSaveForLoopChecker(checkers.BaseChecker):
     def visit_for(self, node):
         """
         Checks for a Model.create() inside of a for loop
+
+        May create false positives
         """
-        for subnode in node.get_children():
-            if not node_is_subclass(subnode, "django.db.models.base.Model",
-                                    ".Model"):
-                # We care about models only
-                return
+        for subnode in node.body:
             for child in subnode.get_children():
+                if isinstance(child, Expr):
+                    for subchild in child.get_children():
+                        self._check_forloop_create_save(subchild)
                 if isinstance(child, Call):
-                    if child.func.as_string() == "create":
-                        self.add_message(f"R{BASE_ID}01", node=child)
-                    if child.func.as_string() == "save":
-                        self.add_message(f"R{BASE_ID}02", node=child)
+                    self._check_forloop_create_save(child)
+
+    def _check_forloop_create_save(self, node):
+        if node.func.attrname == "create":
+            self.add_message(f"R{BASE_ID}04", node=node)
+        if node.func.attrname == "save":
+            self.add_message(f"R{BASE_ID}05", node=node)
