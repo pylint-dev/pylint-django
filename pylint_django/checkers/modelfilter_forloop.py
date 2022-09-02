@@ -1,4 +1,4 @@
-from astroid.nodes import Call, Expr, Name, ClassDef
+from astroid.nodes import Call, Expr, Attribute
 from pylint import checkers, interfaces
 from pylint.checkers import utils
 
@@ -37,5 +37,8 @@ class ModelFilterForLoopChecker(checkers.BaseChecker):
                     self._check_forloop_filter(child)
 
     def _check_forloop_filter(self, node):
-        if node.func.attrname in ("filter", "get"):
-            self.add_message(f"R{BASE_ID}06", node=node)
+        if isinstance(node.func, Attribute):
+            # Ensure it's an attribute, to avoid clashing with the
+            # filter() python builtin, may still clash with the dict .get()
+            if node.func.attrname in ("filter", "get"):
+                self.add_message(f"R{BASE_ID}06", node=node)

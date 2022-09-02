@@ -31,5 +31,7 @@ class QuerysetIteratorForLoopChecker(checkers.BaseChecker):
         for subnode in node.get_children():
             if isinstance(subnode, Call):
                 if isinstance(subnode.func, Attribute):
+                    # Ensure it's an attribute, to avoid clashing with the
+                    # all() python builtin
                     if subnode.func.attrname == "all":
                         self.add_message(f"R{BASE_ID}07", node=subnode)
