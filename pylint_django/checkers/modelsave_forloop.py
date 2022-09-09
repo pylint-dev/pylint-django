@@ -1,4 +1,4 @@
-from astroid.nodes import Call, Expr
+from astroid.nodes import Call, Expr, Attribute
 from pylint import checkers, interfaces
 from pylint.checkers import utils
 
@@ -45,7 +45,9 @@ class ModelSaveForLoopChecker(checkers.BaseChecker):
                     self._check_forloop_create_save(child)
 
     def _check_forloop_create_save(self, node):
-        if node.func.attrname == "create":
-            self.add_message(f"R{BASE_ID}04", node=node)
-        if node.func.attrname == "save":
-            self.add_message(f"R{BASE_ID}05", node=node)
+        if isinstance(node.func, Attribute):
+            # Ensure node.func is an attribute to avoid crashes
+            if node.func.attrname == "create":
+                self.add_message(f"R{BASE_ID}04", node=node)
+            if node.func.attrname == "save":
+                self.add_message(f"R{BASE_ID}05", node=node)
