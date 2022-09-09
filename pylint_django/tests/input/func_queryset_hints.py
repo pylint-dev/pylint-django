@@ -8,7 +8,7 @@ from django.db import models
 
 
 class Book(models.Model):
-    name = models.CharField(max_length=100)  # [consider-using-bulk-create]
+    name = models.CharField(max_length=100)
 
     class Meta:
         app_label = "test_app"
@@ -33,3 +33,9 @@ def assigned_for_create():
 def for_filter():
     for i in range(10):
         _ = Book.objects.filter(name=str(i))  # [consider-using-in-queries]
+
+
+def for_save():
+    obj = Book(name="Test Book")
+    for _ in range(10):
+        obj.save()  # [consider-using-bulk-create-save]

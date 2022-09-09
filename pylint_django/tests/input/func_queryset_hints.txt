@@ -1,4 +1,5 @@
 consider-using-bulk-create:19:8:19:40:for_create:Consider using 'Model.bulk_create()':UNDEFINED
 consider-using-bulk-create:25:12:25:44:for_nested_if_create:Consider using 'Model.bulk_create()':UNDEFINED
-consider-using-bulk-create:30:12:30:49:assigned_for_create:Consider using 'Model.bulk_create()':UNDEFINED
-consider-using-in-queries:35:12:35:49:for_filter:Consider using 'Model.bulk_*():UNDEFINED
+consider-using-bulk-create:30:12:30:44:assigned_for_create:Consider using 'Model.bulk_create()':UNDEFINED
+consider-using-in-queries:35:12:35:44:for_filter:Consider using '__in' queries:UNDEFINED
+consider-using-bulk-create-save:41:8:41:18:for_save:Consider using 'Model.bulk_*():UNDEFINED
