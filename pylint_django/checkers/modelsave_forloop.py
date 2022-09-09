@@ -7,6 +7,10 @@ from pylint_django.__pkginfo__ import BASE_ID
 
 
 class ModelSaveForLoopChecker(checkers.BaseChecker):
+    """
+    Checks for usage of Model.manager.create() or Model.save() inside of for
+    loops
+    """
     __implements__ = (interfaces.IAstroidChecker)
 
     name = "model-save-forloop-checker"
@@ -15,15 +19,16 @@ class ModelSaveForLoopChecker(checkers.BaseChecker):
         f"R{BASE_ID}04": (
             "Consider using 'Model.bulk_create()'",
             "consider-using-bulk-create",
-            "Using 'Model.create()' inside a for loop may impact performance. "
-            "Consider using 'Model.bulk_create()' instead."
+            "Using 'Model.manager.create()' inside a for loop may negatively "
+            "impact performance. Consider using 'Model.manager.bulk_create()' "
+            "instead."
         ),
         f"R{BASE_ID}05": (
             "Consider using 'Model.bulk_*()",
             "consider-using-bulk-create-save",
-            "Using 'Model.save()' inside a for loop may impact performance. "
-            "Consider using 'Model.bulk_update()' or "
-            "'Model.bulk_create()' instead."
+            "Using 'Model.save()' inside a for loop may negatively impact "
+            "performance. Consider using 'Model.manager.bulk_update()' or "
+            "'Model.manager.bulk_create()' instead."
         ),
     }
 

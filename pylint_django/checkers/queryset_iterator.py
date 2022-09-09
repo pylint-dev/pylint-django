@@ -7,6 +7,10 @@ from pylint_django.__pkginfo__ import BASE_ID
 
 
 class QuerysetIteratorForLoopChecker(checkers.BaseChecker):
+    """
+    Checks for usage of "QuerySet.all()" in the head of a for loop,
+    eventually suggesting the usage of ".iterator()"
+    """
     __implements__ = (interfaces.IAstroidChecker)
 
     name = "queryset-iterator-forloop-checker"
