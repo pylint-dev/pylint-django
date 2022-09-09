@@ -1,4 +1,4 @@
-from astroid.nodes import Call, Expr, Attribute
+from astroid.nodes import Attribute, Call, Expr
 from pylint import checkers, interfaces
 from pylint.checkers import utils
 
@@ -9,7 +9,8 @@ class ModelFilterForLoopChecker(checkers.BaseChecker):
     """
     Checks for usage of "Model.manager.filter() inside of for loops
     """
-    __implements__ = (interfaces.IAstroidChecker)
+
+    __implements__ = interfaces.IAstroidChecker
 
     name = "model-filter-forloop-checker"
 
@@ -19,7 +20,7 @@ class ModelFilterForLoopChecker(checkers.BaseChecker):
             "consider-using-in-queries",
             "Using 'Model.manager.filter()' or 'Model.manager.get() inside a "
             "for loop may negatively impact performance. Consider using a "
-            "single query with as '__in' filter instead, outside of the loop."
+            "single query with as '__in' filter instead, outside of the loop.",
         ),
     }
 

@@ -1,8 +1,9 @@
-from astroid.nodes import Call, Attribute
+from astroid.nodes import Attribute, Call
 from pylint import checkers, interfaces
 from pylint.checkers import utils
 
 from pylint_django.__pkginfo__ import BASE_ID
+
 # from pylint_django.augmentations import is_manager_attribute
 
 
@@ -11,7 +12,8 @@ class QuerysetIteratorForLoopChecker(checkers.BaseChecker):
     Checks for usage of "QuerySet.all()" in the head of a for loop,
     eventually suggesting the usage of ".iterator()"
     """
-    __implements__ = (interfaces.IAstroidChecker)
+
+    __implements__ = interfaces.IAstroidChecker
 
     name = "queryset-iterator-forloop-checker"
 
@@ -21,7 +23,7 @@ class QuerysetIteratorForLoopChecker(checkers.BaseChecker):
             "consider-using-queryset-iterator",
             "Using 'QuerySet.all()' may load all results in memory "
             "if you need to iterate over the data only once and don't need "
-            "caching, 'QuerySet.iterator()' may be a more performant option."
+            "caching, 'QuerySet.iterator()' may be a more performant option.",
         ),
     }
 

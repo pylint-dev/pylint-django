@@ -1,8 +1,9 @@
-from astroid.nodes import Call, Expr, Attribute
+from astroid.nodes import Attribute, Call, Expr
 from pylint import checkers, interfaces
 from pylint.checkers import utils
 
 from pylint_django.__pkginfo__ import BASE_ID
+
 # from pylint_django.augmentations import is_manager_attribute
 
 
@@ -11,7 +12,8 @@ class ModelSaveForLoopChecker(checkers.BaseChecker):
     Checks for usage of Model.manager.create() or Model.save() inside of for
     loops
     """
-    __implements__ = (interfaces.IAstroidChecker)
+
+    __implements__ = interfaces.IAstroidChecker
 
     name = "model-save-forloop-checker"
 
@@ -21,14 +23,14 @@ class ModelSaveForLoopChecker(checkers.BaseChecker):
             "consider-using-bulk-create",
             "Using 'Model.manager.create()' inside a for loop may negatively "
             "impact performance. Consider using 'Model.manager.bulk_create()' "
-            "instead."
+            "instead.",
         ),
         f"R{BASE_ID}05": (
             "Consider using 'Model.bulk_*()",
             "consider-using-bulk-create-save",
             "Using 'Model.save()' inside a for loop may negatively impact "
             "performance. Consider using 'Model.manager.bulk_update()' or "
-            "'Model.manager.bulk_create()' instead."
+            "'Model.manager.bulk_create()' instead.",
         ),
     }
 
