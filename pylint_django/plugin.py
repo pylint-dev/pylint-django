@@ -15,6 +15,7 @@ def load_configuration(linter):
     """
     name_checker = get_checker(linter, NameChecker)
     name_checker.config.good_names += (
+        "pk",
         "qs",
         "urlpatterns",
         "register",
