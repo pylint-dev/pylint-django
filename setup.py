@@ -17,7 +17,7 @@ setup(
     version="2.5.3",
     packages=find_packages(),
     include_package_data=True,
-    python_requires='>=3.6.2',
+    python_requires=">=3.6.2",
     install_requires=[
         "pylint-plugin-utils>=0.7",
         "pylint>=2.0,<3",
