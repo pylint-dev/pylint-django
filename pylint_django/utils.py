@@ -1,4 +1,6 @@
 """Utils."""
+from contextlib import contextmanager
+import os
 import sys
 
 import astroid
@@ -38,3 +40,11 @@ def is_migrations_module(node):
         return False
 
     return "migrations" in node.path[0] and not node.path[0].endswith("__init__.py")
+
+
+@contextmanager
+def redirect_stdout_to_stderr():
+    orig_stdout = sys.stdout
+    sys.stdout = sys.stderr
+    yield
+    sys.stdout = orig_stdout

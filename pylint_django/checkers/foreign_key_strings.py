@@ -7,6 +7,7 @@ from pylint.interfaces import IAstroidChecker
 
 from pylint_django.__pkginfo__ import BASE_ID
 from pylint_django.transforms import foreignkey
+from pylint_django.utils import redirect_stdout_to_stderr
 
 
 class ForeignKeyStringsChecker(BaseChecker):
@@ -89,7 +90,8 @@ Consider passing in an explicit Django configuration file to match your project 
         try:
             import django  # pylint: disable=import-outside-toplevel
 
-            django.setup()
+            with redirect_stdout_to_stderr():
+                django.setup()
             from django.apps import (  # noqa pylint: disable=import-outside-toplevel,unused-import
                 apps,
             )
@@ -108,7 +110,8 @@ Consider passing in an explicit Django configuration file to match your project 
                 )
 
                 settings.configure()
-                django.setup()
+                with redirect_stdout_to_stderr():
+                    django.setup()
             else:
                 # see if we can load the provided settings module
                 try:
@@ -118,7 +121,8 @@ Consider passing in an explicit Django configuration file to match your project 
                     )
 
                     settings.configure(Settings(self.config.django_settings_module))
-                    django.setup()
+                    with redirect_stdout_to_stderr():
+                        django.setup()
                 except ImportError:
                     # we could not find the provided settings module...
                     # at least here it is a fatal error so we can just raise this immediately
@@ -132,7 +136,8 @@ Consider passing in an explicit Django configuration file to match your project 
                     )
 
                     settings.configure()
-                    django.setup()
+                    with redirect_stdout_to_stderr():
+                        django.setup()
 
         # Now we can add the transforms specific to this checker
         foreignkey.add_transform(astroid.MANAGER)
