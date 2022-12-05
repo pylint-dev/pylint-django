@@ -117,7 +117,9 @@ Consider passing in an explicit Django configuration file to match your project 
                         settings,
                     )
 
-                    settings.configure(Settings(self.config.django_settings_module))
+                    new_settings = Settings(self.config.django_settings_module)
+                    assert settings.configured
+
                     django.setup()
                 except ImportError:
                     # we could not find the provided settings module...
