@@ -3,7 +3,7 @@ from itertools import chain
 from astroid import MANAGER, InferenceError, UseInferenceDefault, inference_tip, nodes
 from astroid.nodes import Attribute, ClassDef
 
-from pylint_django.utils import node_is_subclass
+from pylint_django.utils import node_is_subclass, redirect_stdout_to_stderr
 
 
 def is_foreignkey_in_class(node):
@@ -41,7 +41,8 @@ def _get_model_class_defs_from_module(module, model_name, module_name):
 def _module_name_from_django_model_resolution(model_name, module_name):
     import django  # pylint: disable=import-outside-toplevel
 
-    django.setup()
+    with redirect_stdout_to_stderr():
+        django.setup()
     from django.apps import apps  # pylint: disable=import-outside-toplevel
 
     app = apps.get_app_config(module_name)
