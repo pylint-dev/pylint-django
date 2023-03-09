@@ -24,13 +24,14 @@ setup(
     extras_require={
         "with_django": ["Django"],
         "for_tests": [
-            "django_tables2",
-            "factory-boy",
             "coverage",
+            "django_tables2",
+            "django-tastypie",
+            "djangorestframework",
+            "factory-boy",
+            "pylint>=2.13",
             "pytest",
             "wheel",
-            "django-tastypie",
-            "pylint>=2.13",
         ],
     },
     license="GPLv2",
