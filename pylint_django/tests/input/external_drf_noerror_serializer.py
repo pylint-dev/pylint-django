@@ -9,3 +9,7 @@ from rest_framework import serializers
 class TestSerializerSubclass(serializers.ModelSerializer):
     class Meta:
         pass
+
+
+class TestSerializer(serializers.Serializer):
+    pass
