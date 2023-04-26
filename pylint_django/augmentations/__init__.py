@@ -797,6 +797,28 @@ def is_wsgi_application(node):
     )
 
 
+def is_drf_serializer(node):
+    """If class is child of DRF Serializer, it does not have to override create and update methods"""
+    return node_is_subclass(node, "rest_framework.serializers.Serializer")
+
+
+
+def has_different_docstring(node):
+    """Checks if function of child class has different docstring than parent"""
+    parent = node.parent.frame()
+    meth_node = None
+    if isinstance(parent, ClassDef):
+        for overridden in parent.local_attr_ancestors(node.name):
+            try:
+                meth_node = overridden[node.name]
+            except KeyError:
+                continue
+            if meth_node.doc != node.doc:
+                return True
+        return False
+    return False
+
+
 # Compat helpers
 def pylint_newstyle_classdef_compat(linter, warning_name, augment):
     if not hasattr(NewStyleConflictChecker, "visit_classdef"):
@@ -991,5 +1013,18 @@ def apply_augmentations(linter):
 
     # wsgi.py
     suppress_message(linter, NameChecker.visit_assignname, "invalid-name", is_wsgi_application)
+
+    # different docstings
+    suppress_message(
+        linter,
+        ClassChecker.visit_functiondef,
+        "useless-super-delegation",
+        has_different_docstring,
+    )
+
+    # not overriding creade and update in DRF Serializer class
+    suppress_message(
+        linter, ClassChecker.visit_classdef, "abstract-method", is_drf_serializer
+    )
 
     apply_wrapped_augmentations()
