@@ -802,7 +802,6 @@ def is_drf_serializer(node):
     return node_is_subclass(node, "rest_framework.serializers.Serializer")
 
 
-
 def has_different_docstring(node):
     """Checks if function of child class has different docstring than parent"""
     parent = node.parent.frame()
@@ -1023,8 +1022,6 @@ def apply_augmentations(linter):
     )
 
     # not overriding creade and update in DRF Serializer class
-    suppress_message(
-        linter, ClassChecker.visit_classdef, "abstract-method", is_drf_serializer
-    )
+    suppress_message(linter, ClassChecker.visit_classdef, "abstract-method", is_drf_serializer)
 
     apply_wrapped_augmentations()

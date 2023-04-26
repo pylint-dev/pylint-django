@@ -3,6 +3,7 @@ class Parent:
     def test():
         return 0
 
+
 class ChildDoc(Parent):
     def test():
         """Difference"""
