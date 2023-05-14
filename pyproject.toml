@@ -1,0 +1,81 @@
+[tool.poetry]
+name = "pylint-django"
+version = "2.5.3"
+readme = "README.rst"
+description = "A Pylint plugin to help Pylint understand the Django web framework"
+repository = "https://github.com/PyCQA/pylint-django"
+authors = ["Carl Crowder <git@carlcrowder.com>"]
+license="GPLv2"
+classifiers=[
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: Unix",
+    "Topic :: Software Development :: Quality Assurance",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Framework :: Django :: 1.11",
+    "Framework :: Django :: 2.0",
+    "Framework :: Django :: 2.1",
+    "Framework :: Django :: 2.2",
+    "Framework :: Django :: 3",
+    "Framework :: Django :: 3.0",
+    "Framework :: Django :: 3.1",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4",
+    "Framework :: Django :: 4.0",
+    "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+]
+keywords=["pylint", "django", "plugin"]
+packages = [
+  { include = "pylint_django/"}
+]
+include = [
+  "LICENSE",
+  "*.rst",
+  "*.md"
+]
+exclude = ["**/tests/**", "**/testutils.py", "**/tests.py"]
+
+[tool.poetry.dependencies]
+python = ">=3.7,<4.0"
+pylint-plugin-utils = ">=0.7"
+pylint = ">=2.0,<3"
+
+[tool.poetry.group.dev.dependencies]
+pylint = ">=2.13"
+django-tables2 = "^2.5.3"
+factory-boy = "^3.2.1"
+coverage = "^7.2.5"
+pytest = "^7.3.1"
+wheel = "^0.40.0"
+django-tastypie = "^0.14.5"
+
+[tool.poetry.extras]
+with_django = ["Django"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
+exclude = '''
+/(
+    tests/
+)/
+'''
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 120
