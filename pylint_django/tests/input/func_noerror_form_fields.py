@@ -12,7 +12,6 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class ManyFieldsForm(forms.Form):
-
     booleanfield = forms.BooleanField()
     charfield = forms.CharField(max_length=40, null=True)
     datetimefield = forms.DateTimeField(auto_now_add=True)

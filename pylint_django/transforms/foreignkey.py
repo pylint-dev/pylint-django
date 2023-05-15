@@ -51,9 +51,7 @@ def _module_name_from_django_model_resolution(model_name, module_name):
 
 
 def infer_key_classes(node, context=None):
-    from django.core.exceptions import (  # pylint: disable=import-outside-toplevel
-        ImproperlyConfigured,
-    )
+    from django.core.exceptions import ImproperlyConfigured  # pylint: disable=import-outside-toplevel
 
     keyword_args = []
     if node.keywords:

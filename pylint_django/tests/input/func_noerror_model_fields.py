@@ -12,7 +12,6 @@ from django.db import models
 
 
 class LotsOfFieldsModel(models.Model):
-
     bigintegerfield = models.BigIntegerField()
     booleanfield = models.BooleanField(default=True)
     charfield = models.CharField(max_length=40, null=True)

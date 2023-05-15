@@ -7,7 +7,6 @@ def forwards_test(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     operations = [
         migrations.RunPython(),  # [missing-backwards-migration-callable]
         migrations.RunPython(forwards_test),  # [missing-backwards-migration-callable]

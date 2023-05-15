@@ -11,23 +11,10 @@ from astroid.objects import Super
 from django import VERSION as django_version
 from django.utils import termcolors
 from django.views.generic.base import ContextMixin, RedirectView, View
-from django.views.generic.dates import (
-    DateMixin,
-    DayMixin,
-    MonthMixin,
-    WeekMixin,
-    YearMixin,
-)
-from django.views.generic.detail import (
-    SingleObjectMixin,
-    SingleObjectTemplateResponseMixin,
-    TemplateResponseMixin,
-)
+from django.views.generic.dates import DateMixin, DayMixin, MonthMixin, WeekMixin, YearMixin
+from django.views.generic.detail import SingleObjectMixin, SingleObjectTemplateResponseMixin, TemplateResponseMixin
 from django.views.generic.edit import DeletionMixin, FormMixin, ModelFormMixin
-from django.views.generic.list import (
-    MultipleObjectMixin,
-    MultipleObjectTemplateResponseMixin,
-)
+from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin
 from pylint.checkers.base import DocStringChecker, NameChecker
 from pylint.checkers.classes import ClassChecker
 from pylint.checkers.design_analysis import MisdesignChecker

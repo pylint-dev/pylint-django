@@ -80,9 +80,7 @@ Consider passing in an explicit Django configuration file to match your project 
         # state is stashed in this property.
 
         try:
-            from django.core.exceptions import (  # pylint: disable=import-outside-toplevel
-                ImproperlyConfigured,
-            )
+            from django.core.exceptions import ImproperlyConfigured  # pylint: disable=import-outside-toplevel
         except ModuleNotFoundError:
             return
 
@@ -90,9 +88,7 @@ Consider passing in an explicit Django configuration file to match your project 
             import django  # pylint: disable=import-outside-toplevel
 
             django.setup()
-            from django.apps import (  # noqa pylint: disable=import-outside-toplevel,unused-import
-                apps,
-            )
+            from django.apps import apps  # noqa pylint: disable=import-outside-toplevel,unused-import
 
             # flake8: noqa=F401, F403
         except ImproperlyConfigured:
@@ -103,19 +99,14 @@ Consider passing in an explicit Django configuration file to match your project 
                 # we will warn the user that they haven't actually configured Django themselves
                 self._raise_warning = True
                 # but use django defaults then...
-                from django.conf import (  # pylint: disable=import-outside-toplevel
-                    settings,
-                )
+                from django.conf import settings  # pylint: disable=import-outside-toplevel
 
                 settings.configure()
                 django.setup()
             else:
                 # see if we can load the provided settings module
                 try:
-                    from django.conf import (  # pylint: disable=import-outside-toplevel
-                        Settings,
-                        settings,
-                    )
+                    from django.conf import Settings, settings  # pylint: disable=import-outside-toplevel
 
                     settings.configure(Settings(self.config.django_settings_module))
                     django.setup()
@@ -127,9 +118,7 @@ Consider passing in an explicit Django configuration file to match your project 
                         args=self.config.django_settings_module,
                     )
                     # however we'll trundle on with basic settings
-                    from django.conf import (  # pylint: disable=import-outside-toplevel
-                        settings,
-                    )
+                    from django.conf import settings  # pylint: disable=import-outside-toplevel
 
                     settings.configure()
                     django.setup()
