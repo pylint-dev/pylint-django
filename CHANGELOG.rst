@@ -4,6 +4,13 @@ Changelog
 Version 2.6.0 (14 May 2023)
 ---------------------------
 
+NOTICE
+~~~~~~
+
+This version drops support for Python 3.6
+
+Bugfixes
+~~~~~~~~
 
 
 
