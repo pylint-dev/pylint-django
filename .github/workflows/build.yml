@@ -12,20 +12,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.6]
-        toxenv: [django_not_installed, django_is_installed, flake8, pylint, readme]
+        python-version: [3.7]
+        toxenv: [django_not_installed, flake8, pylint, readme]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Execute tests
         run: |
-            pip install tox
-            pip install -e .[for_tests]
+            pip install -U pip poetry tox
+            poetry install -E for_tests
 
             export TOXENV=${{ matrix.toxenv }}
             export PYTHON=${{ matrix.python-version }}
@@ -42,16 +42,16 @@ jobs:
         django-version: [-main, "4.0"]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Execute tests
         run: |
-            pip install tox
-            pip install -e .[for_tests]
+            pip install -U pip poetry tox
+            poetry install -E for_tests
 
             export DJANGO=${{ matrix.django-version }}
             export PYTHON=${{ matrix.python-version }}
@@ -76,16 +76,16 @@ jobs:
         django-version: [3.2, 3.1, "3.0", "2.0", "2.2", "1.11"]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Execute tests
         run: |
-            pip install tox
-            pip install -e .[for_tests]
+            pip install -U pip poetry tox
+            poetry install -E for_tests
 
             export DJANGO=${{ matrix.django-version }}
             export PYTHON=${{ matrix.python-version }}
@@ -107,15 +107,15 @@ jobs:
         python-version: [3.7]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Build
         run: |
-            pip install tox
-            pip install -e .[for_tests]
+            pip install -U pip poetry tox
+            poetry install -E for_tests
 
             ./scripts/build.sh

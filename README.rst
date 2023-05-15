@@ -32,7 +32,7 @@ this causes more trouble than good,
 `see discussion <https://github.com/PyCQA/pylint-django/pull/132>`__. If you wish
 to automatically install the latest version of ``Django`` then::
 
-    pip install pylint-django[with_django]
+    pip install pylint-django[with-django]
 
 otherwise sort out your testing environment and please **DO NOT** report issues
 about missing Django!

@@ -68,7 +68,7 @@ echo "..... Trying to install the new tarball inside a virtualenv"
 # note: installs with the optional dependency to verify this is still working
 virtualenv .venv/test-tarball
 source .venv/test-tarball/bin/activate
-pip install -f dist/ pylint_django[with_django]
+pip install -f dist/ pylint_django[with-django]
 pip freeze | grep Django
 deactivate
 rm -rf .venv/
