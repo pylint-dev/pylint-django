@@ -44,6 +44,9 @@ python = ">=3.7,<4.0"
 pylint-plugin-utils = ">=0.8"
 pylint = ">=2.0,<3"
 Django = {version=">=2.2", optional = true}
+django-tables2 = {version="^2.5.3", optional = true}
+factory-boy = {version="^3.2.1", optional = true}
+django-tastypie = {version="^0.14.5", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 tox = "^4.5.1"
@@ -52,9 +55,6 @@ pylint = ">=2.13"
 coverage = "^7.2.5"
 twine = "^4.0.2"
 wheel = "^0.40.0"
-django-tables2 = {version="^2.5.3", optional = true}
-factory-boy = {version="^3.2.1", optional = true}
-django-tastypie = {version="^0.14.5", optional = true}
 
 [tool.poetry.extras]
 with_django = ["Django"]
