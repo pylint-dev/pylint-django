@@ -1,0 +1,80 @@
+name: tests
+
+on:
+  push:
+    branches: master
+  pull_request:
+jobs:
+  test:
+    name: latest / Django@${{ matrix.django-version }} / Python@${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.8, 3.9, "3.10", "3.11"]
+        django-version: [-main, "4.2"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Execute tests
+        run: |
+            pip install -U pip poetry tox
+            poetry install -E for_tests
+
+            export DJANGO=${{ matrix.django-version }}
+            export PYTHON=${{ matrix.python-version }}
+            export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
+            tox
+
+      - name: Coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            pip install coveralls
+            coveralls --service=github
+
+  test_lts:  # testing older versions of python+django
+    name: LTS / Django@${{ matrix.django-version }} / Python@${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:  # TODO: use a YAML anchor - not supported in GitHub actions "yet"
+      fail-fast: false
+      matrix:
+        python-version: [3.8, 3.9, "3.10", "3.11"]
+        django-version: [
+          # See  https://www.djangoproject.com/download/
+          # You must also modify the tox.ini if you touch this !
+          # "4.2", # EOL Extended April 2026
+          "3.2", # EOL Extended April 2024
+          "4.1", # EOL Extended December 2023
+        ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Execute tests
+        run: |
+            pip install -U pip poetry tox
+            poetry install -E for_tests
+
+            export DJANGO=${{ matrix.django-version }}
+            export PYTHON=${{ matrix.python-version }}
+            export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
+            tox
+
+      - name: Coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            pip install coveralls
+            coveralls --service=github

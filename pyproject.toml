@@ -12,18 +12,11 @@ classifiers=[
     "Operating System :: Unix",
     "Topic :: Software Development :: Quality Assurance",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "Framework :: Django :: 2.2",
-    "Framework :: Django :: 3",
-    "Framework :: Django :: 3.0",
-    "Framework :: Django :: 3.1",
     "Framework :: Django :: 3.2",
-    "Framework :: Django :: 4",
-    "Framework :: Django :: 4.0",
     "Framework :: Django :: 4.1",
     "Framework :: Django :: 4.2",
     "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
@@ -40,7 +33,7 @@ include = [
 exclude = ["**/tests/**", "**/testutils.py", "**/tests.py"]
 
 [tool.poetry.dependencies]
-python = ">=3.7,<4.0"
+python = ">=3.8,<4.0"
 pylint-plugin-utils = ">=0.8"
 pylint = ">=2.0,<3"
 Django = {version=">=2.2", optional = true}
