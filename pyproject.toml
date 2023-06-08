@@ -66,3 +66,8 @@ include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
 line_length = 120
+
+[tool.pylint.main]
+disable = ["missing-docstring","too-many-branches","too-many-return-statements","too-many-ancestors","fixme"]
+ignore="tests"
+max-line-length = 120
