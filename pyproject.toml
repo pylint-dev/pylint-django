@@ -44,21 +44,20 @@ python = ">=3.7,<4.0"
 pylint-plugin-utils = ">=0.8"
 pylint = ">=2.0,<3"
 Django = {version=">=2.2", optional = true}
-django-tables2 = {version="^2.5.3", optional = true}
-factory-boy = {version="^3.2.1", optional = true}
-django-tastypie = {version="^0.14.5", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 tox = "^4.5.1"
 pytest = "^7.3.1"
 pylint = ">=2.13"
-coverage = "^7.2.5"
 twine = "^4.0.2"
 wheel = "^0.40.0"
+pytest-cov = "^4.0.0"
+django-tables2 = "^2.6.0"
+factory-boy = "^3.3.0"
+django-tastypie = "^0.14.6"
 
 [tool.poetry.extras]
 with_django = ["Django"]
-for_tests = ['django-tastypie', 'django-tables2', 'factory-boy']
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
