@@ -7,10 +7,10 @@ Various suggestions about JSON http responses
 """
 
 import astroid
-from pylint import checkers, interfaces
-from pylint.checkers import utils
+from pylint import checkers
 
 from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django.compat import check_messages
 
 
 class JsonResponseChecker(checkers.BaseChecker):
@@ -18,8 +18,6 @@ class JsonResponseChecker(checkers.BaseChecker):
     Looks for some common patterns when returning http responses containing
     JSON data!
     """
-
-    __implements__ = (interfaces.IAstroidChecker,)
 
     # configuration section name
     name = "json-response-checker"
@@ -43,7 +41,7 @@ class JsonResponseChecker(checkers.BaseChecker):
         ),
     }
 
-    @utils.check_messages(
+    @check_messages(
         "http-response-with-json-dumps",
         "http-response-with-content-type-json",
         "redundant-content-type-for-json-response",

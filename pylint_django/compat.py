@@ -20,6 +20,11 @@ except ImportError:
     except ImportError:
         from astroid.util import Uninferable
 
+try:
+    from pylint.checkers.utils import check_messages
+except (ImportError, ModuleNotFoundError):
+    from pylint.checkers.utils import only_required_for_messages as check_messages
+
 import pylint
 
 # pylint before version 2.3 does not support load_configuration() hook.

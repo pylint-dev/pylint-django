@@ -10,11 +10,11 @@ pylint --load-plugins=pylint_django.checkers.migrations
 
 import astroid
 from pylint import checkers, interfaces
-from pylint.checkers import utils
 from pylint_plugin_utils import suppress_message
 
 from pylint_django import compat
 from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django.compat import check_messages
 from pylint_django.utils import is_migrations_module
 
 
@@ -86,7 +86,7 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
             if node not in self._possible_offences[module]:
                 self._possible_offences[module].append(node)
 
-    @utils.check_messages("new-db-field-with-default")
+    @check_messages("new-db-field-with-default")
     def close(self):
         def _path(node):
             return node.path
@@ -125,7 +125,7 @@ class MissingBackwardsMigrationChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("missing-backwards-migration-callable")
+    @check_messages("missing-backwards-migration-callable")
     def visit_call(self, node):
         try:
             module = node.frame().parent

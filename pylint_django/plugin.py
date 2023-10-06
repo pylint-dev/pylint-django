@@ -1,7 +1,4 @@
 """Common Django module."""
-from pylint.checkers.base import NameChecker
-from pylint_plugin_utils import get_checker
-
 # we want to import the transforms to make sure they get added to the astroid manager,
 # however we don't actually access them directly, so we'll disable the warning
 from pylint_django import transforms  # noqa, pylint: disable=unused-import
@@ -13,8 +10,7 @@ def load_configuration(linter):
     """
     Amend existing checker config.
     """
-    name_checker = get_checker(linter, NameChecker)
-    name_checker.config.good_names += (
+    linter.config.good_names += (
         "pk",
         "qs",
         "urlpatterns",

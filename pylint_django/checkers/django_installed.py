@@ -1,9 +1,9 @@
 from __future__ import absolute_import
 
 from pylint.checkers import BaseChecker
-from pylint.checkers.utils import check_messages
 
 from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django.compat import check_messages
 
 
 class DjangoInstalledChecker(BaseChecker):
