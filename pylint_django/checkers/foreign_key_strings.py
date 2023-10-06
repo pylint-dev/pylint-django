@@ -2,10 +2,9 @@ from __future__ import absolute_import
 
 import astroid
 from pylint.checkers import BaseChecker
-from pylint.checkers.utils import check_messages
-from pylint.interfaces import IAstroidChecker
 
 from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django.compat import check_messages
 from pylint_django.transforms import foreignkey
 
 
@@ -26,8 +25,6 @@ This can be done via the DJANGO_SETTINGS_MODULE environment variable or the pyli
 
 Some basic default settings were used, however this will lead to less accurate linting.
 Consider passing in an explicit Django configuration file to match your project to improve accuracy."""
-
-    __implements__ = (IAstroidChecker,)
 
     name = "Django foreign keys referenced by strings"
 
@@ -95,7 +92,12 @@ Consider passing in an explicit Django configuration file to match your project 
             # this means that Django wasn't able to configure itself using some defaults
             # provided (likely in a DJANGO_SETTINGS_MODULE environment variable)
             # so see if the user has specified a pylint option
-            if self.config.django_settings_module is None:
+            if hasattr(self, "linter"):
+                django_settings_module = self.linter.config.django_settings_module
+            else:
+                django_settings_module = self.config.django_settings_module
+
+            if django_settings_module is None:
                 # we will warn the user that they haven't actually configured Django themselves
                 self._raise_warning = True
                 # but use django defaults then...
@@ -108,7 +110,7 @@ Consider passing in an explicit Django configuration file to match your project 
                 try:
                     from django.conf import Settings, settings  # pylint: disable=import-outside-toplevel
 
-                    settings.configure(Settings(self.config.django_settings_module))
+                    settings.configure(Settings(django_settings_module))
                     django.setup()
                 except ImportError:
                     # we could not find the provided settings module...

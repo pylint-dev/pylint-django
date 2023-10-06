@@ -2,10 +2,9 @@
 from astroid import Const
 from astroid.nodes import Assign, AssignName, ClassDef, FunctionDef
 from pylint.checkers import BaseChecker
-from pylint.checkers.utils import check_messages
-from pylint.interfaces import IAstroidChecker
 
 from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django.compat import check_messages
 from pylint_django.utils import PY3, node_is_subclass
 
 MESSAGES = {
@@ -74,8 +73,6 @@ def _is_unicode_or_str_in_python_2_compatibility(method):
 
 class ModelChecker(BaseChecker):
     """Django model checker."""
-
-    __implements__ = IAstroidChecker
 
     name = "django-model-checker"
     msgs = MESSAGES

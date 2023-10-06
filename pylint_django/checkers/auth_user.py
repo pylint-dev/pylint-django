@@ -1,12 +1,10 @@
-from pylint import checkers, interfaces
-from pylint.checkers import utils
+from pylint import checkers
 
 from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django.compat import check_messages
 
 
 class AuthUserChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "auth-user-checker"
 
     msgs = {
@@ -22,14 +20,14 @@ class AuthUserChecker(checkers.BaseChecker):
         ),
     }
 
-    @utils.check_messages("hard-coded-auth-user")
+    @check_messages("hard-coded-auth-user")
     def visit_const(self, node):
         # for now we don't check if the parent is a ForeignKey field
         # because the user model should not be hard-coded anywhere
         if node.value == "auth.User":
             self.add_message("hard-coded-auth-user", node=node)
 
-    @utils.check_messages("imported-auth-user")
+    @check_messages("imported-auth-user")
     def visit_importfrom(self, node):
         if node.modname == "django.contrib.auth.models":
             for imported_names in node.names:
