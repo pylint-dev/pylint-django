@@ -108,7 +108,9 @@ Consider passing in an explicit Django configuration file to match your project 
                 try:
                     from django.conf import Settings, settings  # pylint: disable=import-outside-toplevel
 
-                    settings.configure(Settings(self.config.django_settings_module))
+                    Settings(self.config.django_settings_module)
+                    assert settings.configured
+
                     django.setup()
                 except ImportError:
                     # we could not find the provided settings module...
