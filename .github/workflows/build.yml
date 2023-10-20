@@ -35,7 +35,7 @@ jobs:
 
 
   test:
-    name: test latest / Django@${{ matrix.django-version }} / Python@${{ matrix.python-version }}
+    name: test latest / P@${{ matrix.python-version }} / D@${{ matrix.django-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
