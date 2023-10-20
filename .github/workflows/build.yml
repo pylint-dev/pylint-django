@@ -71,7 +71,7 @@ jobs:
             coveralls --service=github
 
   test_deprecated:  # testing older versions of python+django
-    name: test old stuff / Django@${{ matrix.django-version }} / Python@${{ matrix.python-version }}
+    name: test old stuff / P@${{ matrix.python-version }} / D@${{ matrix.django-version }}
     runs-on: ubuntu-latest
     strategy:  # TODO: use a YAML anchor - not supported in GitHub actions "yet"
       fail-fast: false
