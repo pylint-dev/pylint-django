@@ -59,7 +59,7 @@ jobs:
             export DJANGO=${{ matrix.django-version }}
             export PYTHON=${{ matrix.python-version }}
             export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
-            tox
+            poetry run tox
 
       - name: Coveralls
         env:
