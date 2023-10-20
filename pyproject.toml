@@ -44,9 +44,9 @@ python = ">=3.7,<4.0"
 pylint-plugin-utils = ">=0.8"
 pylint = ">=2.0,<3"
 Django = {version=">=2.2", optional = true}
-pytest = "^7.3.1"
 
 [tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
 tox = "^4.5.1"
 pylint = ">=2.13"
 twine = "^4.0.2"
