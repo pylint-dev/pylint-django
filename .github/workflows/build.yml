@@ -2,8 +2,10 @@ name: build
 
 on:
   push:
-    branches: master
-  pull_request:
+    branches:
+        - master
+        - fix-ci-actions
+    pull_request:
 
 jobs:
   sanity:
