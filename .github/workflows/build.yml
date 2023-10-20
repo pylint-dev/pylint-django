@@ -27,7 +27,7 @@ jobs:
       - name: Execute tests
         run: |
             pip install -U pip poetry tox
-            poetry install -E for_tests
+            poetry install
 
             export TOXENV=${{ matrix.toxenv }}
             export PYTHON=${{ matrix.python-version }}
