@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.8, 3.9, "3.10", "3.11"]
+        python-version: [3.8, 3.9, "3.10", "3.11", "3.12"]
         django-version: [-main, "4.0"]
 
     steps:
@@ -53,6 +53,7 @@ jobs:
       - name: Execute tests
         run: |
             pip install -U pip poetry tox
+            poetry config virtualenvs.create false
             poetry install
 
             export DJANGO=${{ matrix.django-version }}
