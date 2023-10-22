@@ -5,7 +5,7 @@ readme = "README.rst"
 description = "A Pylint plugin to help Pylint understand the Django web framework"
 repository = "https://github.com/PyCQA/pylint-django"
 authors = ["Carl Crowder <git@carlcrowder.com>"]
-classifiers=[
+classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Intended Audience :: Developers",
@@ -17,6 +17,7 @@ classifiers=[
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Framework :: Django :: 2.2",
     "Framework :: Django :: 3",
     "Framework :: Django :: 3.0",
@@ -28,14 +29,14 @@ classifiers=[
     "Framework :: Django :: 4.2",
     "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
 ]
-keywords=["pylint", "django", "plugin"]
+keywords = ["pylint", "django", "plugin"]
 packages = [
-  { include = "pylint_django/"}
+    { include = "pylint_django/" }
 ]
 include = [
-  "LICENSE",
-  "*.rst",
-  "*.md"
+    "LICENSE",
+    "*.rst",
+    "*.md"
 ]
 exclude = ["**/tests/**", "**/testutils.py", "**/tests.py"]
 
@@ -43,10 +44,9 @@ exclude = ["**/tests/**", "**/testutils.py", "**/tests.py"]
 python = ">=3.7,<4.0"
 pylint-plugin-utils = ">=0.8"
 pylint = ">=2.0,<3"
-Django = {version=">=2.2", optional = true}
+Django = { version = ">=2.2", optional = true }
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.3.1"
 tox = "^4.5.1"
 pylint = ">=2.13"
 twine = "^4.0.2"
@@ -55,6 +55,7 @@ pytest-cov = "^4.0.0"
 django-tables2 = "^2.6.0"
 factory-boy = "^3.3.0"
 django-tastypie = "^0.14.6"
+pytest = "^7.3.1"
 
 [tool.poetry.extras]
 with_django = ["Django"]
