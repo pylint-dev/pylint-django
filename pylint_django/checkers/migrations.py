@@ -9,7 +9,7 @@ pylint --load-plugins=pylint_django.checkers.migrations
 """
 
 import astroid
-from pylint import checkers, interfaces
+from pylint import checkers
 from pylint_plugin_utils import suppress_message
 
 from pylint_django import compat
@@ -50,8 +50,6 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
     be created instantly and then possibly populate the table with the
     desired default values.
     """
-
-    __implements__ = (interfaces.IAstroidChecker,)
 
     # configuration section name
     name = "new-db-field-with-default"
@@ -113,8 +111,6 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
 
 
 class MissingBackwardsMigrationChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "missing-backwards-migration-callable"
 
     msgs = {
