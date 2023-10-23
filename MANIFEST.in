@@ -1,0 +1,5 @@
+include *.md
+include *.rst
+include LICENSE
+include pylint_django/transforms/transforms/*.py
+prune pylint_django/tests
