@@ -15,7 +15,7 @@ About
 -----
 
 ``pylint-django`` is a `Pylint <http://pylint.org>`__ plugin for improving code
-analysis when analysing code using Django. It is also used by the
+analysis when analyzing code using Django. It is also used by the
 `Prospector <https://github.com/landscapeio/prospector>`__ tool.
 
 
