@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pylint-django"
-version = "2.5.4"
+version = "2.5.5"
 readme = "README.rst"
 description = "A Pylint plugin to help Pylint understand the Django web framework"
 repository = "https://github.com/PyCQA/pylint-django"
