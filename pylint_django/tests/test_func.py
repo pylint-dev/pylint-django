@@ -115,6 +115,7 @@ def test_migrations_plugin(test_file):
 
 
 @pytest.mark.parametrize("test_file", MIGRATIONS_TESTS[:1], ids=MIGRATIONS_TESTS_NAMES[:1])
+@pytest.mark.skip  # currently skipped because ArgParser which pylint uses is not picklable so ...
 def test_linter_should_be_pickleable_with_pylint_django_plugin_installed(test_file):
     LintTest = PylintDjangoMigrationsTest(test_file)
     LintTest.setUp()
