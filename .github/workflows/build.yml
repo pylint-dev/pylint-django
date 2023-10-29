@@ -25,7 +25,7 @@ jobs:
       - name: Execute tests
         run: |
             pip install -U pip poetry tox
-            poetry install -E for_tests
+            poetry install
 
             export TOXENV=${{ matrix.toxenv }}
             export PYTHON=${{ matrix.python-version }}
@@ -51,7 +51,7 @@ jobs:
       - name: Execute tests
         run: |
             pip install -U pip poetry tox
-            poetry install -E for_tests
+            poetry install
 
             export DJANGO=${{ matrix.django-version }}
             export PYTHON=${{ matrix.python-version }}
@@ -85,7 +85,7 @@ jobs:
       - name: Execute tests
         run: |
             pip install -U pip poetry tox
-            poetry install -E for_tests
+            poetry install
 
             export DJANGO=${{ matrix.django-version }}
             export PYTHON=${{ matrix.python-version }}
@@ -116,6 +116,6 @@ jobs:
       - name: Build
         run: |
             pip install -U pip poetry tox
-            poetry install -E for_tests
+            poetry install
 
             ./scripts/build.sh
