@@ -95,6 +95,9 @@ Consider passing in an explicit Django configuration file to match your project 
             if hasattr(self, "linter"):
                 django_settings_module = self.linter.config.django_settings_module
             else:
+                # TODO: remove this no-member ignore : this is to avoid the missing `config` for pylint 3+,
+                #  and can be removed once pylint 2
+                # pylint: disable=no-member
                 django_settings_module = self.config.django_settings_module
 
             if django_settings_module is None:
