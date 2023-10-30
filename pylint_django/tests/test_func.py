@@ -99,7 +99,7 @@ def test_everything(test_file):
     # copied from pylint.tests.test_functional.test_functional
     lint_test = PylintDjangoLintModuleTest(test_file)
     lint_test.setUp()
-    lint_test._runTest()
+    lint_test.runTest()
 
 
 # NOTE: define tests for the migrations checker!
