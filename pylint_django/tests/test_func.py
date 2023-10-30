@@ -97,9 +97,9 @@ TESTS_NAMES = [t.base for t in TESTS]
 @pytest.mark.parametrize("test_file", TESTS, ids=TESTS_NAMES)
 def test_everything(test_file):
     # copied from pylint.tests.test_functional.test_functional
-    LintTest = PylintDjangoLintModuleTest(test_file)
-    LintTest.setUp()
-    LintTest._runTest()
+    lint_test = PylintDjangoLintModuleTest(test_file)
+    lint_test.setUp()
+    lint_test._runTest()
 
 
 # NOTE: define tests for the migrations checker!
@@ -109,21 +109,17 @@ MIGRATIONS_TESTS_NAMES = [t.base for t in MIGRATIONS_TESTS]
 
 @pytest.mark.parametrize("test_file", MIGRATIONS_TESTS, ids=MIGRATIONS_TESTS_NAMES)
 def test_migrations_plugin(test_file):
-    LintTest = PylintDjangoMigrationsTest(test_file)
-    LintTest.setUp()
-    LintTest._runTest()
+    lint_test = PylintDjangoMigrationsTest(test_file)
+    lint_test.setUp()
+    lint_test.runTest()
 
 
 @pytest.mark.parametrize("test_file", MIGRATIONS_TESTS[:1], ids=MIGRATIONS_TESTS_NAMES[:1])
 @pytest.mark.skip  # currently skipped because ArgParser which pylint uses is not picklable so ...
 def test_linter_should_be_pickleable_with_pylint_django_plugin_installed(test_file):
-    LintTest = PylintDjangoMigrationsTest(test_file)
-    LintTest.setUp()
+    lint_test = PylintDjangoMigrationsTest(test_file)
+    lint_test.setUp()
 
     # LintModuleTest sets reporter to instance of FunctionalTestReporter that is not picklable
-    LintTest._linter.reporter = None
-    pickle.dumps(LintTest._linter)
-
-
-if __name__ == "__main__":
-    sys.exit(pytest.main(sys.argv))
+    lint_test._linter.reporter = None
+    pickle.dumps(lint_test._linter)
