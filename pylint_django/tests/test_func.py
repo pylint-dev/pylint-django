@@ -17,11 +17,11 @@ try:
 
     if "test" not in csv.list_dialects():
 
-        class test_dialect(csv.excel):
+        class TestDialect(csv.excel):
             delimiter = ":"
             lineterminator = "\n"
 
-        csv.register_dialect("test", test_dialect)
+        csv.register_dialect("test", TestDialect)
 
     lint_module_test.PYLINTRC = HERE / "testing_pylint.rc"
 except (ImportError, AttributeError):
