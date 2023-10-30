@@ -74,6 +74,11 @@ use_parentheses = true
 line_length = 120
 
 [tool.pylint.main]
-disable = ["missing-docstring","too-many-branches","too-many-return-statements","too-many-ancestors","fixme"]
+disable = [
+    "missing-docstring",
+    "too-many-branches", "too-many-return-statements", "too-many-ancestors",
+    "too-few-public-methods",
+    "fixme",
+]
 ignore="tests"
 max-line-length = 120
