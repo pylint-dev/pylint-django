@@ -117,11 +117,11 @@ def test_migrations_plugin(test_file):
 
 
 @pytest.mark.parametrize("test_file", MIGRATIONS_TESTS[:1], ids=MIGRATIONS_TESTS_NAMES[:1])
-@pytest.mark.skip  # currently skipped because ArgParser which pylint uses is not picklable so ...
+@pytest.mark.skip  # TODO currently skipped because ArgParser which pylint uses is not pickable.
 def test_linter_should_be_pickleable_with_pylint_django_plugin_installed(test_file):
     lint_test = PylintDjangoMigrationsTest(test_file)
     lint_test.setUp()
-
+    # pylint: disable=protected-access
     # LintModuleTest sets reporter to instance of FunctionalTestReporter that is not picklable
     lint_test._linter.reporter = None
     pickle.dumps(lint_test._linter)
