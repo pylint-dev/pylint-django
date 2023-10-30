@@ -46,7 +46,7 @@ def is_model_or_form_field(cls):
     return is_model_field(cls) or is_form_field(cls)
 
 
-def apply_type_shim(cls, _context=None):  # noqa
+def apply_type_shim(cls, _context=None):
     if cls.name in _STR_FIELDS:
         base_nodes = scoped_nodes.builtin_lookup("str")
     elif cls.name in _INT_FIELDS:
@@ -93,7 +93,7 @@ def apply_type_shim(cls, _context=None):  # noqa
     else:
         base_nodes = list(base_nodes[1])
 
-    return iter([cls] + base_nodes)
+    return iter([cls, *base_nodes])
 
 
 def _valid_base_node(node, context):

@@ -790,7 +790,8 @@ def pylint_newstyle_classdef_compat(linter, warning_name, augment):
         return
     suppress_message(
         linter,
-        getattr(NewStyleConflictChecker, "visit_classdef"),
+        # pylint: disable-next=no-member
+        NewStyleConflictChecker.visit_classdef,
         warning_name,
         augment,
     )
