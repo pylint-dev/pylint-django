@@ -24,16 +24,17 @@ jobs:
 
       - name: Execute tests
         run: |
-            pip install -U pip poetry tox
-            poetry install
+          pip install -U pip poetry tox
+          poetry install
 
-            export TOXENV=${{ matrix.toxenv }}
-            export PYTHON=${{ matrix.python-version }}
-            tox
-
+          export TOXENV=${{ matrix.toxenv }}
+          export PYTHON=${{ matrix.python-version }}
+          tox
 
   test:
-    name: test latest / Django@${{ matrix.django-version }} / Python@${{ matrix.python-version }}
+    name:
+      test latest / Django@${{ matrix.django-version }} / Python@${{
+      matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -50,26 +51,28 @@ jobs:
 
       - name: Execute tests
         run: |
-            pip install -U pip poetry tox
-            poetry install
+          pip install -U pip poetry tox
+          poetry install
 
-            export DJANGO=${{ matrix.django-version }}
-            export PYTHON=${{ matrix.python-version }}
-            export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
-            tox
+          export DJANGO=${{ matrix.django-version }}
+          export PYTHON=${{ matrix.python-version }}
+          export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
+          tox
 
       - name: Coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            pip install coveralls
-            coveralls --service=github
+          pip install coveralls
+          coveralls --service=github
 
-  test_deprecated:  # testing older versions of python+django
-    name: test old stuff / Django@${{ matrix.django-version }} / Python@${{ matrix.python-version }}
+  test_deprecated: # testing older versions of python+django
+    name:
+      test old stuff / Django@${{ matrix.django-version }} / Python@${{
+      matrix.python-version }}
     runs-on: ubuntu-latest
-    strategy:  # TODO: use a YAML anchor - not supported in GitHub actions "yet"
+    strategy: # TODO: use a YAML anchor - not supported in GitHub actions "yet"
       fail-fast: false
       matrix:
         python-version: [3.7, 3.8, 3.9]
@@ -84,21 +87,21 @@ jobs:
 
       - name: Execute tests
         run: |
-            pip install -U pip poetry tox
-            poetry install
+          pip install -U pip poetry tox
+          poetry install
 
-            export DJANGO=${{ matrix.django-version }}
-            export PYTHON=${{ matrix.python-version }}
-            export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
-            tox
+          export DJANGO=${{ matrix.django-version }}
+          export PYTHON=${{ matrix.python-version }}
+          export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
+          tox
 
       - name: Coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            pip install coveralls
-            coveralls --service=github
+          pip install coveralls
+          coveralls --service=github
 
   build_and_package_sanity:
     runs-on: ubuntu-latest
@@ -115,6 +118,6 @@ jobs:
 
       - name: Build
         run: |
-            pip install -U pip poetry tox
-            poetry install
-            ./scripts/build.sh
+          pip install -U pip poetry tox
+          poetry install
+          ./scripts/build.sh
