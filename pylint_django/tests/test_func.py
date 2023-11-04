@@ -17,11 +17,11 @@ try:
 
     if "test" not in csv.list_dialects():
 
-        class test_dialect(csv.excel):
+        class TestDialect(csv.excel):
             delimiter = ":"
             lineterminator = "\n"
 
-        csv.register_dialect("test", test_dialect)
+        csv.register_dialect("test", TestDialect)
 
     lint_module_test.PYLINTRC = HERE / "testing_pylint.rc"
 except (ImportError, AttributeError):
@@ -52,6 +52,8 @@ class PylintDjangoLintModuleTest(LintModuleTest):
 
     def __init__(self, test_file):
         # if hasattr(test_file, 'option_file') and test_file.option_file is None:
+        # pylint: disable=super-with-arguments
+        # TODO Fix this and the CI (?)
         super(PylintDjangoLintModuleTest, self).__init__(test_file)
         self._linter.load_plugin_modules(["pylint_django"])
         self._linter.load_plugin_configuration()
@@ -97,9 +99,9 @@ TESTS_NAMES = [t.base for t in TESTS]
 @pytest.mark.parametrize("test_file", TESTS, ids=TESTS_NAMES)
 def test_everything(test_file):
     # copied from pylint.tests.test_functional.test_functional
-    LintTest = PylintDjangoLintModuleTest(test_file)
-    LintTest.setUp()
-    LintTest._runTest()
+    lint_test = PylintDjangoLintModuleTest(test_file)
+    lint_test.setUp()
+    lint_test.runTest()
 
 
 # NOTE: define tests for the migrations checker!
@@ -109,21 +111,17 @@ MIGRATIONS_TESTS_NAMES = [t.base for t in MIGRATIONS_TESTS]
 
 @pytest.mark.parametrize("test_file", MIGRATIONS_TESTS, ids=MIGRATIONS_TESTS_NAMES)
 def test_migrations_plugin(test_file):
-    LintTest = PylintDjangoMigrationsTest(test_file)
-    LintTest.setUp()
-    LintTest._runTest()
+    lint_test = PylintDjangoMigrationsTest(test_file)
+    lint_test.setUp()
+    lint_test.runTest()
 
 
 @pytest.mark.parametrize("test_file", MIGRATIONS_TESTS[:1], ids=MIGRATIONS_TESTS_NAMES[:1])
-@pytest.mark.skip  # currently skipped because ArgParser which pylint uses is not picklable so ...
+@pytest.mark.skip  # TODO currently skipped because ArgParser which pylint uses is not pickable.
 def test_linter_should_be_pickleable_with_pylint_django_plugin_installed(test_file):
-    LintTest = PylintDjangoMigrationsTest(test_file)
-    LintTest.setUp()
-
+    lint_test = PylintDjangoMigrationsTest(test_file)
+    lint_test.setUp()
+    # pylint: disable=protected-access
     # LintModuleTest sets reporter to instance of FunctionalTestReporter that is not picklable
-    LintTest._linter.reporter = None
-    pickle.dumps(LintTest._linter)
-
-
-if __name__ == "__main__":
-    sys.exit(pytest.main(sys.argv))
+    lint_test._linter.reporter = None
+    pickle.dumps(lint_test._linter)
