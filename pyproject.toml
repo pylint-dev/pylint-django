@@ -49,6 +49,7 @@ Django = {version=">=2.2", optional = true}
 tox = "^4.5.1"
 pytest = "^7.3.1"
 pylint = ">=2.13"
+ruff = ">=0.1.1"
 twine = "^4.0.2"
 wheel = "^0.40.0"
 pytest-cov = "^4.0.0"
@@ -82,3 +83,18 @@ disable = [
 ]
 ignore="tests"
 max-line-length = 120
+
+[tool.ruff]
+line-length = 120
+select = [
+    "E",  # pycodestyle
+    "F",  # pyflakes
+    "W",  # pycodestyle
+    "B",  # bugbear
+    "I",  # isort
+    "RUF", # ruff
+    "UP", # pyupgrade
+]
+ignore = [
+    "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
+]

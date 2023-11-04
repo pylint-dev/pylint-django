@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 import astroid
 from pylint.checkers import BaseChecker
 
@@ -87,7 +85,6 @@ Consider passing in an explicit Django configuration file to match your project 
             django.setup()
             from django.apps import apps  # noqa pylint: disable=import-outside-toplevel,unused-import
 
-            # flake8: noqa=F401, F403
         except ImproperlyConfigured:
             # this means that Django wasn't able to configure itself using some defaults
             # provided (likely in a DJANGO_SETTINGS_MODULE environment variable)

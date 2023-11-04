@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 from pylint.checkers import BaseChecker
 
 from pylint_django.__pkginfo__ import BASE_ID
