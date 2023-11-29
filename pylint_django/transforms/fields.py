@@ -91,7 +91,10 @@ def apply_type_shim(cls, _context=None):  # pylint: disable=too-many-statements
     elif cls.name in ("HStoreField", "JSONField"):
         base_nodes = scoped_nodes.builtin_lookup("dict")
     elif cls.name in _RANGE_FIELDS:
-        base_nodes = MANAGER.ast_from_module_name("psycopg2._range").lookup("Range")
+        try:
+            base_nodes = MANAGER.ast_from_module_name("django.db.backends.postgresql.psycopg_any").lookup("Range")
+        except AstroidImportError:
+            base_nodes = MANAGER.ast_from_module_name("psycopg2._range").lookup("Range")
     else:
         return iter([cls])
 
