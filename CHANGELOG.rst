@@ -12,6 +12,7 @@ This version drops support for Python 3.6
 Bugfixes
 ~~~~~~~~
 
+- Fixed compatibility issue with datetime classes and python `3.12` (`#425 <https://github.com/pylint-dev/pylint-django/issues/425>`_)
 
 
 Version 2.5.3 (25 Mär 2022)
