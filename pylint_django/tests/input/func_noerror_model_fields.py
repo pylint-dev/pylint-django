@@ -3,7 +3,6 @@ Checks that Pylint does not complain about various
 methods on Django model fields.
 """
 #  pylint: disable=missing-docstring
-from __future__ import print_function
 
 from datetime import date, datetime
 from decimal import Decimal
