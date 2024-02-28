@@ -10,4 +10,4 @@ pip install pytest pytest-cov \
   "django-tastypie>=0.14.6" \
   "djangorestframework>=3.13.1"
 
-python pylint_django/tests/test_func.py -v "$@"
+python -m pytest pylint_django/tests/test_func.py -v "$@"
