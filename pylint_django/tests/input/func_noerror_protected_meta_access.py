@@ -5,6 +5,7 @@ Django 1.8
 (see https://github.com/PyCQA/pylint-django/issues/66,
 and https://docs.djangoproject.com/en/1.9/ref/models/meta/)
 """
+
 #  pylint: disable=missing-docstring
 from __future__ import print_function
 

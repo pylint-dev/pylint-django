@@ -1,6 +1,7 @@
 """
 Checks that Pylint does not complain about foreign key sets on models
 """
+
 #  pylint: disable=missing-docstring
 
 from django.db import models

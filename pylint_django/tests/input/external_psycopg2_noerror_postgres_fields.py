@@ -1,6 +1,7 @@
 """
 Checks that Pylint does not complain Postgres model fields.
 """
+
 #  pylint: disable=C0111,W5101
 from __future__ import print_function
 

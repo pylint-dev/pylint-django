@@ -2,6 +2,7 @@
 Checks that Pylint does not complain about GenericForeignKey fields:
 https://github.com/PyCQA/pylint-django/issues/230
 """
+
 # pylint: disable=missing-docstring
 
 from django.contrib.contenttypes.fields import GenericForeignKey

@@ -1,6 +1,7 @@
 """
 Checks that Pylint does not complain about using Model and Manager methods
 """
+
 #  pylint: disable=missing-docstring
 from django.db import models
 

@@ -1,4 +1,5 @@
 """Checkers."""
+
 from pylint_django.checkers.auth_user import AuthUserChecker
 from pylint_django.checkers.django_installed import DjangoInstalledChecker
 from pylint_django.checkers.foreign_key_strings import ForeignKeyStringsChecker

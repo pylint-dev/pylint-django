@@ -1,4 +1,5 @@
 """Utils."""
+
 import sys
 
 import astroid

@@ -2,6 +2,7 @@
 Checks that Pylint still complains about unused-arguments for other
 arguments if a function/method contains an argument named `request`.
 """
+
 # pylint: disable=missing-docstring
 
 from django.http import JsonResponse
