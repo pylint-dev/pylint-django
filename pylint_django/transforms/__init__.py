@@ -8,6 +8,7 @@ by the checker rather than here.
 For example, the ForeignKeyStringsChecker loads the foreignkey.py transforms
 itself as it may be disabled independently of the rest of pylint-django
 """
+
 import os
 import re
 

@@ -2,6 +2,7 @@
 Checks that Pylint does not complain about various
 methods on Django model fields.
 """
+
 #  pylint: disable=missing-docstring,wrong-import-position
 from django.db import models
 from django.db.models import ForeignKey, OneToOneField

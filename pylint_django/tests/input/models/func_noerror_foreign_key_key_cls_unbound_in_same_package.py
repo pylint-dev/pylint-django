@@ -10,6 +10,7 @@ Hence it can't find the Author class here so it tells us it doesn't have an
 'id' attribute. Also see:
 https://github.com/PyCQA/pylint-django/issues/232#issuecomment-495242695
 """
+
 # pylint: disable=missing-docstring, no-member
 from django.db import models
 

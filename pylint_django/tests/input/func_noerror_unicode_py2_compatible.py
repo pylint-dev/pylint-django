@@ -4,6 +4,7 @@ Django python3/2 compatability decorator is used
 
 See https://github.com/PyCQA/pylint-django/issues/10
 """
+
 from django.db import models
 
 #  pylint: disable=missing-docstring

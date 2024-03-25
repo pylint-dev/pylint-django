@@ -1,4 +1,5 @@
 """Common Django module."""
+
 # we want to import the transforms to make sure they get added to the astroid manager,
 # however we don't actually access them directly, so we'll disable the warning
 from pylint_django import compat

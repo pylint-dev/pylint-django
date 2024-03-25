@@ -2,6 +2,7 @@
 Checks that Pylint does not complain about various
 methods on many-to-many relationships
 """
+
 from django.contrib.auth.models import AbstractUser, Permission
 
 #  pylint: disable=missing-docstring

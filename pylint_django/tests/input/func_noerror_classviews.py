@@ -2,6 +2,7 @@
 Checks that Pylint does not complain about attributes and methods
 when using Class-based Views
 """
+
 #  pylint: disable=missing-docstring
 
 from django.db import models

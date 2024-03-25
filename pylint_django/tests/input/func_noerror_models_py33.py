@@ -2,6 +2,7 @@
 Checks that Pylint does not complain about a fairly standard
 Django Model
 """
+
 #  pylint: disable=missing-docstring
 from django.db import models
 

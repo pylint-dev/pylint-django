@@ -9,6 +9,7 @@ as django's `ForeignKey`.
 The issue is the lint trys resolving the `ForeignKey` for the
 tastypie `ForeignKey` which cause import error.
 """
+
 from tastypie import fields
 from tastypie.fields import ForeignKey
 
