@@ -15,6 +15,7 @@ Bugfixes
 - Added Django aliases for ranges to support psycopg 2 and 3 (`#421 <https://github.com/pylint-dev/pylint-django/pull/421>`_)
 - Support for PYthon 3.12 datetime (`#427 <https://github.com/pylint-dev/pylint-django/pull/427>`_)
 - Fixed location of installed LICENSE file (`#431 <https://github.com/pylint-dev/pylint-django/issues/431>`_)
+- Fixed ForeignKeyStringChecker referencing linter config incorrectly (`#430 <https://github.com/pylint-dev/pylint-django/issues/430>`_)
 
 Version 2.5.5 (14 May 2023)
 ---------------------------
