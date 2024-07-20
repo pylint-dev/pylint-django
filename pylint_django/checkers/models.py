@@ -1,4 +1,5 @@
 """Models."""
+
 from astroid import Const
 from astroid.nodes import Assign, AssignName, ClassDef, FunctionDef
 from pylint.checkers import BaseChecker

@@ -1,4 +1,5 @@
 """Augmentations."""
+
 #  pylint: disable=invalid-name
 import functools
 import itertools

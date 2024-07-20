@@ -37,13 +37,6 @@ include = ["pylint_django/LICENSE"]
 exclude = ["**/tests/**", "**/testutils.py", "**/tests.py"]
 
 
-[project.urls]
-"Repository" = "https://github.com/pylint-dev/pylint-djangp"
-"Bug Tracker" = "https://github.com/pylint-dev/pylint-djangp/issues"
-"Changelog" = "https://github.com/pylint-dev/pylint-django/blob/master/CHANGELOG.rst"
-"Contributors" = "https://github.com/pylint-dev/pylint-django/blob/master/CONTRIBUTORS.md"
-
-
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
 pylint-plugin-utils = ">=0.8"
