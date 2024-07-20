@@ -7,7 +7,7 @@ Version 2.7.0
 NOTICE
 ~~~~~~
 
-This version drops support for Python 3.7 - latest Pylint no longer supports 3.7, and CI tasks were taking hours under 3.7
+This version drops support for Python 3.7 - latest Pylint no longer supports 3.7, and CI tasks were taking hours under 3.7. `Python 3.7 <https://www.python.org/downloads/release/python-3717/>`_  received its last security update more than a year ago (from the date of this release).
 
 
 Version 2.6.0 (14 May 2023)
