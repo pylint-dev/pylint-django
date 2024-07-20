@@ -16,9 +16,9 @@ jobs:
         toxenv: [django_not_installed, ruff, pylint, readme]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -43,9 +43,9 @@ jobs:
         django-version: ["5.0", "-main"]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -67,9 +67,9 @@ jobs:
           pip install coveralls
           coveralls --service=github
 
-  test:
+  test_maintained:
     name:
-      test latest / Django@${{ matrix.django-version }} / Python@${{
+      test maintained / Django@${{ matrix.django-version }} / Python@${{
       matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
@@ -79,9 +79,9 @@ jobs:
         django-version: ["4.0", "4.1", "4.2"]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -107,9 +107,9 @@ jobs:
         django-version: [3.2, 3.1, "3.0", "2.2"]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -130,9 +130,9 @@ jobs:
         python-version: ["3.12"]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
