@@ -3,7 +3,7 @@ ci:
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -11,21 +11,16 @@ repos:
         args: [--fix=lf]
       - id: debug-statements
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.1.4"
+    rev: "v0.5.3"
     hooks:
       - id: ruff
         args: ["--fix"]
         exclude: "tests/input/"
   - repo: https://github.com/psf/black
-    rev: 23.10.1
+    rev: 24.4.2
     hooks:
       - id: black
         args: [--safe, --line-length=120]
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.3
-    hooks:
-      - id: prettier
-        args: [--prose-wrap=always, --print-width=88]
   - repo: local
     hooks:
       - id: pylint
