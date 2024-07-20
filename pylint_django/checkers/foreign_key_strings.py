@@ -95,7 +95,7 @@ Consider passing in an explicit Django configuration file to match your project 
                 # TODO: remove this no-member ignore : this is to avoid the missing `config` for pylint 3+,
                 #  and can be removed once pylint 2
                 # pylint: disable=no-member
-                django_settings_module = self.config.django_settings_module
+                django_settings_module = self.linter.config.django_settings_module
 
             if django_settings_module is None:
                 # we will warn the user that they haven't actually configured Django themselves
@@ -117,7 +117,7 @@ Consider passing in an explicit Django configuration file to match your project 
                     # at least here it is a fatal error so we can just raise this immediately
                     self.add_message(
                         "django-settings-module-not-found",
-                        args=self.config.django_settings_module,
+                        args=self.linter.config.django_settings_module,
                     )
                     # however we'll trundle on with basic settings
                     from django.conf import settings  # pylint: disable=import-outside-toplevel
