@@ -5,7 +5,7 @@ readme = "README.rst"
 description = "A Pylint plugin to help Pylint understand the Django web framework"
 repository = "https://github.com/PyCQA/pylint-django"
 authors = ["Carl Crowder <git@carlcrowder.com>"]
-classifiers=[
+classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Intended Audience :: Developers",
@@ -29,22 +29,18 @@ classifiers=[
     "Framework :: Django :: 5.0",
     "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
 ]
-keywords=["pylint", "django", "plugin"]
+keywords = ["pylint", "django", "plugin"]
 packages = [
-  { include = "pylint_django/"}
+    { include = "pylint_django/" }
 ]
-include = [
-  "LICENSE",
-  "*.rst",
-  "*.md"
-]
+include = ["pylint_django/LICENSE"]
 exclude = ["**/tests/**", "**/testutils.py", "**/tests.py"]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
 pylint-plugin-utils = ">=0.8"
 pylint = ">=2.0,<4"
-Django = {version=">=2.2", optional = true}
+Django = { version = ">=2.2", optional = true }
 
 [tool.poetry.group.dev.dependencies]
 tox = "^4"
@@ -80,17 +76,17 @@ disable = [
     "too-few-public-methods",
     "fixme",
 ]
-ignore="tests"
+ignore = "tests"
 max-line-length = 120
 
 [tool.ruff]
 line-length = 120
 select = [
-    "E",  # pycodestyle
-    "F",  # pyflakes
-    "W",  # pycodestyle
-    "B",  # bugbear
-    "I",  # isort
+    "E", # pycodestyle
+    "F", # pyflakes
+    "W", # pycodestyle
+    "B", # bugbear
+    "I", # isort
     "RUF", # ruff
     "UP", # pyupgrade
 ]
