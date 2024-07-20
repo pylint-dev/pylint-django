@@ -1,6 +1,15 @@
 Changelog
 =========
 
+Version 2.7.0
+-------------
+
+NOTICE
+~~~~~~
+
+This version drops support for Python 3.7 - latest Pylint no longer supports 3.7, and CI tasks were taking hours under 3.7
+
+
 Version 2.6.0 (14 May 2023)
 ---------------------------
 
