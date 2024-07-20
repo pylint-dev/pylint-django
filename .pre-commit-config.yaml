@@ -20,7 +20,7 @@ repos:
     rev: 24.4.2
     hooks:
       - id: black
-        args: [--safe, --line-length=120]
+        args: [--safe, --line-length=120, "--exclude=pylint_django/tests/input/"]
   - repo: local
     hooks:
       - id: pylint
