@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 2.7.0
+Version 2.6.0
 -------------
 
 NOTICE
@@ -9,8 +9,14 @@ NOTICE
 
 This version drops support for Python 3.7 - latest Pylint no longer supports 3.7, and CI tasks were taking hours under 3.7. `Python 3.7 <https://www.python.org/downloads/release/python-3717/>`_  received its last security update more than a year ago (from the date of this release).
 
+Bugfixes
+~~~~~~~~
 
-Version 2.6.0 (14 May 2023)
+- Added Django aliases for ranges to support psycopg 2 and 3 (`#421 <https://github.com/pylint-dev/pylint-django/pull/421>`_)
+- Support for PYthon 3.12 datetime (`#427 <https://github.com/pylint-dev/pylint-django/pull/427>`_)
+
+
+Version 2.5.5 (14 May 2023)
 ---------------------------
 
 NOTICE
