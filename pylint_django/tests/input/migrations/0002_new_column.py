@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.0/topics/migrations/#postgresql
 
 > ... adding columns with default values will cause a full rewrite of
 > the table, for a time proportional to its size.
-> For this reason, it’s recommended you always create new columns with
+> For this reason, it's recommended you always create new columns with
 > null=True, as this way they will be added immediately.
 """
 # pylint: disable=missing-docstring, invalid-name
