@@ -2,7 +2,7 @@
 These transforms replace the Django types with adapted versions to provide
 additional typing and method inference to pylint. All of these transforms
 are considered "global" to pylint-django, in that all checks and improvements
-requre them to be loaded. Additional transforms specific to checkers are loaded
+require them to be loaded. Additional transforms specific to checkers are loaded
 by the checker rather than here.
 
 For example, the ForeignKeyStringsChecker loads the foreignkey.py transforms

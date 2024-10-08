@@ -1,6 +1,6 @@
 """
 Ensures that no '__unicode__ missing' warning is emitted if the
-Django python3/2 compatability decorator is used
+Django python3/2 compatibility decorator is used
 
 See https://github.com/pylint-dev/pylint-django/issues/10
 """

@@ -117,7 +117,7 @@ class MissingBackwardsMigrationChecker(checkers.BaseChecker):
         f"W{BASE_ID}97": (
             "Always include backwards migration callable",
             "missing-backwards-migration-callable",
-            "Always include a backwards/reverse callable counterpart so that the migration is not irreversable.",
+            "Always include a backwards/reverse callable counterpart so that the migration is not irreversible.",
         )
     }
 

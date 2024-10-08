@@ -29,6 +29,13 @@ repos:
       - id: pyproject-fmt
         # https://pyproject-fmt.readthedocs.io/en/latest/#calculating-max-supported-python-version
         additional_dependencies: ["tox>=4.9"]
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.3.0
+    hooks:
+      - id: codespell
+        args: ["--toml=pyproject.toml"]
+        additional_dependencies:
+          - tomli
   - repo: local
     hooks:
       - id: pylint
