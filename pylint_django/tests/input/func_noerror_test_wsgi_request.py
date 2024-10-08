@@ -1,6 +1,6 @@
 """
 Checks that Pylint does not complain about a standard test. See:
-https://github.com/PyCQA/pylint-django/issues/78
+https://github.com/pylint-dev/pylint-django/issues/78
 """
 
 from django.db import models

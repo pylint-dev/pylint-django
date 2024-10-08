@@ -37,7 +37,7 @@ Version 2.5.3 (25 Mär 2022)
 Bugfixes
 ~~~~~~~~
 
-- Fixed compatibility issue between pylint `2.12` and `2.13` to construct `ScopeConsumer` tuples correctly depending on version (`#358 <https://github.com/PyCQA/pylint-django/issues/358>`_)
+- Fixed compatibility issue between pylint `2.12` and `2.13` to construct `ScopeConsumer` tuples correctly depending on version (`#358 <https://github.com/pylint-dev/pylint-django/issues/358>`_)
 
 Other
 ~~~~~
@@ -50,7 +50,7 @@ Version 2.5.2 (18 Feb 2022)
 Bugfixes
 ~~~~~~~~
 
-- Fixed crash with assigning a class to a variable, and referencing the variable when subclassing (`#349 <https://github.com/PyCQA/pylint-django/issues/349>`_)
+- Fixed crash with assigning a class to a variable, and referencing the variable when subclassing (`#349 <https://github.com/pylint-dev/pylint-django/issues/349>`_)
 
 Other
 ~~~~~
@@ -64,7 +64,7 @@ Version 2.5.1 (16 Feb 2022)
 Bugfixes
 ~~~~~~~~
 
-- Fixed pickling for `augment_visit` (`#276 <https://github.com/PyCQA/pylint-django/issues/276>`_)
+- Fixed pickling for `augment_visit` (`#276 <https://github.com/pylint-dev/pylint-django/issues/276>`_)
 
 Version 2.5.0 (02 Jan 2022)
 ---------------------------
@@ -72,23 +72,23 @@ Version 2.5.0 (02 Jan 2022)
 Bugfixes
 ~~~~~~~~
 
-- Fixed compatibility with astroid 2.9.1 (`#343 <https://github.com/PyCQA/pylint-django/issues/343>`_)
+- Fixed compatibility with astroid 2.9.1 (`#343 <https://github.com/pylint-dev/pylint-django/issues/343>`_)
 
 New
 ~~~
 
-- Removed false positive error of missing member in TextChoices tuples `#298 <https://github.com/PyCQA/pylint-django/issues/298>`_ (see pulls `#330 <https://github.com/PyCQA/pylint-django/pull/330>`_ and `#345 <https://github.com/PyCQA/pylint-django/pull/345>`_)
-- Moved from Travis CI to GitHub Actions (`#366 <https://github.com/PyCQA/pylint-django/pull/366>`_ and `#340 <https://github.com/PyCQA/pylint-django/pull/340>`_)
+- Removed false positive error of missing member in TextChoices tuples `#298 <https://github.com/pylint-dev/pylint-django/issues/298>`_ (see pulls `#330 <https://github.com/pylint-dev/pylint-django/pull/330>`_ and `#345 <https://github.com/pylint-dev/pylint-django/pull/345>`_)
+- Moved from Travis CI to GitHub Actions (`#366 <https://github.com/pylint-dev/pylint-django/pull/366>`_ and `#340 <https://github.com/pylint-dev/pylint-django/pull/340>`_)
 - Added pre-commit configuration and began enforcing black/isort code formatting
-- Multiple test fixes (including `#338 <https://github.com/PyCQA/pylint-django/issues/338>`_) - newer versions of pylint expect a different format for the expected messages txt files.
-- Bumped dependency for pylint-django-utils to get `multi-threaded pylint support <https://github.com/PyCQA/pylint-plugin-utils/pull/21>`_
+- Multiple test fixes (including `#338 <https://github.com/pylint-dev/pylint-django/issues/338>`_) - newer versions of pylint expect a different format for the expected messages txt files.
+- Bumped dependency for pylint-django-utils to get `multi-threaded pylint support <https://github.com/pylint-dev/pylint-plugin-utils/pull/21>`_
 
 Version 2.4.4 (26 Apr 2021)
 ---------------------------
 
 - Fix compatibility issues with pylint >= 2.8. Fixes
-  `#322 <https://github.com/PyCQA/pylint-django/issues/322>`_ and
-  `#323 <https://github.com/PyCQA/pylint-django/issues/323>`_
+  `#322 <https://github.com/pylint-dev/pylint-django/issues/322>`_ and
+  `#323 <https://github.com/pylint-dev/pylint-django/issues/323>`_
 
 
 Version 2.4.3 (09 Apr 2021)
@@ -98,14 +98,14 @@ Version 2.4.3 (09 Apr 2021)
 - Teach pylint-django about all HTTP methods from the View class, not only
   ``get`` and ``post`` (Nicolás Quiroz)
 - Typo fixes for
-  `#314 <https://github.com/PyCQA/pylint-django/issues/314>`_ (John Sandall)
+  `#314 <https://github.com/pylint-dev/pylint-django/issues/314>`_ (John Sandall)
 - Ignore ``unused-argument`` for ``*args``, ``**kwards`` in view method signatures
 
 
 Version 2.4.2 (08 Jan 2021)
 ---------------------------
 
-- Moved `Faker` dependencies to test-only `#304 <https://github.com/PyCQA/pylint-django/issues/304>`_
+- Moved `Faker` dependencies to test-only `#304 <https://github.com/pylint-dev/pylint-django/issues/304>`_
 
 
 Version 2.4.1 (07 Jan 2021)
@@ -118,14 +118,14 @@ Version 2.4.0 (06 Jan 2021)
 ---------------------------
 
 - Allowed configuration of the Django settings module to be used via a
-  commandline argument `#286 <https://github.com/PyCQA/pylint-django/issues/286>`_
+  commandline argument `#286 <https://github.com/pylint-dev/pylint-django/issues/286>`_
 - If Django settings are not specified via a commandline argument or environment
   variable, an error is issued but defaults are loaded from Django, removing the
-  fatal error behaviour. `#277 <https://github.com/PyCQA/pylint-django/issues/277>`_
-  and `#243 <https://github.com/PyCQA/pylint-django/issues/243>`_
+  fatal error behaviour. `#277 <https://github.com/pylint-dev/pylint-django/issues/277>`_
+  and `#243 <https://github.com/pylint-dev/pylint-django/issues/243>`_
 - Fixed tests to work with pylint>2.6
 - Fixed ``AttributeError: 'Subscript' object has no attribute 'name'`` error.
-  Closes `#284 <https://github.com/PyCQA/pylint-django/issues/284>`_ (@uy-rrodriguez)
+  Closes `#284 <https://github.com/pylint-dev/pylint-django/issues/284>`_ (@uy-rrodriguez)
 - Pin Faker version to Prevent Asteroid Crash (James Pulec)
 - Remove Python 3.5 Support (EOL since Sept 2020 and Faker requires 3.6 anyway)
   (James Pulec)
@@ -139,18 +139,18 @@ Version 2.3.0 (05 Aug 2020)
   (Bryan Mutai)
 - Start testing with Django 3.1 on Python 3.8
 - Better error message when Django is not configured. Closes
-  `#277 <https://github.com/PyCQA/pylint-django/issues/277>`_
+  `#277 <https://github.com/pylint-dev/pylint-django/issues/277>`_
 
 
 Version 2.2.0 (22 Jul 2020)
 ---------------------------
 
 - Rely on Django to resolve string references in ForeignKey fields. Refs
-  `#243 <https://github.com/PyCQA/pylint-django/issues/243>`_ (Alejandro Angulo)
+  `#243 <https://github.com/pylint-dev/pylint-django/issues/243>`_ (Alejandro Angulo)
 - Suppress ``unused-argument`` for functions in migration modules. Fix
-  `#267 <https://github.com/PyCQA/pylint-django/issues/267>`_
+  `#267 <https://github.com/pylint-dev/pylint-django/issues/267>`_
 - New checker for hard-coded ``auth.User``. Fix
-  `#244 <https://github.com/PyCQA/pylint-django/issues/244>`_
+  `#244 <https://github.com/pylint-dev/pylint-django/issues/244>`_
 
 
 Version 2.1.0 (12 Jul 2020)
@@ -161,7 +161,7 @@ Version 2.1.0 (12 Jul 2020)
   ``pylint_django.checkers.migrations``
 - Add URL to project Changelog for PyPI (Ville Skyttä)
 - Fix failing test suite b/c of missing CSV dialect. Fix
-  `#268 <https://github.com/PyCQA/pylint-django/issues/268>`_
+  `#268 <https://github.com/pylint-dev/pylint-django/issues/268>`_
   (Alejandro Angulo)
 
 
@@ -176,7 +176,7 @@ Version 2.0.14 (25 Feb 2020)
 
 - Add support for Django 3.0 and Python 3.8 (Wayne Lambert)
 - Support ASGI. Fix
-  `#258 <https://github.com/PyCQA/pylint-django/issues/258>`_ (Sander Maijers)
+  `#258 <https://github.com/pylint-dev/pylint-django/issues/258>`_ (Sander Maijers)
 
 
 Version 2.0.13 (23 Nov 2019), HackBulgaria edition
@@ -184,7 +184,7 @@ Version 2.0.13 (23 Nov 2019), HackBulgaria edition
 
 - Suppress ``too-many-ancestors`` for class-based generic views
 - Add ``handler400``, ``handler403``, ``handler404`` to good_names. Fix
-  `#248 <https://github.com/PyCQA/pylint-django/issues/248>`_
+  `#248 <https://github.com/pylint-dev/pylint-django/issues/248>`_
 
 
 Version 2.0.12 (04 Nov 2019)
@@ -193,11 +193,11 @@ Version 2.0.12 (04 Nov 2019)
 - Fix too broad suppression of ``unused-argument`` warnings for functions and
   methods where the first argument is named ``request``. Now issues warnings
   for the rest of the arguments if they are unused. Fix
-  `#249 <https://github.com/PyCQA/pylint-django/issues/249>`_ (Pascal Urban)
+  `#249 <https://github.com/pylint-dev/pylint-django/issues/249>`_ (Pascal Urban)
 - Pass arguments of ``scripts/test.sh`` to ``test_func/pytest`` to ease
   development (Pascal Urban)
 - Document behavior when ForeignKey fields are referenced as strings. Fix
-  `#241 <https://github.com/PyCQA/pylint-django/issues/241>`_
+  `#241 <https://github.com/pylint-dev/pylint-django/issues/241>`_
 
 
 Version 2.0.11 (10 July 2019)
@@ -210,11 +210,11 @@ Version 2.0.10 (07 July 2019), Novi Sad edition
 -----------------------------------------------
 
 - Suppress ``no-member`` for ``ManyToManyField``. Fix
-  `#192 <https://github.com/PyCQA/pylint-django/issues/192>`_ and
-  `#237 <https://github.com/PyCQA/pylint-django/issues/237>`_ (Pierre Chiquet)
+  `#192 <https://github.com/pylint-dev/pylint-django/issues/192>`_ and
+  `#237 <https://github.com/pylint-dev/pylint-django/issues/237>`_ (Pierre Chiquet)
 
 - Fix ``UnboundLocalError`` with ``ForeignKey(to=)``. Fix
-  `#232 <https://github.com/PyCQA/pylint-django/issues/232>`_ (Sardorbek Imomaliev)
+  `#232 <https://github.com/pylint-dev/pylint-django/issues/232>`_ (Sardorbek Imomaliev)
 
 
 Version 2.0.9 (26 April 2019)
@@ -225,37 +225,37 @@ Version 2.0.9 (26 April 2019)
   that is used in this pattern ``app.Model`` and also there is some other
   ``bool`` const like ``null=True`` right after ``to``. (Sardorbek Imomaliev)
 - Don't crash if ForeignKey field doesn't have keyword arguments Fix
-  `#230 <https://github.com/PyCQA/pylint-django/issues/230>`_
+  `#230 <https://github.com/pylint-dev/pylint-django/issues/230>`_
 
 
 Version 2.0.8 (18 April 2019)
 -----------------------------
 
 - Support recursive (self) ForeignKey relations. Fix
-  `#208 <https://github.com/PyCQA/pylint-django/issues/208>`_ (Daniil Kharkov)
+  `#208 <https://github.com/pylint-dev/pylint-django/issues/208>`_ (Daniil Kharkov)
 
 
 Version 2.0.7 (16 April 2019)
 -----------------------------
 
 - Fixed ``AstroidImportError`` for ``DecimalField``. Fix
-  `#221 <https://github.com/PyCQA/pylint-django/issues/221>`_ (Daniil Kharkov)
+  `#221 <https://github.com/pylint-dev/pylint-django/issues/221>`_ (Daniil Kharkov)
 - Add ``load_configuration()`` in ``pylint_django/__init__.py``. Fix #222
-  `#222 <https://github.com/PyCQA/pylint-django/issues/222>`_
+  `#222 <https://github.com/pylint-dev/pylint-django/issues/222>`_
 - Support ForeignKey relations with ``to`` keyword. Fix
-  `#223 <https://github.com/PyCQA/pylint-django/issues/223>`_ (Daniil Kharkov)
+  `#223 <https://github.com/pylint-dev/pylint-django/issues/223>`_ (Daniil Kharkov)
 
 
 Version 2.0.6 (27 Feb 2019)
 ---------------------------
 
 - Updating dependency version of pylint-plugin-utils as pylint 2.3 release
-  was not compatible `#220 <https://github.com/PyCQA/pylint-django/issues/220>`_
+  was not compatible `#220 <https://github.com/pylint-dev/pylint-django/issues/220>`_
 - Improvements to tox.ini:
-  `#217 <https://github.com/PyCQA/pylint-django/issues/217>`_
-  and `#216 <https://github.com/PyCQA/pylint-django/issues/216>`_ (@aerostitch)
+  `#217 <https://github.com/pylint-dev/pylint-django/issues/217>`_
+  and `#216 <https://github.com/pylint-dev/pylint-django/issues/216>`_ (@aerostitch)
 - Add support for new load_configuration hook of pylint
-  `#214 <https://github.com/PyCQA/pylint-django/issues/214>`_ (@matusvalo)
+  `#214 <https://github.com/pylint-dev/pylint-django/issues/214>`_ (@matusvalo)
 - 'urlpatterns' no longer reported as an invalid constant name
 
 
@@ -272,11 +272,11 @@ Version 2.0.4 (do not use)
 --------------------------
 
 - Avoid traceback with concurrent execution. Fix
-  `#197 <https://github.com/PyCQA/pylint-django/issues/197>`_
+  `#197 <https://github.com/pylint-dev/pylint-django/issues/197>`_
 - Suppress ``no-member`` errors for ``LazyFunction`` in factories
 - Suppress ``no-member`` errors for ``RelatedManager`` fields
 - Clean up compatibility code:
-  `PR #207 <http://github.com/PyCQA/pylint-django/pull/207>`_
+  `PR #207 <http://github.com/pylint-dev/pylint-django/pull/207>`_
 
 
 Version 2.0.3 (do not use)
@@ -284,14 +284,14 @@ Version 2.0.3 (do not use)
 
 - Fixing compatability between ranges of astroid (2.0.4 -> 2.1) and
   pylint (2.1.1 -> 2.2).
-  `#201 <https://github.com/PyCQA/pylint-django/issues/201>`_ and
-  `#202 <https://github.com/PyCQA/pylint-django/issues/202>`_
+  `#201 <https://github.com/pylint-dev/pylint-django/issues/201>`_ and
+  `#202 <https://github.com/pylint-dev/pylint-django/issues/202>`_
 
 Version 2.0.2 (26 Aug 2018)
 ---------------------------
 
 - Suppress false-positive no-self-argument in factory.post_generation. Fix
-  `#190 <https://github.com/PyCQA/pylint-django/issues/190>`_ (Federico Bond)
+  `#190 <https://github.com/pylint-dev/pylint-django/issues/190>`_ (Federico Bond)
 
 
 Version 2.0.1 (20 Aug 2018)
@@ -299,14 +299,14 @@ Version 2.0.1 (20 Aug 2018)
 
 - Enable testing with Django 2.1
 - Add test for Model.objects.get_or_create(). Close
-  `#156 <https://github.com/PyCQA/pylint-django/issues/156>`__
+  `#156 <https://github.com/pylint-dev/pylint-django/issues/156>`__
 - Add test for objects.exclude(). Close
-  `#177 <https://github.com/PyCQA/pylint-django/issues/177>`__
+  `#177 <https://github.com/pylint-dev/pylint-django/issues/177>`__
 - Fix Instance of 'Model' has no 'id' member (no-member),
   fix Class 'UserCreationForm' has no 'declared_fields' member. Close
-  `#184 <https://github.com/PyCQA/pylint-django/issues/184>`__
+  `#184 <https://github.com/pylint-dev/pylint-django/issues/184>`__
 - Fix for Instance of 'ManyToManyField' has no 'add' member. Close
-  `#163 <https://github.com/PyCQA/pylint-django/issues/163>`__
+  `#163 <https://github.com/pylint-dev/pylint-django/issues/163>`__
 - Add test & fix for unused arguments on class based views
 
 
@@ -324,10 +324,10 @@ Version 0.11.1 (25 May 2018), the DjangoCon Heidelberg edition
 - Enable test case for ``urlpatterns`` variable which was previously disabled
 - Disable ``unused-argument`` message for the ``request`` argument passed to
   view functions. Fix
-  `#155 <https://github.com/PyCQA/pylint-django/issues/155>`__
+  `#155 <https://github.com/pylint-dev/pylint-django/issues/155>`__
 - Add transformations for ``model_utils`` managers instead of special-casing them.
   Fix
-  `#160 <https://github.com/PyCQA/pylint-django/issues/160>`__
+  `#160 <https://github.com/pylint-dev/pylint-django/issues/160>`__
 
 
 Version 0.11 (18 April 2018), the TestCon Moscow edition
@@ -348,29 +348,29 @@ Version 0.10.0 (10 April 2018)
 
 - Remove the compatibility layer for older astroid versions
 - Make flake8 happy. Fix
-  `#102 <https://github.com/PyCQA/pylint-django/issues/102>`__
+  `#102 <https://github.com/pylint-dev/pylint-django/issues/102>`__
 - Fix: compatibility with Python < 3.6 caused by ``ModuleNotFoundError``
   not available on older versions of Python (Juan Rial)
 - Show README and CHANGELOG on PyPI. Fix
-  `#122 <https://github.com/PyCQA/pylint-django/issues/122>`__
+  `#122 <https://github.com/pylint-dev/pylint-django/issues/122>`__
 - Fix explicit unicode check with ``python_2_unicode_compatible`` base models
   (Federico Bond)
 - Suppress ``not-an-iterable`` message for 'objects'. Fix
-  `#117 <https://github.com/PyCQA/pylint-django/issues/117>`__
+  `#117 <https://github.com/pylint-dev/pylint-django/issues/117>`__
 - Teach pylint_django that ``objects.all()`` is subscriptable. Fix
-  `#144 <https://github.com/PyCQA/pylint-django/issues/144>`__
+  `#144 <https://github.com/pylint-dev/pylint-django/issues/144>`__
 - Suppress ``invalid-name`` for ``wsgi.application``. Fix
-  `#77 <https://github.com/PyCQA/pylint-django/issues/77>`__
+  `#77 <https://github.com/pylint-dev/pylint-django/issues/77>`__
 - Add test for ``WSGIRequest.context``. Closes
-  `#78 <https://github.com/PyCQA/pylint-django/issues/78>`__
+  `#78 <https://github.com/pylint-dev/pylint-django/issues/78>`__
 - Register transforms for ``FileField``. Fix
-  `#60 <https://github.com/PyCQA/pylint-django/issues/60>`__
+  `#60 <https://github.com/pylint-dev/pylint-django/issues/60>`__
 - New checker ``pylint_django.checkers.db_performance``.
   Enables checking of migrations and reports when there's an
   ``AddField`` operation with a default value which may slow down applying
   migrations on large tables. This may also lead to production tables
   being locked while migrations are being applied. Fix
-  `#118 <https://github.com/PyCQA/pylint-django/issues/118>`__
+  `#118 <https://github.com/pylint-dev/pylint-django/issues/118>`__
 - Suppress ``no-member`` for ``factory.SubFactory`` objects.
   Useful when model factories use ``factory.SubFactory()`` for foreign
   key relations.
@@ -382,30 +382,30 @@ Version 0.9.4 (12 March 2018)
 -  Add an optional dependency on Django
 -  Fix the ``DjangoInstalledChecker`` so it can actually warn when
    Django isn't available
--  Fix `#136 <https://github.com/PyCQA/pylint-django/issues/136>`__ by
+-  Fix `#136 <https://github.com/pylint-dev/pylint-django/issues/136>`__ by
    adding automated build and sanity test scripts
 
 Version 0.9.3 (removed from PyPI)
 ---------------------------------
 
--  Fix `#133 <https://github.com/PyCQA/pylint-django/issues/133>`__ and
-   `#134 <https://github.com/PyCQA/pylint-django/issues/134>`__ by
+-  Fix `#133 <https://github.com/pylint-dev/pylint-django/issues/133>`__ and
+   `#134 <https://github.com/pylint-dev/pylint-django/issues/134>`__ by
    including package data when building wheel and tar.gz packages for
    PyPI (Joseph Herlant)
 
 Version 0.9.2 (broken)
 ----------------------
 
--  Fix `#129 <https://github.com/PyCQA/pylint-django/issues/129>`__ -
+-  Fix `#129 <https://github.com/pylint-dev/pylint-django/issues/129>`__ -
    Move tests under ``site-packages/pylint_django`` (Mr. Senko)
--  Fix `#96 <https://github.com/PyCQA/pylint-django/issues/96>`__ - List
+-  Fix `#96 <https://github.com/pylint-dev/pylint-django/issues/96>`__ - List
    Django as a dependency (Mr. Senko)
 
 Version 0.9.1 (26 Feb 2018)
 ---------------------------
 
--  Fix `#123 <https://github.com/PyCQA/pylint-django/issues/123>`__ -
-   Update links after the move to PyCQA (Mr. Senko)
+-  Fix `#123 <https://github.com/pylint-dev/pylint-django/issues/123>`__ -
+   Update links after the move to pylint-dev (Mr. Senko)
 -  Add test for Meta class from django\_tables2 (Mr. Senko)
 -  Fix flake8 complaints (Peter Bittner)
 -  Add missing .txt and .rc test files to MANIFEST.in (Joseph Herlant)
@@ -413,11 +413,11 @@ Version 0.9.1 (26 Feb 2018)
 Version 0.9 (25 Jan 2018)
 -------------------------
 
--  Fix `#120 <https://github.com/PyCQA/pylint-django/issues/120>`__ -
+-  Fix `#120 <https://github.com/pylint-dev/pylint-django/issues/120>`__ -
    TypeError: 'NamesConsumer' object does not support indexing (Simone
    Basso)
--  Fix `#110 <https://github.com/PyCQA/pylint-django/issues/120>`__ and
-   `#35 <https://github.com/PyCQA/pylint-django/issues/120>`__ - resolve
+-  Fix `#110 <https://github.com/pylint-dev/pylint-django/issues/120>`__ and
+   `#35 <https://github.com/pylint-dev/pylint-django/issues/120>`__ - resolve
    ForeignKey models specified as strings instead of class names (Mr.
    Senko)
 
@@ -426,43 +426,43 @@ Version 0.8.0 (20 Jan 2018)
 
 -  This is the last version to support Python 2. Issues a deprecation
    warning!
--  `#109 <http://github.com/PyCQA/pylint-django/pull/109>`__, adding
+-  `#109 <http://github.com/pylint-dev/pylint-django/pull/109>`__, adding
    'urlpatterns', 'register', 'app\_name' to good names. Obsoletes
-   `#111 <http://github.com/PyCQA/pylint-django/pull/111>`__, fixes
-   `#108 <http://github.com/PyCQA/pylint-django/issues/108>`__ (Vinay
+   `#111 <http://github.com/pylint-dev/pylint-django/pull/111>`__, fixes
+   `#108 <http://github.com/pylint-dev/pylint-django/issues/108>`__ (Vinay
    Pai)
 -  Add 'handler500' to good names (Mr. Senko)
--  `#103 <http://github.com/PyCQA/pylint-django/pull/103>`__: Support
+-  `#103 <http://github.com/pylint-dev/pylint-django/pull/103>`__: Support
    factory\_boy's DjangoModelFactory Meta class (Konstantinos
    Koukopoulos)
--  `#100 <https://github.com/PyCQA/pylint-django/pull/100>`__: Fix
+-  `#100 <https://github.com/pylint-dev/pylint-django/pull/100>`__: Fix
    E1101:Instance of '**proxy**\ ' has no 'format' member' when using
    .format() on a ugettext\_lazy translation. Fixes
-   `#80 <https://github.com/PyCQA/pylint-django/issues/80>`__
+   `#80 <https://github.com/pylint-dev/pylint-django/issues/80>`__
    (canarduck)
--  `#99 <https://github.com/PyCQA/pylint-django/pull/99>`__: Add tests
+-  `#99 <https://github.com/pylint-dev/pylint-django/pull/99>`__: Add tests
    and transforms for DurationField, fixes
-   `#95 <https://github.com/PyCQA/pylint-django/issues/95>`__ (James M.
+   `#95 <https://github.com/pylint-dev/pylint-django/issues/95>`__ (James M.
    Allen)
--  `#92 <https://github.com/PyCQA/pylint-django/pull/92>`__: Add json
+-  `#92 <https://github.com/pylint-dev/pylint-django/pull/92>`__: Add json
    field to WSGIRequest proxy (sjk4sc)
--  `#84 <https://github.com/PyCQA/pylint-django/pull/84>`__: Add support
+-  `#84 <https://github.com/pylint-dev/pylint-django/pull/84>`__: Add support
    for django.contrib.postgres.fields and UUIDField (Villiers Strauss)
 -  Stop testing with older Django versions. Currently testing with
    Django 1.11.x and 2.0
 -  Stop testing on Python 2, no functional changes in the source code
    though
 -  Update tests and require latest version of pylint (>=1.8), fixes
-   `#53 <https://github.com/PyCQA/pylint-django/issues/53>`__,
-   `#97 <https://github.com/PyCQA/pylint-django/issues/97>`__
--  `#81 <https://github.com/PyCQA/pylint-django/issues/81>`__ Fix
+   `#53 <https://github.com/pylint-dev/pylint-django/issues/53>`__,
+   `#97 <https://github.com/pylint-dev/pylint-django/issues/97>`__
+-  `#81 <https://github.com/pylint-dev/pylint-django/issues/81>`__ Fix
    'duplicate-except' false negative for except blocks which catch the
    ``DoesNotExist`` exception.
 
 Version 0.7.4
 -------------
 
--  `#88 <https://github.com/PyCQA/pylint-django/pull/88>`__ Fixed builds
+-  `#88 <https://github.com/pylint-dev/pylint-django/pull/88>`__ Fixed builds
    with Django 1.10 (thanks to
    `federicobond <https://github.com/federicobond>`__)
 -  `#91 <https://github.com/PyCQA/pylint-django/pull/91>`__ Fixed race

@@ -8,7 +8,7 @@ name = "pylint-django"
 version = "2.7.0"
 readme = "README.rst"
 description = "A Pylint plugin to help Pylint understand the Django web framework"
-repository = "https://github.com/PyCQA/pylint-django"
+repository = "https://github.com/pylint-dev/pylint-django"
 authors = [ "Carl Crowder <git@carlcrowder.com>" ]
 classifiers = [
   "Development Status :: 5 - Production/Stable",

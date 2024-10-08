@@ -2,7 +2,7 @@
 Ensures that no '__unicode__ missing' warning is emitted if the
 Django python3/2 compatability decorator is used
 
-See https://github.com/PyCQA/pylint-django/issues/10
+See https://github.com/pylint-dev/pylint-django/issues/10
 """
 from django.db import models
 

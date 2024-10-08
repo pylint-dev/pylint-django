@@ -70,7 +70,7 @@ class UserPreferences(models.Model):
     """
     Used for testing FK which refers to another model by
     string, not model class, see
-    https://github.com/PyCQA/pylint-django/issues/35
+    https://github.com/pylint-dev/pylint-django/issues/35
     """
 
     user = ForeignKey("User", on_delete=models.CASCADE)
