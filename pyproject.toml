@@ -1,41 +1,45 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+
+requires = [ "poetry-core>=1" ]
+
 [tool.poetry]
 name = "pylint-django"
 version = "2.7.0"
 readme = "README.rst"
 description = "A Pylint plugin to help Pylint understand the Django web framework"
 repository = "https://github.com/PyCQA/pylint-django"
-authors = ["Carl Crowder <git@carlcrowder.com>"]
+authors = [ "Carl Crowder <git@carlcrowder.com>" ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Environment :: Console",
-    "Intended Audience :: Developers",
-    "Operating System :: Unix",
-    "Topic :: Software Development :: Quality Assurance",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Framework :: Django :: 2.2",
-    "Framework :: Django :: 3",
-    "Framework :: Django :: 3.0",
-    "Framework :: Django :: 3.1",
-    "Framework :: Django :: 3.2",
-    "Framework :: Django :: 4",
-    "Framework :: Django :: 4.0",
-    "Framework :: Django :: 4.1",
-    "Framework :: Django :: 4.2",
-    "Framework :: Django :: 5.0",
-    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Operating System :: Unix",
+  "Topic :: Software Development :: Quality Assurance",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Framework :: Django :: 2.2",
+  "Framework :: Django :: 3",
+  "Framework :: Django :: 3.0",
+  "Framework :: Django :: 3.1",
+  "Framework :: Django :: 3.2",
+  "Framework :: Django :: 4",
+  "Framework :: Django :: 4.0",
+  "Framework :: Django :: 4.1",
+  "Framework :: Django :: 4.2",
+  "Framework :: Django :: 5.0",
+  "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
 ]
-keywords = ["pylint", "django", "plugin"]
+keywords = [ "pylint", "django", "plugin" ]
 packages = [
-    { include = "pylint_django/" }
+  { include = "pylint_django/" },
 ]
-include = ["pylint_django/LICENSE"]
-exclude = ["**/tests/**", "**/testutils.py", "**/tests.py"]
-
+include = [ "pylint_django/LICENSE" ]
+exclude = [ "**/tests/**", "**/testutils.py", "**/tests.py" ]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
@@ -44,7 +48,7 @@ pylint = ">=2.0,<4"
 Django = { version = ">=2.2", optional = true }
 
 [tool.poetry.group.dev.dependencies]
-tox = "^4"
+tox = ">=4.9"
 pytest = "^7.3.1"
 ruff = ">=0.1.1"
 wheel = "^0.40"
@@ -54,14 +58,25 @@ factory-boy = "^3.3"
 django-tastypie = "^0.14"
 
 [tool.poetry.extras]
-with_django = ["Django"]
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+with_django = [ "Django" ]
 
 [tool.black]
 line-length = 120
+
+[tool.ruff]
+line-length = 120
+select = [
+  "E",   # pycodestyle
+  "F",   # pyflakes
+  "W",   # pycodestyle
+  "B",   # bugbear
+  "I",   # isort
+  "RUF", # ruff
+  "UP",  # pyupgrade
+]
+ignore = [
+  "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
+]
 
 [tool.isort]
 multi_line_output = 3
@@ -72,25 +87,12 @@ line_length = 120
 
 [tool.pylint.main]
 disable = [
-    "missing-docstring",
-    "too-many-branches", "too-many-return-statements", "too-many-ancestors",
-    "too-few-public-methods",
-    "fixme",
+  "missing-docstring",
+  "too-many-branches",
+  "too-many-return-statements",
+  "too-many-ancestors",
+  "too-few-public-methods",
+  "fixme",
 ]
 ignore = "tests"
 max-line-length = 120
-
-[tool.ruff]
-line-length = 120
-select = [
-    "E", # pycodestyle
-    "F", # pyflakes
-    "W", # pycodestyle
-    "B", # bugbear
-    "I", # isort
-    "RUF", # ruff
-    "UP", # pyupgrade
-]
-ignore = [
-    "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
-]
