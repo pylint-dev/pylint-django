@@ -17,7 +17,6 @@ classifiers = [
   "Operating System :: Unix",
   "Topic :: Software Development :: Quality Assurance",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -32,6 +31,7 @@ classifiers = [
   "Framework :: Django :: 4.1",
   "Framework :: Django :: 4.2",
   "Framework :: Django :: 5.0",
+  "Framework :: Django :: 5.1",
   "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
 ]
 keywords = [ "pylint", "django", "plugin" ]
@@ -42,20 +42,21 @@ include = [ "pylint_django/LICENSE" ]
 exclude = [ "**/tests/**", "**/testutils.py", "**/tests.py" ]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4.0"
+python = ">=3.9,<4.0"
 pylint-plugin-utils = ">=0.8"
-pylint = ">=2.0,<4"
+pylint = ">=3.0,<4"
 Django = { version = ">=2.2", optional = true }
 
 [tool.poetry.group.dev.dependencies]
 tox = ">=4.9"
 pytest = "^7.3.1"
-ruff = ">=0.1.1"
+ruff = ">=0.6.9"
 wheel = "^0.40"
 pytest-cov = "^4"
 django-tables2 = "^2.6"
 factory-boy = "^3.3"
 django-tastypie = "^0.14"
+pre-commit = ">=1"
 
 [tool.poetry.extras]
 with_django = [ "Django" ]
