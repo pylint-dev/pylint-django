@@ -96,3 +96,6 @@ disable = [
 ]
 ignore = "tests"
 max-line-length = 120
+
+[tool.codespell]
+ignore-words = [ "custom_dict.txt" ]

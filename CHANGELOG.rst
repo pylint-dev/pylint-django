@@ -282,7 +282,7 @@ Version 2.0.4 (do not use)
 Version 2.0.3 (do not use)
 --------------------------
 
-- Fixing compatability between ranges of astroid (2.0.4 -> 2.1) and
+- Fixing compatibility between ranges of astroid (2.0.4 -> 2.1) and
   pylint (2.1.1 -> 2.2).
   `#201 <https://github.com/pylint-dev/pylint-django/issues/201>`_ and
   `#202 <https://github.com/pylint-dev/pylint-django/issues/202>`_
@@ -550,7 +550,7 @@ Version 0.5.5
 Version 0.5.4
 -------------
 
--  Improved resiliance to inference failure when Django types cannot be
+-  Improved resilience to inference failure when Django types cannot be
    inferred (which can happen if Django is not on the system path
 
 Version 0.5.3
@@ -578,7 +578,7 @@ Version 0.5
    Improved handling of Django model fields
 -  `Issue #10 <https://github.com/PyCQA/pylint-django/issues/10>`__ No
    warning about missing **unicode** if the Django python3/2
-   compatability tools are used
+   compatibility tools are used
 -  `Issue #11 <https://github.com/PyCQA/pylint-django/issues/11>`__
    Improved handling of Django form fields
 -  `Issue #12 <https://github.com/PyCQA/pylint-django/issues/12>`__

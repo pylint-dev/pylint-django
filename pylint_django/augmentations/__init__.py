@@ -30,7 +30,7 @@ from pylint_django.utils import PY3, node_is_subclass
 # get its attributes that way - and this used to be the method - but unfortunately
 # there's no guarantee that Django is properly configured at that stage, and importing
 # anything from the django.db package causes an ImproperlyConfigured exception.
-# Therefore we'll fall back on a hard-coded list of attributes which won't be as accurate,
+# Therefore, we'll fall back on a hard-coded list of attributes which won't be as accurate,
 # but this is not 100% accurate anyway.
 MANAGER_ATTRS = {
     "none",
@@ -837,7 +837,7 @@ def apply_augmentations(linter):
         is_urls_module_valid_constant,
     )
 
-    # supress errors when accessing magical class attributes
+    # suppress errors when accessing magical class attributes
     suppress_message(linter, TypeChecker.visit_attribute, "no-member", is_manager_attribute)
     suppress_message(linter, TypeChecker.visit_attribute, "no-member", is_admin_attribute)
     suppress_message(linter, TypeChecker.visit_attribute, "no-member", is_model_attribute)
