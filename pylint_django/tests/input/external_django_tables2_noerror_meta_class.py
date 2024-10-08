@@ -1,6 +1,6 @@
 # Check that Meta class definitions for django_tables2 classes
 # don't produce old-style-class warnings, see
-# https://github.com/PyCQA/pylint-django/issues/56
+# https://github.com/pylint-dev/pylint-django/issues/56
 
 # pylint: disable=missing-docstring,too-few-public-methods
 

@@ -1,6 +1,6 @@
 # Test that defining `objects` as a regular model manager
 # doesn't raise issues, see
-# https://github.com/PyCQA/pylint-django/issues/144
+# https://github.com/pylint-dev/pylint-django/issues/144
 #
 # pylint: disable=missing-docstring
 

@@ -1,5 +1,5 @@
 **WARNING:** Please do not report issues about missing Django, see
-[README](https://github.com/PyCQA/pylint-django#installation)!
+[README](https://github.com/pylint-dev/pylint-django#installation)!
 
 **TODO:** make sure to post the output of `pip freeze`
 
