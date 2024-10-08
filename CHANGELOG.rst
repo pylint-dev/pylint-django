@@ -9,7 +9,7 @@ Other
 ~~~~~
 
 - Add CI tests against Django 5.2
-
+- CI now tests against python 3.13
 
 Version 2.6.1
 -------------
