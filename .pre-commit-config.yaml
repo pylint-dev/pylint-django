@@ -23,6 +23,12 @@ repos:
         # see https://stackoverflow.com/a/61046953
         exclude: ^pylint_django/tests/input.*$
         args: [--safe, --line-length=120]
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: "2.2.4"
+    hooks:
+      - id: pyproject-fmt
+        # https://pyproject-fmt.readthedocs.io/en/latest/#calculating-max-supported-python-version
+        additional_dependencies: ["tox>=4.9"]
   - repo: local
     hooks:
       - id: pylint
