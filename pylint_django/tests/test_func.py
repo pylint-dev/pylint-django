@@ -54,7 +54,7 @@ class PylintDjangoLintModuleTest(LintModuleTest):
         # if hasattr(test_file, 'option_file') and test_file.option_file is None:
         # pylint: disable=super-with-arguments
         # TODO Fix this and the CI (?)
-        super(PylintDjangoLintModuleTest, self).__init__(test_file)  # noqa
+        super(PylintDjangoLintModuleTest, self).__init__(test_file)  # noqa: UP008
         self._linter.load_plugin_modules(["pylint_django"])
         self._linter.load_plugin_configuration()
 
