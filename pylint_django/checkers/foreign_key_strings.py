@@ -83,7 +83,8 @@ Consider passing in an explicit Django configuration file to match your project 
             import django  # pylint: disable=import-outside-toplevel
 
             django.setup()
-            from django.apps import apps  # noqa pylint: disable=import-outside-toplevel,unused-import
+            # pylint: disable-next=import-outside-toplevel,unused-import
+            from django.apps import apps  # noqa: F401
 
         except ImproperlyConfigured:
             # this means that Django wasn't able to configure itself using some defaults
