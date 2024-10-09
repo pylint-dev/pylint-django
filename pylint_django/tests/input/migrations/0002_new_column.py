@@ -4,7 +4,7 @@ This should trigger a warning because adding new columns with
 default value on a large table leads to DB performance issues.
 
 See:
-https://github.com/PyCQA/pylint-django/issues/118 and
+https://github.com/pylint-dev/pylint-django/issues/118 and
 https://docs.djangoproject.com/en/2.0/topics/migrations/#postgresql
 
 > ... adding columns with default values will cause a full rewrite of

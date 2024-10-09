@@ -465,58 +465,58 @@ Version 0.7.4
 -  `#88 <https://github.com/pylint-dev/pylint-django/pull/88>`__ Fixed builds
    with Django 1.10 (thanks to
    `federicobond <https://github.com/federicobond>`__)
--  `#91 <https://github.com/PyCQA/pylint-django/pull/91>`__ Fixed race
+-  `#91 <https://github.com/pylint-dev/pylint-django/pull/91>`__ Fixed race
    condition when running with pylint parallel execution mode (thanks to
    `jeremycarroll <https://github.com/jeremycarroll>`__)
--  `#64 <https://github.com/PyCQA/pylint-django/issues/64>`__ "Meta is
+-  `#64 <https://github.com/pylint-dev/pylint-django/issues/64>`__ "Meta is
    old style class" now suppressed on BaseSerializer too (thanks to
    `unklphil <https://github.com/unklphil>`__)
--  `#70 <https://github.com/PyCQA/pylint-django/pull/70>`__ Updating to
+-  `#70 <https://github.com/pylint-dev/pylint-django/pull/70>`__ Updating to
    handle newer pylint/astroid versions (thanks to
    `iXce <https://github.com/iXce>`__)
 
 Version 0.7.2
 -------------
 
--  `#76 <https://github.com/PyCQA/pylint-django/pull/76>`__ Better
+-  `#76 <https://github.com/pylint-dev/pylint-django/pull/76>`__ Better
    handling of mongoengine querysetmanager
--  `#73 <https://github.com/PyCQA/pylint-django/pull/73>`__
-   `#72 <https://github.com/PyCQA/pylint-django/issues/72>`__ Make package
+-  `#73 <https://github.com/pylint-dev/pylint-django/pull/73>`__
+   `#72 <https://github.com/pylint-dev/pylint-django/issues/72>`__ Make package
    zip safe to help fix some path problems
--  `#68 <https://github.com/PyCQA/pylint-django/pull/68>`__ Suppressed
+-  `#68 <https://github.com/pylint-dev/pylint-django/pull/68>`__ Suppressed
    invalid constant warning for "app\_name" in urls.py
--  `#67 <https://github.com/PyCQA/pylint-django/pull/67>`__ Fix
+-  `#67 <https://github.com/pylint-dev/pylint-django/pull/67>`__ Fix
    view.args and view.kwargs
--  `#66 <https://github.com/PyCQA/pylint-django/issues/66>`__ accessing
+-  `#66 <https://github.com/pylint-dev/pylint-django/issues/66>`__ accessing
    \_meta no longer causes a protected-access warning as this is a
    public API as of Django 1.8
--  `#65 <https://github.com/PyCQA/pylint-django/pull/65>`__ Add support
+-  `#65 <https://github.com/pylint-dev/pylint-django/pull/65>`__ Add support
    of mongoengine module.
--  `#59 <https://github.com/PyCQA/pylint-django/pull/59>`__ Silence
+-  `#59 <https://github.com/pylint-dev/pylint-django/pull/59>`__ Silence
    old-style-class for widget Meta
 
 Version 0.7.1
 -------------
 
--  `#52 <https://github.com/PyCQA/pylint-django/issues/52>`__ - Fixed
+-  `#52 <https://github.com/pylint-dev/pylint-django/issues/52>`__ - Fixed
    stupid mistake when using versioninfo
 
 Version 0.7
 -----------
 
--  `#51 <https://github.com/PyCQA/pylint-django/issues/51>`__ - Fixed
+-  `#51 <https://github.com/pylint-dev/pylint-django/issues/51>`__ - Fixed
    compatibility with pylint 1.5 / astroid 1.4.1
 
 Version 0.6.1
 -------------
 
--  `#43 <https://github.com/PyCQA/pylint-django/issues/43>`__ - Foreign
+-  `#43 <https://github.com/pylint-dev/pylint-django/issues/43>`__ - Foreign
    key ID access (``somefk_id``) does not raise an 'attribute not found'
    warning
--  `#31 <https://github.com/PyCQA/pylint-django/issues/31>`__ - Support
+-  `#31 <https://github.com/pylint-dev/pylint-django/issues/31>`__ - Support
    for custom model managers (thanks
    `smirolo <https://github.com/smirolo>`__)
--  `#48 <https://github.com/PyCQA/pylint-django/pull/48>`__ - Added
+-  `#48 <https://github.com/pylint-dev/pylint-django/pull/48>`__ - Added
    support for django-restframework (thanks
    `mbertolacci <https://github.com/mbertolacci>`__)
 
@@ -526,25 +526,25 @@ Version 0.6
 -  Pylint 1.4 dropped support for Python 2.6, therefore a constraint is
    added that pylint-django will only work with Python2.6 if pylint<=1.3
    is installed
--  `#40 <https://github.com/PyCQA/pylint-django/issues/40>`__ - pylint
+-  `#40 <https://github.com/pylint-dev/pylint-django/issues/40>`__ - pylint
    1.4 warned about View and Model classes not having enough public
    methods; this is suppressed
--  `#37 <https://github.com/PyCQA/pylint-django/issues/37>`__ - fixed an
+-  `#37 <https://github.com/pylint-dev/pylint-django/issues/37>`__ - fixed an
    infinite loop when using astroid 1.3.3+
--  `#36 <https://github.com/PyCQA/pylint-django/issues/36>`__ - no
+-  `#36 <https://github.com/pylint-dev/pylint-django/issues/36>`__ - no
    longer warning about lack of ``__unicode__`` method on abstract model
    classes
--  `PR #34 <https://github.com/PyCQA/pylint-django/pull/34>`__ - prevent
+-  `PR #34 <https://github.com/pylint-dev/pylint-django/pull/34>`__ - prevent
    warning about use of ``super()`` on ModelManager classes
 
 Version 0.5.5
 -------------
 
--  `PR #27 <https://github.com/PyCQA/pylint-django/pull/27>`__ - better
+-  `PR #27 <https://github.com/pylint-dev/pylint-django/pull/27>`__ - better
    ``ForeignKey`` transforms, which now work when of the form
    ``othermodule.ModelClass``. This also fixes a problem where an
    inferred type would be ``_Yes`` and pylint would fail
--  `PR #28 <https://github.com/PyCQA/pylint-django/pull/28>`__ - better
+-  `PR #28 <https://github.com/pylint-dev/pylint-django/pull/28>`__ - better
    knowledge of ``ManyToManyField`` classes
 
 Version 0.5.4
@@ -556,7 +556,7 @@ Version 0.5.4
 Version 0.5.3
 -------------
 
--  `Issue #25 <https://github.com/PyCQA/pylint-django/issues/25>`__
+-  `Issue #25 <https://github.com/pylint-dev/pylint-django/issues/25>`__
    Fixing cases where a module defines ``get`` as a method
 
 Version 0.5.2
@@ -574,20 +574,20 @@ Version 0.5.1
 Version 0.5
 -----------
 
--  `Issue #7 <https://github.com/PyCQA/pylint-django/issues/7>`__
+-  `Issue #7 <https://github.com/pylint-dev/pylint-django/issues/7>`__
    Improved handling of Django model fields
--  `Issue #10 <https://github.com/PyCQA/pylint-django/issues/10>`__ No
+-  `Issue #10 <https://github.com/pylint-dev/pylint-django/issues/10>`__ No
    warning about missing **unicode** if the Django python3/2
    compatibility tools are used
--  `Issue #11 <https://github.com/PyCQA/pylint-django/issues/11>`__
+-  `Issue #11 <https://github.com/pylint-dev/pylint-django/issues/11>`__
    Improved handling of Django form fields
--  `Issue #12 <https://github.com/PyCQA/pylint-django/issues/12>`__
+-  `Issue #12 <https://github.com/pylint-dev/pylint-django/issues/12>`__
    Improved handling of Django ImageField and FileField objects
--  `Issue #14 <https://github.com/PyCQA/pylint-django/issues/14>`__
+-  `Issue #14 <https://github.com/pylint-dev/pylint-django/issues/14>`__
    Models which do not define **unicode** but whose parents do now have
    a new error (W5103) instead of incorrectly warning about no
    **unicode** being present.
--  `Issue #21 <https://github.com/PyCQA/pylint-django/issues/21>`__
+-  `Issue #21 <https://github.com/pylint-dev/pylint-django/issues/21>`__
    ``ForeignKey`` and ``OneToOneField`` fields on models are replaced
    with instance of the type they refer to in the AST, which allows
    pylint to generate correct warnings about attributes they may or may
@@ -605,9 +605,9 @@ Version 0.2
 -  Pylint now recognises ``BaseForm`` as an ancestor of ``Form`` and
    subclasses
 -  Improved ``Form`` support
--  `Issue #2 <https://github.com/PyCQA/pylint-django/issues/2>`__ - a
+-  `Issue #2 <https://github.com/pylint-dev/pylint-django/issues/2>`__ - a
    subclass of a ``Model`` or ``Form`` also has warnings about a
    ``Meta`` class suppressed.
--  `Issue #3 <https://github.com/PyCQA/pylint-django/issues/3>`__ -
+-  `Issue #3 <https://github.com/pylint-dev/pylint-django/issues/3>`__ -
    ``Form`` and ``ModelForm`` subclasses no longer warn about ``Meta``
    classes.

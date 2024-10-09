@@ -25,7 +25,7 @@ def _add_transform(package_name):
         Build a fake module to use within transformations.
         @package_name is a parameter from the outer scope b/c according to
         the docs this can't receive any parameters.
-        http://pylint.pycqa.org/projects/astroid/en/latest/extending.html?highlight=MANAGER#module-extender-transforms
+        https://pylint.readthedocs.io/projects/astroid/en/latest/extending.html#module-extender-transforms
         """
         transforms_dir = os.path.join(os.path.dirname(__file__), "transforms")
         transformed_name = re.sub(r"\.", "_", package_name)
