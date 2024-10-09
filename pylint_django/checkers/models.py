@@ -79,7 +79,7 @@ class ModelChecker(BaseChecker):
     msgs = MESSAGES
 
     @check_messages("model-missing-unicode")
-    def visit_classdef(self, node):
+    def visit_classdef(self, node):  # noqa: PLR0911
         """Class visitor."""
         if not node_is_subclass(node, "django.db.models.base.Model", ".Model"):
             # we only care about models

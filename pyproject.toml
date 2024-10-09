@@ -74,7 +74,11 @@ lint.select = [
   "I",       # isort
   "PGH004",  # pygrep-hooks - Use specific rule codes when using noqa
   "PIE",     # flake8-pie
+  "PLC",     # pylint convention
+  "PLE",     # pylint error
+  "PLR",     # pylint refactor
   "PLR1714", # Consider merging multiple comparisons
+  "PLW",     # pylint warning
   "PYI",     # flake8-pyi
   "RUF",     # ruff
   "T100",    # flake8-debugger
@@ -82,7 +86,10 @@ lint.select = [
   "W",       # pycodestyle
 ]
 lint.ignore = [
-  "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
+  "PLR0912", # Too many branches, worse than C901
+  "PLR0915", # Too many statements, worse than C901
+  "PLR2004", # Magic value used in comparison, opinionated
+  "RUF012",  # Mutable class attributes should be annotated with `typing.ClassVar`
 ]
 
 [tool.isort]

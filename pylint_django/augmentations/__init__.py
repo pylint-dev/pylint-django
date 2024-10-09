@@ -366,12 +366,11 @@ def foreign_key_sets(chain, node):
         # if this is a X_set method, that's a pretty strong signal that this is the default
         # Django name, rather than one set by related_name
         quack = True
-    else:
-        # we will
-        if isinstance(node.parent, Attribute):
-            func_name = getattr(node.parent, "attrname", None)
-            if func_name in MANAGER_ATTRS:
-                quack = True
+    # we will
+    elif isinstance(node.parent, Attribute):
+        func_name = getattr(node.parent, "attrname", None)
+        if func_name in MANAGER_ATTRS:
+            quack = True
 
     if quack:
         children = list(node.get_children())
@@ -522,7 +521,7 @@ def _attribute_is_magic(node, attrs, parents):
     try:
         for cls in node.last_child().inferred():
             if isinstance(cls, Super):
-                cls = cls._self_class  # pylint: disable=protected-access
+                cls = cls._self_class  # pylint: disable=protected-access # noqa:PLW2901
             if node_is_subclass(cls, *parents) or cls.qname() in parents:
                 return True
     except InferenceError:
