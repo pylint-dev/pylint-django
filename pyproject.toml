@@ -66,16 +66,16 @@ line-length = 120
 
 [tool.ruff]
 line-length = 120
-select = [
+lint.select = [
+  "B",   # bugbear
   "E",   # pycodestyle
   "F",   # pyflakes
-  "W",   # pycodestyle
-  "B",   # bugbear
   "I",   # isort
   "RUF", # ruff
   "UP",  # pyupgrade
+  "W",   # pycodestyle
 ]
-ignore = [
+lint.ignore = [
   "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
 ]
 
