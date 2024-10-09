@@ -7,15 +7,20 @@ Version 2.6.0
 NOTICE
 ~~~~~~
 
-This version drops support for Python 3.7 - latest Pylint no longer supports 3.7, and CI tasks were taking hours under 3.7. `Python 3.7 <https://www.python.org/downloads/release/python-3717/>`_  received its last security update more than a year ago (from the date of this release).
+We dropped support for Python 3.7, 3.8, and for pylint below 3.0.
 
 Bugfixes
 ~~~~~~~~
 
 - Added Django aliases for ranges to support psycopg 2 and 3 (`#421 <https://github.com/pylint-dev/pylint-django/pull/421>`_)
-- Support for PYthon 3.12 datetime (`#427 <https://github.com/pylint-dev/pylint-django/pull/427>`_)
+- Support for Python 3.12 datetime (`#427 <https://github.com/pylint-dev/pylint-django/pull/427>`_)
 - Fixed location of installed LICENSE file (`#431 <https://github.com/pylint-dev/pylint-django/issues/431>`_)
 - Fixed ForeignKeyStringChecker referencing linter config incorrectly (`#430 <https://github.com/pylint-dev/pylint-django/issues/430>`_)
+
+Other
+~~~~~
+
+- CI now tests against Django 5.1
 
 Version 2.5.5 (14 May 2023)
 ---------------------------
