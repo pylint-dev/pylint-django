@@ -16,13 +16,9 @@ repos:
       - id: ruff
         args: ["--fix"]
         exclude: "tests/input/"
-  - repo: https://github.com/psf/black
-    rev: 24.10.0
-    hooks:
-      - id: black
-        # see https://stackoverflow.com/a/61046953
+      - id: ruff-format
         exclude: ^pylint_django/tests/input.*$
-        args: [--safe, --line-length=120]
+        args: [--line-length=120]
   - repo: https://github.com/tox-dev/pyproject-fmt
     rev: "2.2.4"
     hooks:
