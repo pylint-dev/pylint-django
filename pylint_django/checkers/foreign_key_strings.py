@@ -62,7 +62,7 @@ Consider passing in an explicit Django configuration file to match your project 
         # Django is configured explicitly, and will use some basic defaults in that
         # case. However, as this is a WARNING not a FATAL, the error must be raised
         # with an AST node - only F and R messages are scope exempt (see
-        # https://github.com/PyCQA/pylint/blob/master/pylint/constants.py#L24)
+        # https://github.com/pylint-dev/pylint/blob/master/pylint/constants.py#L24)
 
         # However, testing to see if Django is configured happens in `open()`
         # before any modules are inspected, as Django needs to be configured with

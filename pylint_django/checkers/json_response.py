@@ -1,7 +1,7 @@
 # Copyright (c) 2018 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# For details: https://github.com/PyCQA/pylint-django/blob/master/LICENSE
+# For details: https://github.com/pylint-dev/pylint-django/blob/master/LICENSE
 """
 Various suggestions about JSON http responses
 """

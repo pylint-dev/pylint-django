@@ -124,7 +124,7 @@ class ModelChecker(BaseChecker):
                 return
 
         # if the Django compatibility decorator is used then we don't emit a warning
-        # see https://github.com/PyCQA/pylint-django/issues/10
+        # see https://github.com/pylint-dev/pylint-django/issues/10
         if _has_python_2_unicode_compatible_decorator(node):
             return
 

@@ -325,7 +325,7 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
         new_things[name] = stmts
 
     # ScopeConsumer changed between pylint 2.12 and 2.13
-    # see https://github.com/PyCQA/pylint/issues/5970#issuecomment-1078778393
+    # see https://github.com/pylint-dev/pylint/issues/5970#issuecomment-1078778393
     if hasattr(consumer, "consumed_uncertain"):
         # this is pylint >= 2.13, and the ScopeConsumer tuple has an additional field
         sc_args = (new_things, consumer.consumed, consumer.consumed_uncertain, consumer.scope_type)
