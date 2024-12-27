@@ -1,6 +1,15 @@
 Changelog
 =========
 
+Version 2.7.0
+-------------
+
+Other
+~~~~~
+
+- CI now tests against python 3.13
+
+
 Version 2.6.1
 -------------
 
