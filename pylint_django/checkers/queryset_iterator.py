@@ -1,5 +1,5 @@
 from astroid.nodes import Attribute, Call
-from pylint import checkers, interfaces
+from pylint import checkers
 from pylint.checkers import utils
 
 from pylint_django.__pkginfo__ import BASE_ID
@@ -13,8 +13,6 @@ class QuerysetIteratorForLoopChecker(checkers.BaseChecker):
     eventually suggesting the usage of ".iterator()"
     """
 
-    __implements__ = interfaces.IAstroidChecker
-
     name = "queryset-iterator-forloop-checker"
 
     msgs = {
@@ -27,7 +25,7 @@ class QuerysetIteratorForLoopChecker(checkers.BaseChecker):
         ),
     }
 
-    @utils.check_messages("consider-using-queryset-iterator")
+    @utils.only_required_for_messages("consider-using-queryset-iterator")
     def visit_for(self, node):
         """
         Checks for a QuerySet.all() inside of a for loop

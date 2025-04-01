@@ -1,5 +1,5 @@
 from astroid.nodes import Attribute, Call, Expr
-from pylint import checkers, interfaces
+from pylint import checkers
 from pylint.checkers import utils
 
 from pylint_django.__pkginfo__ import BASE_ID
@@ -12,8 +12,6 @@ class ModelSaveForLoopChecker(checkers.BaseChecker):
     Checks for usage of Model.manager.create() or Model.save() inside of for
     loops
     """
-
-    __implements__ = interfaces.IAstroidChecker
 
     name = "model-save-forloop-checker"
 
@@ -34,8 +32,8 @@ class ModelSaveForLoopChecker(checkers.BaseChecker):
         ),
     }
 
-    @utils.check_messages("consider-using-bulk-create")
-    @utils.check_messages("consider-using-bulk-create-save")
+    @utils.only_required_for_messages("consider-using-bulk-create")
+    @utils.only_required_for_messages("consider-using-bulk-create-save")
     def visit_for(self, node):
         """
         Checks for a Model.create() inside of a for loop

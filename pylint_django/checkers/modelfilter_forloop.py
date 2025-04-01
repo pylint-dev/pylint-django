@@ -1,5 +1,5 @@
 from astroid.nodes import Attribute, Call, Expr
-from pylint import checkers, interfaces
+from pylint import checkers
 from pylint.checkers import utils
 
 from pylint_django.__pkginfo__ import BASE_ID
@@ -9,8 +9,6 @@ class ModelFilterForLoopChecker(checkers.BaseChecker):
     """
     Checks for usage of "Model.manager.filter() inside of for loops
     """
-
-    __implements__ = interfaces.IAstroidChecker
 
     name = "model-filter-forloop-checker"
 
@@ -24,7 +22,7 @@ class ModelFilterForLoopChecker(checkers.BaseChecker):
         ),
     }
 
-    @utils.check_messages("consider-using-in-queries")
+    @utils.only_required_for_messages("consider-using-in-queries")
     def visit_for(self, node):
         """
         Checks for a Queryset.filter() inside of a for loop
