@@ -1,6 +1,7 @@
 # flake8: noqa
 # pylint: skip-file
-# no sane linter can figure out the hackiness in this compatability layer...
+# no sane linter can figure out the hackiness in this compatibility layer...
+import sys
 
 try:
     from astroid.nodes import AssignName, Attribute, ClassDef, FunctionDef, ImportFrom
@@ -20,6 +21,11 @@ except ImportError:
     except ImportError:
         from astroid.util import Uninferable
 
+try:
+    from pylint.checkers.utils import only_required_for_messages as check_messages
+except (ImportError, ModuleNotFoundError):
+    from pylint.checkers.utils import check_messages
+
 import pylint
 
 # pylint before version 2.3 does not support load_configuration() hook.
@@ -28,3 +34,6 @@ try:
     LOAD_CONFIGURATION_SUPPORTED = tuple(pylint.__version__.split(".")) >= ("2", "3")
 except AttributeError:
     LOAD_CONFIGURATION_SUPPORTED = pylint.__pkginfo__.numversion >= (2, 3)
+
+# datetime module is compiled and moved to _pydatetime
+COMPILED_DATETIME_CLASSES = sys.version_info >= (3, 12)

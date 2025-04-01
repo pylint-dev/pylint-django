@@ -1,11 +1,8 @@
-from __future__ import absolute_import
-
 import astroid
 from pylint.checkers import BaseChecker
-from pylint.checkers.utils import check_messages
-from pylint.interfaces import IAstroidChecker
 
 from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django.compat import check_messages
 from pylint_django.transforms import foreignkey
 
 
@@ -26,8 +23,6 @@ This can be done via the DJANGO_SETTINGS_MODULE environment variable or the pyli
 
 Some basic default settings were used, however this will lead to less accurate linting.
 Consider passing in an explicit Django configuration file to match your project to improve accuracy."""
-
-    __implements__ = (IAstroidChecker,)
 
     name = "Django foreign keys referenced by strings"
 
@@ -67,7 +62,7 @@ Consider passing in an explicit Django configuration file to match your project 
         # Django is configured explicitly, and will use some basic defaults in that
         # case. However, as this is a WARNING not a FATAL, the error must be raised
         # with an AST node - only F and R messages are scope exempt (see
-        # https://github.com/PyCQA/pylint/blob/master/pylint/constants.py#L24)
+        # https://github.com/pylint-dev/pylint/blob/master/pylint/constants.py#L24)
 
         # However, testing to see if Django is configured happens in `open()`
         # before any modules are inspected, as Django needs to be configured with
@@ -80,9 +75,7 @@ Consider passing in an explicit Django configuration file to match your project 
         # state is stashed in this property.
 
         try:
-            from django.core.exceptions import (  # pylint: disable=import-outside-toplevel
-                ImproperlyConfigured,
-            )
+            from django.core.exceptions import ImproperlyConfigured  # pylint: disable=import-outside-toplevel
         except ModuleNotFoundError:
             return
 
@@ -90,46 +83,45 @@ Consider passing in an explicit Django configuration file to match your project 
             import django  # pylint: disable=import-outside-toplevel
 
             django.setup()
-            from django.apps import (  # noqa pylint: disable=import-outside-toplevel,unused-import
-                apps,
-            )
+            # pylint: disable-next=import-outside-toplevel,unused-import
+            from django.apps import apps  # noqa: F401
 
-            # flake8: noqa=F401, F403
         except ImproperlyConfigured:
             # this means that Django wasn't able to configure itself using some defaults
             # provided (likely in a DJANGO_SETTINGS_MODULE environment variable)
             # so see if the user has specified a pylint option
-            if self.config.django_settings_module is None:
+            if hasattr(self, "linter"):
+                django_settings_module = self.linter.config.django_settings_module
+            else:
+                # TODO: remove this no-member ignore : this is to avoid the missing `config` for pylint 3+,
+                #  and can be removed once pylint 2
+                # pylint: disable=no-member
+                django_settings_module = self.linter.config.django_settings_module
+
+            if django_settings_module is None:
                 # we will warn the user that they haven't actually configured Django themselves
                 self._raise_warning = True
                 # but use django defaults then...
-                from django.conf import (  # pylint: disable=import-outside-toplevel
-                    settings,
-                )
+                from django.conf import settings  # pylint: disable=import-outside-toplevel
 
                 settings.configure()
                 django.setup()
             else:
                 # see if we can load the provided settings module
                 try:
-                    from django.conf import (  # pylint: disable=import-outside-toplevel
-                        Settings,
-                        settings,
-                    )
+                    from django.conf import Settings, settings  # pylint: disable=import-outside-toplevel
 
-                    settings.configure(Settings(self.config.django_settings_module))
+                    settings.configure(Settings(django_settings_module))
                     django.setup()
                 except ImportError:
                     # we could not find the provided settings module...
                     # at least here it is a fatal error so we can just raise this immediately
                     self.add_message(
                         "django-settings-module-not-found",
-                        args=self.config.django_settings_module,
+                        args=self.linter.config.django_settings_module,
                     )
                     # however we'll trundle on with basic settings
-                    from django.conf import (  # pylint: disable=import-outside-toplevel
-                        settings,
-                    )
+                    from django.conf import settings  # pylint: disable=import-outside-toplevel
 
                     settings.configure()
                     django.setup()

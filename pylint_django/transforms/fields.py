@@ -1,7 +1,7 @@
 from astroid import MANAGER, AstroidImportError, inference_tip, nodes
 from astroid.nodes import scoped_nodes
 
-from pylint_django import utils
+from pylint_django import compat, utils
 
 _STR_FIELDS = (
     "CharField",
@@ -46,8 +46,7 @@ def is_model_or_form_field(cls):
     return is_model_field(cls) or is_form_field(cls)
 
 
-def apply_type_shim(cls, _context=None):  # noqa
-
+def apply_type_shim(cls, _context=None):  # pylint: disable=too-many-statements
     if cls.name in _STR_FIELDS:
         base_nodes = scoped_nodes.builtin_lookup("str")
     elif cls.name in _INT_FIELDS:
@@ -62,13 +61,25 @@ def apply_type_shim(cls, _context=None):  # noqa
         except AstroidImportError:
             base_nodes = MANAGER.ast_from_module_name("_pydecimal").lookup("Decimal")
     elif cls.name in ("SplitDateTimeField", "DateTimeField"):
-        base_nodes = MANAGER.ast_from_module_name("datetime").lookup("datetime")
+        if compat.COMPILED_DATETIME_CLASSES:
+            base_nodes = MANAGER.ast_from_module_name("_pydatetime").lookup("datetime")
+        else:
+            base_nodes = MANAGER.ast_from_module_name("datetime").lookup("datetime")
     elif cls.name == "TimeField":
-        base_nodes = MANAGER.ast_from_module_name("datetime").lookup("time")
+        if compat.COMPILED_DATETIME_CLASSES:
+            base_nodes = MANAGER.ast_from_module_name("_pydatetime").lookup("time")
+        else:
+            base_nodes = MANAGER.ast_from_module_name("datetime").lookup("time")
     elif cls.name == "DateField":
-        base_nodes = MANAGER.ast_from_module_name("datetime").lookup("date")
+        if compat.COMPILED_DATETIME_CLASSES:
+            base_nodes = MANAGER.ast_from_module_name("_pydatetime").lookup("date")
+        else:
+            base_nodes = MANAGER.ast_from_module_name("datetime").lookup("date")
     elif cls.name == "DurationField":
-        base_nodes = MANAGER.ast_from_module_name("datetime").lookup("timedelta")
+        if compat.COMPILED_DATETIME_CLASSES:
+            base_nodes = MANAGER.ast_from_module_name("_pydatetime").lookup("timedelta")
+        else:
+            base_nodes = MANAGER.ast_from_module_name("datetime").lookup("timedelta")
     elif cls.name == "UUIDField":
         base_nodes = MANAGER.ast_from_module_name("uuid").lookup("UUID")
     elif cls.name == "ManyToManyField":
@@ -80,7 +91,10 @@ def apply_type_shim(cls, _context=None):  # noqa
     elif cls.name in ("HStoreField", "JSONField"):
         base_nodes = scoped_nodes.builtin_lookup("dict")
     elif cls.name in _RANGE_FIELDS:
-        base_nodes = MANAGER.ast_from_module_name("psycopg2._range").lookup("Range")
+        try:
+            base_nodes = MANAGER.ast_from_module_name("django.db.backends.postgresql.psycopg_any").lookup("Range")
+        except AstroidImportError:
+            base_nodes = MANAGER.ast_from_module_name("psycopg2._range").lookup("Range")
     else:
         return iter([cls])
 
@@ -94,7 +108,7 @@ def apply_type_shim(cls, _context=None):  # noqa
     else:
         base_nodes = list(base_nodes[1])
 
-    return iter([cls] + base_nodes)
+    return iter([cls, *base_nodes])
 
 
 def _valid_base_node(node, context):

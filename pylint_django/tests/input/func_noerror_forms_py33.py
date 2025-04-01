@@ -34,7 +34,6 @@ class TestModelFormSubclass(forms.ModelForm):
 
 
 class TestFormWidgetAssignment(forms.Form):
-
     multi_field = forms.MultipleChoiceField(choices=[("1", "First"), ("2", "Second")])
 
     class Meta:

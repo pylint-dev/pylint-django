@@ -1,11 +1,11 @@
 """Models."""
+
 from astroid import Const
 from astroid.nodes import Assign, AssignName, ClassDef, FunctionDef
 from pylint.checkers import BaseChecker
-from pylint.checkers.utils import check_messages
-from pylint.interfaces import IAstroidChecker
 
 from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django.compat import check_messages
 from pylint_django.utils import PY3, node_is_subclass
 
 MESSAGES = {
@@ -75,13 +75,11 @@ def _is_unicode_or_str_in_python_2_compatibility(method):
 class ModelChecker(BaseChecker):
     """Django model checker."""
 
-    __implements__ = IAstroidChecker
-
     name = "django-model-checker"
     msgs = MESSAGES
 
     @check_messages("model-missing-unicode")
-    def visit_classdef(self, node):
+    def visit_classdef(self, node):  # noqa: PLR0911
         """Class visitor."""
         if not node_is_subclass(node, "django.db.models.base.Model", ".Model"):
             # we only care about models
@@ -126,7 +124,7 @@ class ModelChecker(BaseChecker):
                 return
 
         # if the Django compatibility decorator is used then we don't emit a warning
-        # see https://github.com/PyCQA/pylint-django/issues/10
+        # see https://github.com/pylint-dev/pylint-django/issues/10
         if _has_python_2_unicode_compatible_decorator(node):
             return
 

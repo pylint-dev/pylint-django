@@ -1,11 +1,11 @@
 pylint-django
 =============
 
-.. image:: https://github.com/PyCQA/pylint-django/actions/workflows/build.yml/badge.svg
-    :target: https://github.com/PyCQA/pylint-django/actions/workflows/build.yml
+.. image:: https://github.com/pylint-dev/pylint-django/actions/workflows/build.yml/badge.svg
+    :target: https://github.com/pylint-dev/pylint-django/actions/workflows/build.yml
 
-.. image:: https://coveralls.io/repos/github/PyCQA/pylint-django/badge.svg?branch=master
-     :target: https://coveralls.io/github/PyCQA/pylint-django?branch=master
+.. image:: https://coveralls.io/repos/github/pylint-dev/pylint-django/badge.svg?branch=master
+     :target: https://coveralls.io/github/pylint-dev/pylint-django?branch=master
 
 .. image:: https://img.shields.io/pypi/v/pylint-django.svg
     :target: https://pypi.python.org/pypi/pylint-django
@@ -29,10 +29,10 @@ To install::
 
 **WARNING:** ``pylint-django`` will not install ``Django`` by default because
 this causes more trouble than good,
-`see discussion <https://github.com/PyCQA/pylint-django/pull/132>`__. If you wish
+`see discussion <https://github.com/pylint-dev/pylint-django/pull/132>`__. If you wish
 to automatically install the latest version of ``Django`` then::
 
-    pip install pylint-django[with_django]
+    pip install pylint-django[with-django]
 
 otherwise sort out your testing environment and please **DO NOT** report issues
 about missing Django!

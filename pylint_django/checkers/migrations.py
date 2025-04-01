@@ -2,19 +2,19 @@
 # Copyright (c) 2020 Bryan Mutai <mutaiwork@gmail.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# For details: https://github.com/PyCQA/pylint-django/blob/master/LICENSE
+# For details: https://github.com/pylint-dev/pylint-django/blob/master/LICENSE
 """
 Various suggestions around migrations. Disabled by default! Enable with
 pylint --load-plugins=pylint_django.checkers.migrations
 """
 
 import astroid
-from pylint import checkers, interfaces
-from pylint.checkers import utils
+from pylint import checkers
 from pylint_plugin_utils import suppress_message
 
 from pylint_django import compat
 from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django.compat import check_messages
 from pylint_django.utils import is_migrations_module
 
 
@@ -51,8 +51,6 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
     desired default values.
     """
 
-    __implements__ = (interfaces.IAstroidChecker,)
-
     # configuration section name
     name = "new-db-field-with-default"
     msgs = {
@@ -86,7 +84,7 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
             if node not in self._possible_offences[module]:
                 self._possible_offences[module].append(node)
 
-    @utils.check_messages("new-db-field-with-default")
+    @check_messages("new-db-field-with-default")
     def close(self):
         def _path(node):
             return node.path
@@ -113,19 +111,17 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
 
 
 class MissingBackwardsMigrationChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "missing-backwards-migration-callable"
 
     msgs = {
         f"W{BASE_ID}97": (
             "Always include backwards migration callable",
             "missing-backwards-migration-callable",
-            "Always include a backwards/reverse callable counterpart so that the migration is not irreversable.",
+            "Always include a backwards/reverse callable counterpart so that the migration is not irreversible.",
         )
     }
 
-    @utils.check_messages("missing-backwards-migration-callable")
+    @check_messages("missing-backwards-migration-callable")
     def visit_call(self, node):
         try:
             module = node.frame().parent

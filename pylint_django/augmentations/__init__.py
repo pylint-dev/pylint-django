@@ -1,4 +1,5 @@
 """Augmentations."""
+
 #  pylint: disable=invalid-name
 import functools
 import itertools
@@ -11,23 +12,10 @@ from astroid.objects import Super
 from django import VERSION as django_version
 from django.utils import termcolors
 from django.views.generic.base import ContextMixin, RedirectView, View
-from django.views.generic.dates import (
-    DateMixin,
-    DayMixin,
-    MonthMixin,
-    WeekMixin,
-    YearMixin,
-)
-from django.views.generic.detail import (
-    SingleObjectMixin,
-    SingleObjectTemplateResponseMixin,
-    TemplateResponseMixin,
-)
+from django.views.generic.dates import DateMixin, DayMixin, MonthMixin, WeekMixin, YearMixin
+from django.views.generic.detail import SingleObjectMixin, SingleObjectTemplateResponseMixin, TemplateResponseMixin
 from django.views.generic.edit import DeletionMixin, FormMixin, ModelFormMixin
-from django.views.generic.list import (
-    MultipleObjectMixin,
-    MultipleObjectTemplateResponseMixin,
-)
+from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin
 from pylint.checkers.base import DocStringChecker, NameChecker
 from pylint.checkers.classes import ClassChecker
 from pylint.checkers.design_analysis import MisdesignChecker
@@ -42,7 +30,7 @@ from pylint_django.utils import PY3, node_is_subclass
 # get its attributes that way - and this used to be the method - but unfortunately
 # there's no guarantee that Django is properly configured at that stage, and importing
 # anything from the django.db package causes an ImproperlyConfigured exception.
-# Therefore we'll fall back on a hard-coded list of attributes which won't be as accurate,
+# Therefore, we'll fall back on a hard-coded list of attributes which won't be as accurate,
 # but this is not 100% accurate anyway.
 MANAGER_ATTRS = {
     "none",
@@ -337,7 +325,7 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
         new_things[name] = stmts
 
     # ScopeConsumer changed between pylint 2.12 and 2.13
-    # see https://github.com/PyCQA/pylint/issues/5970#issuecomment-1078778393
+    # see https://github.com/pylint-dev/pylint/issues/5970#issuecomment-1078778393
     if hasattr(consumer, "consumed_uncertain"):
         # this is pylint >= 2.13, and the ScopeConsumer tuple has an additional field
         sc_args = (new_things, consumer.consumed, consumer.consumed_uncertain, consumer.scope_type)
@@ -378,12 +366,11 @@ def foreign_key_sets(chain, node):
         # if this is a X_set method, that's a pretty strong signal that this is the default
         # Django name, rather than one set by related_name
         quack = True
-    else:
-        # we will
-        if isinstance(node.parent, Attribute):
-            func_name = getattr(node.parent, "attrname", None)
-            if func_name in MANAGER_ATTRS:
-                quack = True
+    # we will
+    elif isinstance(node.parent, Attribute):
+        func_name = getattr(node.parent, "attrname", None)
+        if func_name in MANAGER_ATTRS:
+            quack = True
 
     if quack:
         children = list(node.get_children())
@@ -534,7 +521,7 @@ def _attribute_is_magic(node, attrs, parents):
     try:
         for cls in node.last_child().inferred():
             if isinstance(cls, Super):
-                cls = cls._self_class  # pylint: disable=protected-access
+                cls = cls._self_class  # pylint: disable=protected-access # noqa:PLW2901
             if node_is_subclass(cls, *parents) or cls.qname() in parents:
                 return True
     except InferenceError:
@@ -803,7 +790,8 @@ def pylint_newstyle_classdef_compat(linter, warning_name, augment):
         return
     suppress_message(
         linter,
-        getattr(NewStyleConflictChecker, "visit_classdef"),
+        # pylint: disable-next=no-member
+        NewStyleConflictChecker.visit_classdef,
         warning_name,
         augment,
     )
@@ -848,7 +836,7 @@ def apply_augmentations(linter):
         is_urls_module_valid_constant,
     )
 
-    # supress errors when accessing magical class attributes
+    # suppress errors when accessing magical class attributes
     suppress_message(linter, TypeChecker.visit_attribute, "no-member", is_manager_attribute)
     suppress_message(linter, TypeChecker.visit_attribute, "no-member", is_admin_attribute)
     suppress_message(linter, TypeChecker.visit_attribute, "no-member", is_model_attribute)

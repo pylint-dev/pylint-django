@@ -1,10 +1,10 @@
 """Models."""
+
 from astroid.nodes import Assign, AssignName, ClassDef
 from pylint.checkers import BaseChecker
-from pylint.checkers.utils import check_messages
-from pylint.interfaces import IAstroidChecker
 
 from pylint_django.__pkginfo__ import BASE_ID
+from pylint_django.compat import check_messages
 from pylint_django.utils import node_is_subclass
 
 
@@ -17,8 +17,6 @@ def _get_child_meta(node):
 
 class FormChecker(BaseChecker):
     """Django model checker."""
-
-    __implements__ = IAstroidChecker
 
     name = "django-form-checker"
     msgs = {

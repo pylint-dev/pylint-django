@@ -2,11 +2,11 @@
 Checks that Pylint doesn't raise an error when a 'ForeignKey' appears in a
 non-django class
 
-The real case is described as follow:
+The real case is described as follows:
 The project use tastypie and django.
 tastypie has a `ForeignKey` field which has the same name
 as django's `ForeignKey`.
-The issue is the lint trys resolving the `ForeignKey` for the
+The issue is the lint tries resolving the `ForeignKey` for the
 tastypie `ForeignKey` which cause import error.
 """
 from tastypie import fields

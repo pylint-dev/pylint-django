@@ -1,6 +1,0 @@
-include *.md
-include *.rst
-include LICENSE
-include pylint_django/transforms/transforms/*.py
-include pylint_django/tests/test_django_not_installed.sh
-recursive-include pylint_django/tests/ *.py *.rc *.txt

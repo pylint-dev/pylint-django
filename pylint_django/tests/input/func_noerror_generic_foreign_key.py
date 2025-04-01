@@ -1,6 +1,6 @@
 """
 Checks that Pylint does not complain about GenericForeignKey fields:
-https://github.com/PyCQA/pylint-django/issues/230
+https://github.com/pylint-dev/pylint-django/issues/230
 """
 # pylint: disable=missing-docstring
 

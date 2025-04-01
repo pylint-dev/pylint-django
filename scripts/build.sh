@@ -19,8 +19,7 @@ tox -e readme
 # then build the packages
 echo "..... Building PyPI packages"
 set -e
-python setup.py sdist >/dev/null
-python setup.py bdist_wheel >/dev/null
+poetry build --quiet
 set +e
 
 # then run some sanity tests
@@ -40,7 +39,7 @@ echo "..... Trying to verify that all source files are present"
 # remove pylint_django/*.egg-info/ generated during build
 find . -type d -name '*.egg-info' | xargs rm -rf
 
-source_files=`find ./pylint_django/ -type f | sed 's|./||'`
+source_files=`find ./pylint_django/ -type f ! -path '**/tests/**' | sed 's|./||'`
 
 # verify for .tar.gz package
 package_files=`tar -tvf dist/*.tar.gz`
@@ -69,7 +68,7 @@ echo "..... Trying to install the new tarball inside a virtualenv"
 # note: installs with the optional dependency to verify this is still working
 virtualenv .venv/test-tarball
 source .venv/test-tarball/bin/activate
-pip install -f dist/ pylint_django[with_django]
+pip install -f dist/ pylint_django[with-django]
 pip freeze | grep Django
 deactivate
 rm -rf .venv/
@@ -77,7 +76,6 @@ rm -rf .venv/
 echo "..... Trying to install the new wheel inside a virtualenv"
 virtualenv .venv/test-wheel
 source .venv/test-wheel/bin/activate
-pip install pylint-plugin-utils  # because it does not provide a wheel package
 pip install --only-binary :all: -f dist/ pylint_django
 deactivate
 rm -rf .venv/

@@ -1,7 +1,7 @@
 # Check that when overriding the 'objects' attribite of a model class
 # with a manager from the django-model-utils package pylint-django
 # does not report not-an-iterator error, see
-# https://github.com/PyCQA/pylint-django/issues/117
+# https://github.com/pylint-dev/pylint-django/issues/117
 # pylint: disable=missing-docstring, invalid-name
 
 from django.db import models

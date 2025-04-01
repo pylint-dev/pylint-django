@@ -12,110 +12,132 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.6]
-        toxenv: [django_not_installed, django_is_installed, flake8, pylint, readme]
+        python-version: ["3.12"]
+        toxenv: [django_not_installed, ruff, pylint, readme]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Execute tests
         run: |
-            pip install tox
-            pip install -e .[for_tests]
+          pip install -U pip poetry tox
+          poetry install
 
-            export TOXENV=${{ matrix.toxenv }}
-            export PYTHON=${{ matrix.python-version }}
-            tox
+          export TOXENV=${{ matrix.toxenv }}
+          export PYTHON=${{ matrix.python-version }}
+          tox
 
-
-  test:
-    name: test latest / Django@${{ matrix.django-version }} / Python@${{ matrix.python-version }}
+  test_latest:
+    name:
+      test latest / Django@${{ matrix.django-version }} / Python@${{
+      matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.8, 3.9]
-        django-version: [-main, "4.0"]
+        python-version: ["3.10", "3.11", "3.12"]
+        django-version: ["5.0", "5.1", "-main"]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Execute tests
         run: |
-            pip install tox
-            pip install -e .[for_tests]
+          pip install -U pip poetry tox
+          poetry install
 
-            export DJANGO=${{ matrix.django-version }}
-            export PYTHON=${{ matrix.python-version }}
-            export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
-            tox
+          export DJANGO=${{ matrix.django-version }}
+          export PYTHON=${{ matrix.python-version }}
+          export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
+          tox
 
       - name: Coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            pip install coveralls
-            coveralls --service=github
+          pip install coveralls
+          coveralls --service=github
 
-  test_deprecated:  # testing older versions of python+django
-    name: test old stuff / Django@${{ matrix.django-version }} / Python@${{ matrix.python-version }}
+  test_maintained:
+    name:
+      test maintained / Django@${{ matrix.django-version }} / Python@${{
+      matrix.python-version }}
     runs-on: ubuntu-latest
-    strategy:  # TODO: use a YAML anchor - not supported in GitHub actions "yet"
+    strategy:
       fail-fast: false
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
-        django-version: [3.2, 3.1, "3.0", "2.0", 1.11]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        django-version: ["4.0", "4.1", "4.2"]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Execute tests
         run: |
-            pip install tox
-            pip install -e .[for_tests]
+          pip install -U pip poetry tox
+          poetry install
 
-            export DJANGO=${{ matrix.django-version }}
-            export PYTHON=${{ matrix.python-version }}
-            export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
-            tox
+          export DJANGO=${{ matrix.django-version }}
+          export PYTHON=${{ matrix.python-version }}
+          export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
+          tox
 
-      - name: Coveralls
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  test_deprecated: # testing older versions of python+django
+    name:
+      test old stuff / Django@${{ matrix.django-version }} / Python@${{
+      matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy: # TODO: use a YAML anchor - not supported in GitHub actions "yet"
+      fail-fast: false
+      matrix:
+        python-version: [3.9]
+        django-version: [3.2, 3.1, "3.0", "2.2"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Execute tests
         run: |
-            pip install coveralls
-            coveralls --service=github
+          pip install -U pip poetry tox
+          poetry install
+
+          export DJANGO=${{ matrix.django-version }}
+          export PYTHON=${{ matrix.python-version }}
+          export TOXENV=$(echo py${{ matrix.python-version }}-django${{ matrix.django-version }} | tr -d .)
+          tox
 
   build_and_package_sanity:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6]
+        python-version: ["3.12"]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Build
         run: |
-            pip install tox
-            pip install -e .[for_tests]
-
-            ./scripts/build.sh
+          pip install -U pip poetry tox
+          poetry install
+          ./scripts/build.sh

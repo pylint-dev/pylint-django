@@ -3,7 +3,7 @@ Standard WSGI config created by django-admin startproject.
 
 Used to verify pylint_django doesn't produce invalid-name for
 the application variable. See:
-https://github.com/PyCQA/pylint-django/issues/77
+https://github.com/pylint-dev/pylint-django/issues/77
 """
 
 import os
