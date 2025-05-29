@@ -1,6 +1,16 @@
 Changelog
 =========
 
+
+Version 2.7.0
+-------------
+
+Other
+~~~~~
+
+- Add CI tests against Django 5.2
+
+
 Version 2.6.1
 -------------
 
