@@ -11,7 +11,7 @@ repos:
         args: [--fix=lf]
       - id: debug-statements
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.11.6"
+    rev: "v0.11.13"
     hooks:
       - id: ruff
         args: ["--fix"]
@@ -20,7 +20,7 @@ repos:
         exclude: ^pylint_django/tests/input.*$
         args: [--line-length=120]
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: "v2.5.1"
+    rev: "v2.6.0"
     hooks:
       - id: pyproject-fmt
         # https://pyproject-fmt.readthedocs.io/en/latest/#calculating-max-supported-python-version
