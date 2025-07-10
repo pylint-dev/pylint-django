@@ -87,6 +87,7 @@ lint.select = [
   "W",       # pycodestyle
 ]
 lint.ignore = [
+  "PLC0415", # Import should be at top level
   "PLR0912", # Too many branches, worse than C901
   "PLR0915", # Too many statements, worse than C901
   "PLR2004", # Magic value used in comparison, opinionated
