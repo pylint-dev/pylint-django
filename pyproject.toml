@@ -5,7 +5,7 @@ requires = [ "poetry-core>=1" ]
 
 [tool.poetry]
 name = "pylint-django"
-version = "2.6.1"
+version = "2.7.0"
 readme = "README.rst"
 description = "A Pylint plugin to help Pylint understand the Django web framework"
 repository = "https://github.com/pylint-dev/pylint-django"
@@ -22,16 +22,9 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Framework :: Django :: 2.2",
-  "Framework :: Django :: 3",
-  "Framework :: Django :: 3.0",
-  "Framework :: Django :: 3.1",
   "Framework :: Django :: 3.2",
-  "Framework :: Django :: 4",
-  "Framework :: Django :: 4.0",
-  "Framework :: Django :: 4.1",
   "Framework :: Django :: 4.2",
-  "Framework :: Django :: 5.0",
-  "Framework :: Django :: 5.1",
+  "Framework :: Django :: 5.2",
   "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
 ]
 keywords = [ "pylint", "django", "plugin" ]
