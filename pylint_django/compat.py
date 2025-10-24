@@ -1,4 +1,4 @@
-# flake8: noqa
+# flake8: noqa: F401
 # pylint: skip-file
 # no sane linter can figure out the hackiness in this compatibility layer...
 import sys
