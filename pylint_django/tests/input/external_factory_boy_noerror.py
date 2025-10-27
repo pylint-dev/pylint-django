@@ -36,7 +36,7 @@ class BookFactory(factory.django.DjangoModelFactory):
 class BookTestCase(test.LiveServerTestCase):
     serialized_rollback = True
 
-    def _fixture_setup(self):
+    def _fixture_setup(self): # pylint: disable=arguments-differ
         super()._fixture_setup()
         self.book = BookFactory()
         _author = AuthorFactory()
