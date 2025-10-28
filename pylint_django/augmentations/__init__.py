@@ -511,7 +511,7 @@ def is_model_mpttmeta_subclass(node):
     return node_is_subclass(node.parent, *parents)
 
 
-def _attribute_is_magic(node, attrs, parents):
+def _attribute_is_magic(node: Attribute, attrs: set[str], parents: tuple[str, ...]) -> bool:
     """Checks that node is an attribute used inside one of allowed parents"""
     if node.attrname not in attrs:
         return False
