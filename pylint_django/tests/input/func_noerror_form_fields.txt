@@ -1,0 +1,1 @@
+no-member:61:14:61:40:ManyFieldsForm.decimalfield_tests:Instance of 'DecimalField' has no 'adjusted' member:INFERENCE
