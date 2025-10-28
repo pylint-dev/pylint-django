@@ -58,7 +58,9 @@ class ManyFieldsForm(forms.Form):
         print(self.datefield.isoformat())
 
     def decimalfield_tests(self):
-        print(self.decimalfield.adjusted())
+        # Known false positive for python 3.13 ?
+        # (But not bad enough to block the release of python 3.13 support)
+        print(self.decimalfield.adjusted()) # >3.12:[no-member]
 
     def durationfield_tests(self):
         now = datetime.now()

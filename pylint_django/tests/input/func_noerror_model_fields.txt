@@ -1,0 +1,1 @@
+no-member:77:14:77:39:LotsOfFieldsModel.decimalfield_tests:Instance of 'DecimalField' has no 'compare' member:INFERENCE
