@@ -28,7 +28,7 @@ except (ImportError, AttributeError):
     # specify directly the directory containing test_functional.py
     test_functional_dir = os.getenv("PYLINT_TEST_FUNCTIONAL_DIR", "")
 
-    # otherwise look for in in ~/pylint/tests - pylint 2.4
+    # otherwise look for it in ~/pylint/tests - pylint 2.4
     # this is the pylint git checkout dir, not the pylint module dir
     if not os.path.isdir(test_functional_dir):
         test_functional_dir = os.path.join(os.getenv("HOME", "/home/travis"), "pylint", "tests")
