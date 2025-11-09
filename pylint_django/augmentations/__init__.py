@@ -13,7 +13,11 @@ from django import VERSION as django_version
 from django.utils import termcolors
 from django.views.generic.base import ContextMixin, RedirectView, View
 from django.views.generic.dates import DateMixin, DayMixin, MonthMixin, WeekMixin, YearMixin
-from django.views.generic.detail import SingleObjectMixin, SingleObjectTemplateResponseMixin, TemplateResponseMixin
+from django.views.generic.detail import (
+    SingleObjectMixin,
+    SingleObjectTemplateResponseMixin,
+    TemplateResponseMixin,
+)
 from django.views.generic.edit import DeletionMixin, FormMixin, ModelFormMixin
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin
 from pylint.checkers.base import DocStringChecker, NameChecker
@@ -651,7 +655,8 @@ class IsAttribute:  # pylint: disable=too-few-public-methods
 
 
 def is_model_view_subclass_method_shouldnt_be_function(node):
-    """Checks that node is a default http method (i.e get, post, put, and more) of the View class."""
+    """Checks that node is a default http method (i.e. get, post, put, and more)
+    of the View class."""
     if node.name not in View.http_method_names:
         return False
 
@@ -672,8 +677,9 @@ def ignore_unused_argument_warnings_for_request(orig_method, self, stmt, name):
     """
     Ignore unused-argument warnings for function arguments named "request".
 
-    The signature of Django view functions require the request argument but it is okay if the request is not used.
-    This function should be used as a wrapper for the `VariablesChecker._is_name_ignored` method.
+    The signature of Django view functions require the request argument, but it is
+    okay if the request is not used. This function should be used as a wrapper for
+    the `VariablesChecker._is_name_ignored` method.
     """
     if name in ("request", "args", "kwargs"):
         return True
@@ -799,23 +805,27 @@ def pylint_newstyle_classdef_compat(linter, warning_name, augment):
 
 def apply_wrapped_augmentations():
     """Apply augmentation and suppression rules through monkey patching of pylint."""
-    # NOTE: The monkey patching is done with wrap and needs to be done in a thread safe manner to support the
-    # parallel option of pylint (-j).
-    # This is achieved by comparing __name__ of the monkey patched object to the original value and only patch it if
-    # these are equal.
+    # NOTE: The monkey patching is done with wrap and needs to be done in a thread safe manner
+    # to support the parallel option of pylint (-j).
+    # This is achieved by comparing __name__ of the monkey patched object to the original value
+    # and only patch it if these are equal.
 
     # Unused argument 'request' (get, post)
     current_is_name_ignored = VariablesChecker._is_name_ignored  # pylint: disable=protected-access
     if current_is_name_ignored.__name__ == "_is_name_ignored":
         # pylint: disable=protected-access
-        VariablesChecker._is_name_ignored = wrap(current_is_name_ignored, ignore_unused_argument_warnings_for_request)
+        VariablesChecker._is_name_ignored = wrap(
+            current_is_name_ignored, ignore_unused_argument_warnings_for_request
+        )
 
     # ForeignKey and OneToOneField
     current_leave_module = VariablesChecker.leave_module
     if current_leave_module.__name__ == "leave_module":
         # current_leave_module is not wrapped
         # Two threads may hit the next assignment concurrently, but the result is the same
-        VariablesChecker.leave_module = wrap(current_leave_module, ignore_import_warnings_for_related_fields)
+        VariablesChecker.leave_module = wrap(
+            current_leave_module, ignore_import_warnings_for_related_fields
+        )
         # VariablesChecker.leave_module is now wrapped
     # else VariablesChecker.leave_module is already wrapped
 
@@ -825,7 +835,9 @@ def apply_augmentations(linter):
     """Apply augmentation and suppression rules."""
     augment_visit(linter, TypeChecker.visit_attribute, foreign_key_sets)
     augment_visit(linter, TypeChecker.visit_attribute, foreign_key_ids)
-    suppress_message(linter, TypeChecker.visit_attribute, "no-member", is_model_field_display_method)
+    suppress_message(
+        linter, TypeChecker.visit_attribute, "no-member", is_model_field_display_method
+    )
     suppress_message(linter, TypeChecker.visit_attribute, "no-member", is_style_attribute)
     suppress_message(
         linter,

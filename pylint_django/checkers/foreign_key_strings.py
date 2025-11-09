@@ -15,15 +15,18 @@ class ForeignKeyStringsChecker(BaseChecker):
     ensure Django is able to configure itself before attempting to use the lookups.
     """
 
-    _LONG_MESSAGE = """Finding foreign-key relationships from strings in pylint-django requires configuring Django.
-This can be done via the DJANGO_SETTINGS_MODULE environment variable or the pylint option django-settings-module, eg:
+    _LONG_MESSAGE = """\
+Finding foreign-key relationships from strings in pylint-django requires configuring Django.
+This can be done via the DJANGO_SETTINGS_MODULE environment variable or the pylint option
+django-settings-module, eg:
 
     `pylint --load-plugins=pylint_django --django-settings-module=myproject.settings`
 
 . This can also be set as an option in a .pylintrc configuration file.
 
 Some basic default settings were used, however this will lead to less accurate linting.
-Consider passing in an explicit Django configuration file to match your project to improve accuracy."""
+Consider passing in an explicit Django configuration file to match your project to improve
+accuracy."""
 
     name = "Django foreign keys referenced by strings"
 
@@ -76,7 +79,9 @@ Consider passing in an explicit Django configuration file to match your project 
         # state is stashed in this property.
 
         try:
-            from django.core.exceptions import ImproperlyConfigured  # pylint: disable=import-outside-toplevel
+            from django.core.exceptions import (
+                ImproperlyConfigured,  # pylint: disable=import-outside-toplevel
+            )
         except ModuleNotFoundError:
             return
 
@@ -94,8 +99,8 @@ Consider passing in an explicit Django configuration file to match your project 
             if hasattr(self, "linter"):
                 django_settings_module = self.linter.config.django_settings_module
             else:
-                # TODO: remove this no-member ignore : this is to avoid the missing `config` for pylint 3+,
-                #  and can be removed once pylint 2
+                # TODO: remove this no-member ignore : this is to avoid the missing `config`
+                #  for pylint 3+, and can be removed once pylint 2 is no longer supported
                 # pylint: disable=no-member
                 django_settings_module = self.linter.config.django_settings_module
 
@@ -110,7 +115,10 @@ Consider passing in an explicit Django configuration file to match your project 
             else:
                 # see if we can load the provided settings module
                 try:
-                    from django.conf import Settings, settings  # pylint: disable=import-outside-toplevel
+                    from django.conf import (  # pylint: disable=import-outside-toplevel
+                        Settings,
+                        settings,
+                    )
 
                     settings.configure(Settings(django_settings_module))
                     django.setup()

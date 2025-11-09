@@ -14,7 +14,9 @@ def is_foreignkey_in_class(node):
         return False
 
     # Make sure the outfit class is the subclass of django.db.models.Model
-    is_in_django_model_class = node_is_subclass(node.parent.parent, "django.db.models.base.Model", ".Model")
+    is_in_django_model_class = node_is_subclass(
+        node.parent.parent, "django.db.models.base.Model", ".Model"
+    )
     if not is_in_django_model_class:
         return False
 
@@ -30,11 +32,15 @@ def is_foreignkey_in_class(node):
 def _get_model_class_defs_from_module(module, model_name, module_name):
     class_defs = []
     for module_node in module.lookup(model_name)[1]:
-        if isinstance(module_node, nodes.ClassDef) and node_is_subclass(module_node, "django.db.models.base.Model"):
+        if isinstance(module_node, nodes.ClassDef) and node_is_subclass(
+            module_node, "django.db.models.base.Model"
+        ):
             class_defs.append(module_node)
         elif isinstance(module_node, nodes.ImportFrom):
             imported_module = module_node.do_import_module()
-            class_defs.extend(_get_model_class_defs_from_module(imported_module, model_name, module_name))
+            class_defs.extend(
+                _get_model_class_defs_from_module(imported_module, model_name, module_name)
+            )
     return class_defs
 
 
@@ -51,7 +57,9 @@ def _module_name_from_django_model_resolution(model_name, module_name):
 
 
 def infer_key_classes(node, context=None):
-    from django.core.exceptions import ImproperlyConfigured  # pylint: disable=import-outside-toplevel
+    from django.core.exceptions import (
+        ImproperlyConfigured,  # pylint: disable=import-outside-toplevel
+    )
 
     keyword_args = []
     if node.keywords:

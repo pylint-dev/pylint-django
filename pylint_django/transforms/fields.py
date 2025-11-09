@@ -35,7 +35,9 @@ _RANGE_FIELDS = (
 
 
 def is_model_field(cls):
-    return cls.qname().startswith("django.db.models.fields") or cls.qname().startswith("django.contrib.postgres.fields")
+    return cls.qname().startswith("django.db.models.fields") or cls.qname().startswith(
+        "django.contrib.postgres.fields"
+    )
 
 
 def is_form_field(cls):
@@ -92,7 +94,9 @@ def apply_type_shim(cls, _context=None):  # pylint: disable=too-many-statements
         base_nodes = scoped_nodes.builtin_lookup("dict")
     elif cls.name in _RANGE_FIELDS:
         try:
-            base_nodes = MANAGER.ast_from_module_name("django.db.backends.postgresql.psycopg_any").lookup("Range")
+            base_nodes = MANAGER.ast_from_module_name(
+                "django.db.backends.postgresql.psycopg_any"
+            ).lookup("Range")
         except AstroidImportError:
             base_nodes = MANAGER.ast_from_module_name("psycopg2._range").lookup("Range")
     else:
@@ -124,4 +128,6 @@ def _valid_base_node(node, context):
 
 
 def add_transforms(manager):
-    manager.register_transform(nodes.ClassDef, inference_tip(apply_type_shim), is_model_or_form_field)
+    manager.register_transform(
+        nodes.ClassDef, inference_tip(apply_type_shim), is_model_or_form_field
+    )

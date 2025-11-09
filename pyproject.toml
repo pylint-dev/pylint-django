@@ -64,11 +64,8 @@ pre-commit = ">=1"
 [tool.poetry.extras]
 with_django = [ "Django" ]
 
-[tool.black]
-line-length = 120
-
 [tool.ruff]
-line-length = 120
+line-length = 100
 lint.select = [
   "B",       # bugbear
   "E",       # pycodestyle
@@ -101,7 +98,7 @@ multi_line_output = 3
 include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
-line_length = 120
+line_length = 100
 
 [tool.pylint.main]
 disable = [
@@ -113,7 +110,7 @@ disable = [
   "fixme",
 ]
 ignore = "tests"
-max-line-length = 120
+max-line-length = 100
 
 [tool.codespell]
 ignore-words = [ "custom_dict.txt" ]

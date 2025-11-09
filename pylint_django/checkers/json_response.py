@@ -55,7 +55,10 @@ class JsonResponseChecker(checkers.BaseChecker):
 
         if node.func.as_string().endswith("HttpResponse") and node.keywords:
             for keyword in node.keywords:
-                if keyword.arg == "content_type" and keyword.value.as_string().lower().find("application/json") > -1:
+                if (
+                    keyword.arg == "content_type"
+                    and keyword.value.as_string().lower().find("application/json") > -1
+                ):
                     self.add_message("http-response-with-content-type-json", node=node)
                     break
 
