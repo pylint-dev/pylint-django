@@ -47,7 +47,7 @@ exclude = [ "**/tests/**", "**/testutils.py", "**/tests.py" ]
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
 pylint-plugin-utils = ">=0.8"
-pylint = ">=3.0,<4"
+pylint = ">=3.0,<5"
 Django = { version = ">=2.2", optional = true }
 
 [tool.poetry.group.dev.dependencies]

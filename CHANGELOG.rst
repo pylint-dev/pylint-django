@@ -5,13 +5,15 @@ Changelog
 Version 2.6.2
 -------------
 
+We added support for pylint 4.0.0+.
+
 Other
 ~~~~~
 
 - CI now tests against Django 5.2
 - CI now tests against python 3.13
 - CI now tests against python 3.14
-
+- CI now tests against pylint 4.0.0+
 
 Version 2.6.1
 -------------
