@@ -2,9 +2,9 @@
 
 from astroid.nodes import Assign, AssignName, ClassDef
 from pylint.checkers import BaseChecker
+from pylint.checkers.utils import only_required_for_messages
 
 from pylint_django.__pkginfo__ import BASE_ID
-from pylint_django.compat import check_messages
 from pylint_django.utils import node_is_subclass
 
 
@@ -27,7 +27,7 @@ class FormChecker(BaseChecker):
         )
     }
 
-    @check_messages("modelform-uses-exclude")
+    @only_required_for_messages("modelform-uses-exclude")
     def visit_classdef(self, node):
         """Class visitor."""
         if not node_is_subclass(node, "django.forms.models.ModelForm", ".ModelForm"):

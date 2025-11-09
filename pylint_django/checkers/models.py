@@ -1,11 +1,10 @@
 """Models."""
 
-from astroid import Const
-from astroid.nodes import Assign, AssignName, ClassDef, FunctionDef
+from astroid.nodes import Assign, AssignName, ClassDef, Const, FunctionDef
 from pylint.checkers import BaseChecker
+from pylint.checkers.utils import only_required_for_messages
 
 from pylint_django.__pkginfo__ import BASE_ID
-from pylint_django.compat import check_messages
 from pylint_django.utils import PY3, node_is_subclass
 
 MESSAGES = {
@@ -78,7 +77,7 @@ class ModelChecker(BaseChecker):
     name = "django-model-checker"
     msgs = MESSAGES
 
-    @check_messages("model-missing-unicode")
+    @only_required_for_messages("model-missing-unicode")
     def visit_classdef(self, node):  # noqa: PLR0911
         """Class visitor."""
         if not node_is_subclass(node, "django.db.models.base.Model", ".Model"):
