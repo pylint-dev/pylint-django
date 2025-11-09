@@ -1,8 +1,8 @@
 import astroid
 from pylint.checkers import BaseChecker
+from pylint.checkers.utils import only_required_for_messages
 
 from pylint_django.__pkginfo__ import BASE_ID
-from pylint_django.compat import check_messages
 from pylint_django.transforms import foreignkey
 
 
@@ -133,7 +133,7 @@ Consider passing in an explicit Django configuration file to match your project 
         # duplicating the django_installed checker, it'll do for now. In the future, merging
         # those two checkers together might make sense.
 
-    @check_messages("django-not-configured")
+    @only_required_for_messages("django-not-configured")
     def visit_module(self, node):
         if self._raise_warning:
             # just add it to the first node we see... which isn't nice but not sure what else to do

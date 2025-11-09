@@ -1,7 +1,7 @@
 from pylint.checkers import BaseChecker
+from pylint.checkers.utils import only_required_for_messages
 
 from pylint_django.__pkginfo__ import BASE_ID
-from pylint_django.compat import check_messages
 
 
 class DjangoInstalledChecker(BaseChecker):
@@ -23,7 +23,7 @@ class DjangoInstalledChecker(BaseChecker):
         ),
     }
 
-    @check_messages("django-not-available")
+    @only_required_for_messages("django-not-available")
     def open(self):
         try:
             __import__("django")
