@@ -8,9 +8,9 @@ Various suggestions about JSON http responses
 
 import astroid
 from pylint import checkers
+from pylint.checkers.utils import only_required_for_messages
 
 from pylint_django.__pkginfo__ import BASE_ID
-from pylint_django.compat import check_messages
 
 
 class JsonResponseChecker(checkers.BaseChecker):
@@ -41,7 +41,7 @@ class JsonResponseChecker(checkers.BaseChecker):
         ),
     }
 
-    @check_messages(
+    @only_required_for_messages(
         "http-response-with-json-dumps",
         "http-response-with-content-type-json",
         "redundant-content-type-for-json-response",
