@@ -1,12 +1,13 @@
 """
 These transforms replace the Django types with adapted versions to provide
-additional typing and method inference to pylint. All of these transforms
-are considered "global" to pylint-django, in that all checks and improvements
-require them to be loaded. Additional transforms specific to checkers are loaded
-by the checker rather than here.
+additional typing and method inference to pylint.
 
-For example, the ForeignKeyStringsChecker loads the foreignkey.py transforms
-itself as it may be disabled independently of the rest of pylint-django
+All of these transforms are considered "global" to pylint-django, in that all checks
+and improvements require them to be loaded. Additional transforms specific to checkers
+are loaded by the checker rather than here.
+
+For example, the ForeignKeyStringsChecker loads the foreignkey.py transforms itself
+as it may be disabled independently of the rest of pylint-django
 """
 
 import os
@@ -23,6 +24,7 @@ def _add_transform(package_name):
     def fake_module_builder():
         """
         Build a fake module to use within transformations.
+
         @package_name is a parameter from the outer scope b/c according to
         the docs this can't receive any parameters.
         https://pylint.readthedocs.io/projects/astroid/en/latest/extending.html#module-extender-transforms

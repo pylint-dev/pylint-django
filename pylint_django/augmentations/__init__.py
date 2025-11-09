@@ -512,7 +512,7 @@ def is_model_mpttmeta_subclass(node):
 
 
 def _attribute_is_magic(node: Attribute, attrs: set[str], parents: tuple[str, ...]) -> bool:
-    """Checks that node is an attribute used inside one of allowed parents"""
+    """Checks that node is an attribute used inside one of allowed parents."""
     if node.attrname not in attrs:
         return False
     if not node.last_child():
@@ -798,9 +798,7 @@ def pylint_newstyle_classdef_compat(linter, warning_name, augment):
 
 
 def apply_wrapped_augmentations():
-    """
-    Apply augmentation and suppression rules through monkey patching of pylint.
-    """
+    """Apply augmentation and suppression rules through monkey patching of pylint."""
     # NOTE: The monkey patching is done with wrap and needs to be done in a thread safe manner to support the
     # parallel option of pylint (-j).
     # This is achieved by comparing __name__ of the monkey patched object to the original value and only patch it if

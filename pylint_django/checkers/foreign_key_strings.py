@@ -9,9 +9,10 @@ from pylint_django.transforms import foreignkey
 class ForeignKeyStringsChecker(BaseChecker):
     """
     Adds transforms to be able to do type inference for model ForeignKeyField
-    properties which use a string to name the foreign relationship. This uses
-    Django's model name resolution and this checker wraps the setup to ensure
-    Django is able to configure itself before attempting to use the lookups.
+    properties which use a string to name the foreign relationship.
+
+    This uses Django's model name resolution and this checker wraps the setup to
+    ensure Django is able to configure itself before attempting to use the lookups.
     """
 
     _LONG_MESSAGE = """Finding foreign-key relationships from strings in pylint-django requires configuring Django.

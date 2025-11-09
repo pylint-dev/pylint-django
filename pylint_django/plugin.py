@@ -7,9 +7,7 @@ from pylint_django.checkers import register_checkers
 
 
 def load_configuration(linter):
-    """
-    Amend existing checker config.
-    """
+    """Amend existing checker config."""
     linter.config.good_names += (
         "pk",
         "qs",
@@ -27,10 +25,8 @@ def load_configuration(linter):
 
 
 def register(linter):
-    """
-    Registering additional checkers.
-    """
-    # add all of the checkers
+    """Registering additional checkers."""
+    # add all the checkers
     register_checkers(linter)
 
     # register any checking fiddlers

@@ -4,7 +4,9 @@
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # For details: https://github.com/pylint-dev/pylint-django/blob/master/LICENSE
 """
-Various suggestions around migrations. Disabled by default! Enable with
+Various suggestions around migrations.
+
+Disabled by default! Enable with
 pylint --load-plugins=pylint_django.checkers.migrations
 """
 
@@ -42,7 +44,9 @@ def _is_addfield_with_default(call):
 class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
     """
     Looks for migrations which add new model fields and these fields have a
-    default value. According to Django docs this may have performance penalties
+    default value.
+
+    According to Django docs this may have performance penalties
     especially on large tables:
     https://docs.djangoproject.com/en/2.0/topics/migrations/#postgresql
 

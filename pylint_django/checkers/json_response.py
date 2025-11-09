@@ -2,9 +2,7 @@
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # For details: https://github.com/pylint-dev/pylint-django/blob/master/LICENSE
-"""
-Various suggestions about JSON http responses
-"""
+"""Various suggestions about JSON http responses."""
 
 import astroid
 from pylint import checkers

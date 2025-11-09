@@ -1,4 +1,4 @@
-"""pylint_django module."""
+"""'pylint_django' module."""
 
 from pylint_django import plugin
 

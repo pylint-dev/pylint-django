@@ -46,9 +46,7 @@ sys.path += [str(p.absolute()) for p in (HERE, HERE / "../../", HERE / "input")]
 
 
 class PylintDjangoLintModuleTest(LintModuleTest):
-    """
-    Only used so that we can load this plugin into the linter!
-    """
+    """Only used so that we can load this plugin into the linter!"""
 
     def __init__(self, test_file):
         # if hasattr(test_file, 'option_file') and test_file.option_file is None:
