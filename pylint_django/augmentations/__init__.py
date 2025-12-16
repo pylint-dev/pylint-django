@@ -21,7 +21,12 @@ from pylint.checkers.classes import ClassChecker
 from pylint.checkers.design_analysis import MisdesignChecker
 from pylint.checkers.newstyle import NewStyleConflictChecker
 from pylint.checkers.typecheck import TypeChecker
-from pylint.checkers.variables import ScopeConsumer, VariablesChecker
+from pylint.checkers.variables import VariablesChecker
+
+try:  # Pylint <4.0
+    from pylint.checkers.variables import ScopeConsumer
+except ImportError:
+    ScopeConsumer = None
 from pylint_plugin_utils import augment_visit, suppress_message
 
 from pylint_django.utils import PY3, node_is_subclass
@@ -324,16 +329,12 @@ def ignore_import_warnings_for_related_fields(orig_method, self, node):
                 continue
         new_things[name] = stmts
 
-    # ScopeConsumer changed between pylint 2.12 and 2.13
-    # see https://github.com/pylint-dev/pylint/issues/5970#issuecomment-1078778393
-    if hasattr(consumer, "consumed_uncertain"):
-        # this is pylint >= 2.13, and the ScopeConsumer tuple has an additional field
+    if not ScopeConsumer:  # Pylint 4.0+
+        consumer.to_consume = new_things
+    else:  # Pylint <4.0
         sc_args = (new_things, consumer.consumed, consumer.consumed_uncertain, consumer.scope_type)
-    else:
-        # this is <2.13 and does not have the consumer_uncertain field
-        sc_args = (new_things, consumer.consumed, consumer.scope_type)
+        consumer._atomic = ScopeConsumer(*sc_args)  # pylint: disable=W0212
 
-    consumer._atomic = ScopeConsumer(*sc_args)  # pylint: disable=W0212
     self._to_consume = [consumer]  # pylint: disable=W0212
 
     return orig_method(self, node)
