@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-Version 2.6.2
+Version 2.7.0
 -------------
 
 We added support for pylint 4.0.0+.
