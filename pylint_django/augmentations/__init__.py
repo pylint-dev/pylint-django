@@ -10,6 +10,7 @@ from astroid.nodes.scoped_nodes import ClassDef as ScopedClass
 from astroid.nodes.scoped_nodes import Module
 from astroid.objects import Super
 from django import VERSION as django_version
+from django.conf import settings
 from django.utils import termcolors
 from django.views.generic.base import ContextMixin, RedirectView, View
 from django.views.generic.dates import DateMixin, DayMixin, MonthMixin, WeekMixin, YearMixin
@@ -753,6 +754,23 @@ def allow_meta_protected_access(node):
     return False
 
 
+def allow_simple_history_protected_access(assign_node):
+    # NOTE: Only consider the first assignment target, mirroring current pylint behavior.
+    # See pylint ClassChecker::visit_assign().
+    # Because the type of assign_target typically cannot be inferred, this will suppress
+    # the warning even for assignments on objects not related to simple_history.
+    assign_target = assign_node.targets[0]
+    assign_target_attrname = getattr(assign_target, "attrname", None)
+
+    if assign_target_attrname is None or assign_target_attrname not in ("_change_reason",):
+        return False
+
+    if "simple_history" not in settings.INSTALLED_APPS:
+        return False
+
+    return True
+
+
 class IsClass:  # pylint: disable=too-few-public-methods
     def __init__(self, class_name):
         self.class_name = class_name
@@ -967,6 +985,14 @@ def apply_augmentations(linter):
         MisdesignChecker.leave_classdef,
         "too-few-public-methods",
         is_model_mpttmeta_subclass,
+    )
+
+    # django-simple-history
+    suppress_message(
+        linter,
+        ClassChecker.visit_assign,
+        "protected-access",
+        allow_simple_history_protected_access,
     )
 
     # factory_boy's DjangoModelFactory
