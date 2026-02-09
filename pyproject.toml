@@ -1,6 +1,5 @@
 [build-system]
 build-backend = "poetry.core.masonry.api"
-
 requires = [ "poetry-core>=1" ]
 
 [tool.poetry]
@@ -43,26 +42,20 @@ packages = [
 ]
 include = [ "pylint_django/LICENSE" ]
 exclude = [ "**/tests/**", "**/testutils.py", "**/tests.py" ]
-
-[tool.poetry.dependencies]
-python = ">=3.9,<4.0"
-pylint-plugin-utils = ">=0.8"
-pylint = ">=3.0,<5"
-Django = { version = ">=2.2", optional = true }
-
-[tool.poetry.group.dev.dependencies]
-tox = ">=4.9"
-pytest = "^7.3.1"
-ruff = ">=0.6.9"
-wheel = "^0.40"
-pytest-cov = "^4"
-django-tables2 = "^2.6"
-factory-boy = "^3.3"
-django-tastypie = "^0.14"
-pre-commit = ">=1"
-
-[tool.poetry.extras]
-with_django = [ "Django" ]
+dependencies.python = ">=3.9,<4.0"
+dependencies.pylint-plugin-utils = ">=0.8"
+dependencies.pylint = ">=3.0,<5"
+dependencies.Django = { version = ">=2.2", optional = true }
+extras.with_django = [ "Django" ]
+group.dev.dependencies.tox = ">=4.9"
+group.dev.dependencies.pytest = "^7.3.1"
+group.dev.dependencies.ruff = ">=0.6.9"
+group.dev.dependencies.wheel = "^0.40"
+group.dev.dependencies.pytest-cov = "^4"
+group.dev.dependencies.django-tables2 = "^2.6"
+group.dev.dependencies.factory-boy = "^3.3"
+group.dev.dependencies.django-tastypie = "^0.14"
+group.dev.dependencies.pre-commit = ">=1"
 
 [tool.black]
 line-length = 120
@@ -103,8 +96,8 @@ force_grid_wrap = 0
 use_parentheses = true
 line_length = 120
 
-[tool.pylint.main]
-disable = [
+[tool.pylint]
+main.disable = [
   "missing-docstring",
   "too-many-branches",
   "too-many-return-statements",
@@ -112,8 +105,8 @@ disable = [
   "too-few-public-methods",
   "fixme",
 ]
-ignore = "tests"
-max-line-length = 120
+main.ignore = "tests"
+main.max-line-length = 120
 
 [tool.codespell]
 ignore-words = [ "custom_dict.txt" ]
