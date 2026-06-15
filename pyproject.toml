@@ -1,28 +1,18 @@
 [build-system]
 build-backend = "poetry.core.masonry.api"
-
 requires = [ "poetry-core>=1" ]
 
 [tool.poetry]
 name = "pylint-django"
 version = "2.7.0"
-readme = "README.rst"
 description = "A Pylint plugin to help Pylint understand the Django web framework"
-repository = "https://github.com/pylint-dev/pylint-django"
 authors = [ "Carl Crowder <git@carlcrowder.com>" ]
+readme = "README.rst"
+repository = "https://github.com/pylint-dev/pylint-django"
+keywords = [ "django", "plugin", "pylint" ]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Console",
-  "Intended Audience :: Developers",
-  "Operating System :: Unix",
-  "Topic :: Software Development :: Quality Assurance",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
-  "Programming Language :: Python :: 3.14",
   "Framework :: Django :: 2.2",
   "Framework :: Django :: 3",
   "Framework :: Django :: 3.0",
@@ -35,34 +25,37 @@ classifiers = [
   "Framework :: Django :: 5.0",
   "Framework :: Django :: 5.1",
   "Framework :: Django :: 5.2",
+  "Intended Audience :: Developers",
   "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+  "Operating System :: Unix",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Quality Assurance",
 ]
-keywords = [ "pylint", "django", "plugin" ]
 packages = [
   { include = "pylint_django/" },
 ]
 include = [ "pylint_django/LICENSE" ]
-exclude = [ "**/tests/**", "**/testutils.py", "**/tests.py" ]
-
-[tool.poetry.dependencies]
-python = ">=3.9,<4.0"
-pylint-plugin-utils = ">=0.8"
-pylint = ">=3.0,<5"
-Django = { version = ">=2.2", optional = true }
-
-[tool.poetry.group.dev.dependencies]
-tox = ">=4.9"
-pytest = "^7.3.1"
-ruff = ">=0.6.9"
-wheel = "^0.40"
-pytest-cov = "^4"
-django-tables2 = "^2.6"
-factory-boy = "^3.3"
-django-tastypie = "^0.14"
-pre-commit = ">=1"
-
-[tool.poetry.extras]
-with_django = [ "Django" ]
+exclude = [ "**/tests.py", "**/tests/**", "**/testutils.py" ]
+dependencies.python = ">=3.9,<4.0"
+dependencies.Django = { version = ">=2.2", optional = true }
+dependencies.pylint = ">=3.0,<5"
+dependencies.pylint-plugin-utils = ">=0.8"
+group.dev.dependencies.django-tables2 = "^2.6"
+group.dev.dependencies.django-tastypie = "^0.14"
+group.dev.dependencies.factory-boy = "^3.3"
+group.dev.dependencies.pre-commit = ">=1"
+group.dev.dependencies.pytest = "^7.3.1"
+group.dev.dependencies.pytest-cov = "^4"
+group.dev.dependencies.ruff = ">=0.6.9"
+group.dev.dependencies.tox = ">=4.9"
+group.dev.dependencies.wheel = "^0.40"
+extras.with_django = [ "Django" ]
 
 [tool.black]
 line-length = 120
@@ -97,23 +90,23 @@ lint.ignore = [
 ]
 
 [tool.isort]
+line_length = 120
 multi_line_output = 3
+use_parentheses = true
 include_trailing_comma = true
 force_grid_wrap = 0
-use_parentheses = true
-line_length = 120
 
-[tool.pylint.main]
-disable = [
+[tool.pylint]
+main.disable = [
+  "fixme",
   "missing-docstring",
+  "too-few-public-methods",
+  "too-many-ancestors",
   "too-many-branches",
   "too-many-return-statements",
-  "too-many-ancestors",
-  "too-few-public-methods",
-  "fixme",
 ]
-ignore = "tests"
-max-line-length = 120
+main.ignore = "tests"
+main.max-line-length = 120
 
 [tool.codespell]
 ignore-words = [ "custom_dict.txt" ]
