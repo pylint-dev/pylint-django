@@ -14,10 +14,10 @@ import re
 
 import astroid
 
-from pylint_django.transforms import fields
+from pylint_django.transforms import fields, text_choices
 
 fields.add_transforms(astroid.MANAGER)
-
+text_choices.add_transforms(astroid.MANAGER)
 
 def _add_transform(package_name):
     def fake_module_builder():
