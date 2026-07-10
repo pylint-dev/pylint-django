@@ -2,6 +2,18 @@ Changelog
 =========
 
 
+Version 2.8.0
+-------------
+
+New checks
+~~~~~~~~~~
+
+- Added ``format-html-interpolation`` (W5150) and ``mark-safe-interpolation`` (W5151) checks
+  which warn when the format string of ``format_html()`` / ``format_html_join()`` or the
+  argument of ``mark_safe()`` is built with an f-string, ``str.format()``, ``%``-formatting or
+  ``+`` concatenation. Such values bypass Django's HTML escaping; pass them as arguments instead.
+
+
 Version 2.7.0
 -------------
 
