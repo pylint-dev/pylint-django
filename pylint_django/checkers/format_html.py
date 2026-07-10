@@ -9,6 +9,10 @@ substituted into the format string. When the format string is instead built with
 `str.format()`, `%`-formatting or `+` concatenation, the interpolated values are spliced in
 without escaping, which reintroduces the XSS hole `format_html()` exists to close. The same is
 true of `mark_safe()`, which performs no escaping at all.
+
+Django deprecated calling `format_html()` without arguments for exactly this reason; see
+https://code.djangoproject.com/ticket/34609 and the `format_html()` reference docs at
+https://docs.djangoproject.com/en/stable/ref/utils/#django.utils.html.format_html
 """
 
 from __future__ import annotations
@@ -61,14 +65,16 @@ class FormatHtmlChecker(checkers.BaseChecker):
             "format string; arguments are automatically HTML-escaped",
             "format-html-interpolation",
             "Used when the format string of format_html()/format_html_join() is built with an "
-            "f-string, str.format(), %-formatting or + concatenation, which bypasses escaping.",
+            "f-string, str.format(), %-formatting or + concatenation, which bypasses escaping. "
+            "See https://code.djangoproject.com/ticket/34609",
         ),
         f"W{BASE_ID}51": (
             "Avoid mark_safe() on a dynamically-built string; use format_html() with arguments "
             "so values are HTML-escaped",
             "mark-safe-interpolation",
             "Used when mark_safe() is called on a string built with an f-string, str.format(), "
-            "%-formatting or + concatenation, which is not escaped at all.",
+            "%-formatting or + concatenation, which is not escaped at all. See "
+            "https://docs.djangoproject.com/en/stable/ref/utils/#django.utils.html.format_html",
         ),
     }
 
