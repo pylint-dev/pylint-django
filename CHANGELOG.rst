@@ -13,6 +13,10 @@ New checks
   argument of ``mark_safe()`` is built with an f-string, ``str.format()``, ``%``-formatting or
   ``+`` concatenation. Such values bypass Django's HTML escaping; pass them as arguments instead.
 
+Other
+~~~~~
+
+- CI now tests against Django 6.0
 
 Version 2.7.0
 -------------
