@@ -4,7 +4,7 @@ requires = [ "poetry-core>=1" ]
 
 [tool.poetry]
 name = "pylint-django"
-version = "2.7.0"
+version = "2.8.0"
 description = "A Pylint plugin to help Pylint understand the Django web framework"
 authors = [ "Carl Crowder <git@carlcrowder.com>" ]
 readme = "README.rst"
