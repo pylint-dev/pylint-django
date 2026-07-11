@@ -40,7 +40,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
-        django-version: ["5.0", "5.1", "5.2", "-main"]
+        django-version: ["5.0", "5.1", "5.2", "6.0","-main"]
 
     steps:
       - uses: actions/checkout@v4
@@ -67,29 +67,6 @@ jobs:
           pip install coveralls
           coveralls --service=github
 
-  test_maintained:
-    name:
-      test maintained / Django@${{ matrix.django-version }} / Python@${{
-      matrix.python-version }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
-        django-version: ["5.2", "6.0"]
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Execute tests
-        run: |
-          pip install -U pip poetry tox
-
-
   test_recent_unmaintained:
     name:
       test maintained / Django@${{ matrix.django-version }} / Python@${{
@@ -98,7 +75,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
         django-version: ["4.0", "4.1", "4.2", "5.0", "5.1"]
 
     steps:
