@@ -110,9 +110,9 @@ def apply_type_shim(cls, _context=None):  # pylint: disable=too-many-statements
 
     # Add all ancestors inheriting from Field
     for ancestor in cls.ancestors():
+        base_nodes.append(ancestor)
         if ancestor.qname() == "django.db.models.fields.Field":
             break
-        base_nodes.append(ancestor)
 
     return iter([cls, *base_nodes])
 
