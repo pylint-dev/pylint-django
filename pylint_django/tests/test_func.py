@@ -80,7 +80,7 @@ def get_tests(input_dir="input", sort=False):
     suite = []
     for fname in input_dir.iterdir():
         if fname.name != "__init__.py" and fname.name.endswith(".py"):
-            suite.append(FunctionalTestFile(str(input_dir.absolute()), str(fname.absolute())))
+            suite.append(FunctionalTestFile(str(input_dir.absolute()), fname.name))
 
     # when testing the migrations plugin we need to sort by input file name
     # because the plugin reports the errors in close() which appends them to the
