@@ -2,10 +2,9 @@
 
 import sys
 
-import astroid
+from astroid import nodes
 from astroid.bases import Instance
 from astroid.exceptions import InferenceError
-from astroid.nodes import ClassDef
 
 from pylint_django.compat import Uninferable
 
@@ -14,7 +13,7 @@ PY3 = sys.version_info >= (3, 0)  # TODO: pylint_django doesn't support Py2 any 
 
 def node_is_subclass(cls, *subclass_names):
     """Checks if cls node has parent with subclass_name."""
-    if not isinstance(cls, (ClassDef, Instance)):
+    if not isinstance(cls, (nodes.ClassDef, Instance)):
         return False
 
     if cls.bases == Uninferable:
@@ -35,7 +34,7 @@ def node_is_subclass(cls, *subclass_names):
 
 
 def is_migrations_module(node):
-    if not isinstance(node, astroid.Module):
+    if not isinstance(node, nodes.Module):
         return False
 
     return "migrations" in node.path[0] and not node.path[0].endswith("__init__.py")

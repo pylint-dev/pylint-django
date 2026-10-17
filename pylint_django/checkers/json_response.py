@@ -6,7 +6,7 @@
 Various suggestions about JSON http responses
 """
 
-import astroid
+from astroid import nodes
 from pylint import checkers
 from pylint.checkers.utils import only_required_for_messages
 
@@ -50,7 +50,7 @@ class JsonResponseChecker(checkers.BaseChecker):
         if (
             node.func.as_string().endswith("HttpResponse")
             and node.args
-            and isinstance(node.args[0], astroid.Call)
+            and isinstance(node.args[0], nodes.Call)
             and node.args[0].func.as_string() == "json.dumps"
         ):
             self.add_message("http-response-with-json-dumps", node=node)
