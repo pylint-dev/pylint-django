@@ -8,7 +8,7 @@ Various suggestions around migrations. Disabled by default! Enable with
 pylint --load-plugins=pylint_django.checkers.migrations
 """
 
-import astroid
+from astroid import nodes
 from pylint import checkers
 from pylint.checkers.utils import only_required_for_messages
 from pylint_plugin_utils import suppress_message
@@ -19,7 +19,7 @@ from pylint_django.utils import is_migrations_module
 
 
 def _is_addfield_with_default(call):
-    if not isinstance(call.func, astroid.Attribute):
+    if not isinstance(call.func, nodes.Attribute):
         return False
 
     if not call.func.attrname == "AddField":
@@ -27,7 +27,7 @@ def _is_addfield_with_default(call):
 
     for keyword in call.keywords:
         # looking for AddField(..., field=XXX(..., default=Y, ...), ...)
-        if keyword.arg == "field" and isinstance(keyword.value, astroid.Call):
+        if keyword.arg == "field" and isinstance(keyword.value, nodes.Call):
             # loop over XXX's keywords
             # NOTE: not checking if XXX is an actual field type because there could
             # be many types we're not aware of. Also the migration will probably break
@@ -104,9 +104,9 @@ class NewDbFieldWithDefaultChecker(checkers.BaseChecker):
                 last_name_space = name_space
                 latest_migrations.append(module)
 
-        for module, nodes in self._possible_offences.items():
+        for module, offending_nodes in self._possible_offences.items():
             if module in latest_migrations:
-                for node in nodes:
+                for node in offending_nodes:
                     self.add_message("new-db-field-with-default", args=module.name, node=node)
 
 
