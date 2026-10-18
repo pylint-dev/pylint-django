@@ -116,14 +116,16 @@ Tests
 
 The structure of the test package follows that from pylint itself.
 
-It is fairly simple: create a module starting with ``func_`` followed by
-a test name, and insert into it some code. The tests will run pylint
-against these modules. If the idea is that no messages now occur, then
-that is fine, just check to see if it works by running ``scripts/test.sh``.
+It is fairly simple: create a module in a topic directory of
+``pylint_django/tests/functional/``, named after the topic followed by a test
+name (for example ``functional/views/views_class.py``), and insert into it some
+code. The tests will run pylint against these modules. If the idea is that no
+messages now occur, then that is fine, just check to see if it works by running
+``scripts/test.sh``.
 
 Any command line argument passed to ``scripts/test.sh`` will be passed to the internal invocation of ``pytest``.
 For example if you want to debug the tests you can execute ``scripts/test.sh --capture=no``.
-A specific test case can be run by filtering based on the file name of the test case ``./scripts/test.sh -k 'func_noerror_views'``.
+A specific test case can be run by filtering based on the file name of the test case ``./scripts/test.sh -k 'views_class'``.
 
 Ideally, add some pylint error suppression messages to the file to prevent
 spurious warnings, since these are all tiny little modules not designed to
@@ -131,9 +133,10 @@ do anything so there's no need to be perfect.
 
 It is possible to make tests with expected error output, for example, if
 adding a new message or simply accepting that pylint is supposed to warn.
-A ``test_file_name.txt`` file contains a list of expected error messages in the
-format
-``error-type:line number:class name or empty:1st line of detailed error text:confidence or empty``.
+Mark each line where a message is expected with a comment such as
+``# [unused-argument]``. A ``test_file_name.txt`` file next to the module contains
+the expected messages in the format
+``symbol:line:column:end line:end column:object:message:confidence``.
 
 
 License
