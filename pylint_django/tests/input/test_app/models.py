@@ -1,1 +1,1 @@
-from models.author import Author  # noqa: F401
+from models.author import Author  # noqa: F401 # pylint: disable=unused-import

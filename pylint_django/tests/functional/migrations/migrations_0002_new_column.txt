@@ -1,0 +1,1 @@
+new-db-field-with-default:29:8:33:9:Migration:migrations.migrations_0002_new_column AddField with default value:UNDEFINED
