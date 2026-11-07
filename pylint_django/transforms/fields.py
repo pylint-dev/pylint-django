@@ -1,4 +1,4 @@
-from astroid import MANAGER, AstroidImportError, inference_tip, nodes
+from astroid import MANAGER, AstroidImportError, InferenceError, UseInferenceDefault, inference_tip, nodes
 from astroid.nodes import scoped_nodes
 
 from pylint_django import compat, utils
@@ -24,6 +24,7 @@ _INT_FIELDS = (
     "PositiveSmallIntegerField",
 )
 _BOOL_FIELDS = ("BooleanField", "NullBooleanField")
+_GENERIC_FOREIGN_KEY = "django.contrib.contenttypes.fields.GenericForeignKey"
 _RANGE_FIELDS = (
     "RangeField",
     "IntegerRangeField",
@@ -129,5 +130,33 @@ def _valid_base_node(node, context):
     return node
 
 
+def is_generic_foreign_key_in_class(node):
+    """Is this of the form ``field = GenericForeignKey(...)`` in a class body?"""
+    if not isinstance(node.parent, nodes.Assign) or not isinstance(node.parent.parent, nodes.ClassDef):
+        return False
+    if isinstance(node.func, nodes.Attribute):
+        return node.func.attrname == "GenericForeignKey"
+    if isinstance(node.func, nodes.Name):
+        return node.func.name == "GenericForeignKey"
+    return False
+
+
+def infer_generic_foreign_key(node, context=None):
+    """A GenericForeignKey can point to an instance of any model, so we cannot
+    know which attributes the related object has."""
+    try:
+        for inferred in node.func.infer(context=context):
+            if isinstance(inferred, nodes.ClassDef) and inferred.qname() == _GENERIC_FOREIGN_KEY:
+                return iter([compat.Uninferable])
+    except InferenceError:
+        pass
+    raise UseInferenceDefault
+
+
 def add_transforms(manager):
     manager.register_transform(nodes.ClassDef, inference_tip(apply_type_shim), is_model_or_form_field)
+    manager.register_transform(
+        nodes.Call,
+        inference_tip(infer_generic_foreign_key),
+        is_generic_foreign_key_in_class,
+    )
