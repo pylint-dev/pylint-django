@@ -2,6 +2,15 @@ Changelog
 =========
 
 
+Unreleased
+----------
+
+Bugfixes
+~~~~~~~~
+
+- Fixed false ``no-member`` on attributes accessed through a ``GenericForeignKey`` with Django 6.1+ (`#496 <https://github.com/pylint-dev/pylint-django/issues/496>`_)
+
+
 Version 2.8.0
 -------------
 
